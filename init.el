@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     markdown
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -305,13 +306,45 @@ before packages are loaded. If you are unsure, you should try in setting them in
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  "setup"
+
+  (bind-keys* ("¥" . "\\")
+
+              ;; 編集
+              ("C-h" . backward-delete-char-untabify)
+              ("C-c C-w" . comment-or-uncomment-region)
+
+              ;; バッファ操作
+              ("C-x C-b" . helm-mini)
+              ("C-S-x b" . buffer-menu)
+              ("C-<backspace>" . kill-buffer)
+
+              ;; paneの移動
+              ("C-t h" . windmove-left)
+              ("C-t j" . windmove-down)
+              ("C-t k" . windmove-up)
+              ("C-t l" . windmove-right)
+
+              ;; paneのサイズ変更
+              ("s-<left>" . shrink-window-horizontally)
+              ("s-<down>" . enlarge-window)
+              ("s-<up>" . shrink-window)
+              ("s-<right>" . enlarge-window-horizontally)
+
+              ;; キーボードマクロ
+              ("<f1>" . start-kbd-macro)
+              ("<f2>" . end-kbd-macro)
+              ("<f3>" . call-last-kbd-macro)
+              ("<f4>" . name-last-kbd-macro)
+              ("<f5>" . insert-kbd-macro)
+              
+              ;; version管理
+              ("C-x C-v" . magit-status)
+
+              )
   )
+
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -322,7 +355,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
