@@ -31,14 +31,17 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
      markdown
+     python
+     wakatime
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
      ;; git
@@ -56,7 +59,12 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      elscreen
+                                      elscreen-multi-term
+                                      helm-elscreen
+                                      helm-mt
                                       magit
+                                      multi-term
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -307,12 +315,51 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   "setup"
+  (add-to-list 'exec-path "/usr/local/bin")  ;; $PATH
+
+  ;; append include path
+  (add-to-list 'load-path "~/src/github.com/TakesxiSximada/mastodon-mode.el")
+  (add-to-list 'load-path "~/src/github.com/xahlee/xah-replace-pairs/")
+  (dolist
+      (path (seq-filter
+             (lambda (dirname) (string-suffix-p ".el" dirname))
+             (directory-files "~/src/bitbucket.org/takesxi_sximada" t)))
+    (add-to-list 'load-path path t))
+
+  ;; multi-term
+  (setq multi-term-program "/bin/bash")
+
+  ;; DO NOT TO CLOSE EMMACS !!!!!!!!!!
+  (setq confirm-kill-emacs 'y-or-n-p)
+
+  ;; 編集用フック
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  ;; elscreen
+  (use-package elscreen
+    :init
+    (setq elscreen-tab-display-control nil)
+    (setq elscreen-tab-display-kill-screen nil)
+    :config
+    (setq elscreen-prefix-key (kbd "C-\\"))
+    (elscreen-start)
+    )
+
+  ;; wakatime
+  (global-wakatime-mode t)
+
+  ;; キーバインド
+  (bind-keys :map emacs-lisp-mode-map
+             ("C-x C-d" . edebug-defun))
 
   (bind-keys* ("¥" . "\\")
 
               ;; 編集
               ("C-h" . backward-delete-char-untabify)
+              ("C-x g" . find-grep)
+              ("C-x C-g" . goto-line)
               ("C-c C-w" . comment-or-uncomment-region)
+              ;; ("C-x a" . exchange-point-and-mark)
 
               ;; バッファ操作
               ("C-x C-b" . helm-mini)
@@ -337,10 +384,34 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("<f3>" . call-last-kbd-macro)
               ("<f4>" . name-last-kbd-macro)
               ("<f5>" . insert-kbd-macro)
-              
+
+              ;; その他
+              ;; ("<f6>" . magit-status)
+              ;; ("<f7>" . eww-search-words)
+              ;; ("<f8>" . google-translate-enja-or-jaen)
+              ;; ("<f9>" . browse-wakatime)
+              ;; ("<f10>" . eval-buffer)
+              ;; ("<f11>" . describe-personal-keybindings)
+              ("<f12>" . (lambda () (interactive)
+                           (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
+              ("<C-f12>" . dotspacemacs/sync-configuration-layers)
+
               ;; version管理
               ("C-x C-v" . magit-status)
 
+              ;; terminalの起動
+              ("C-t b" . helm-mt)
+              ("C-t C-t t" . multi-term)
+              ;; ("C-t C-t C-t" . emt-multi-term)
+
+              ;; tabの移動
+              ;; ("s-[" . elscreen-previous)
+              ;; ("s-]" . elscreen-next)
+
+              ;; emoji
+              ;; ("C-x a" . emoji-cheat-sheet-plus-insert)
+              ;; ("C-x C-a" . emoji-cheat-sheet-plus-buffer)
+              ;; ("C-x M-a" . emoji-cheat-sheet-plus-display-mode)
               )
   )
 
@@ -355,7 +426,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
