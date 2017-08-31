@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
      javascript
      markdown
      python
@@ -61,10 +62,13 @@ values."
    dotspacemacs-additional-packages '(
                                       elscreen
                                       elscreen-multi-term
+                                      elscreen-multi-term
+                                      google-translate
                                       helm-elscreen
                                       helm-mt
                                       magit
                                       multi-term
+                                      restclient
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -335,18 +339,56 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; 編集用フック
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-  ;; elscreen
+  ;; spacemacs上でelscreenを実行するためには以下の修正を入れる必要がある
+  ;; https://github.com/knu/elscreen/issues/6#issuecomment-164115783
   (use-package elscreen
     :init
     (setq elscreen-tab-display-control nil)
     (setq elscreen-tab-display-kill-screen nil)
     :config
-    (setq elscreen-prefix-key (kbd "C-\\"))
+    (setq elscreen-prefix-key (kbd "C-¥"))
     (elscreen-start)
     )
 
   ;; wakatime
   (global-wakatime-mode t)
+
+  ;; sql-mode
+  (use-package sql-mode
+    :config
+    (custom-set-variables
+     '(sql-mysql-login-params
+       (quote (user password database server port)))))
+
+  ;; google translate
+  ;; (defvar google-translate-english-chars "[:ascii:]’“”–"
+  ;;   "これらの文字が含まれているときは英語とみなす")
+  ;;
+  ;; (defun google-translate-enja-or-jaen (&optional string)
+  ;;   "regionか、現在のセンテンスを言語自動判別でGoogle翻訳する。"
+  ;;   (interactive)
+  ;;   (setq string
+  ;;         (cond ((stringp string) string)
+  ;;               (current-prefix-arg
+  ;;                (read-string "Google Translate: "))
+  ;;               ((use-region-p)
+  ;;                (buffer-substring (region-beginning) (region-end)))
+  ;;               (t
+  ;;                (save-excursion
+  ;;                  (let (s)
+  ;;                    (forward-char 1)
+  ;;                    (backward-sentence)
+  ;;                    (setq s (point))
+  ;;                    (forward-sentence)
+  ;;                    (buffer-substring s (point)))))))
+  ;;   (let* ((asciip (string-match
+  ;;                   (format "\\`[%s]+\\'" google-translate-english-chars)
+  ;;                   string)))
+  ;;     (run-at-time 0.1 nil 'deactivate-mark)
+  ;;     (google-translate-translate
+  ;;      (if asciip "en" "ja")
+  ;;      (if asciip "ja" "en")
+  ;;      string)))
 
   ;; キーバインド
   (bind-keys :map emacs-lisp-mode-map
@@ -385,10 +427,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("<f4>" . name-last-kbd-macro)
               ("<f5>" . insert-kbd-macro)
 
+              ;; 翻訳
+              ("<C-f6>" . google-translate-smooth-translate)
+
               ;; その他
-              ;; ("<f6>" . magit-status)
               ;; ("<f7>" . eww-search-words)
-              ;; ("<f8>" . google-translate-enja-or-jaen)
+              ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
               ;; ("<f10>" . eval-buffer)
               ;; ("<f11>" . describe-personal-keybindings)
@@ -402,11 +446,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ;; terminalの起動
               ("C-t b" . helm-mt)
               ("C-t C-t t" . multi-term)
-              ;; ("C-t C-t C-t" . emt-multi-term)
+              ("C-t C-t C-t" . emt-multi-term)
 
               ;; tabの移動
-              ;; ("s-[" . elscreen-previous)
-              ;; ("s-]" . elscreen-next)
+              ("s-[" . elscreen-previous)
+              ("s-]" . elscreen-next)
 
               ;; emoji
               ;; ("C-x a" . emoji-cheat-sheet-plus-insert)
@@ -426,7 +470,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
