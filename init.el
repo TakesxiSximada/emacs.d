@@ -448,7 +448,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("C-t C-t t" . multi-term)
               ("C-t C-t C-t" . emt-multi-term)
 
-              ;; tabの移動
+              ;; elscreen
+              ("s-t" . elscreen-create)
+              ("s-w" . elscreen-kill)
               ("s-[" . elscreen-previous)
               ("s-]" . elscreen-next)
 
