@@ -65,7 +65,6 @@ values."
                                       elnode
                                       elscreen
                                       elscreen-multi-term
-                                      elscreen-multi-term
                                       google-translate
                                       helm-elscreen
                                       helm-mt
@@ -321,6 +320,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   "setup"
+  (load-file "~/.config/emacs/default.el")  ;; private configuration
+
   (add-to-list 'exec-path "/usr/local/bin")  ;; $PATH
 
   ;; append include path
@@ -411,16 +412,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
   ;; org-agenda
-  (setq org-agenda-files '("~/src/bitbucket.org/takesxi_sximada/sximada.el/TODO.org"
-                           "~/src/bitbucket.org/takesxi_sximada/leadingmark.el/TODO.org"
-                           "~/src/bitbucket.org/takesxi_sximada/squeeze.el/TODO.org"
-                           ;; "~/src/bitbucket.org/takesxi_sximada/oreilly.el/TODO.org"
-                           ))
+  (setq org-agenda-files my/org-agenda-files)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((plantuml . t)))
-  (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2017.14/libexec/plantuml.jar")
+  (setq org-plantuml-jar-path my/org-plantuml-jar-path)
 
 
   ;; google translate
@@ -524,10 +521,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ;; ("<f7>" . eww-search-words)
               ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
-              ;; ("<f10>" . eval-buffer)
+              ;; ("<f11>" . org-agenda-day-view)
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
-              ("<C-f12>" . dotspacemacs/sync-configuration-layers)
+              ("<C-f12>" . eval-buffer)
+              ("<C-M-f12>" . dotspacemacs/sync-configuration-layers)
 
               ;; version管理
               ("C-x C-v" . magit-status)
@@ -549,9 +547,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ;; ("C-x M-a" . emoji-cheat-sheet-plus-display-mode)
               )
 
-  (org-agenda-list)
-  (switch-to-buffer "*Org Agenda*")
-  (spacemacs/toggle-maximize-buffer)
+  ;; (org-agenda-list)
+  ;; (switch-to-buffer "*Org Agenda*")
+  ;; (spacemacs/toggle-maximize-buffer)
   )
 
 
