@@ -334,7 +334,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (add-to-list 'load-path path t))
 
   ;; multi-term
-  (setq multi-term-program "/bin/bash")
+  (setq multi-term-program "/bin/zsh")
 
   ;; DO NOT TO CLOSE EMMACS !!!!!!!!!!
   (setq confirm-kill-emacs 'y-or-n-p)
@@ -519,9 +519,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
               ;; その他
               ;; ("<f7>" . eww-search-words)
-              ("<f6>" . google-translate-enja-or-jaen)
+              ;; ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
-              ;; ("<f11>" . org-agenda-day-view)
+              ;; ("<C-f11>" . org-agenda-day-view)
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
               ("<C-f12>" . eval-buffer)
