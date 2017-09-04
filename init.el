@@ -31,7 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     sql
+     plantuml
+     yaml
      javascript
      markdown
      python
@@ -54,12 +55,14 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
+     restclient
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      elnode
                                       elscreen
                                       elscreen-multi-term
                                       elscreen-multi-term
@@ -68,7 +71,6 @@ values."
                                       helm-mt
                                       magit
                                       multi-term
-                                      restclient
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -351,7 +353,54 @@ before packages are loaded. If you are unsure, you should try in setting them in
     )
 
   ;; wakatime
+  (require 'wakatime-mode)
   (global-wakatime-mode t)
+
+  (defun wakatime-client-command (savep)
+    "Return client command executable and arguments.
+   Set SAVEP to non-nil for write action."
+    (wakatime-debug "GOGO")
+    (format "%s%s--file \'%s\' %s --plugin \"%s/%s\" --time %.2f%s%s"
+            (if (s-blank wakatime-python-bin) "" (format "%s " wakatime-python-bin))
+            (if (s-blank wakatime-cli-path) "wakatime " (format "%s " wakatime-cli-path))
+            (or (buffer-file-name (current-buffer)) (buffer-name))
+            (if (buffer-file-name (current-buffer)) "" (format " --entity-type app --project \'%s\' " mode-name))
+            wakatime-user-agent
+            wakatime-version
+            (float-time)
+            (if savep " --write" "")
+            (if (s-blank wakatime-api-key) "" (format " --key %s" wakatime-api-key))))
+
+  (defun wakatime-save ()
+    "Send save notice to WakaTime."
+    (wakatime-call t))
+
+  (defun wakatime-bind-hooks ()
+    "Watch for activity in buffers."
+    (add-hook 'after-save-hook 'wakatime-save nil t)
+    (add-hook 'auto-save-hook 'wakatime-save nil t)
+    (add-hook 'first-change-hook 'wakatime-ping nil t))
+
+  (defun wakatime-unbind-hooks ()
+    "Stop watching for activity in buffers."
+    (remove-hook 'after-save-hook 'wakatime-save t)
+    (remove-hook 'auto-save-hook 'wakatime-save t)
+    (remove-hook 'first-change-hook 'wakatime-ping t))
+
+
+  ;; (defun wakatime-client-command (savep)
+  ;;   "Return client command executable and arguments.
+  ;;  Set SAVEP to non-nil for write action."
+  ;;   (format "%s%s--file \"%s\" --plugin \"%s/%s\" --time %.2f%s%s"
+  ;;           (if (s-blank wakatime-python-bin) "" (format "%s " wakatime-python-bin))
+  ;;           (if (s-blank wakatime-cli-path) "wakatime " (format "%s " wakatime-cli-path))
+  ;;           (or (buffer-file-name (current-buffer)) (buffer-name))
+  ;;           wakatime-user-agent
+  ;;           wakatime-version
+  ;;           (float-time)
+  ;;           (if savep " --write" "")
+  ;;           (if (s-blank wakatime-api-key) "" (format " --key %s" wakatime-api-key))))
+
 
   ;; sql-mode
   (use-package sql-mode
@@ -359,6 +408,20 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (custom-set-variables
      '(sql-mysql-login-params
        (quote (user password database server port)))))
+
+
+  ;; org-agenda
+  (setq org-agenda-files '("~/src/bitbucket.org/takesxi_sximada/sximada.el/TODO.org"
+                           "~/src/bitbucket.org/takesxi_sximada/leadingmark.el/TODO.org"
+                           "~/src/bitbucket.org/takesxi_sximada/squeeze.el/TODO.org"
+                           ;; "~/src/bitbucket.org/takesxi_sximada/oreilly.el/TODO.org"
+                           ))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((plantuml . t)))
+  (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2017.14/libexec/plantuml.jar")
+
 
   ;; google translate
   ;; (defvar google-translate-english-chars "[:ascii:]’“”–"
@@ -394,6 +457,33 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (bind-keys :map emacs-lisp-mode-map
              ("C-x C-d" . edebug-defun))
 
+
+  (bind-keys*
+   ("C-t h" . (lambda ()
+                (interactive)
+                (wakatime-save)
+                (windmove-left)
+                (wakatime-save)
+                ))
+   ("C-t j" . (lambda ()
+                (interactive)
+                (wakatime-save)
+                (windmove-down)
+                (wakatime-save)
+                ))
+   ("C-t k" . (lambda ()
+                (interactive)
+                (wakatime-save)
+                (windmove-up)
+                (wakatime-save)
+                ))
+   ("C-t l" . (lambda ()
+                (interactive)
+                (wakatime-save)
+                (windmove-right)
+                (wakatime-save)
+                )))
+  (require 'mastodon-mode)
   (bind-keys* ("¥" . "\\")
 
               ;; 編集
@@ -409,10 +499,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("C-<backspace>" . kill-buffer)
 
               ;; paneの移動
-              ("C-t h" . windmove-left)
-              ("C-t j" . windmove-down)
-              ("C-t k" . windmove-up)
-              ("C-t l" . windmove-right)
+              ;; ("C-t h" . windmove-left)
+              ;; ("C-t j" . windmove-down)
+              ;; ("C-t k" . windmove-up)
+              ;; ("C-t l" . windmove-right)
 
               ;; paneのサイズ変更
               ("s-<left>" . shrink-window-horizontally)
@@ -435,7 +525,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
               ;; ("<f10>" . eval-buffer)
-              ;; ("<f11>" . describe-personal-keybindings)
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
               ("<C-f12>" . dotspacemacs/sync-configuration-layers)
@@ -459,6 +548,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ;; ("C-x C-a" . emoji-cheat-sheet-plus-buffer)
               ;; ("C-x M-a" . emoji-cheat-sheet-plus-display-mode)
               )
+
+  (org-agenda-list)
+  (switch-to-buffer "*Org Agenda*")
+  (spacemacs/toggle-maximize-buffer)
   )
 
 
@@ -472,7 +565,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
