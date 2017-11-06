@@ -31,6 +31,10 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
+     typescript
+     ;; markdown
+     csv
      ruby
      html
      gtags
@@ -74,6 +78,7 @@ values."
                                       helm-elscreen
                                       helm-mt
                                       magit
+                                      multi-eshell
                                       multi-term
                                       review-mode
                                       websocket
@@ -471,6 +476,21 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (bind-keys :map emacs-lisp-mode-map
              ("C-x C-d" . edebug-defun))
 
+  (require 'term)
+  (bind-keys :map term-raw-map
+             ("C-@" . set-mark-command)
+             ("C-a" . move-beginning-of-line)
+             ("C-e" . move-end-of-line)
+             ("C-v" . scroll-up-command)
+             ("C-f" . forward-char)
+             ("M-f" . forward-word)
+             ("C-b" . backward-char)
+             ("M-b" . backward-word)
+             ("M-b" . backward-word)
+             ("C-k" . (lambda (&optional arg)
+                        (interactive "P") (funcall 'kill-line arg) (term-send-raw)))
+             )
+
 
   (bind-keys*
    ("C-t h" . (lambda ()
@@ -539,6 +559,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ;; ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
               ;; ("<C-f11>" . org-agenda-day-view)
+              ("<C-f11>" . describe-key)
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
               ("<C-f12>" . eval-buffer)
@@ -549,7 +570,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
               ;; terminalの起動
               ("C-t b" . helm-mt)
-              ("C-t C-t t" . multi-term)
+              ("C-t C-t t" . multi-eshell)
               ("C-t C-t C-t" . emt-multi-term)
 
               ;; elscreen
@@ -580,7 +601,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
