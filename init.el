@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     elixir
      sql
      typescript
      ;; markdown
@@ -74,12 +75,16 @@ values."
                                       elnode
                                       elscreen
                                       elscreen-multi-term
+                                      flymake-python-pyflakes
                                       google-translate
                                       helm-elscreen
                                       helm-mt
+                                      jedi
+                                      jedi-core
                                       magit
                                       multi-eshell
                                       multi-term
+                                      python-x
                                       review-mode
                                       websocket
                                       )
@@ -345,6 +350,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
              (directory-files "~/src/bitbucket.org/takesxi_sximada" t)))
     (add-to-list 'load-path path t))
 
+
+  ;; for python
+  (flymake-mode t)
+  (require 'flymake-python-pyflakes)
+  (flymake-python-pyflakes-load)
+
+  ;; jedi
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (setq jedi:complete-on-dot t)
+
   ;; multi-term
   (setq multi-term-program "/bin/zsh")
 
@@ -441,6 +456,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
    '((plantuml . t)))
   (setq org-plantuml-jar-path my/org-plantuml-jar-path)
 
+
+  (fset 'my-anitube-url
+        "\C-adlking anitube download '\C-d\C-e\342\C-@\C-e\367' MOVIE-\C-y.mp4\C-n\C-a")
+
+  (fset 'my-trans
+        [?> ?\S-  ?\C-@ ?\C-e C-f6 return ?e ?n return ?j ?a return ?\C-t ?l ?\M-\} ?\M-\} ?\C-n ?\C-@ ?\M-\} ?\M-w ?\C-t ?h ?\C-e ?\C-j ?\C-j ?\C-y ?\C-n])
 
   ;; google translate
   ;; (defvar google-translate-english-chars "[:ascii:]’“”–"
@@ -552,9 +573,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("<f5>" . insert-kbd-macro)
 
               ;; 翻訳
+              ("<f6>" . 'my-trans)
               ("<C-f6>" . google-translate-smooth-translate)
 
               ;; その他
+              ("<f7>" . 'my-anitube-url)
               ;; ("<f7>" . eww-search-words)
               ;; ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
@@ -601,7 +624,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (flymake-python-pyflakes flymake-easy jedi jedi-core python-environment epc ctable concurrent deferred ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode python-x folding multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
