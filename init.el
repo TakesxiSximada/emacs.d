@@ -30,7 +30,9 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(haskell
+     rust
+     go
      elixir
      sql
      typescript
@@ -57,7 +59,7 @@ values."
      twitter
      ;; git
      ;; markdown
-     ;; org
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -73,17 +75,22 @@ values."
    dotspacemacs-additional-packages '(
                                       atomic-chrome
                                       elnode
-                                      elscreen
                                       elscreen-multi-term
+                                      exec-path-from-shell
+                                      flycheck-pyflakes
+                                      flymake-cursor
                                       flymake-python-pyflakes
                                       google-translate
                                       helm-elscreen
                                       helm-mt
                                       jedi
                                       jedi-core
+                                      kubernetes
                                       magit
                                       multi-eshell
                                       multi-term
+                                      ;; pyflake
+                                      s
                                       python-x
                                       review-mode
                                       websocket
@@ -333,6 +340,12 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
+  (setq configuration-layer-elpa-archives '(("melpa" .  "melpa.org/packages/")
+                                            ("org" . "orgmode.org/elpa/")
+                                            ("gnu" . "elpa.gnu.org/packages/")
+                                            ))
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -343,6 +356,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; append include path
   (add-to-list 'load-path "~/src/github.com/TakesxiSximada/mastodon-mode.el")
+  (add-to-list 'load-path "~/mastodon.el/lisp")
   (add-to-list 'load-path "~/src/github.com/xahlee/xah-replace-pairs/")
   (dolist
       (path (seq-filter
@@ -350,15 +364,52 @@ before packages are loaded. If you are unsure, you should try in setting them in
              (directory-files "~/src/bitbucket.org/takesxi_sximada" t)))
     (add-to-list 'load-path path t))
 
+  ;; https://github.com/syl20bnr/spacemacs/issues/9549
+  ;; https://github.com/syl20bnr/spacemacs/issues/9608
+  ;; (require 'helm-bookmark)
+
+  ;; flycheck
+  (setq flycheck-python-pycompile-executable "/Users/sximada/miniconda3/envs/py3.6.2/bin/python")
+  (setq flycheck-python-flake8-executable "/Users/sximada/miniconda3/envs/py3.6.2/bin/flake8")
+  (add-hook 'python-mode-hook 'flycheck-mode)
+  ;; (exec-path-from-shell-initialize)
+  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
 
   ;; for python
-  (flymake-mode t)
-  (require 'flymake-python-pyflakes)
-  (flymake-python-pyflakes-load)
+  ;; (flymake-mode t)
+  ;; (require 'flymake-python-pyflakes)
+  ;; (flymake-python-pyflakes-load)
 
   ;; jedi
   (add-hook 'python-mode-hook 'jedi:setup)
   (setq jedi:complete-on-dot t)
+
+  (setq jedi:setup-keys nil)
+  (setq jedi:tooltip-method nil)
+  (autoload 'jedi:setup "jedi" nil t)
+  (add-hook 'python-mode-hook 'jedi:setup)
+
+
+  (defvar jedi:goto-stack '())
+  (defun jedi:jump-to-definition ()
+    (interactive)
+    (add-to-list 'jedi:goto-stack
+                 (list (buffer-name) (point)))
+    (jedi:goto-definition))
+  (defun jedi:jump-back ()
+    (interactive)
+    (let ((p (pop jedi:goto-stack)))
+      (if p (progn
+              (switch-to-buffer (nth 0 p))
+              (goto-char (nth 1 p))))))
+
+
+  (add-hook 'python-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-.") 'jedi:jump-to-definition)
+               (local-set-key (kbd "C-,") 'jedi:jump-back)
+               (local-set-key (kbd "C-c d") 'jedi:show-doc)
+               (local-set-key (kbd "C-<tab>") 'jedi:complete)))
 
   ;; multi-term
   (setq multi-term-program "/bin/zsh")
@@ -368,6 +419,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; 編集用フック
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  ;; (package-install-file "~/.smacemacs.d/multi-eshell.el")
+  (use-package multi-eshell)
 
   ;; spacemacs上でelscreenを実行するためには以下の修正を入れる必要がある
   ;; https://github.com/knu/elscreen/issues/6#issuecomment-164115783
@@ -430,18 +484,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
   ;; sql-mode
-  (use-package sql-mode
-    :config
-    (custom-set-variables
-     '(sql-mysql-login-params
-       (quote (user password database server port)))))
-  (setq sql-mysql-login-params '(user password database server port))
+  ;(use-package sql-mode
+  ;  :config
+  ;  (custom-set-variables
+  ;   '(sql-my
+  ;     sql-login-params
+  ;     (quote (user password database server port)))))
+  ;(setq sql-mysql-login-params '(user password database server port))
 
   ;; org-mode
   (setq org-todo-keywords
         '((sequence
-           "TODO(t)" "WIP(w)" "PENDING(p)" "REVIEW(r)" "QUESTION(q)" "FEEDBACK(f)" "|"
-           "DONE(x)" "CANCEL(c)")))
+           "PROBREM(t)" "TODO(t)" "WIP(w)" "PENDING(p)" "REVIEW(r)" "QUESTION(q)" "FEEDBACK(f)" "|"
+           "DONE(x)" "CANCEL(c)" "RESOLVED(o)" "KEEP(k)" "")))
 
   ;; Effort estimate
   (setq org-global-properties
@@ -451,9 +506,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; org-agenda
   (setq org-agenda-files my/org-agenda-files)
 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((plantuml . t)))
+
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '(
+                                 (shell . t)
+                                 (elixir . t)
+                                 (http . t)
+                                 (restclient . t)
+                                 (python . t)
+                                 (plantuml . t)
+                                 (ruby . t)
+                                 (emacs-lisp . t)
+                                 )
+                               )
   (setq org-plantuml-jar-path my/org-plantuml-jar-path)
 
 
@@ -462,6 +527,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (fset 'my-trans
         [?> ?\S-  ?\C-@ ?\C-e C-f6 return ?e ?n return ?j ?a return ?\C-t ?l ?\M-\} ?\M-\} ?\C-n ?\C-@ ?\M-\} ?\M-w ?\C-t ?h ?\C-e ?\C-j ?\C-j ?\C-y ?\C-n])
+
+  (fset 'my-activate
+        [?s ?o ?u ?r ?c ?e ?  ?~ ?/ ?. ?b ?a ?s ?h ?_ ?p ?r ?o ?f ?i ?k backspace ?l ?e return ?s ?n ?a ?k ?e ?  ?p ?y ?3 ?. ?6 ?. ?2 return])
+
 
   ;; google translate
   ;; (defvar google-translate-english-chars "[:ascii:]’“”–"
@@ -492,6 +561,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;      (if asciip "en" "ja")
   ;;      (if asciip "ja" "en")
   ;;      string)))
+
+
+  (which-key-setup-side-window-bottom)    ;ミニバッファ
+  (which-key-setup-side-window-right)     ;右端
+  (which-key-setup-side-window-right-bottom) ;両方使う
+  (which-key-mode 1)
 
   ;; キーバインド
   (bind-keys :map emacs-lisp-mode-map
@@ -538,7 +613,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                 (windmove-right)
                 (wakatime-save)
                 )))
-  (require 'mastodon-mode)
+  ;;(require 'mastodon-mode)
+
   (bind-keys* ("¥" . "\\")
 
               ;; 編集
@@ -602,8 +678,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("s-[" . elscreen-previous)
               ("s-]" . elscreen-next)
 
-              ;; emoji
-              ;; ("C-x a" . emoji-cheat-sheet-plus-insert)
+              ;;               ;; ("C-x a" . emoji-cheat-sheet-plus-insert)
               ;; ("C-x C-a" . emoji-cheat-sheet-plus-buffer)
               ;; ("C-x M-a" . emoji-cheat-sheet-plus-display-mode)
               )
@@ -611,6 +686,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (org-agenda-list)
   ;; (switch-to-buffer "*Org Agenda*")
   ;; (spacemacs/toggle-maximize-buffer)
+
+  ;;
+  (defun web-mode-hook ()
+    "Hooks for Web mode."
+    (setq web-mode-markup-indent-offset   4))
+  (add-hook 'web-mode-hook 'web-mode-hook)
   )
 
 
@@ -624,10 +705,31 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (flymake-python-pyflakes flymake-easy jedi jedi-core python-environment epc ctable concurrent deferred ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode python-x folding multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (go-guru go-eldoc company-go go-mode flycheck-pyflakes flymake-cursor flymake-python-pyflakes flymake-easy jedi jedi-core python-environment epc ctable concurrent deferred ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode python-x folding multi-eshell
+             tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (elscreen-mew elscreen-separate-buffer-list package-utils elscreen-fr yasnippet-snippets toml-mode ruby-refactor ruby-hash-syntax racer pos-tip pippel org-mime cargo rust-mode go-guru go-eldoc company-go go-mode flycheck-pyflakes flymake-cursor flymake-python-pyflakes flymake-easy jedi jedi-core python-environment epc ctable concurrent deferred ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode python-x folding multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
