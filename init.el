@@ -1,7 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-
+(setq dotspacemacs-mode-line-theme 'spacemacs)
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -30,7 +30,10 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(haskell
+   '(nginx
+     clojure
+     perl5
+     haskell
      rust
      go
      elixir
@@ -64,7 +67,7 @@ values."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
      restclient
      )
@@ -73,26 +76,35 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      ;; flycheck-pyflakes
+                                      ;; flymake-python-pyflakes
+                                      ;; pyflake
+                                      async-await
                                       atomic-chrome
+                                      clomacs
+                                      company
+                                      ein
                                       elnode
+                                      elpy
                                       elscreen-multi-term
                                       exec-path-from-shell
-                                      flycheck-pyflakes
                                       flymake-cursor
-                                      flymake-python-pyflakes
                                       google-translate
                                       helm-elscreen
                                       helm-mt
+                                      ini-mode
                                       jedi
                                       jedi-core
                                       kubernetes
                                       magit
                                       multi-eshell
                                       multi-term
-                                      ;; pyflake
-                                      s
                                       python-x
                                       review-mode
+                                      s
+                                      tss
+                                      vue-html-mode
+                                      vue-mode
                                       websocket
                                       )
    ;; A list of packages that cannot be updated.
@@ -330,7 +342,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -364,31 +376,23 @@ before packages are loaded. If you are unsure, you should try in setting them in
              (directory-files "~/src/bitbucket.org/takesxi_sximada" t)))
     (add-to-list 'load-path path t))
 
+  (setq find-function-C-source-directory "/srv/emacs/src/src")  ;; Emacs C source code dir for tag jump
+
   ;; https://github.com/syl20bnr/spacemacs/issues/9549
   ;; https://github.com/syl20bnr/spacemacs/issues/9608
   ;; (require 'helm-bookmark)
 
-  ;; flycheck
-  (setq flycheck-python-pycompile-executable "/Users/sximada/miniconda3/envs/py3.6.2/bin/python")
-  (setq flycheck-python-flake8-executable "/Users/sximada/miniconda3/envs/py3.6.2/bin/flake8")
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  ;; (exec-path-from-shell-initialize)
-  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
-
-  ;; for python
-  ;; (flymake-mode t)
-  ;; (require 'flymake-python-pyflakes)
-  ;; (flymake-python-pyflakes-load)
+  ;; ===============
+  ;; Python settings
+  ;; ===============
 
   ;; jedi
-  (add-hook 'python-mode-hook 'jedi:setup)
+  ;; ====
   (setq jedi:complete-on-dot t)
 
   (setq jedi:setup-keys nil)
   (setq jedi:tooltip-method nil)
   (autoload 'jedi:setup "jedi" nil t)
-  (add-hook 'python-mode-hook 'jedi:setup)
-
 
   (defvar jedi:goto-stack '())
   (defun jedi:jump-to-definition ()
@@ -396,6 +400,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (add-to-list 'jedi:goto-stack
                  (list (buffer-name) (point)))
     (jedi:goto-definition))
+
   (defun jedi:jump-back ()
     (interactive)
     (let ((p (pop jedi:goto-stack)))
@@ -403,22 +408,57 @@ before packages are loaded. If you are unsure, you should try in setting them in
               (switch-to-buffer (nth 0 p))
               (goto-char (nth 1 p))))))
 
+  ;; Miniconda settings
+  ;; ==================
+  (setq my:conda-envs-path "~/miniconda3/envs/")
+  (defun use-python-environment (directory)
+    "Activate the virtual environment in DIRECTORY."
+    (interactive (list (read-directory-name "Activate venv: " my:conda-envs-path)))
+    (message "Use pyvenv: %s" directory)
+    (elpy-enable)
+    (setq elpy-rpc-backend "jedi")  ;; 自動補完のバックエンドとして Rope か Jedi を選択
+    (setq python-shell-interpreter "python"
+          python-shell-interpreter-args "-i")
+    (pyvenv-activate directory)
+    (message "[Require] pip install -U yapf jedi vprof flake8 isort")
+    (elpy-rpc-restart))
 
-  (add-hook 'python-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "C-.") 'jedi:jump-to-definition)
-               (local-set-key (kbd "C-,") 'jedi:jump-back)
-               (local-set-key (kbd "C-c d") 'jedi:show-doc)
-               (local-set-key (kbd "C-<tab>") 'jedi:complete)))
+  ;; Python mode hooks
+  ;; =================
+  (defun my:python-mode-maps ()
+    (message "Update keymap")
+    (let ((map elpy-mode-map))
+      (define-key map (kbd "M-.") 'jedi:jump-to-definition)
+      (define-key map (kbd "M-,") 'jedi:jump-back)
+      (define-key map (kbd "C-c d") 'jedi:show-doc)
+      (define-key map (kbd "C-<tab>") 'jedi:complete)))
+
+
+  (defun my:python-mode-hooks ()
+    (message "PYTHON MODE")
+    (my:python-mode-maps)
+    ;; Enable isort (before save)
+    (make-variable-buffer-local 'python-sort-imports-on-save)
+    (setq python-sort-imports-on-save t)
+
+    (add-hook 'before-save-hook 'elpy-format-code nil t)  ;; 保存時に整形処理を実行
+    (add-hook 'python-mode-hook 'jedi:setup)  ;; jedi
+    )
+
+  (add-hook 'python-mode-hook 'my:python-mode-hooks)
+
+
+  ;; editorconfig
+  (use-package editorconfig
+    :ensure t
+    :config
+    (editorconfig-mode 1))
 
   ;; multi-term
   (setq multi-term-program "/bin/zsh")
 
   ;; DO NOT TO CLOSE EMMACS !!!!!!!!!!
   (setq confirm-kill-emacs 'y-or-n-p)
-
-  ;; 編集用フック
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
   ;; (package-install-file "~/.smacemacs.d/multi-eshell.el")
   (use-package multi-eshell)
@@ -495,12 +535,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; org-mode
   (setq org-todo-keywords
         '((sequence
-           "PROBREM(t)" "TODO(t)" "WIP(w)" "PENDING(p)" "REVIEW(r)" "QUESTION(q)" "FEEDBACK(f)" "|"
-           "DONE(x)" "CANCEL(c)" "RESOLVED(o)" "KEEP(k)" "")))
+           "PROBREM(p)" "TODO(t)" "WIP(w)" "PENDING(e)" "REVIEW(r)" "QUESTION(q)" "FEEDBACK(f)" "|"
+           "DONE(x)" "CANCEL(c)" "RESOLVED(o)" "KEEP(k)" )))
 
   ;; Effort estimate
   (setq org-global-properties
-        (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00")
+        (quote (("Effort_ALL" . "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20")
                 ("STYLE_ALL" . "habit"))))
 
   ;; org-agenda
@@ -521,18 +561,22 @@ before packages are loaded. If you are unsure, you should try in setting them in
                                )
   (setq org-plantuml-jar-path my/org-plantuml-jar-path)
 
-
-  (fset 'my-anitube-url
-        "\C-adlking anitube download '\C-d\C-e\342\C-@\C-e\367' MOVIE-\C-y.mp4\C-n\C-a")
+  ;; magithub
+  ;; (magithub-feature-autoinject nil)
+  ;; (setq magithub-clone-default-directory "~/github")
 
   (fset 'my-trans
         [?> ?\S-  ?\C-@ ?\C-e C-f6 return ?e ?n return ?j ?a return ?\C-t ?l ?\M-\} ?\M-\} ?\C-n ?\C-@ ?\M-\} ?\M-w ?\C-t ?h ?\C-e ?\C-j ?\C-j ?\C-y ?\C-n])
 
-  (fset 'my-activate
-        [?s ?o ?u ?r ?c ?e ?  ?~ ?/ ?. ?b ?a ?s ?h ?_ ?p ?r ?o ?f ?i ?k backspace ?l ?e return ?s ?n ?a ?k ?e ?  ?p ?y ?3 ?. ?6 ?. ?2 return])
-
 
   ;; google translate
+  (when (and (= emacs-major-version 25) (<= emacs-minor-version 2))
+    (setq google-translate-base-url
+          "https://translate.google.com/translate_a/single"
+          google-translate--tkk-url
+          "https://translate.google.com/"))
+
+
   ;; (defvar google-translate-english-chars "[:ascii:]’“”–"
   ;;   "これらの文字が含まれているときは英語とみなす")
   ;;
@@ -567,6 +611,21 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (which-key-setup-side-window-right)     ;右端
   (which-key-setup-side-window-right-bottom) ;両方使う
   (which-key-mode 1)
+
+  ;; typescript
+  (require 'typescript)
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+
+  (require 'tss)
+  (setq tss-popup-help-key "C-:")
+  (setq tss-jump-to-definition-key "C->")
+  (setq tss-implement-definition-key "C-c i")
+  (tss-config-default)
+  (setq typescript-indent-level 2)  ;;   インデント幅が4だったので、2に変更。
+
+
+  ;; hang up emacs
+  (setq dotspacemacs-mode-line-unicode-symbols t)
 
   ;; キーバインド
   (bind-keys :map emacs-lisp-mode-map
@@ -613,7 +672,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                 (windmove-right)
                 (wakatime-save)
                 )))
-  ;;(require 'mastodon-mode)
+  (require 'mastodon-mode)
 
   (bind-keys* ("¥" . "\\")
 
@@ -653,7 +712,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("<C-f6>" . google-translate-smooth-translate)
 
               ;; その他
-              ("<f7>" . 'my-anitube-url)
+              ("<f7>" . sximada:pyvenv)
               ;; ("<f7>" . eww-search-words)
               ;; ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
@@ -661,7 +720,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("<C-f11>" . describe-key)
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
-              ("<C-f12>" . eval-buffer)
+              ("<C-f12>" . (lambda () (interactive)
+                             (switch-to-buffer (find-file-noselect "~/Dropbox/tasks/sximada.org"))))
               ("<C-M-f12>" . dotspacemacs/sync-configuration-layers)
 
               ;; version管理
@@ -694,8 +754,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-hook 'web-mode-hook 'web-mode-hook)
   )
 
-
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -725,7 +783,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elscreen-mew elscreen-separate-buffer-list package-utils elscreen-fr yasnippet-snippets toml-mode ruby-refactor ruby-hash-syntax racer pos-tip pippel org-mime cargo rust-mode go-guru go-eldoc company-go go-mode flycheck-pyflakes flymake-cursor flymake-python-pyflakes flymake-easy jedi jedi-core python-environment epc ctable concurrent deferred ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode python-x folding multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
+    (ini-mode go-guru go-eldoc company-go go-mode flycheck-pyflakes flymake-cursor flymake-python-pyflakes flymake-easy jedi jedi-core python-environment epc ctable concurrent deferred ob-elixir flycheck-mix flycheck-credo alchemist elixir-mode python-x folding multi-eshell tide typescript-mode flycheck csv-mode goto-chg projectile helm helm-core async review-mode twittering-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-gtags ggtags atomic-chrome websocket plantuml-mode yaml-mode switch-buffer-functions elnode db fakir creole web noflet kv restclient-helm ob-restclient ob-http company-restclient know-your-http-well restclient sql-indent wakatime-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot web-beautify livid-mode helm-company helm-c-yasnippet fuzzy company-tern dash-functional tern company-statistics company-anaconda company auto-yasnippet ac-ispell auto-complete skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-elscreen elscreen-multi-term elscreen helm-mt multi-term mmm-mode markdown-toc markdown-mode gh-md magit magit-popup git-commit with-editor ws-butler winum volatile-highlights vi-tilde-fringe uuidgen toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight dumb-jump f dash s define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link which-key use-package macrostep hydra helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag evil elisp-slime-nav bind-map auto-compile ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
