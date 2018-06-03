@@ -447,6 +447,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (add-hook 'python-mode-hook 'my:python-mode-hooks)
 
+  ;; Bot
+  (defun sximada:start-bot ()
+    (message "Start etomato bot")
+    (async-shell-command "cd /srv/snstools/snstools && robo t" (get-buffer-create "*bot*")))
 
   ;; editorconfig
   (use-package editorconfig
