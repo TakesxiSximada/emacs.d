@@ -724,11 +724,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ;; ("<f6>" . google-translate-enja-or-jaen)
               ;; ("<f9>" . browse-wakatime)
               ;; ("<C-f11>" . org-agenda-day-view)
-              ("<C-f11>" . describe-key)
+              ("<f10>" . (lambda () (interactive)
+                           (switch-to-buffer (find-file-noselect "~/Dropbox/tasks/sximada.org"))))
+              ("<f11>" . (lambda ()
+                           (interactive)
+                           (switch-to-buffer (get-buffer-create "*scratch*"))
+                           (emacs-lisp-mode)))
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
-              ("<C-f12>" . (lambda () (interactive)
-                             (switch-to-buffer (find-file-noselect "~/Dropbox/tasks/sximada.org"))))
               ("<C-M-f12>" . dotspacemacs/sync-configuration-layers)
 
               ;; version管理
