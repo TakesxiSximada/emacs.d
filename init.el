@@ -386,6 +386,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Python settings
   ;; ===============
 
+  (defun spacemacs//pyvenv-mode-set-local-virtualenv ())  ;; THIS FUNCTION DO NOT WORK!! orz
+
   ;; jedi
   ;; ====
   (setq jedi:complete-on-dot t)
