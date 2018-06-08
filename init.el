@@ -451,6 +451,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Bot
   (defun sximada:start-bot ()
+    (interactive)
     (message "Start etomato bot")
     (async-shell-command "cd /srv/snstools/snstools && robo t" (get-buffer-create "*bot*")))
 
