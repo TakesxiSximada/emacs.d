@@ -443,13 +443,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (defun my:python-mode-hooks ()
     (message "PYTHON MODE")
-    (my:python-mode-maps)
     ;; Enable isort (before save)
     (make-variable-buffer-local 'python-sort-imports-on-save)
     (setq python-sort-imports-on-save t)
 
     (add-hook 'before-save-hook 'elpy-format-code nil t)  ;; 保存時に整形処理を実行
     (add-hook 'python-mode-hook 'jedi:setup)  ;; jedi
+    (my:python-mode-maps)
     )
 
   (add-hook 'python-mode-hook 'my:python-mode-hooks)
