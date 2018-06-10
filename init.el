@@ -43,7 +43,6 @@ values."
      csv
      ruby
      html
-     gtags
      plantuml
      yaml
      javascript
