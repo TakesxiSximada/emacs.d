@@ -381,6 +381,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; https://github.com/syl20bnr/spacemacs/issues/9608
   ;; (require 'helm-bookmark)
 
+
+  ;; ===============
+  ;; Global
+  ;; ===============
+  (add-hook 'find-file-hook '(lambda () (interactive) (view-mode)))  ;; File open with READ ONLY.
+
   ;; ===============
   ;; Python settings
   ;; ===============
