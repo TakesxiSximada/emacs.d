@@ -753,6 +753,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
               ("s-[" . elscreen-previous)
               ("s-]" . elscreen-next)
 
+              ;; read only mode
+              ("C-q" . read-only-mode)
+              ("C-x C-q" . quoted-insert)
+
+
               ;;               ;; ("C-x a" . emoji-cheat-sheet-plus-insert)
               ;; ("C-x C-a" . emoji-cheat-sheet-plus-buffer)
               ;; ("C-x M-a" . emoji-cheat-sheet-plus-display-mode)
