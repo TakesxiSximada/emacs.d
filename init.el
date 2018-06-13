@@ -361,7 +361,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   "setup"
-  (load-file "~/.config/emacs/default.el")  ;; private configuration
+
+  ;; private configuration
+  (setq my:private-config-file-path "~/.config/emacs/default.el")
+  (load-file my:private-config-file-path)
 
   (add-to-list 'exec-path "/usr/local/bin")  ;; $PATH
 
@@ -737,6 +740,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                            (emacs-lisp-mode)))
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
+              ("<C-f12>" . (lambda () (interactive)
+                           (switch-to-buffer (find-file-noselect my:private-config-file-path))))
               ("<C-M-f12>" . dotspacemacs/sync-configuration-layers)
 
               ;; version管理
