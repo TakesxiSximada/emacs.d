@@ -772,13 +772,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; (switch-to-buffer "*Org Agenda*")
   ;; (spacemacs/toggle-maximize-buffer)
 
-  ;;
-  (defun web-mode-hook ()
-    "Hooks for Web mode."
+  ;; web-mode
+  (use-package web-mode
+    :config
+    (setq web-mode-attr-indent-offset 2)
+    (setq web-mode-attr-value-indent-offset 2)
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
-    (setq web-mode-code-indent-offset 2))
-  (add-hook 'web-mode-hook 'web-mode-hook)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-sql-indent-offset 2))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
