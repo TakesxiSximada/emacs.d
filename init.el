@@ -174,7 +174,7 @@ values."
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'emacs-lis-mode
+   dotspacemacs-scratch-mode 'emacs-lisp-mode  ;; DON'T WORK
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -737,7 +737,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                            (switch-to-buffer (find-file-noselect "~/Dropbox/tasks/sximada.org"))))
               ("<f11>" . (lambda ()
                            (interactive)
-                           (switch-to-buffer (get-buffer-create "*scratch*"))))
+                           (switch-to-buffer (get-buffer-create "*scratch*"))
+                           (emacs-lisp-mode)))
               ("<f12>" . (lambda () (interactive)
                            (switch-to-buffer (find-file-noselect "~/.spacemacs.d/init.el"))))
               ("<C-f12>" . (lambda () (interactive)
