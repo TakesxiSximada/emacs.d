@@ -784,6 +784,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (setq web-mode-code-indent-offset 2)
     (setq web-mode-sql-indent-offset 2))
 
+  (use-package restclient
+    :config
+    (bind-keys :map restclient-mode-map
+               ("C-c C-e" . http-edit-body-indirect)))
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
