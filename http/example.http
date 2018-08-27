@@ -1,0 +1,8 @@
+GET http://example.com
+Content-Type: application/json
+
+{
+    "foo": bar
+}
+
+
