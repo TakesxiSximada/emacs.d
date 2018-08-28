@@ -4,8 +4,13 @@
   (setq user-emacs-directory (file-name-directory user-init-file)))
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq user-secrets-file "~/.credentials/secrets.el")
+
 (when (file-exists-p custom-file)
   (load custom-file))
+
+(when (file-exists-p user-secrets-file)
+  (load user-secrets-file))
 
 (tool-bar-mode 0)
 (menu-bar-mode 0)
