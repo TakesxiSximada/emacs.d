@@ -74,12 +74,25 @@ function ge-start () {
     fi
 
     echo $init_el
-    nohup emacs -q --no-site-file --no-splash --no-x-resources -f package-initialize --debug-init --load $init_el $option &
+    if [ "-nw" = $option ]
+    then
+	emacs -q --no-site-file --no-splash --no-x-resources -f package-initialize --debug-init --load $init_el $option
+    else
+	nohup emacs -q --no-site-file --no-splash --no-x-resources -f package-initialize --debug-init --load $init_el $option &
+    fi
 }
 
+
 function ge-plain () {
-    nohup emacs -q --no-site-file --no-splash --no-x-resources -f package-initialize --debug-init $1 &
+    option="$1"
+    if [ "-nw" = $option ]
+    then
+	emacs -q --no-site-file --no-splash --no-x-resources -f package-initialize --debug-init $option
+    else
+	nohup emacs -q --no-site-file --no-splash --no-x-resources -f package-initialize --debug-init $option &
+    fi
 }
+
 
 function ge () {
     subcmd="$1"
@@ -87,9 +100,10 @@ function ge () {
     case "$subcmd" in
 	"current" ) ge-current $2;;
 	"set" ) ge-set $2 $3;;
+	"list" ) ge-list;;
 	"g" ) ge-start $2;;
 	"c" ) ge-start $2 "-nw";;
-	"gq" ) ge-plain "";;
+	"q" ) ge-plain "";;
 	"cq" ) ge-plain "-nw";;
 	"" ) ge-start $2;;
 	"*" ) echo "Invalid sub command: $subcmd: current, set, g, c, gq, cq or blank ";;
