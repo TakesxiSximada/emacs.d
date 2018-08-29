@@ -70,6 +70,23 @@
 	     ("C-i" . company-complete-selection)
 	     ("C-M-i" . company-complete)))
 
+
+(use-package alert
+  :commands (alert)
+  :init
+  (setq alert-default-style 'notifier))
+
+
+(use-package slack
+  :ensure t :defer t
+  :commands (slack-start)
+  :init
+  ;; (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
+  (setq slack-prefer-current-team t)
+  :config
+  (mapc (lambda (args) (apply 'slack-register-team args)) our-secrets-slack-team-alist))
+
+
 ;; custom
 (load-file "/srv/mastodon/mast.el")
 (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)
