@@ -90,6 +90,27 @@
 (setq org-clock-out-remove-zero-time-clocks t)
 (setq org-clock-clocked-in-display 'frame-title)
 
+(defun our-org-clock-out-and-save-when-exit ()
+  "Save buffers and stop clocking when kill emacs.
+
+See: https://qiita.com/takaxp/items/6b2d1e05e7ce4517274d
+"
+  (when (org-clocking-p)
+    (org-clock-out)
+    (save-some-buffers t)))
+(add-hook 'kill-emacs-hook #'our-org-clock-out-and-save-when-exit)
+
+(setq org-todo-keywords
+      '((sequence
+         "PROBREM(p)" "TODO(t)" "WIP(w)" "PENDING(e)" "REVIEW(r)" "QUESTION(q)" "FEEDBACK(f)" "|"
+         "DONE(x)" "CANCEL(c)" "RESOLVED(o)" "KEEP(k)" )))
+(setq org-global-properties
+      (quote (("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89")
+              ("STYLE_ALL" . "habit"))))
+
+
+
+
 ;; custom
 (load-file "/srv/mastodon/mast.el")
 (add-hook 'before-save-hook #'delete-trailing-whitespace nil t)
