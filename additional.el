@@ -86,6 +86,7 @@
   :config
   (mapc (lambda (args) (apply 'slack-register-team args)) our-secrets-slack-team-alist))
 
+(setq org-clock-out-remove-zero-time-clocks t)
 
 ;; custom
 (load-file "/srv/mastodon/mast.el")
