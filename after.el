@@ -6,6 +6,7 @@
       (bind-key ch sym)
     (message (format "Need function: %s" sym))))
 
+
 (defun our-toggle-open-init-file ()
   (interactive)
   (let ((name (buffer-file-name)))
@@ -16,6 +17,18 @@
 	  ((equal name nil) (find-file user-init-file))
 	  ((equal "" nil) (find-file user-init-file))
 	  (t (find-file user-init-file)))))
+
+
+(defun our-org-next-file ()
+  (if (member (buffer-file-name) our-org-files)
+      (nth (% (+ (-elem-index (buffer-file-name) our-org-files) 1)
+	      (length our-org-files)) our-org-files)
+    (car our-org-files)))
+
+
+(defun our-toggle-open-org-file ()
+  (interactive)
+  (find-file (our-org-next-file)))
 
 
 (bind-keys* ("¥" . "\\")
@@ -51,7 +64,7 @@
             ("M-_" . async-shell-command)
 	    ;; other
 	    ("s-t" . (lambda () (interactive) (message "Oops!")))
-            ("<f11>" . (lambda () (interactive) (find-file "~/Dropbox/tasks/sximada.org")))
+            ("<f11>" . our-toggle-open-org-file)
 	    ("<f12>" . our-toggle-open-init-file))
 
 ;; buffer
