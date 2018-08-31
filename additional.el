@@ -126,3 +126,10 @@ See: https://qiita.com/takaxp/items/6b2d1e05e7ce4517274d
 (defun our-async-exec (cmd cwd &optional buffer)
   (let ((default-directory cwd))
     (async-shell-command cmd (or buffer (our-create-buffer-name cmd)))))
+
+
+(defun our-get-buffer-create (&optional name)
+  (interactive "sBuffer Name: ")
+  (let ((buf-name (format "*%s*" name)))
+    (get-buffer-create buf-name)
+    (message (format "Created a buffer: %s" buf-name))))
