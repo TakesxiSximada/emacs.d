@@ -56,8 +56,8 @@
 
 (use-package company :ensure t :defer nil
   :init
-  (setq company-idle-delay 0) ; デフォルトは0.5
-  (setq company-minimum-prefix-length 2) ; デフォルトは4
+  (setq company-idle-delay 0) ; default = 0.5
+  (setq company-minimum-prefix-length 2) ; default = 4
   (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
   :bind
   ("C-M-i" . company-complete)
