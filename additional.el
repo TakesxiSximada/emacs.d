@@ -42,7 +42,7 @@
 (use-package spacemacs-theme :ensure t :defer t
   :no-require t
   :init
-  (load-theme 'leuven t))
+  (load-theme 'tsdh-dark t))
 
 
 (use-package google-this :ensure t :defer t
