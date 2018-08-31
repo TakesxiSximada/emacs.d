@@ -102,7 +102,8 @@ See: https://qiita.com/takaxp/items/6b2d1e05e7ce4517274d
 
 (setq org-todo-keywords
       '((sequence
-         "PROBREM(p)" "TODO(t)" "WIP(w)" "PENDING(e)" "REVIEW(r)" "QUESTION(q)" "FEEDBACK(f)" "|"
+         "PROPOSAL(P)" "PROBREM(p)" "TODO(t)" "WIP(w)" "PENDING(e)" "REVIEW(r)"
+	 "QUESTION(q)" "FEEDBACK(f)" "|"
          "DONE(x)" "CANCEL(c)" "RESOLVED(o)" "KEEP(k)" )))
 (setq org-global-properties
       (quote (("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89")
