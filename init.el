@@ -80,6 +80,32 @@
 ;; elenv
 ;; -----
 (setq elenv-root-directory "/srv/")
+(add-hook 'elenv-initialize-package-after-hook
+	  (lambda ()
+	     (use-package powerline :ensure t :defer t)
+	     (use-package helm :ensure t :defer t
+	       :init
+	       (require 'helm-config)
+	       :config
+	       (helm-mode t)
+	       (dired-async-mode t)
+	       (setq helm-M-x-fuzzy-match t)
+	       (bind-keys :map helm-map
+			  ("<tab>" . helm-execute-persistent-action)
+			  ("C-i" . helm-execute-persistent-action)
+			  ("C-z" . helm-select-action)))
+	     (use-package helm-ag :ensure t :defer t
+	       :init
+	       (setq helm-ag-use-agignore t))
+	     (use-package elscreen :ensure t
+	       :init
+	       (setq elscreen-display-tab nil)
+	       (setq elscreen-tab-display-kill-screen nil)
+	       (setq elscreen-tab-display-control nil)
+	       (elscreen-start)
+	       (elscreen-create))
+	     (use-package magit :ensure t :defer t)))
+
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
 (toggle-frame-fullscreen)
 
