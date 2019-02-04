@@ -141,7 +141,7 @@
 	    ("s-t" . (lambda () (interactive) (message "Oops!")))
             ("<f9>" . google-this)
             ("<f11>" . our-toggle-open-org-file)
-	    ("<f12>" . our-toggle-open-init-file))
+	    ("<f12>" . elenv-switch-user-init-file))
 
 ;; buffer
 (our-bind-key "C-x C-b" 'helm-mini)
