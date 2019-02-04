@@ -110,7 +110,9 @@
 (require 'our)
 (require 'our-circleci)
 (require 'our-brew)
+(require 'our-org)
 
+(add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
 ;; ----------
 ;; keybinding
@@ -161,8 +163,9 @@
 	    ;; other
 	    ("s-t" . (lambda () (interactive) (message "Oops!")))
             ("<f9>" . google-this)
-            ("<f11>" . our-toggle-open-org-file)
-	    ("<f12>" . elenv-switch-user-init-file))
+	    ("<f12>" . elenv-switch-user-init-file)
+	    ("<C-f12>" . our-org-open))
+
 
 ;; buffer
 (our-bind-key "C-x C-b" 'helm-mini)
