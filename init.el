@@ -23,7 +23,6 @@
       (lambda ()
 	(switch-to-buffer "*Messages*")))
 
-
 ;;--------
 ;; package
 ;;--------
@@ -38,12 +37,70 @@
 
 (load-file "~/.emacs.d/env.el")
 
+;; ---
+;; our
+;; ---
+(defun our-bind-key (ch sym)
+  (if (fboundp sym)
+      (bind-key ch sym)
+    (message (format "Need function: %s" sym))))
+
+
+;; --------------
+;; our-async-exec
+;; --------------
+(defvar our-async-exec-cmd-history nil)
+(defvar our-async-exec-cwd-history nil)
+
+(defun our-create-buffer-name (cmd &optional cwd)
+  (format "`%s`%s"
+	  (let ((elms (split-string cmd)))
+	    (mapconcat 'identity
+		       (append (last (split-string (car elms) "/"))
+			       (cdr elms))
+		       " "))
+	  (if (and cwd (> (length cwd) 0)) (format ": %s" cwd) "")))
+
+
+(defun our-async-exec (cmd cwd &optional buffer)
+  (let ((default-directory cwd))
+    (async-shell-command cmd (or buffer (our-create-buffer-name cmd cwd)))))
+
+
+(defun our-async-exec-interactive (cmd &optional cwd buffer)
+  (interactive
+   (list (read-string "Command: "
+		      ""
+		      'our-async-exec-cmd-history
+		      "")
+	 (read-string "Directory: "
+		      default-directory
+		      'our-async-exec-cwd-history
+		      default-directory)))
+  (our-async-exec cmd cwd buffer))
+
+
+(defun our-get-buffer-create (&optional name)
+  (interactive "sBuffer Name: ")
+  (let ((buf-name (format "*%s*" name)))
+    (get-buffer-create buf-name)
+    (message (format "Created a buffer: %s" buf-name))))
+
+
 ;; -----
 ;; elenv
 ;; -----
 (setq elenv-root-directory "/srv/")
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
 (toggle-frame-fullscreen)
+
+
+;; -----------
+;; our-package
+;; -----------
+(add-to-list 'load-path "/srv/sallies/nvm.el/")
+(add-to-list 'load-path "/srv/sallies/our.el/")
+
 
 ;; ----------
 ;; keybinding
@@ -54,9 +111,9 @@
 (require 'windmove)
 ;; (require 'window)
 
-(require 'helm-ag)
 (require 'elscreen)
-
+(require 'helm-ag)
+(require 'magit)
 
 (bind-keys* ("¥" . "\\")
 	    ("C-h" . backward-delete-char-untabify)
