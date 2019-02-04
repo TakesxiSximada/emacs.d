@@ -107,6 +107,10 @@
 (add-to-list 'load-path "/srv/sallies/nvm.el/")
 (add-to-list 'load-path "/srv/sallies/our.el/")
 
+(require 'our)
+(require 'our-circleci)
+(require 'our-brew)
+
 
 ;; ----------
 ;; keybinding
