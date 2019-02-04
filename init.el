@@ -1,4 +1,115 @@
+;; ----------------
+;; toolbarの設定
+;; ----------------
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+
+;;------------------------
+;; fonts
+;;------------------------
+(set-face-attribute 'default nil :family "Menlo" :height 120)
+(set-fontset-font (frame-parameter nil 'font)
+                  'japanese-jisx0208
+                  (font-spec :family "Hiragino Kaku Gothic ProN"))
+
+(add-to-list 'face-font-rescale-alist
+             '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
+
+;; --------------
+;; 起動画面の設定
+;; --------------
+(setq initial-buffer-choice
+      (lambda ()
+	(switch-to-buffer "*Messages*")))
+
+
+;;--------
+;; package
+;;--------
+;; (require 'package)
+;; (setq package-archives
+;;       '(("gnu" . "http://elpa.gnu.org/packages/")
+;;         ("melpa" . "http://melpa.org/packages/")
+;; 	("org" . "http://orgmode.org/elpa/")
+;; 	;; ("marmalade" . "http://marmalade-repo.org/packages/")
+;; 	("melpa-stable" . "http://stable.melpa.org/packages/")
+;; 	))
+
 (load-file "~/.emacs.d/env.el")
+
+;; -----
+;; elenv
+;; -----
 (setq elenv-root-directory "/srv/")
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
 (toggle-frame-fullscreen)
+
+;; ----------
+;; keybinding
+;; ----------
+(require 'simple)
+(require 'macros)
+(require 'newcomment)
+(require 'windmove)
+;; (require 'window)
+
+(require 'helm-ag)
+(require 'elscreen)
+
+
+(bind-keys* ("¥" . "\\")
+	    ("C-h" . backward-delete-char-untabify)
+	    ("C-x g" . helm-do-ag)
+	    ("C-x C-g" . goto-line)
+	    ("C-x C-p" . list-processes)
+	    ("C-c C-w" . comment-or-uncomment-region)
+
+            ;; keyboard macro
+            ("<f1>" . start-kbd-macro)
+            ("<f2>" . end-kbd-macro)
+            ("<f3>" . call-last-kbd-macro)
+            ("<f4>" . name-last-kbd-macro)
+            ("<f5>" . insert-kbd-macro)
+
+	    ;; buffers
+	    ("C-<backspace>" . kill-buffer)
+
+	    ;; panes and screen
+	    ("C-t C-t" . elscreen-previous)
+	    ("C-t h" . windmove-left)
+	    ("C-t j" . windmove-down)
+	    ("C-t k" . windmove-up)
+	    ("C-t l" . windmove-right)
+
+            ;; panes size
+            ("s-<left>" . shrink-window-horizontally)
+            ("s-<down>" . enlarge-window)
+            ("s-<up>" . shrink-window)
+            ("s-<right>" . enlarge-window-horizontally)
+
+	    ;; command
+            ("M-_" . our-async-exec-interactive)
+            ("C-M-_" . async-shell-command)
+	    ;; other
+	    ("s-t" . (lambda () (interactive) (message "Oops!")))
+            ("<f9>" . google-this)
+            ("<f11>" . our-toggle-open-org-file)
+	    ("<f12>" . our-toggle-open-init-file))
+
+;; buffer
+(our-bind-key "C-x C-b" 'helm-mini)
+(our-bind-key "C-x b" 'helm-buffers-list)
+(our-bind-key "C-x C-f" 'helm-find-files)
+(our-bind-key "M-x" 'helm-M-x)
+
+;; git
+(our-bind-key "C-x C-v" 'magit-status)
+
+;; elscreen
+;; (bind-key "C-t C-t" 'elscreen-previousch)
+;; (our-bind-key "C-t C-t" 'elscreen-previous)
+;; (our-bind-key "C-t C-n" 'elscreen-next)
+;; (our-bind-key "C-t C-p" 'elscreen-previous)
+;; (our-bind-key "C-t C-l" 'helm-elscreen)
+;; (our-bind-key "C-t C-w" 'elscreen-kill)
