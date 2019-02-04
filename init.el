@@ -26,15 +26,6 @@
 
 (load-file "~/.emacs.d/env.el")
 
-;; ---
-;; our
-;; ---
-(defun our-bind-key (ch sym)
-  (if (fboundp sym)
-      (bind-key ch sym)
-    (message (format "Need function: %s" sym))))
-
-
 ;; --------------
 ;; our-async-exec
 ;; --------------
