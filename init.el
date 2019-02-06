@@ -176,6 +176,43 @@
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
+
+;; --------
+;; org-mode
+;; --------
+(defun our-org-mode-setup ()
+  (org-indent-mode)  ;; org-modeの表示をインデントモードにする
+  (org-display-inline-images)  ;; 画像表示
+  (setq org-src-fontify-natively t)
+
+  (setq org-todo-keywords
+      '((sequence
+         "TODO(t)"
+	 "WIP(w)"
+	 "PENDING(e)"
+	 "REVIEW(r)"
+	 "PROPOSAL(P)"
+	 "PROBREM(p)"
+	 "QUESTION(q)"
+	 "RESEARCH(R)"
+	 "FEEDBACK(f)"
+	 "EPIC(g)"
+	 "|"
+         "DONE(x)"
+	 "CANCEL(c)"
+	 "RESOLVED(o)"
+	 "KEEP(k)"
+	 "DOC(d)"
+	 "FAQ(f)"
+	 "SPEC(s)"
+	 "TIPS(t)")))
+
+  (setq org-global-properties
+	(quote (("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89")
+		("STYLE_ALL" . "habit")))))
+
+(add-hook 'org-mode-hook 'our-org-mode-setup)
+
 ;; ----------
 ;; keybinding
 ;; ----------
