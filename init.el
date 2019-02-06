@@ -59,8 +59,8 @@
 	  (if (and cwd (> (length cwd) 0)) (format ": %s" cwd) "")))
 
 
-(defun our-async-exec (cmd cwd &optional buffer)
-  (let ((default-directory cwd))
+(defun our-async-exec (cmd &optional cwd buffer)
+  (let ((default-directory (or cwd default-directory)))
     (async-shell-command cmd (or buffer (our-create-buffer-name cmd cwd)))))
 
 
