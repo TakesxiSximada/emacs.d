@@ -198,6 +198,7 @@
 	 "FEEDBACK(f)"
 	 "EPIC(g)"
 	 "|"
+         "WHY(W)"
          "DONE(x)"
 	 "CANCEL(c)"
 	 "RESOLVED(o)"
