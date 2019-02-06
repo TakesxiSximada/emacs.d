@@ -152,6 +152,11 @@
 		("C-s" . company-filter-candidates)
 		("C-i" . company-complete-selection)
 		("C-M-i" . company-complete)))
+
+   (use-package spacemacs-theme :ensure t :defer t
+     :no-require t
+     :init
+     (load-theme 'tsdh-dark t))
    ))
 
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
