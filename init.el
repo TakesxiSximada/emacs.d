@@ -88,31 +88,72 @@
 ;; elenv
 ;; -----
 (setq elenv-root-directory "/srv/")
-(add-hook 'elenv-initialize-package-after-hook
-	  (lambda ()
-	     (use-package powerline :ensure t :defer t)
-	     (use-package helm :ensure t :defer t
-	       :init
-	       (require 'helm-config)
-	       :config
-	       (helm-mode t)
-	       (dired-async-mode t)
-	       (setq helm-M-x-fuzzy-match t)
-	       (bind-keys :map helm-map
-			  ("<tab>" . helm-execute-persistent-action)
-			  ("C-i" . helm-execute-persistent-action)
-			  ("C-z" . helm-select-action)))
-	     (use-package helm-ag :ensure t :defer t
-	       :init
-	       (setq helm-ag-use-agignore t))
-	     (use-package elscreen :ensure t
-	       :init
-	       (setq elscreen-display-tab nil)
-	       (setq elscreen-tab-display-kill-screen nil)
-	       (setq elscreen-tab-display-control nil)
-	       (elscreen-start)
-	       (elscreen-create))
-	     (use-package magit :ensure t :defer t)))
+(add-hook
+ 'elenv-initialize-package-after-hook
+ (lambda ()
+   (require 'use-package)
+
+   (use-package powerline :ensure t :defer t)
+
+   (use-package exec-path-from-shell :ensure t :defer t
+     :init
+     (when (memq window-system '(mac ns x))
+       (exec-path-from-shell-initialize)))
+
+   (use-package helm :ensure t :defer t
+     :init
+     (require 'helm-config)
+     :config
+     (helm-mode t)
+     (dired-async-mode t)
+     (setq helm-M-x-fuzzy-match t)
+     (bind-keys :map helm-map
+		("<tab>" . helm-execute-persistent-action)
+		("C-i" . helm-execute-persistent-action)
+		("C-z" . helm-select-action)))
+   (use-package helm-ag :ensure t :defer t
+     :init
+     (setq helm-ag-use-agignore t))
+   (use-package elscreen :ensure t
+     :init
+     (setq elscreen-display-tab nil)
+     (setq elscreen-tab-display-kill-screen nil)
+     (setq elscreen-tab-display-control nil)
+     (elscreen-start)
+     (elscreen-create))
+   (use-package magit :ensure t :defer t)
+
+   (use-package async-await :ensure t :defer t)
+   (use-package json :ensure t :defer t)
+   (use-package request :ensure t :defer t)
+   (use-package async-await :ensure t :defer t)
+   (use-package gist :ensure t :defer t)
+   (use-package helm-themes :ensure t :defer t)
+   (use-package http :ensure t :defer t)
+   (use-package markdown-mode :ensure t)
+   (use-package quickrun :ensure t :defer t)
+   (use-package restclient :ensure t :defer t
+     :config
+     (add-to-list 'restclient-content-type-modes '("text/csv" . http-mode)))
+   (use-package websocket :ensure t :defer t)
+   (use-package yaml-mode :ensure t :defer t)
+   (use-package dockerfile-mode :ensure t :defer t)
+   (use-package company :ensure t :defer nil
+     :init
+     (setq company-idle-delay 0) ; default = 0.5
+     (setq company-minimum-prefix-length 2) ; default = 4
+     (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
+     :bind
+     ("C-M-i" . company-complete)
+     :config
+     (global-company-mode 1)
+     (bind-keys :map company-active-map
+		("C-n" . company-select-next)
+		("C-p" . company-select-previous)
+		("C-s" . company-filter-candidates)
+		("C-i" . company-complete-selection)
+		("C-M-i" . company-complete)))
+   ))
 
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
 (toggle-frame-fullscreen)
