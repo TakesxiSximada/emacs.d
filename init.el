@@ -26,6 +26,18 @@
 
 (load-file "~/.emacs.d/env.el")
 
+;; --------
+;; 環境変数
+;; --------
+
+(setenv "LDFLAGS" "-L/usr/local/opt/libffi/lib -L/usr/local/opt/texinfo/lib -L/usr/local/opt/libxml2/lib -L/usr/local/opt/texinfo/lib -L/usr/local/opt/mysql@5.7/lib -L/usr/local/opt/openssl/lib")
+
+(setenv "CPPFLAGS" "-I/usr/local/opt/libxml2/include -I/usr/local/opt/mysql@5.7/include -I/usr/local/opt/openssl/include")
+
+(setenv "PKG_CONFIG_PATH" "/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/mysql@5.7/lib/pkgconfig:/usr/local/opt/openssl/lib/pkgconfig")
+
+
+
 ;; --------------
 ;; our-async-exec
 ;; --------------
