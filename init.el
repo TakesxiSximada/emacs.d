@@ -83,7 +83,6 @@
     (get-buffer-create buf-name)
     (message (format "Created a buffer: %s" buf-name))))
 
-
 ;; -----
 ;; elenv
 ;; -----
