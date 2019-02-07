@@ -173,6 +173,7 @@
 (require 'our-brew)
 (require 'our-org)
 (require 'our-pyvenv)
+(require 'our-magit)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
