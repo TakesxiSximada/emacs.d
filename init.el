@@ -44,7 +44,6 @@
 				 "-L/usr/local/opt/openssl/lib"
 				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/texinfo/lib"
-				 "-L/usr/local/opt/texinfo/lib"
 				 ) " "))
 
 (setenv "CPPFLAGS" (string-join '(
