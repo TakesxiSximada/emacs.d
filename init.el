@@ -208,6 +208,9 @@
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
+(load-file "~/.emacs.d/env/mastodon.el")
+(load-file "~/.emacs.d/env/discord.el")
+
 ;; -----
 ;; redis
 ;; -----
