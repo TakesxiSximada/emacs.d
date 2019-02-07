@@ -169,11 +169,11 @@
 (add-to-list 'load-path "/srv/sallies/our.el/")
 
 (require 'our)
-(require 'our-circleci)
 (require 'our-brew)
+(require 'our-circleci)
+(require 'our-magit)
 (require 'our-org)
 (require 'our-pyvenv)
-(require 'our-magit)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
