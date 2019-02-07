@@ -1,3 +1,9 @@
+;; ------------
+;; localeの設定
+;; ------------
+(setenv "LANG" "ja_JP.UTF-8")
+(set-buffer-file-coding-system 'utf-8-unix)
+
 ;; ----------------
 ;; toolbarの設定
 ;; ----------------
