@@ -22,6 +22,12 @@
 (add-to-list 'face-font-rescale-alist
              '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
 
+;; -----------------
+;; backup fileの設定
+;; -----------------
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
 ;; --------------
 ;; 起動画面の設定
 ;; --------------
