@@ -202,6 +202,25 @@
 (unless (executable-find "java") (our-async-exec "brew cask install java"))
 (unless (executable-find "clj") (our-async-exec "brew install clojure"))
 
+(unless (executable-find "lein") (our-async-exec "brew install leiningen"))
+;; ------------------- leiningen install log -----------------------------------------------
+;; ==> Downloading https://homebrew.bintray.com/bottles/leiningen-2.8.3.mojave.bottle.tar.gz
+;; ######################################################################## 100.0%
+;; ==> Pouring leiningen-2.8.3.mojave.bottle.tar.gz
+;; ==> Caveats
+;; Dependencies will be installed to:
+;;   $HOME/.m2/repository
+;; To play around with Clojure run `lein repl` or `lein help`.
+
+;; Bash completion has been installed to:
+;;   /usr/local/etc/bash_completion.d
+
+;; zsh completions have been installed to:
+;;   /usr/local/share/zsh/site-functions
+;; ==> Summary
+;; 🍺  /usr/local/Cellar/leiningen/2.8.3: 9 files, 13MB
+
+
 (use-package rainbow-delimiters :ensure t :defer t)
 (use-package paredit :ensure t :defer t
   :config
