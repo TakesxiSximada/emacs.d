@@ -37,7 +37,6 @@
 (setenv "PKG_CONFIG_PATH" "/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/mysql@5.7/lib/pkgconfig:/usr/local/opt/openssl/lib/pkgconfig")
 
 
-
 ;; ------------
 ;; Yes/Noの設定
 ;; ------------
@@ -173,6 +172,7 @@
 (require 'our-circleci)
 (require 'our-brew)
 (require 'our-org)
+(require 'our-pyvenv)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
