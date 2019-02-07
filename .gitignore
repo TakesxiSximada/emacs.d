@@ -3,3 +3,4 @@ env.el
 recentf
 elpa
 abbrev_defs
+/.python-environments
