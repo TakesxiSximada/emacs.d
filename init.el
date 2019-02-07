@@ -180,7 +180,6 @@
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
 (toggle-frame-fullscreen)
 
-
 ;; -----------
 ;; our-package
 ;; -----------
@@ -195,6 +194,40 @@
 (require 'our-pyvenv)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
+
+
+;; -------
+;; Clojure
+;; -------
+(unless (executable-find "java") (our-async-exec "brew cask install java"))
+(unless (executable-find "clj") (our-async-exec "brew install clojure"))
+
+(use-package rainbow-delimiters :ensure t :defer t)
+(use-package paredit :ensure t :defer t
+  :config
+  (bind-keys :map paredit-mode-map
+             ("C-h" . paredit-backward-delete)))
+(use-package clojure-mode :ensure t :defer t)
+(use-package clj-refactor :ensure t :defer t
+  :diminish clj-refactor-mode
+  :config (cljr-add-keybindings-with-prefix "C-c j"))
+(use-package cider :ensure t :defer t
+  :init
+  (add-hook 'cider-mode-hook #'clj-refactor-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  :diminish subword-mode
+  :config
+  (setq nrepl-log-messages t
+        cider-repl-display-in-current-window t
+        cider-repl-use-clojure-font-lock t
+        cider-prompt-save-file-on-load 'always-save
+        cider-font-lock-dynamically '(macro core function var)
+        cider-overlays-use-font-lock t)
+  (cider-repl-toggle-pretty-printing))
 
 
 ;; --------
