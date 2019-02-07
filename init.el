@@ -195,6 +195,11 @@
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
+;; -----
+;; redis
+;; -----
+(unless (executable-find "redis-cli") (our-async-exec "brew install redis"))
+
 ;; ------------
 ;; chromedriver
 ;; ------------
