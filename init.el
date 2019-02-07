@@ -210,6 +210,42 @@
 ;; ------------
 (unless (executable-find "chromedriver") (our-async-exec "brew cask install chromedriver"))
 
+;; ------
+;; python
+;; ------
+(use-package py-isort :ensure t :defer t
+  :init
+  (add-hook 'before-save-hook 'py-isort-before-save))
+(use-package jedi :ensure t :defer t)
+
+(use-package elpy :ensure t
+  :commands elpy-enable
+  :init
+  (require 'jedi)
+  (defvar jedi:goto-stack '())
+  (elpy-enable)
+  (defun jedi:jump-to-definition ()
+    (interactive)
+    (add-to-list 'jedi:goto-stack
+                 (list (buffer-name) (point)))
+    (jedi:goto-definition))
+
+  (defun jedi:jump-back ()
+    (interactive)
+    (let ((p (pop jedi:goto-stack)))
+      (if p (progn
+              (switch-to-buffer (nth 0 p))
+              (goto-char (nth 1 p))))))
+
+  :bind (:map elpy-mode-map
+	      ("M-." . jedi:jump-to-definition)
+	      ("M-," . jedi:jump-back)
+	      ("C-c d" . jedi:show-doc)
+	      ("C-<tab>" . jedi:complete)))
+;; (jedi:install-server)
+(jedi:setup)
+(elpy-enable)
+
 ;; -------
 ;; clojure
 ;; -------
