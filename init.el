@@ -211,7 +211,7 @@
 (unless (executable-find "chromedriver") (our-async-exec "brew cask install chromedriver"))
 
 ;; -------
-;; Clojure
+;; clojure
 ;; -------
 (unless (executable-find "java") (our-async-exec "brew cask install java"))
 (unless (executable-find "clj") (our-async-exec "brew install clojure"))
