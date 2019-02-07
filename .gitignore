@@ -1,6 +1,7 @@
-env.el
 *~
-recentf
-elpa
-abbrev_defs
 /.python-environments
+/abbrev_defs
+/ac-comphist.dat
+/elpa
+/env.el
+/recentf
