@@ -195,6 +195,10 @@
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
+;; ------------
+;; chromedriver
+;; ------------
+(unless (executable-find "chromedriver") (our-async-exec "brew cask install chromedriver"))
 
 ;; -------
 ;; Clojure
