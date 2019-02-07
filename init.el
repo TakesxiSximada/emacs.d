@@ -200,6 +200,7 @@
 (require 'our)
 (require 'our-brew)
 (require 'our-circleci)
+(require 'our-discord)
 (require 'our-magit)
 (require 'our-mastodon)
 (require 'our-org)
