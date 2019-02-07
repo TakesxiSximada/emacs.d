@@ -29,13 +29,32 @@
 ;; --------
 ;; 環境変数
 ;; --------
+(require 'subr-x)
 
-(setenv "LDFLAGS" "-L/usr/local/opt/libffi/lib -L/usr/local/opt/texinfo/lib -L/usr/local/opt/libxml2/lib -L/usr/local/opt/texinfo/lib -L/usr/local/opt/mysql@5.7/lib -L/usr/local/opt/openssl/lib")
+(setenv "LDFLAGS" (string-join '(
+				 "-L/usr/local/opt/libffi/lib"
+				 "-L/usr/local/opt/libxml2/lib"
+				 "-L/usr/local/opt/mysql@5.7/lib"
+				 "-L/usr/local/opt/openssl/lib"
+				 "-L/usr/local/opt/readline/lib"
+				 "-L/usr/local/opt/texinfo/lib"
+				 "-L/usr/local/opt/texinfo/lib"
+				 ) " "))
 
-(setenv "CPPFLAGS" "-I/usr/local/opt/libxml2/include -I/usr/local/opt/mysql@5.7/include -I/usr/local/opt/openssl/include")
+(setenv "CPPFLAGS" (string-join '(
+				  "-I/usr/local/opt/libxml2/include"
+				  "-I/usr/local/opt/mysql@5.7/include"
+				  "-I/usr/local/opt/openssl/include"
+				  "-I/usr/local/opt/readline/include"
+				  ) " "))
 
-(setenv "PKG_CONFIG_PATH" "/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/libxml2/lib/pkgconfig:/usr/local/opt/mysql@5.7/lib/pkgconfig:/usr/local/opt/openssl/lib/pkgconfig")
-
+(setenv "PKG_CONFIG_PATH" (string-join '(
+					 "/usr/local/opt/libffi/lib/pkgconfig"
+					 "/usr/local/opt/libxml2/lib/pkgconfig"
+					 "/usr/local/opt/mysql@5.7/lib/pkgconfig"
+					 "/usr/local/opt/openssl/lib/pkgconfig"
+					 "/usr/local/opt/readline/lib/pkgconfig"
+					 ) ":"))
 
 ;; ------------
 ;; Yes/Noの設定
