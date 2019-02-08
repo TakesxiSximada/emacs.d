@@ -365,7 +365,7 @@
 (bind-keys* ("¥" . "\\")
 	    ("C-h" . backward-delete-char-untabify)
 	    ("C-x g" . helm-do-ag)
-	    ("C-x C-g" . goto-line)
+	    ("C-x C-g" . elenv-dired)
 	    ("C-x C-p" . list-processes)
 	    ("C-c C-w" . comment-or-uncomment-region)
 
@@ -418,11 +418,3 @@
 ;; (our-bind-key "C-t C-p" 'elscreen-previous)
 ;; (our-bind-key "C-t C-l" 'helm-elscreen)
 ;; (our-bind-key "C-t C-w" 'elscreen-kill)
-
-;; ---------------------------------------------------
-;; 既存bufferのdefault-directoryをelenv-root-dirに変更
-;; ---------------------------------------------------
-(mapc (lambda (name)
-	(with-current-buffer (get-buffer name)
-	  (setq default-directory elenv-root-dir)))
-      '("*Messages*" "*scratch*"))
