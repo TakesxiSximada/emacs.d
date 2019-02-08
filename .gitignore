@@ -2,8 +2,9 @@
 /.python-environments
 /abbrev_defs
 /ac-comphist.dat
-/elpa
+/elpa/
 /env.el
 /recentf
-/request
-/url
+/request/
+/url/
+/var/
