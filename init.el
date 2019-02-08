@@ -418,3 +418,11 @@
 ;; (our-bind-key "C-t C-p" 'elscreen-previous)
 ;; (our-bind-key "C-t C-l" 'helm-elscreen)
 ;; (our-bind-key "C-t C-w" 'elscreen-kill)
+
+;; ---------------------------------------------------
+;; 既存bufferのdefault-directoryをelenv-root-dirに変更
+;; ---------------------------------------------------
+(mapc (lambda (name)
+	(with-current-buffer (get-buffer name)
+	  (setq default-directory elenv-root-dir)))
+      '("*Messages*" "*scratch*"))
