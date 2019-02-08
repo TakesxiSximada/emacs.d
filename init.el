@@ -204,7 +204,6 @@
 (require 'our-magit)
 (require 'our-mastodon)
 (require 'our-org)
-(require 'our-pyvenv)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
@@ -224,6 +223,7 @@
 ;; ------
 ;; python
 ;; ------
+(use-package pyvenv :ensure t :defer t)
 (use-package py-isort :ensure t :defer t
   :init
   (add-hook 'before-save-hook 'py-isort-before-save))
@@ -256,6 +256,8 @@
 ;; (jedi:install-server)
 (jedi:setup)
 (elpy-enable)
+
+(require 'our-pyvenv)
 
 ;; -------
 ;; clojure
