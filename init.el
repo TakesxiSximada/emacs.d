@@ -207,8 +207,9 @@
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
-(load-file "~/.emacs.d/env/mastodon.el")
 (load-file "~/.emacs.d/env/discord.el")
+(load-file "~/.emacs.d/env/mastodon.el")
+(load-file "~/.emacs.d/env/wakatime.el")
 
 ;; -----
 ;; redis
@@ -282,7 +283,6 @@
 ;; ==> Summary
 ;; 🍺  /usr/local/Cellar/leiningen/2.8.3: 9 files, 13MB
 
-
 (use-package rainbow-delimiters :ensure t :defer t)
 (use-package paredit :ensure t :defer t
   :config
@@ -313,9 +313,13 @@
 ;; --------
 ;; wakatime
 ;; --------
+(require 'our-wakatime)
 (use-package wakatime-mode :ensure t :defer t
   :init
-  (global-wakatime-mode))
+  (our-wakatime-setup)
+  (if (and wakatime-api-key
+	   (file-exists-p wakatime-cli-path))
+      (global-wakatime-mode)))
 
 ;; --------
 ;; org-mode
