@@ -228,8 +228,7 @@
   :init
   (add-hook 'before-save-hook 'py-isort-before-save))
 (use-package jedi :ensure t :defer t)
-
-(use-package elpy :ensure t
+(use-package elpy :ensure t :defer t
   :commands elpy-enable
   :init
   (require 'jedi)
