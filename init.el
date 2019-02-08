@@ -310,6 +310,12 @@
         cider-overlays-use-font-lock t)
   (cider-repl-toggle-pretty-printing))
 
+;; --------
+;; wakatime
+;; --------
+(use-package wakatime-mode :ensure t :defer t
+  :init
+  (global-wakatime-mode))
 
 ;; --------
 ;; org-mode
