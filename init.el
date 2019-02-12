@@ -41,8 +41,19 @@
 ;; --------
 ;; 環境変数
 ;; --------
+(require 'cl)
 (require 'subr-x)
 
+(setq exec-path (delete-duplicates
+		 (append `(
+			   ,(expand-file-name "~/google-cloud-sdk/bin")
+			   "/usr/local/opt/texinfo/bin"
+			   "/usr/local/opt/libxml2/bin"
+			   )
+			 (split-string (getenv "PATH") ":")
+			 exec-path)))
+
+(setenv "PATH" (string-join exec-path ":"))
 (setenv "LDFLAGS" (string-join '(
 				 "-L/usr/local/opt/libffi/lib"
 				 "-L/usr/local/opt/libxml2/lib"
