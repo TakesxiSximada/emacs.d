@@ -209,7 +209,8 @@
 (add-to-list 'load-path "/srv/sallies/our.el/")
 
 (require 'our-brew)
-(require 'our-circleci)
+;; (require 'our-circleci)
+(require 'our-need-install)
 (require 'our-discord)
 (require 'our-freewifi)
 (require 'our-magit)
