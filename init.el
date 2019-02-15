@@ -208,13 +208,17 @@
 (add-to-list 'load-path "/srv/sallies/nvm.el/")
 (add-to-list 'load-path "/srv/sallies/our.el/")
 
-(require 'our)
 (require 'our-brew)
 (require 'our-circleci)
 (require 'our-discord)
+(require 'our-freewifi)
 (require 'our-magit)
 (require 'our-mastodon)
 (require 'our-org)
+(require 'our-pyvenv)
+(require 'our-simeji)
+(require 'our-wakatime)
+(require 'our)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
