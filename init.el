@@ -222,6 +222,11 @@
 (load-file "~/.emacs.d/env/mastodon.el")
 (load-file "~/.emacs.d/env/wakatime.el")
 
+;; -----------------
+;; external packages
+;; -----------------
+(use-package sudden-death :ensure t :defer t)
+
 ;; -----
 ;; redis
 ;; -----
