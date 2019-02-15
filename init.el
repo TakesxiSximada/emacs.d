@@ -1,3 +1,9 @@
+;; ---------
+;; load-path
+;; ---------
+(add-to-list 'load-path "/srv/sallies/nvm.el/")
+(add-to-list 'load-path "/srv/sallies/our.el/")
+
 ;; ------------
 ;; localeの設定
 ;; ------------
@@ -123,6 +129,7 @@
     (get-buffer-create buf-name)
     (message (format "Created a buffer: %s" buf-name))))
 
+
 ;; -----
 ;; elenv
 ;; -----
@@ -205,9 +212,6 @@
 ;; -----------
 ;; our-package
 ;; -----------
-(add-to-list 'load-path "/srv/sallies/nvm.el/")
-(add-to-list 'load-path "/srv/sallies/our.el/")
-
 (require 'our-brew)
 ;; (require 'our-circleci)
 (require 'our-need-install)
