@@ -213,7 +213,7 @@
 ;; our-package
 ;; -----------
 (require 'our-brew)
-;; (require 'our-circleci)
+(require 'our-circleci)
 (require 'our-need-install)
 (require 'our-discord)
 (require 'our-freewifi)
