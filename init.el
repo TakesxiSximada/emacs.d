@@ -83,7 +83,6 @@
 					 "/usr/local/opt/openssl/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
 					 ) ":"))
-
 ;; ------------
 ;; Yes/Noの設定
 ;; ------------
@@ -92,43 +91,7 @@
 ;; --------------
 ;; our-async-exec
 ;; --------------
-(defvar our-async-exec-cmd-history nil)
-(defvar our-async-exec-cwd-history nil)
-
-(defun our-create-buffer-name (cmd &optional cwd)
-  (format "`%s`%s"
-	  (let ((elms (split-string cmd)))
-	    (mapconcat 'identity
-		       (append (last (split-string (car elms) "/"))
-			       (cdr elms))
-		       " "))
-	  (if (and cwd (> (length cwd) 0)) (format ": %s" cwd) "")))
-
-
-(defun our-async-exec (cmd &optional cwd buffer)
-  (let ((default-directory (or cwd default-directory)))
-    (async-shell-command cmd (or buffer (our-create-buffer-name cmd cwd)))))
-
-
-(defun our-async-exec-interactive (cmd &optional cwd buffer)
-  (interactive
-   (list (read-string "Command: "
-		      ""
-		      'our-async-exec-cmd-history
-		      "")
-	 (read-string "Directory: "
-		      default-directory
-		      'our-async-exec-cwd-history
-		      default-directory)))
-  (our-async-exec cmd cwd buffer))
-
-
-(defun our-get-buffer-create (&optional name)
-  (interactive "sBuffer Name: ")
-  (let ((buf-name (format "*%s*" name)))
-    (get-buffer-create buf-name)
-    (message (format "Created a buffer: %s" buf-name))))
-
+(require 'our-async-exec)
 
 ;; -----
 ;; elenv
