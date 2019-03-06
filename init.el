@@ -53,14 +53,16 @@
 (setq exec-path (delete-duplicates
 		 (append `(
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
-			   "/usr/local/opt/texinfo/bin"
+			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/libxml2/bin"
+			   "/usr/local/opt/texinfo/bin"
 			   )
 			 (split-string (getenv "PATH") ":")
 			 exec-path)))
 
 (setenv "PATH" (string-join exec-path ":"))
 (setenv "LDFLAGS" (string-join '(
+				 "-L/usr/local/opt/gettext/lib"
 				 "-L/usr/local/opt/libffi/lib"
 				 "-L/usr/local/opt/libxml2/lib"
 				 "-L/usr/local/opt/mysql@5.7/lib"
@@ -70,6 +72,7 @@
 				 ) " "))
 
 (setenv "CPPFLAGS" (string-join '(
+				  "-I/usr/local/opt/gettext/include"
 				  "-I/usr/local/opt/libxml2/include"
 				  "-I/usr/local/opt/mysql@5.7/include"
 				  "-I/usr/local/opt/openssl/include"
