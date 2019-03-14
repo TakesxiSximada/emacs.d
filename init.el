@@ -55,6 +55,7 @@
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/libxml2/bin"
+			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
 			   )
 			 (split-string (getenv "PATH") ":")
@@ -68,6 +69,7 @@
 				 "-L/usr/local/opt/mysql@5.7/lib"
 				 "-L/usr/local/opt/openssl/lib"
 				 "-L/usr/local/opt/readline/lib"
+				 "-L/usr/local/opt/sqlite/lib"
 				 "-L/usr/local/opt/texinfo/lib"
 				 ) " "))
 
@@ -77,6 +79,7 @@
 				  "-I/usr/local/opt/mysql@5.7/include"
 				  "-I/usr/local/opt/openssl/include"
 				  "-I/usr/local/opt/readline/include"
+				  "-I/usr/local/opt/sqlite/include"
 				  ) " "))
 
 (setenv "PKG_CONFIG_PATH" (string-join '(
@@ -85,6 +88,7 @@
 					 "/usr/local/opt/mysql@5.7/lib/pkgconfig"
 					 "/usr/local/opt/openssl/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
+					 "/usr/local/opt/sqlite/lib/pkgconfig"
 					 ) ":"))
 ;; ------------
 ;; Yes/Noの設定
@@ -349,6 +353,21 @@
 		("STYLE_ALL" . "habit")))))
 
 (add-hook 'org-mode-hook 'our-org-mode-setup)
+
+;; ---------
+;; org-babel
+;; ---------
+(use-package ob-restclient :ensure t :defer t)
+(our-need-install "plantuml" "plantuml" :darwin "brew install plantuml")
+(setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.1/libexec/plantuml.jar")
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (dot . t)
+   (emacs-lisp . t)
+   (plantuml . t)
+   (restclient . t)
+   ))
 
 ;; ----------
 ;; keybinding
