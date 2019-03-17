@@ -358,6 +358,7 @@
 ;; org-babel
 ;; ---------
 (use-package ob-restclient :ensure t :defer t)
+(use-package org-preview-html :ensure t :defer t)
 (our-need-install "plantuml" "plantuml" :darwin "brew install plantuml")
 (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.1/libexec/plantuml.jar")
 (org-babel-do-load-languages
