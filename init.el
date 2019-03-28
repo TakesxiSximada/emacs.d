@@ -206,6 +206,7 @@
 ;; external packages
 ;; -----------------
 (use-package sudden-death :ensure t :defer t)
+(use-package dired-filter :ensure t :defer t)
 
 ;; -----
 ;; redis
