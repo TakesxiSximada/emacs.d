@@ -207,6 +207,7 @@
 ;; -----------------
 (use-package sudden-death :ensure t :defer t)
 (use-package dired-filter :ensure t :defer t)
+(use-package google-translate :ensure t :defer t)
 
 ;; -----
 ;; redis
@@ -407,6 +408,10 @@
 	    ("C-t j" . windmove-down)
 	    ("C-t k" . windmove-up)
 	    ("C-t l" . windmove-right)
+
+	    ;; translate
+	    ("C-t e" . google-translate-at-point-reverse)
+	    ("C-t C-e" . google-translate-at-point-reverse)
 
             ;; panes size
             ("s-<left>" . shrink-window-horizontally)
