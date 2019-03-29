@@ -53,6 +53,7 @@
 (setq exec-path (delete-duplicates
 		 (append `(
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
+			   "/Library/TeX/texbin"
 			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/libxml2/bin"
 			   "/usr/local/opt/sqlite/bin"
@@ -376,6 +377,8 @@
 ;; others
 ;; ----------
 (our-need-install "pandoc" "pandoc" :darwin "brew install pandoc")
+(our-need-install "basictex" "basictex" :darwin "brew cask install basictex")
+(our-need-install "ghostscript" "ghostscript" :darwin "brew install ghostscript")
 (our-need-install "latexit" "latexit" :darwin "brew cask install latexit")
 
 ;; ----------
