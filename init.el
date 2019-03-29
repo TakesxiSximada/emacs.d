@@ -376,10 +376,36 @@
 ;; ----------
 ;; others
 ;; ----------
-(our-need-install "pandoc" "pandoc" :darwin "brew install pandoc")
-(our-need-install "basictex" "basictex" :darwin "brew cask install basictex")
+(our-need-install "basictex" "basictex" :darwin "brew cask install basictex # M-x our-latex-update")
+(defun our-latex-update ()
+  (interactive)
+  (our-async-exec
+   (string-join '(;; パッケージのアップデート
+		  "sudo tlmgr update --self --all"
+		  ;; デフォルトで A4 用紙を使う
+		  "sudo tlmgr paper a4"
+		  ;; 日本語用パッケージ群のインストール
+		  "sudo tlmgr install collection-langjapanese"
+		  ;; 和文フォント ヒラギノのインストールと設定
+		  "sudo tlmgr repository add http://contrib.texlive.info/current tlcontrib"
+		  "sudo tlmgr pinning add tlcontrib '*'"
+		  "sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree ptex-fontmaps-macos cjk-gs-integrate-macos"
+		  "sudo cjk-gs-integrate --link-texmf --cleanup"
+		  "sudo cjk-gs-integrate-macos --link-texmf"
+		  "sudo mktexlsr"
+		  "sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron"
+		  ;; 日本語環境でソースコードの埋め込み
+		  ;; FIXME: ここではうまくjlisting.sty.bz2がダウンロード出来ていないのでコメントアウトするしかない
+		  ;; "curl https://ja.osdn.net/projects/mytexpert/downloads/26068/jlisting.sty.bz2/ | bzip2 -d "
+		  ;; "sudo mv ~/Downloads/jlisting.sty /usr/local/texlive/2018basic/texmf-dist/tex/latex/listings/"
+		  ;; "sudo chmod +r /usr/local/texlive/2018basic/texmf-dist/tex/latex/listings/jlisting.sty"
+		  ;; "sudo mktexlsr"
+		  )
+		" && ")))
+
 (our-need-install "ghostscript" "ghostscript" :darwin "brew install ghostscript")
 (our-need-install "latexit" "latexit" :darwin "brew cask install latexit")
+(our-need-install "pandoc" "pandoc" :darwin "brew install pandoc")
 
 ;; ----------
 ;; keybinding
