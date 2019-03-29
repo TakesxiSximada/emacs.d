@@ -373,6 +373,12 @@
    ))
 
 ;; ----------
+;; others
+;; ----------
+(our-need-install "pandoc" "pandoc" :darwin "brew install pandoc")
+(our-need-install "latexit" "latexit" :darwin "brew cask install latexit")
+
+;; ----------
 ;; keybinding
 ;; ----------
 (require 'simple)
