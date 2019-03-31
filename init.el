@@ -184,6 +184,7 @@
 ;; our-package
 ;; -----------
 (require 'our)
+(require 'our-macos)
 (require 'our-brew)
 (require 'our-cider)
 (require 'our-circleci)
