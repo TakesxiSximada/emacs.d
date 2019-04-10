@@ -184,12 +184,12 @@
 ;; our-package
 ;; -----------
 (require 'our)
-(require 'our-macos)
 (require 'our-brew)
 (require 'our-cider)
 (require 'our-circleci)
 (require 'our-discord)
 (require 'our-freewifi)
+(require 'our-macos)
 (require 'our-magit)
 (require 'our-mastodon)
 (require 'our-need-install)
