@@ -52,12 +52,13 @@
 
 (setq exec-path (delete-duplicates
 		 (append `(
-			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   "/Library/TeX/texbin"
 			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/libxml2/bin"
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
+			   "~/.local/bin"
+			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   )
 			 (split-string (getenv "PATH") ":")
 			 exec-path)))
