@@ -379,6 +379,7 @@
    (emacs-lisp . t)
    (plantuml . t)
    (restclient . t)
+   (shell . t)
    ))
 
 ;; ----------
