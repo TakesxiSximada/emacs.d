@@ -57,7 +57,7 @@
 			   "/usr/local/opt/libxml2/bin"
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
-			   "~/.local/bin"
+			   ,(expand-file-name "~/.local/bin")
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   )
 			 (split-string (getenv "PATH") ":")
