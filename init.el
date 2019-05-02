@@ -391,6 +391,14 @@
    (python . t)
    ))
 
+
+;; ----------
+;; kubernetes
+;; ----------
+(use-package kubernetes
+  :ensure t
+  :commands (kubernetes-overview))
+
 ;; ----------
 ;; others
 ;; ----------
