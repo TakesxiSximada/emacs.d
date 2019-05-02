@@ -182,6 +182,11 @@
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
 (toggle-frame-fullscreen)
 
+;; -----
+;; qiita
+;; -----
+(use-package unicode-escape :ensure t :defer t)
+
 ;; -----------
 ;; our-package
 ;; -----------
@@ -206,11 +211,6 @@
 (load-file "~/.emacs.d/env/discord.el")
 (load-file "~/.emacs.d/env/mastodon.el")
 (load-file "~/.emacs.d/env/wakatime.el")
-
-;; -----
-;; qiita
-;; -----
-(setq our-qiita-api-token "8da84fd490b5c6ceae35b0daa43c69c0a9796ae8")
 (load-file "~/.emacs.d/env/cloudapp.el")
 
 ;; -----------------
