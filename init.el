@@ -382,6 +382,7 @@
    (plantuml . t)
    (restclient . t)
    (shell . t)
+   (python . t)
    ))
 
 ;; ----------
