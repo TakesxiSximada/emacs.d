@@ -211,6 +211,7 @@
 ;; qiita
 ;; -----
 (setq our-qiita-api-token "8da84fd490b5c6ceae35b0daa43c69c0a9796ae8")
+(load-file "~/.emacs.d/env/cloudapp.el")
 
 ;; -----------------
 ;; external packages
