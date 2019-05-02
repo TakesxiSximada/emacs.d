@@ -230,6 +230,12 @@
 ;; ------------
 (unless (executable-find "chromedriver") (our-async-exec "brew cask install chromedriver"))
 
+;; --------
+;; lsp-mode
+;; --------
+(use-package lsp-mode :ensure t :defer t)
+(use-package lsp-ui :ensure t :defer t)
+
 ;; ------
 ;; python
 ;; ------
