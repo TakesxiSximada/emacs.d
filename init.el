@@ -204,6 +204,7 @@
 (require 'our-pyvenv)
 (require 'our-qiita)
 (require 'our-simeji)
+(require 'our-terraform)
 (require 'our-wakatime)
 
 (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
@@ -462,6 +463,9 @@
 
 	    ;; buffers
 	    ("C-<backspace>" . kill-buffer)
+
+	    ;; terraform
+	    ("C-t C-f" . our-terraform-menu)
 
 	    ;; panes and screen
 	    ("C-t C-t" . elscreen-previous)
