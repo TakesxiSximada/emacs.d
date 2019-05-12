@@ -187,6 +187,11 @@
 ;; -----
 (use-package unicode-escape :ensure t :defer t)
 
+;; -------------
+;; our-terraform
+;; -------------
+(use-package avy-menu :ensure t :defer t)
+
 ;; -----------
 ;; our-package
 ;; -----------
