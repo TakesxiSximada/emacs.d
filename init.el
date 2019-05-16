@@ -1,3 +1,5 @@
+(use-package pyvenv :ensure t :defer t)
+
 (setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
 
 (add-hook
