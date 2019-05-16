@@ -1,3 +1,5 @@
+(setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
+
 (add-hook
  'after-init-hook
  (lambda ()
