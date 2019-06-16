@@ -396,6 +396,7 @@
    (restclient . t)
    (shell . t)
    (python . t)
+   (sql . t)
    ))
 
 
