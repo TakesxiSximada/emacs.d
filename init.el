@@ -276,8 +276,8 @@
 	      ("C-c d" . jedi:show-doc)
 	      ("C-<tab>" . jedi:complete)))
 ;; (jedi:install-server)
-(jedi:setup)
-(elpy-enable)
+;; (jedi:setup)
+;; (elpy-enable)
 
 (require 'our-pyvenv)
 
