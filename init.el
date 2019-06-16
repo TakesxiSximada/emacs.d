@@ -143,7 +143,7 @@
    (use-package magit :ensure t :defer t)
 
    (use-package async-await :ensure t :defer t)
-   (use-package json :ensure t :defer t)
+   ;; (use-package json :ensure t :defer t)
    (use-package request :ensure t :defer t)
    (use-package async-await :ensure t :defer t)
    (use-package gist :ensure t :defer t)
