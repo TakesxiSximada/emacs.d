@@ -177,6 +177,7 @@
      :no-require t
      :init
      (load-theme 'tsdh-dark t))
+   (use-package foreman-mode :ensure t :defer t)
    ))
 
 (progn (add-to-list 'load-path "/srv/sallies/elenv/") (require 'elenv) (elenv-activate))  ;; elenv auto inser
