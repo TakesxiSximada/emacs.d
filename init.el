@@ -85,6 +85,13 @@
   (setq ido-vertical-show-count t)
   )
 
+
+;;; For Docker
+(use-package docker :defer t :ensure t :no-require t)
+(use-package docker-compose-mode :defer t :ensure t :no-require t)
+(use-package docker-tramp :defer t :ensure t :no-require t)
+(use-package dockerfile-mode :defer t :ensure t :no-require t)
+
 ;;; For Python
 (use-package pyvenv :defer t :ensure t :no-require t)
 
