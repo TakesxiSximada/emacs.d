@@ -22,7 +22,7 @@
  ("<f1>" . start-kbd-macro)
  ("<f2>" . end-kbd-macro)
  ("<f3>" . call-last-kbd-macro)
- (enlarge-window)
+
  ;; move buffer
  ("C-t h" . windmove-left)
  ("C-t j" . windmove-down)
