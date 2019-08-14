@@ -46,7 +46,7 @@
 (use-package ido-vertical-mode :defer t :ensure t :no-require t
   :config
   (ido-vertical-mode 1)
-  (setq ido-vertical-define-keys 'C-n-and-C-p-only)    ;; C-n/C-pで候補選択する
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only)
   (setq ido-vertical-show-count t)
   )
 
