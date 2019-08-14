@@ -263,10 +263,15 @@
 	     (cdr (assoc 'key entry)))
 
      cwd)))
-
-
-
 ;;; Our Git Clone Ends here.
+
+;;; Our open user init file
+(defun our-open-user-init-file ()
+  (interactive)
+  (switch-to-buffer
+   (find-file-noselect
+    user-init-file)))
+;;; Our open init file Ends here.
 
 
 (defun rust-lang-install ()
@@ -294,4 +299,7 @@
 
  ;; My Customize
  ("M-_" . our-async-exec-interactive)
+
+ ;; File open utility
+ ("<f12>" . our-open-user-init-file)
  )
