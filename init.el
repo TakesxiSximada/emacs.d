@@ -11,3 +11,5 @@
 
 (use-package magit :defer t :ensure t :no-require t)
 
+(bind-keys* ("C-x C-v" . magit-status))
+
