@@ -207,22 +207,7 @@
     (email . ,email)
     (key . ,ssh-private-key-path)))
 
-(defvar our-git-config
-  `(("sximada"
-     . ,(our-git-config-entry
-	 "sximada"
-	 "50688746+sximada@users.noreply.github.com"
-	 "~/.ssh/id_rsa.kuma"))
-    ("TakesxiSximada"
-     . ,(our-git-config-entry
-	 "TakesxiSximada"
-	 "8707279+TakesxiSximada@users.noreply.github.com"
-	 "~/.ssh/id_rsa.TakesxiSximada"))
-    ("sallies"
-     . ,(our-git-config-entry
-	 "sallies"
-	 "45523943+sallies@users.noreply.github.com"
-	 "~/.ssh/id_rsa.sallies"))))
+(defvar our-git-config nil)
 
 (defun our-git-clone (repo label cwd name)
   (interactive
@@ -303,3 +288,5 @@
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
  )
+
+(load-file "./settings.el")
