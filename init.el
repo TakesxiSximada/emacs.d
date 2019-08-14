@@ -9,9 +9,28 @@
 	;; ("melpa-stable" . "http://stable.melpa.org/packages/")
 	))
 
+(require 'windmove)
 (use-package magit :defer t :ensure t :no-require t)
 
-(bind-keys* ("C-x C-v" . magit-status))
+(bind-keys*
+ ("¥" . "\\")
+ ("C-h" . backward-delete-char-untabify)
+ ("C-c C-w" . comment-or-uncomment-region)
+
+ ;; keyboard macro
+ ("<f1>" . start-kbd-macro)
+ ("<f2>" . end-kbd-macro)
+ ("<f3>" . call-last-kbd-macro)
+ (enlarge-window)
+ ;; move buffer
+ ("C-t h" . windmove-left)
+ ("C-t j" . windmove-down)
+ ("C-t k" . windmove-up)
+ ("C-t l" . windmove-right)
+
+ ;; Git
+ ("C-x C-v" . magit-status)
+ )
 
 (defun rust-lang-install ()
   (interactive)
