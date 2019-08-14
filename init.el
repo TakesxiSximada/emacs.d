@@ -18,13 +18,13 @@
 (ido-everywhere 1)
 (setq ido-enable-flex-matching t)
 
-(use-package smex :defer t :ensure t :no-require t
+(use-package smex :ensure t :no-require t
   :config
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
   )
 
-(use-package ido-vertical-mode :defer t :ensure t :no-require t
+(use-package ido-vertical-mode :ensure t :no-require t
   :config
   (ido-vertical-mode 1)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
