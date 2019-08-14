@@ -343,4 +343,4 @@
  ("<f12>" . our-open-user-init-file)
  )
 
-(load-file "./settings.el")
+(load-file "~/.emacs.d/settings.el")
