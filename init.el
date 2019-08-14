@@ -6,7 +6,7 @@
         ("melpa" . "https://melpa.org/packages/")
 	("org" . "https://orgmode.org/elpa/")
 	;; ("marmalade" . "http://marmalade-repo.org/packages/")
-	;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+	("melpa-stable" . "http://stable.melpa.org/packages/")
 	))
 
 (require 'windmove)
