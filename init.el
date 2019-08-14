@@ -85,6 +85,9 @@
   (setq ido-vertical-show-count t)
   )
 
+;;; For Python
+(use-package pyvenv :defer t :ensure t :no-require t)
+
 ;;; Our Async Exec
 (defvar our-async-exec-cmd-history nil)
 (defvar our-async-exec-cwd-history nil)
