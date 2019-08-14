@@ -12,6 +12,7 @@
 (require 'windmove)
 (use-package magit :defer t :ensure t :no-require t)
 (use-package smex :defer t :ensure t :no-require t)
+(use-package ido-vertical-mode :defer t :ensure t :no-require t)
 
 (bind-keys*
  ("¥" . "\\")
@@ -40,6 +41,7 @@
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(ido-vertical-mode 1)
 
 (defun rust-lang-install ()
   (interactive)
