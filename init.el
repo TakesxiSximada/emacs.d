@@ -13,3 +13,6 @@
 
 (bind-keys* ("C-x C-v" . magit-status))
 
+(defun rust-lang-install ()
+  (interactive)
+  (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
