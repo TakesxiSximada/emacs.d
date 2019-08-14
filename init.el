@@ -12,26 +12,6 @@
 (require 'windmove)
 (use-package magit :defer t :ensure t :no-require t)
 
-(bind-keys*
- ("¥" . "\\")
- ("C-h" . backward-delete-char-untabify)
- ("C-c C-w" . comment-or-uncomment-region)
-
- ;; keyboard macro
- ("<f1>" . start-kbd-macro)
- ("<f2>" . end-kbd-macro)
- ("<f3>" . call-last-kbd-macro)
-
- ;; move buffer
- ("C-t h" . windmove-left)
- ("C-t j" . windmove-down)
- ("C-t k" . windmove-up)
- ("C-t l" . windmove-right)
-
- ;; Git
- ("C-x C-v" . magit-status)
- )
-
 ;; Input I/F
 (ido-mode 1)
 (ido-everywhere 1)
@@ -53,3 +33,23 @@
 (defun rust-lang-install ()
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
+
+(bind-keys*
+ ("¥" . "\\")
+ ("C-h" . backward-delete-char-untabify)
+ ("C-c C-w" . comment-or-uncomment-region)
+
+ ;; keyboard macro
+ ("<f1>" . start-kbd-macro)
+ ("<f2>" . end-kbd-macro)
+ ("<f3>" . call-last-kbd-macro)
+
+ ;; move buffer
+ ("C-t h" . windmove-left)
+ ("C-t j" . windmove-down)
+ ("C-t k" . windmove-up)
+ ("C-t l" . windmove-right)
+
+ ;; Git
+ ("C-x C-v" . magit-status)
+ )
