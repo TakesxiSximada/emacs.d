@@ -1,4 +1,5 @@
 ;; -*- coding: utf-8 -*-
+(defalias 'yes-or-no-p 'y-or-n-p)
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
 (setq package-archives
