@@ -8,3 +8,6 @@
 	;; ("marmalade" . "http://marmalade-repo.org/packages/")
 	;; ("melpa-stable" . "http://stable.melpa.org/packages/")
 	)
+
+(use-package magit :defer t :ensure t :no-require t)
+
