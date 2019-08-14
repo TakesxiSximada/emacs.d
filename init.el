@@ -32,6 +32,12 @@
  ("C-x C-v" . magit-status)
  )
 
+
+;; Input I/F
+(ido-mode 1)
+(ido-everywhere 1)
+(setq ido-enable-flex-matching t)
+
 (defun rust-lang-install ()
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
