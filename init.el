@@ -11,8 +11,6 @@
 
 (require 'windmove)
 (use-package magit :defer t :ensure t :no-require t)
-(use-package smex :defer t :ensure t :no-require t)
-(use-package ido-vertical-mode :defer t :ensure t :no-require t)
 
 (bind-keys*
  ("¥" . "\\")
@@ -39,9 +37,18 @@
 (ido-everywhere 1)
 (setq ido-enable-flex-matching t)
 
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(ido-vertical-mode 1)
+(use-package smex :defer t :ensure t :no-require t
+  :config
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  )
+
+(use-package ido-vertical-mode :defer t :ensure t :no-require t
+  :config
+  (ido-vertical-mode 1)
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only)    ;; C-n/C-pで候補選択する
+  (setq ido-vertical-show-count t)
+  )
 
 (defun rust-lang-install ()
   (interactive)
