@@ -11,6 +11,7 @@
 
 (require 'windmove)
 (use-package magit :defer t :ensure t :no-require t)
+(use-package smex :defer t :ensure t :no-require t)
 
 (bind-keys*
  ("¥" . "\\")
@@ -32,11 +33,13 @@
  ("C-x C-v" . magit-status)
  )
 
-
 ;; Input I/F
 (ido-mode 1)
 (ido-everywhere 1)
 (setq ido-enable-flex-matching t)
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (defun rust-lang-install ()
   (interactive)
