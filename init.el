@@ -16,13 +16,14 @@
 
 (setq exec-path (delete-duplicates
 		 (append `(
-			   "/Users/sximada/development/flutter/bin"
+			   "/Library/TeX/texbin"
 			   "/Users/sximada/.nvm/versions/node/v8.10.0/bin"
 			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
+			   "/Users/sximada/development/flutter/bin"
 			   "/usr/local/bin"
-			   "/Library/TeX/texbin"
 			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/libxml2/bin"
+			   "/usr/local/opt/openssl/bin"
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
 			   ,(expand-file-name "~/.cargo/bin")
@@ -33,11 +34,11 @@
 			 exec-path)))
 
 (setenv "PATH" (string-join exec-path ":"))
+
 (setenv "LDFLAGS" (string-join '(
 				 "-L/usr/local/opt/gettext/lib"
 				 "-L/usr/local/opt/libffi/lib"
 				 "-L/usr/local/opt/libxml2/lib"
-				 "-L/usr/local/opt/mysql@5.7/lib"
 				 "-L/usr/local/opt/openssl/lib"
 				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/sqlite/lib"
@@ -47,7 +48,6 @@
 (setenv "CPPFLAGS" (string-join '(
 				  "-I/usr/local/opt/gettext/include"
 				  "-I/usr/local/opt/libxml2/include"
-				  "-I/usr/local/opt/mysql@5.7/include"
 				  "-I/usr/local/opt/openssl/include"
 				  "-I/usr/local/opt/readline/include"
 				  "-I/usr/local/opt/sqlite/include"
@@ -56,7 +56,6 @@
 (setenv "PKG_CONFIG_PATH" (string-join '(
 					 "/usr/local/opt/libffi/lib/pkgconfig"
 					 "/usr/local/opt/libxml2/lib/pkgconfig"
-					 "/usr/local/opt/mysql@5.7/lib/pkgconfig"
 					 "/usr/local/opt/openssl/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
 					 "/usr/local/opt/sqlite/lib/pkgconfig"
