@@ -326,6 +326,17 @@
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
 
+;;; For elscreen
+(use-package elscreen :ensure t :no-require t
+  :init
+  (setq elscreen-display-tab nil)
+  (setq elscreen-tab-display-kill-screen nil)
+  (setq elscreen-tab-display-control nil)
+  (bind-key* "C-t C-t" 'elscreen-previous)
+  :config
+  (elscreen-start)
+  (elscreen-create))
+
 (bind-keys*
  ("¥" . "\\")
  ("C-h" . backward-delete-char-untabify)
