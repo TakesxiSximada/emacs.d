@@ -282,9 +282,9 @@
    (list
     (completing-read "Repository: " nil)
     (ido-completing-read
-	  "Git configuration: "
-	  (mapcar (lambda (n) (car n)) our-git-config)
-	  nil nil nil nil nil)
+     "Git configuration: "
+     (mapcar (lambda (n) (car n)) our-git-config)
+     nil nil nil nil nil)
     (ido-read-directory-name "Directory: ")
     (completing-read "Name: " nil)))
 
