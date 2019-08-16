@@ -94,6 +94,11 @@
 ;;; For Python
 (use-package pyvenv :defer t :ensure t :no-require t)
 
+;;; For TypeScript
+(use-package typescript-mode :defer t :ensure t :no-require t
+  :config
+  (custom-set-variables '(typescript-indent-level 2)))
+
 ;;; Our Async Exec
 (defvar our-async-exec-cmd-history nil)
 (defvar our-async-exec-cwd-history nil)
