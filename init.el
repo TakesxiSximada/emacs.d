@@ -75,6 +75,7 @@
   :config
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   )
 
 (use-package ido-vertical-mode :ensure t :no-require t
@@ -84,6 +85,13 @@
   (setq ido-vertical-show-count t)
   )
 
+(use-package ido-yes-or-no :ensure t :no-require t
+  :config
+  (ido-yes-or-no-mode 1))
+
+(use-package ido-completing-read+ :ensure t :defer t :no-require t
+  :config
+  (ido-ubiquitous-mode 1))
 
 ;;; For Docker
 (use-package docker :defer t :ensure t :no-require t)
