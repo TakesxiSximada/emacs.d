@@ -52,6 +52,7 @@
 
 (setq exec-path (delete-duplicates
 		 (append `(
+			   "/Users/sximada/.rbenv/shims"
 			   "/Users/sximada/development/flutter/bin"
 			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
 			   "/Library/TeX/texbin"
