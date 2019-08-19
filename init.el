@@ -64,7 +64,9 @@
 ;;; Environment Variable Ends here
 
 (require 'windmove)
+
 (use-package magit :defer t :ensure t :no-require t)
+(use-package monky :defer t :ensure t :no-require t)
 
 ;; Input I/F
 (ido-mode 1)
