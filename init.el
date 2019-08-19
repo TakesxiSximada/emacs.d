@@ -201,6 +201,74 @@
 
 ;;; Our Async Exec Ends here.
 
+;;; Our Git Clone
+(defun our-git-config-entry (name email ssh-private-key-path)
+  `((name . ,name)
+    (email . ,email)
+    (key . ,ssh-private-key-path)))
+
+(defvar our-git-config
+  `(("sximada"
+     . ,(our-git-config-entry
+	 "sximada"
+	 "50688746+sximada@users.noreply.github.com"
+	 "~/.ssh/id_rsa.kuma"))
+    ("TakesxiSximada"
+     . ,(our-git-config-entry
+	 "TakesxiSximada"
+	 "8707279+TakesxiSximada@users.noreply.github.com"
+	 "~/.ssh/id_rsa.TakesxiSximada"))
+    ("sallies"
+     . ,(our-git-config-entry
+	 "sallies"
+	 "45523943+sallies@users.noreply.github.com"
+	 "~/.ssh/id_rsa.sallies"))))
+
+(defun our-git-clone (repo label cwd name)
+  (interactive
+   (list
+    (completing-read "Repository: " nil)
+    (ido-completing-read
+	  "Git configuration: "
+	  (mapcar (lambda (n) (car n)) our-git-config)
+	  nil nil nil nil nil)
+    (ido-read-directory-name "Directory: ")
+    (completing-read "Name: " nil)))
+
+  (unless (file-exists-p cwd)
+    (make-directory cwd))
+
+  (let ((entry (cdr (assoc label our-git-config))))
+    (our-async-exec
+     (format "git -c core.sshCommand='ssh -i %s -F /dev/null' clone %s %s"
+	     (cdr (assoc 'key entry))
+	     repo name)
+     cwd)))
+
+
+(defun our-git-config-apply (label cwd)
+  (interactive
+   (list
+    (ido-completing-read
+	  "Git configuration: "
+	  (mapcar (lambda (n) (car n)) our-git-config)
+	  nil nil nil nil nil)
+    (ido-read-directory-name "Directory: ")))
+
+  (let ((entry (cdr (assoc label our-git-config))))
+    (our-async-exec
+     (format "git config user.name '%s' && git config user.email '%s' && git config core.sshCommand 'ssh -i %s -F /dev/null'"
+	     (cdr (assoc 'name entry))
+	     (cdr (assoc 'email entry))
+	     (cdr (assoc 'key entry)))
+
+     cwd)))
+
+
+
+;;; Our Git Clone Ends here.
+
+
 (defun rust-lang-install ()
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
