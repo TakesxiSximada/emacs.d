@@ -112,6 +112,9 @@
   :config
   (custom-set-variables '(typescript-indent-level 2)))
 
+;;; For foreman-mode (by collective-el)
+(custom-set-variables '(foreman-procfile-name ".Procfile"))
+
 ;;; Our Async Exec
 (defvar our-async-exec-cmd-history nil)
 (defvar our-async-exec-cwd-history nil)
