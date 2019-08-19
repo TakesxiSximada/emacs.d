@@ -1,4 +1,33 @@
 ;; -*- coding: utf-8 -*-
+
+;; locale
+(setenv "LANG" "ja_JP.UTF-8")
+(set-buffer-file-coding-system 'utf-8-unix)
+
+;; toolbar
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+
+;; fonts
+(set-face-attribute 'default nil :family "Menlo" :height 120)
+(set-fontset-font (frame-parameter nil 'font)
+                  'japanese-jisx0208
+                  (font-spec :family "Hiragino Kaku Gothic ProN"))
+
+(add-to-list 'face-font-rescale-alist
+             '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
+
+;; backup file
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+
+
+;; Splash
+(setq initial-buffer-choice
+      (lambda ()
+	(switch-to-buffer "*Messages*")))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
