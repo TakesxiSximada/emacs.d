@@ -133,6 +133,15 @@
 (use-package docker-tramp :defer t :ensure t :no-require t)
 (use-package dockerfile-mode :defer t :ensure t :no-require t)
 
+;;; For LSP
+(use-package eglot :defer t :ensure t :no-require t
+  :init
+  (add-hook 'python-mode-hook 'eglot-ensure)
+  :config
+  (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
+  (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark))
+
+
 ;;; For Python
 (use-package pyvenv :defer t :ensure t :no-require t
   :config
