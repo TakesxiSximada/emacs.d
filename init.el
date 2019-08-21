@@ -141,6 +141,9 @@
   (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
   (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark))
 
+;;; For restclient
+(use-package restclient :defer t :ensure t :no-require t)
+
 
 ;;; For Python
 (use-package pyvenv :defer t :ensure t :no-require t
