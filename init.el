@@ -144,6 +144,17 @@
 ;;; For restclient
 (use-package restclient :defer t :ensure t :no-require t)
 
+;;; For babel
+(use-package ob-restclient :defer t :ensure t :no-require t)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (emacs-lisp . t)
+   (restclient . t)
+   (shell . t)
+   (python . t)
+   (sql . t)))
+
 
 ;;; For Python
 (use-package pyvenv :defer t :ensure t :no-require t
