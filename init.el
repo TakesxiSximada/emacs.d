@@ -116,10 +116,6 @@
   (setq ido-vertical-show-count t)
   )
 
-(use-package ido-yes-or-no :ensure t :no-require t
-  :config
-  (ido-yes-or-no-mode 1))
-
 (use-package ido-completing-read+ :ensure t :defer t :no-require t
   :config
   (ido-ubiquitous-mode 1))
