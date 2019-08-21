@@ -427,6 +427,11 @@
   (elscreen-start)
   (elscreen-create))
 
+;;; For flycheck
+(use-package flycheck :defer :ensure t :no-require t
+  :init
+  (add-hook 'python-mode-hook 'flycheck-mode))
+
 (bind-keys*
  ("¥" . "\\")
  ("C-h" . backward-delete-char-untabify)
