@@ -5,6 +5,12 @@
 (setq custom-theme-directory "~/.emacs.d/themes")
 (load-theme 'sximada-dark t)
 
+(when window-system
+  (global-hl-line-mode t))
+(unless window-system
+  (setq hl-line-face 'underline)
+  (global-hl-line-mode))
+
 ;; locale
 (setenv "LANG" "ja_JP.UTF-8")
 (set-buffer-file-coding-system 'utf-8-unix)
