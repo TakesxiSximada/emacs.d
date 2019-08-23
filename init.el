@@ -52,8 +52,9 @@
 (setq exec-path (delete-duplicates
 		 (append `(
 			   "/Library/TeX/texbin"
-			   "/Users/sximada/.nvm/versions/node/v8.10.0/bin"
-			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v8.10.0/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
+			   "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
 			   "/Users/sximada/development/flutter/bin"
 			   "/usr/local/bin"
 			   "/usr/local/opt/gettext/bin"
