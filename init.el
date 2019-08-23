@@ -1,5 +1,10 @@
 ;; -*- coding: utf-8 -*-
 
+;; theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(setq custom-theme-directory "~/.emacs.d/themes")
+(load-theme 'sximada-dark t)
+
 ;; locale
 (setenv "LANG" "ja_JP.UTF-8")
 (set-buffer-file-coding-system 'utf-8-unix)
