@@ -187,6 +187,13 @@
   :config
   (custom-set-variables '(typescript-indent-level 2)))
 
+;;; For React
+(use-package rjsx-mode :defer t :ensure t :no-require t
+  :config
+  (setq indent-tabs-mode nil)
+  (setq js-indent-level 2)
+  (setq js2-strict-missing-semi-warning nil))
+
 ;;; Our Async Exec
 (defvar our-async-exec-cmd-history nil)
 (defvar our-async-exec-cwd-history nil)
