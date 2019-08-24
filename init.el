@@ -1,4 +1,5 @@
 ;; -*- coding: utf-8 -*-
+(toggle-frame-fullscreen)
 
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
