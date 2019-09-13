@@ -179,27 +179,26 @@
 
 
 ;;; For Python
-(use-package pyvenv :defer t :ensure t :no-require t
-  :config
-  ;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
-  (defun pyvenv-create (venv-name python-executable)
-    "Create virtualenv.  VENV-NAME  PYTHON-EXECUTABLE."
-    (interactive (list
-                  (read-from-minibuffer "Name of virtual environment: ")
-                  (read-file-name "Python interpreter to use: "
-                                  (file-name-directory (executable-find "python"))
-                                  nil nil "python")))
-    (let ((venv-dir (concat (file-name-as-directory (pyvenv-workon-home))
-                            venv-name)))
-      (unless (file-exists-p venv-dir)
-	(run-hooks 'pyvenv-pre-create-hooks)
-	(with-current-buffer (generate-new-buffer "*virtualenv*")
-          (call-process python-executable nil t t
-			"-m" "venv" venv-dir)
-          (display-buffer (current-buffer)))
-	(run-hooks 'pyvenv-post-create-hooks))
-      (pyvenv-activate venv-dir)))
-  )
+(use-package pyvenv :ensure t :no-require t)
+
+;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
+(defun pyvenv-create (venv-name python-executable)
+  "Create virtualenv.  VENV-NAME  PYTHON-EXECUTABLE."
+  (interactive (list
+                (read-from-minibuffer "Name of virtual environment: ")
+                (read-file-name "Python interpreter to use: "
+                                (file-name-directory (executable-find "python"))
+                                nil nil "python")))
+  (let ((venv-dir (concat (file-name-as-directory (pyvenv-workon-home))
+                          venv-name)))
+    (unless (file-exists-p venv-dir)
+      (run-hooks 'pyvenv-pre-create-hooks)
+      (with-current-buffer (generate-new-buffer "*virtualenv*")
+        (call-process python-executable nil t t
+		      "-m" "venv" venv-dir)
+        (display-buffer (current-buffer)))
+      (run-hooks 'pyvenv-post-create-hooks))
+    (pyvenv-activate venv-dir)))
 
 ;;; For TypeScript
 (use-package typescript-mode :defer t :ensure t :no-require t
