@@ -93,25 +93,43 @@
 				 "-L/usr/local/opt/libffi/lib"
 				 "-L/usr/local/opt/libxml2/lib"
 				 "-L/usr/local/opt/openssl/lib"
+				 ;; "-L/usr/local/opt/openssl@1.1/lib"
 				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/sqlite/lib"
 				 "-L/usr/local/opt/texinfo/lib"
+				 "-L/usr/local/opt/openldap/lib"
+				 "-L/usr/local/opt/curl-openssl/lib"
+				 "-L/usr/local/opt/icu4c/lib"
+				 "-L/usr/local/opt/libpq/lib"
+				 "-L/usr/local/opt/php@7.2/lib"
+				 "-L/usr/local/opt/readline/lib"
 				 ) " "))
 
 (setenv "CPPFLAGS" (string-join '(
 				  "-I/usr/local/opt/gettext/include"
 				  "-I/usr/local/opt/libxml2/include"
 				  "-I/usr/local/opt/openssl/include"
+				  ;; "-I/usr/local/opt/openssl@1.1/include"
 				  "-I/usr/local/opt/readline/include"
 				  "-I/usr/local/opt/sqlite/include"
+				  "-I/usr/local/opt/openldap/include"
+				  "-I/usr/local/opt/curl-openssl/include"
+				  "-I/usr/local/opt/icu4c/include"
+				  "-I/usr/local/opt/libpq/include"
+				  "-I/usr/local/opt/php@7.2/include"
+				  "-I/usr/local/opt/readline/include"
 				  ) " "))
 
 (setenv "PKG_CONFIG_PATH" (string-join '(
 					 "/usr/local/opt/libffi/lib/pkgconfig"
 					 "/usr/local/opt/libxml2/lib/pkgconfig"
 					 "/usr/local/opt/openssl/lib/pkgconfig"
+					 ;; "/usr/local/opt/openssl@1.1/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
 					 "/usr/local/opt/sqlite/lib/pkgconfig"
+					 "/usr/local/opt/curl-openssl/lib/pkgconfig"
+					 "/usr/local/opt/icu4c/lib/pkgconfig"
+					 "/usr/local/opt/readline/lib/pkgconfig"
 					 ) ":"))
 
 ;;; Environment Variable Ends here
