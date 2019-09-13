@@ -171,6 +171,12 @@
    (shell . t)
    (sql . t)))
 
+;;; For Rust
+(use-package rustic :defer t :ensure t :no-require t
+  :init
+  (setq rustic-lsp-server 'rust-analyzer)
+  (setq rustic-rls-pkg 'eglot))
+
 
 ;;; For Python
 (use-package pyvenv :defer t :ensure t :no-require t
