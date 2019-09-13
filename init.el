@@ -60,15 +60,25 @@
 		 (append `(
 			   "/Library/TeX/texbin"
 			   ;; "/Users/sximada/.nvm/versions/node/v8.10.0/bin"
-			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
-			   ;; "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
+			   "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
 			   "/Users/sximada/development/flutter/bin"
 			   "/usr/local/bin"
 			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/libxml2/bin"
 			   "/usr/local/opt/openssl/bin"
+			   ;; "/usr/local/opt/openssl@1.1/bin"
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
+			   "/usr/local/opt/apr-util/bin"
+			   "/usr/local/opt/openldap/bin"
+			   "/usr/local/opt/openldap/sbin"
+			   "/usr/local/opt/curl-openssl/bin"
+			   "/usr/local/opt/icu4c/bin"
+			   "/usr/local/opt/icu4c/sbin"
+			   "/usr/local/opt/libpq/bin"
+			   "/usr/local/opt/php@7.2/bin"
+			   "/usr/local/opt/php@7.2/sbin"
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
