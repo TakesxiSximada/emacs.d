@@ -138,6 +138,10 @@
 ;;; For Silver Searcher (ag)
 (use-package ag :ensure t :defer t :no-require t)
 
+;;; For Nginx
+(use-package nginx-mode :ensure t)
+
+
 ;;; For Docker
 (use-package docker :defer t :ensure t :no-require t)
 (use-package docker-compose-mode :defer t :ensure t :no-require t)
