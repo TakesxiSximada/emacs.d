@@ -199,6 +199,12 @@
    (shell . t)
    (sql . t)))
 
+;;; Editorconfig
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
 ;;; For Rust
 (use-package rustic :defer t :ensure t :no-require t
   :init
