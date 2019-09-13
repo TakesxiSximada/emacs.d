@@ -165,9 +165,10 @@
  'org-babel-load-languages
  '(
    (emacs-lisp . t)
-   (restclient . t)
-   (shell . t)
    (python . t)
+   (restclient . t)
+   ;;(rustic . t)
+   (shell . t)
    (sql . t)))
 
 
