@@ -439,8 +439,7 @@
     user-init-file)))
 ;;; Our open init file Ends here.
 
-
-(defun rust-lang-install ()
+(defun lang-install-rust ()
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
 
