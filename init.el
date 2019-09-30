@@ -425,7 +425,8 @@
 
 (defvar our-git-config nil)
 
-(defun our-git-clone (repo label cwd name)
+
+(defun our-git-fetch-unshallow (repo label cwd name)
   (interactive
    (list
     (completing-read "Repository: " nil)
@@ -442,6 +443,50 @@
   (let ((entry (cdr (assoc label our-git-config))))
     (our-async-exec
      (format "git -c core.sshCommand='ssh -i %s -F /dev/null' clone %s %s"
+	     (cdr (assoc 'key entry))
+	     repo name)
+     cwd)))
+
+
+(defun our-git-clone (repo label cwd name)
+  (interactive
+   (list
+    (completing-read "Repository: " nil)
+    (ido-completing-read
+     "Git configuration: "
+     (mapcar (lambda (n) (car n)) our-git-config)
+     nil nil nil nil nil)
+    (ido-read-directory-name "Directory: ")
+    (completing-read "Name: " nil)))
+
+  (unless (file-exists-p cwd)
+    (make-directory cwd))
+
+  (let ((entry (cdr (assoc label our-git-config))))
+    (our-async-exec
+     (format "git -c core.sshCommand='ssh -i %s -F /dev/null' clone  --depth 1 %s %s"
+	     (cdr (assoc 'key entry))
+	     repo name)
+     cwd)))
+
+
+(defun our-git-submodule-add (repo label cwd name)
+  (interactive
+   (list
+    (completing-read "Repository: " nil)
+    (ido-completing-read
+     "Git configuration: "
+     (mapcar (lambda (n) (car n)) our-git-config)
+     nil nil nil nil nil)
+    (ido-read-directory-name "Directory: ")
+    (completing-read "Name: " nil)))
+
+  (unless (file-exists-p cwd)
+    (make-directory cwd))
+
+  (let ((entry (cdr (assoc label our-git-config))))
+    (our-async-exec
+     (format "git -c core.sshCommand='ssh -i %s -F /dev/null' submodule add %s %s"
 	     (cdr (assoc 'key entry))
 	     repo name)
      cwd)))
