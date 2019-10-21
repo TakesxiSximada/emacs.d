@@ -522,7 +522,7 @@
 ;;; Our open user task file
 (defun our-open-user-task-file ()
   (interactive)
-  (dired "~/Dropbox/tasks"))
+  (find-file "~/Dropbox/tasks/daily.org"))
 ;;; Our open user task file Ends here.
 
 (defun lang-install-rust ()
