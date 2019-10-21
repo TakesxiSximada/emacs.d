@@ -519,6 +519,12 @@
     user-init-file)))
 ;;; Our open init file Ends here.
 
+;;; Our open user task file
+(defun our-open-user-task-file ()
+  (interactive)
+  (dired "~/Dropbox/tasks"))
+;;; Our open user task file Ends here.
+
 (defun lang-install-rust ()
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
@@ -563,6 +569,8 @@
 
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
+ ("S-<f12>" . our-open-user-task-file)
+
  )
 
 (load-file "~/.emacs.d/settings.el")
