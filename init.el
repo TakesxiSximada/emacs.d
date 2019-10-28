@@ -2,7 +2,9 @@
 (toggle-frame-fullscreen)
 
 ;; theme
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path
+	     "~/.emacs.d/themes"
+	     "~/.emacs.d/lib")
 (setq custom-theme-directory "~/.emacs.d/themes")
 (load-theme 'sximada-dark t)
 
