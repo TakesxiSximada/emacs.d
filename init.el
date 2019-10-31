@@ -577,3 +577,8 @@
  )
 
 (load-file "~/.emacs.d/settings.el")
+
+(use-package org
+  :bind (("<f9>" . 'org-set-effort)
+	 ("<S-f10>" . 'org-clock-in)
+	 ("<S-f11>" . 'org-clock-out)))
