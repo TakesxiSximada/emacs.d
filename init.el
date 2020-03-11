@@ -651,6 +651,10 @@
   :ensure t
   :commands (kubernetes-overview))
 
+(bind-key* "C-t C-a" 'org-agenda)
+(bind-key* "C-t a" 'org-agenda)
+(bind-key* "C-t C-j" 'org-capture)
+
 ;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 
