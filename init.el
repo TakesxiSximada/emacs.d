@@ -637,6 +637,16 @@
   )
 
 
+(defun our-buffer-copy-current-file-path ()
+  "バッファのファイルパスをクリップボードにコピーする"
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (if path
+      (progn
+        (kill-new path)
+        (message (format "Copied: %s" path)))
+      (message (format "Cannot copied")))))
+
 (use-package kubernetes
   :ensure t
   :commands (kubernetes-overview))
