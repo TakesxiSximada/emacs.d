@@ -637,11 +637,12 @@
 ;; (setq org-agenda-overriding-columns-format "%TODO %7EFFORT %PRIORITY     %100ITEM 100%TAGS")
 (use-package company :ensure t :pin melpa
   :config
+  (global-company-mode)
   (custom-set-variables
    '(company-idle-delay .1)
    '(company-tooltip-idle-delay .1))
   )
-(global-company-mode)
+
 
 (defun our-buffer-copy-current-file-path ()
   "バッファのファイルパスをクリップボードにコピーする"
