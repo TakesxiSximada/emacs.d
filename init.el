@@ -629,6 +629,14 @@
   :bind (("<f9>" . 'org-set-effort)
 	 ("<S-f10>" . 'org-clock-in)
 	 ("<S-f11>" . 'org-clock-out)))
+(use-package company :ensure t :pin melpa
+  :config
+  (custom-set-variables
+   '(company-idle-delay .1)
+   '(company-tooltip-idle-delay .1))
+  )
+
+
 ;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 
