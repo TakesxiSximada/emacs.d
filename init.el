@@ -619,6 +619,8 @@
  ("<f12>" . our-open-user-init-file)
  ("S-<f12>" . our-open-user-task-file)
 
+ ;; ignore key binding
+ ;; TODO: command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
  )
 
 (load-file "~/.emacs.d/settings.el")
