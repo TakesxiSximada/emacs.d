@@ -637,6 +637,10 @@
   )
 
 
+(use-package kubernetes
+  :ensure t
+  :commands (kubernetes-overview))
+
 ;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 
