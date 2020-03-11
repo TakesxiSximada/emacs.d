@@ -81,29 +81,35 @@
 (setq exec-path (delete-duplicates
 		 (append `(
 			   "/Library/TeX/texbin"
-			   ;; "/Users/sximada/.nvm/versions/node/v8.10.0/bin"
-			   ;; "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
-			   "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
-			   "/Users/sximada/development/flutter/bin"
 			   "/usr/local/bin"
-			   "/usr/local/opt/gettext/bin"
-			   "/usr/local/opt/libxml2/bin"
-			   "/usr/local/opt/openssl/bin"
-			   ;; "/usr/local/opt/openssl@1.1/bin"
-			   "/usr/local/opt/sqlite/bin"
-			   "/usr/local/opt/texinfo/bin"
+			   "/usr/local/opt/ncurses/bin"
 			   "/usr/local/opt/apr-util/bin"
-			   "/usr/local/opt/openldap/bin"
-			   "/usr/local/opt/openldap/sbin"
+			   "/usr/local/opt/binutils/bin"
 			   "/usr/local/opt/curl-openssl/bin"
+			   "/usr/local/opt/gettext/bin"
 			   "/usr/local/opt/icu4c/bin"
 			   "/usr/local/opt/icu4c/sbin"
 			   "/usr/local/opt/libpq/bin"
+			   "/usr/local/opt/libxml2/bin"
+			   "/usr/local/opt/llvm/bin"
+			   "/usr/local/opt/openldap/bin"
+			   "/usr/local/opt/openldap/sbin"
+			   "/usr/local/opt/openssl/bin"
 			   "/usr/local/opt/php@7.2/bin"
 			   "/usr/local/opt/php@7.2/sbin"
+			   "/usr/local/opt/sqlite/bin"
+			   "/usr/local/opt/texinfo/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v10.16.3/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v8.16.1/bin"
+			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
+			   ;; "/Users/sximada/development/flutter/bin"
+			   ;; "/usr/local/opt/openssl@1.1/bin"
+			   ,(expand-file-name "~/development/flutter/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
 			   ,(expand-file-name "~/Library/Python/3.7/bin")
+			   ,(expand-file-name "~/Library/Python/3.8/bin")
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   )
 			 (split-string (getenv "PATH") ":")
@@ -112,35 +118,42 @@
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "LDFLAGS" (string-join '(
+				 "-L/usr/local/opt/binutils/lib"
+				 "-L/usr/local/opt/curl-openssl/lib"
 				 "-L/usr/local/opt/gettext/lib"
+				 "-L/usr/local/opt/icu4c/lib"
 				 "-L/usr/local/opt/libffi/lib"
+				 "-L/usr/local/opt/libpq/lib"
 				 "-L/usr/local/opt/libxml2/lib"
+				 "-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+				 "-L/usr/local/opt/llvm/lib"
+				 "-L/usr/local/opt/openldap/lib"
 				 "-L/usr/local/opt/openssl/lib"
-				 ;; "-L/usr/local/opt/openssl@1.1/lib"
+				 "-L/usr/local/opt/php@7.2/lib"
+				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/sqlite/lib"
 				 "-L/usr/local/opt/texinfo/lib"
-				 "-L/usr/local/opt/openldap/lib"
-				 "-L/usr/local/opt/curl-openssl/lib"
-				 "-L/usr/local/opt/icu4c/lib"
-				 "-L/usr/local/opt/libpq/lib"
-				 "-L/usr/local/opt/php@7.2/lib"
-				 "-L/usr/local/opt/readline/lib"
+				 "-L/usr/local/opt/ncurses/lib"
+				 ;; "-L/usr/local/opt/openssl@1.1/lib"
 				 ) " "))
 
 (setenv "CPPFLAGS" (string-join '(
-				  "-I/usr/local/opt/gettext/include"
-				  "-I/usr/local/opt/libxml2/include"
-				  "-I/usr/local/opt/openssl/include"
-				  ;; "-I/usr/local/opt/openssl@1.1/include"
-				  "-I/usr/local/opt/readline/include"
-				  "-I/usr/local/opt/sqlite/include"
-				  "-I/usr/local/opt/openldap/include"
+				  "-I/usr/local/opt/binutils/include"
 				  "-I/usr/local/opt/curl-openssl/include"
+				  "-I/usr/local/opt/gettext/include"
 				  "-I/usr/local/opt/icu4c/include"
 				  "-I/usr/local/opt/libpq/include"
+				  "-I/usr/local/opt/libxml2/include"
+				  "-I/usr/local/opt/llvm/include"
+				  "-I/usr/local/opt/openldap/include"
+				  "-I/usr/local/opt/openssl/include"
 				  "-I/usr/local/opt/php@7.2/include"
 				  "-I/usr/local/opt/readline/include"
+				  "-I/usr/local/opt/readline/include"
+				  "-I/usr/local/opt/sqlite/include"
+				  "-I/usr/local/opt/ncurses/include"
+				  ;; "-I/usr/local/opt/openssl@1.1/include"
 				  ) " "))
 
 (setenv "PKG_CONFIG_PATH" (string-join '(
@@ -153,6 +166,7 @@
 					 "/usr/local/opt/curl-openssl/lib/pkgconfig"
 					 "/usr/local/opt/icu4c/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
+					 "/usr/local/opt/ncurses/lib/pkgconfig"
 					 ) ":"))
 
 ;;; Environment Variable Ends here
