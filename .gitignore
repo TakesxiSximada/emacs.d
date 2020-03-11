@@ -1,7 +1,11 @@
 \#*\#
+auto-save-list/
 custom.el
 elpa
+eshell/
 ido.last
+recentf
 settings.el
 smex-items
+tramp
 transient/
