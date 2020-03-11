@@ -629,6 +629,6 @@
   :bind (("<f9>" . 'org-set-effort)
 	 ("<S-f10>" . 'org-clock-in)
 	 ("<S-f11>" . 'org-clock-out)))
-;; n
+;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 
