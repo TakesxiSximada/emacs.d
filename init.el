@@ -629,6 +629,12 @@
   :bind (("<f9>" . 'org-set-effort)
 	 ("<S-f10>" . 'org-clock-in)
 	 ("<S-f11>" . 'org-clock-out)))
+
+;; org-export
+(custom-set-variables '(org-export-with-sub-superscripts nil))
+
+;; org-agenda
+;; (setq org-agenda-overriding-columns-format "%TODO %7EFFORT %PRIORITY     %100ITEM 100%TAGS")
 (use-package company :ensure t :pin melpa
   :config
   (custom-set-variables
