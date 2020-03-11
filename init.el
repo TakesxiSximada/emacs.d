@@ -55,6 +55,18 @@
 	("melpa-stable" . "http://stable.melpa.org/packages/")
 	))
 
+
+(progn ;; Setup packaging tools
+  (package-install 'use-package)
+  (use-package quelpa :ensure t)
+  (quelpa
+   '(quelpa-use-package
+     :fetcher git
+     :url "https://github.com/quelpa/quelpa-use-package.git"))
+  (require 'quelpa-use-package)
+  )
+
+
 ;;; Environment Variable
 (require 'cl)
 (require 'subr-x)
