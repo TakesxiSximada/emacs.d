@@ -67,6 +67,13 @@
   )
 
 
+;;; for qiita
+(use-package ox-qmd :ensure t
+  :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
+
+
+
+
 ;;; Environment Variable
 (require 'cl)
 (require 'subr-x)
