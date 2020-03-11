@@ -657,4 +657,4 @@
 
 ;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
-
+(put 'set-goal-column 'disabled nil)
