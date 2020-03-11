@@ -1,4 +1,19 @@
 ;; -*- coding: utf-8 -*-
+(toggle-frame-fullscreen)
+
+;; custom lisp
+(add-to-list 'load-path "~/.emacs.d/lib")
+
+;; theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(setq custom-theme-directory "~/.emacs.d/themes")
+(load-theme 'sximada-dark t)
+
+(when window-system
+  (global-hl-line-mode t))
+(unless window-system
+  (setq hl-line-face 'underline)
+  (global-hl-line-mode))
 
 ;; locale
 (setenv "LANG" "ja_JP.UTF-8")
@@ -11,9 +26,10 @@
 
 ;; fonts
 (set-face-attribute 'default nil :family "Menlo" :height 120)
-(set-fontset-font (frame-parameter nil 'font)
-                  'japanese-jisx0208
-                  (font-spec :family "Hiragino Kaku Gothic ProN"))
+(let ((typ (frame-parameter nil 'font)))
+  (unless (string-equal "tty" typ)
+    (set-fontset-font typ 'japanese-jisx0208
+                      (font-spec :family "Hiragino Kaku Gothic ProN"))))
 
 (add-to-list 'face-font-rescale-alist
              '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
@@ -39,6 +55,25 @@
 	("melpa-stable" . "http://stable.melpa.org/packages/")
 	))
 
+
+(progn ;; Setup packaging tools
+  (package-install 'use-package)
+  (use-package quelpa :ensure t)
+  (quelpa
+   '(quelpa-use-package
+     :fetcher git
+     :url "https://github.com/quelpa/quelpa-use-package.git"))
+  (require 'quelpa-use-package)
+  )
+
+
+;;; for qiita
+(use-package ox-qmd :ensure t
+  :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
+
+
+
+
 ;;; Environment Variable
 (require 'cl)
 (require 'subr-x)
@@ -46,17 +81,35 @@
 (setq exec-path (delete-duplicates
 		 (append `(
 			   "/Library/TeX/texbin"
-			   "/Users/sximada/.nvm/versions/node/v8.10.0/bin"
-			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
-			   "/Users/sximada/development/flutter/bin"
 			   "/usr/local/bin"
+			   "/usr/local/opt/ncurses/bin"
+			   "/usr/local/opt/apr-util/bin"
+			   "/usr/local/opt/binutils/bin"
+			   "/usr/local/opt/curl-openssl/bin"
 			   "/usr/local/opt/gettext/bin"
+			   "/usr/local/opt/icu4c/bin"
+			   "/usr/local/opt/icu4c/sbin"
+			   "/usr/local/opt/libpq/bin"
 			   "/usr/local/opt/libxml2/bin"
+			   "/usr/local/opt/llvm/bin"
+			   "/usr/local/opt/openldap/bin"
+			   "/usr/local/opt/openldap/sbin"
 			   "/usr/local/opt/openssl/bin"
+			   "/usr/local/opt/php@7.2/bin"
+			   "/usr/local/opt/php@7.2/sbin"
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v10.16.3/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
+			   ;; "/Users/sximada/.nvm/versions/node/v8.16.1/bin"
+			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
+			   ;; "/Users/sximada/development/flutter/bin"
+			   ;; "/usr/local/opt/openssl@1.1/bin"
+			   ,(expand-file-name "~/development/flutter/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
+			   ,(expand-file-name "~/Library/Python/3.7/bin")
+			   ,(expand-file-name "~/Library/Python/3.8/bin")
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   )
 			 (split-string (getenv "PATH") ":")
@@ -65,29 +118,55 @@
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "LDFLAGS" (string-join '(
+				 "-L/usr/local/opt/binutils/lib"
+				 "-L/usr/local/opt/curl-openssl/lib"
 				 "-L/usr/local/opt/gettext/lib"
+				 "-L/usr/local/opt/icu4c/lib"
 				 "-L/usr/local/opt/libffi/lib"
+				 "-L/usr/local/opt/libpq/lib"
 				 "-L/usr/local/opt/libxml2/lib"
+				 "-L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
+				 "-L/usr/local/opt/llvm/lib"
+				 "-L/usr/local/opt/openldap/lib"
 				 "-L/usr/local/opt/openssl/lib"
+				 "-L/usr/local/opt/php@7.2/lib"
+				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/sqlite/lib"
 				 "-L/usr/local/opt/texinfo/lib"
+				 "-L/usr/local/opt/ncurses/lib"
+				 ;; "-L/usr/local/opt/openssl@1.1/lib"
 				 ) " "))
 
 (setenv "CPPFLAGS" (string-join '(
+				  "-I/usr/local/opt/binutils/include"
+				  "-I/usr/local/opt/curl-openssl/include"
 				  "-I/usr/local/opt/gettext/include"
+				  "-I/usr/local/opt/icu4c/include"
+				  "-I/usr/local/opt/libpq/include"
 				  "-I/usr/local/opt/libxml2/include"
+				  "-I/usr/local/opt/llvm/include"
+				  "-I/usr/local/opt/openldap/include"
 				  "-I/usr/local/opt/openssl/include"
+				  "-I/usr/local/opt/php@7.2/include"
+				  "-I/usr/local/opt/readline/include"
 				  "-I/usr/local/opt/readline/include"
 				  "-I/usr/local/opt/sqlite/include"
+				  "-I/usr/local/opt/ncurses/include"
+				  ;; "-I/usr/local/opt/openssl@1.1/include"
 				  ) " "))
 
 (setenv "PKG_CONFIG_PATH" (string-join '(
 					 "/usr/local/opt/libffi/lib/pkgconfig"
 					 "/usr/local/opt/libxml2/lib/pkgconfig"
 					 "/usr/local/opt/openssl/lib/pkgconfig"
+					 ;; "/usr/local/opt/openssl@1.1/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
 					 "/usr/local/opt/sqlite/lib/pkgconfig"
+					 "/usr/local/opt/curl-openssl/lib/pkgconfig"
+					 "/usr/local/opt/icu4c/lib/pkgconfig"
+					 "/usr/local/opt/readline/lib/pkgconfig"
+					 "/usr/local/opt/ncurses/lib/pkgconfig"
 					 ) ":"))
 
 ;;; Environment Variable Ends here
@@ -96,6 +175,7 @@
 
 (use-package magit :defer t :ensure t :no-require t)
 (use-package monky :defer t :ensure t :no-require t)
+(use-package transient :defer t :ensure t :no-require t)
 
 ;; Input I/F
 (ido-mode 1)
@@ -123,6 +203,10 @@
 ;;; For Silver Searcher (ag)
 (use-package ag :ensure t :defer t :no-require t)
 
+;;; For Nginx
+(use-package nginx-mode :ensure t)
+
+
 ;;; For Docker
 (use-package docker :defer t :ensure t :no-require t)
 (use-package docker-compose-mode :defer t :ensure t :no-require t)
@@ -142,43 +226,63 @@
 
 ;;; For babel
 (use-package ob-restclient :defer t :ensure t :no-require t)
+(use-package ob-async :defer t :ensure t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
    (emacs-lisp . t)
-   (restclient . t)
-   (shell . t)
    (python . t)
+   (restclient . t)
+   ;;(rustic . t)
+   (shell . t)
    (sql . t)))
+
+;;; Editorconfig
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
+;;; For Rust
+(use-package rustic :defer t :ensure t :no-require t
+  :init
+  (setq rustic-lsp-server 'rust-analyzer)
+  (setq rustic-rls-pkg 'eglot))
 
 
 ;;; For Python
-(use-package pyvenv :defer t :ensure t :no-require t
-  :config
-  ;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
-  (defun pyvenv-create (venv-name python-executable)
-    "Create virtualenv.  VENV-NAME  PYTHON-EXECUTABLE."
-    (interactive (list
-                  (read-from-minibuffer "Name of virtual environment: ")
-                  (read-file-name "Python interpreter to use: "
-                                  (file-name-directory (executable-find "python"))
-                                  nil nil "python")))
-    (let ((venv-dir (concat (file-name-as-directory (pyvenv-workon-home))
-                            venv-name)))
-      (unless (file-exists-p venv-dir)
-	(run-hooks 'pyvenv-pre-create-hooks)
-	(with-current-buffer (generate-new-buffer "*virtualenv*")
-          (call-process python-executable nil t t
-			"-m" "venv" venv-dir)
-          (display-buffer (current-buffer)))
-	(run-hooks 'pyvenv-post-create-hooks))
-      (pyvenv-activate venv-dir)))
-  )
+(use-package pyvenv :ensure t :no-require t)
+
+;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
+(defun pyvenv-create (venv-name python-executable)
+  "Create virtualenv.  VENV-NAME  PYTHON-EXECUTABLE."
+  (interactive (list
+                (read-from-minibuffer "Name of virtual environment: ")
+                (read-file-name "Python interpreter to use: "
+                                (file-name-directory (executable-find "python3.7"))
+                                nil nil "python")))
+  (let ((venv-dir (concat (file-name-as-directory (pyvenv-workon-home))
+                          venv-name)))
+    (unless (file-exists-p venv-dir)
+      (run-hooks 'pyvenv-pre-create-hooks)
+      (with-current-buffer (generate-new-buffer "*virtualenv*")
+        (call-process python-executable nil t t
+		      "-m" "venv" venv-dir)
+        (display-buffer (current-buffer)))
+      (run-hooks 'pyvenv-post-create-hooks))
+    (pyvenv-activate venv-dir)))
 
 ;;; For TypeScript
 (use-package typescript-mode :defer t :ensure t :no-require t
   :config
   (custom-set-variables '(typescript-indent-level 2)))
+
+;;; For React
+(use-package rjsx-mode :defer t :ensure t :no-require t
+  :config
+  (setq indent-tabs-mode nil)
+  (setq js-indent-level 2)
+  (setq js2-strict-missing-semi-warning nil))
 
 ;;; Our Async Exec
 (defvar our-async-exec-cmd-history nil)
@@ -358,7 +462,8 @@
 
 (defvar our-git-config nil)
 
-(defun our-git-clone (repo label cwd name)
+
+(defun our-git-fetch-unshallow (repo label cwd name)
   (interactive
    (list
     (completing-read "Repository: " nil)
@@ -379,6 +484,49 @@
 	     repo name)
      cwd)))
 
+
+(defun our-git-clone (repo label cwd name)
+  (interactive
+   (list
+    (completing-read "Repository: " nil)
+    (ido-completing-read
+     "Git configuration: "
+     (mapcar (lambda (n) (car n)) our-git-config)
+     nil nil nil nil nil)
+    (ido-read-directory-name "Directory: ")
+    (completing-read "Name: " nil)))
+
+  (unless (file-exists-p cwd)
+    (make-directory cwd))
+
+  (let ((entry (cdr (assoc label our-git-config))))
+    (our-async-exec
+     (format "git -c core.sshCommand='ssh -i %s -F /dev/null' clone  --depth 1 %s %s"
+	     (cdr (assoc 'key entry))
+	     repo name)
+     cwd)))
+
+
+(defun our-git-submodule-add (repo label cwd name)
+  (interactive
+   (list
+    (completing-read "Repository: " nil)
+    (ido-completing-read
+     "Git configuration: "
+     (mapcar (lambda (n) (car n)) our-git-config)
+     nil nil nil nil nil)
+    (ido-read-directory-name "Directory: ")
+    (completing-read "Name: " nil)))
+
+  (unless (file-exists-p cwd)
+    (make-directory cwd))
+
+  (let ((entry (cdr (assoc label our-git-config))))
+    (our-async-exec
+     (format "git -c core.sshCommand='ssh -i %s -F /dev/null' submodule add %s %s"
+	     (cdr (assoc 'key entry))
+	     repo name)
+     cwd)))
 
 (defun our-git-config-apply (label cwd)
   (interactive
@@ -407,8 +555,13 @@
     user-init-file)))
 ;;; Our open init file Ends here.
 
+;;; Our open user task file
+(defun our-open-user-task-file ()
+  (interactive)
+  (find-file "~/Dropbox/tasks/README.org"))
+;;; Our open user task file Ends here.
 
-(defun rust-lang-install ()
+(defun lang-install-rust ()
   (interactive)
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
 
@@ -427,6 +580,18 @@
 (use-package flycheck :defer :ensure t :no-require t
   :init
   (add-hook 'python-mode-hook 'flycheck-mode))
+
+;;; For vue.js
+(use-package add-node-modules-path :ensure t :defer t)
+(require 'flycheck)
+(use-package vue-mode :ensure t :defer t
+  :init
+  (flycheck-add-mode 'javascript-eslint 'vue-mode)
+  (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
+  (flycheck-add-mode 'javascript-eslint 'css-mode)
+  :config
+  (add-hook 'vue-mode-hook #'add-node-modules-path)
+  (add-hook 'vue-mode-hook 'flycheck-mode))
 
 (bind-keys*
  ("¥" . "\\")
@@ -452,6 +617,50 @@
 
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
+ ("S-<f12>" . our-open-user-task-file)
+
+ ;; ignore key binding
+ ;; TODO: command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
  )
 
 (load-file "~/.emacs.d/settings.el")
+
+(use-package org
+  :bind (("<f9>" . 'org-set-effort)
+	 ("<S-f10>" . 'org-clock-in)
+	 ("<S-f11>" . 'org-clock-out)))
+
+;; org-export
+(custom-set-variables '(org-export-with-sub-superscripts nil))
+
+;; org-agenda
+;; (setq org-agenda-overriding-columns-format "%TODO %7EFFORT %PRIORITY     %100ITEM 100%TAGS")
+(use-package company :ensure t :pin melpa
+  :config
+  (custom-set-variables
+   '(company-idle-delay .1)
+   '(company-tooltip-idle-delay .1))
+  )
+
+
+(defun our-buffer-copy-current-file-path ()
+  "バッファのファイルパスをクリップボードにコピーする"
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (if path
+      (progn
+        (kill-new path)
+        (message (format "Copied: %s" path)))
+      (message (format "Cannot copied")))))
+
+(use-package kubernetes
+  :ensure t
+  :commands (kubernetes-overview))
+
+(bind-key* "C-t C-a" 'org-agenda)
+(bind-key* "C-t a" 'org-agenda)
+(bind-key* "C-t C-j" 'org-capture)
+
+;; n https://github.com/tj/n
+(setenv "N_PREFIX" (expand-file-name "~/.local"))
+(put 'set-goal-column 'disabled nil)
