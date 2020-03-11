@@ -581,6 +581,18 @@
   :init
   (add-hook 'python-mode-hook 'flycheck-mode))
 
+;;; For vue.js
+(use-package add-node-modules-path :ensure t :defer t)
+(require 'flycheck)
+(use-package vue-mode :ensure t :defer t
+  :init
+  (flycheck-add-mode 'javascript-eslint 'vue-mode)
+  (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
+  (flycheck-add-mode 'javascript-eslint 'css-mode)
+  :config
+  (add-hook 'vue-mode-hook #'add-node-modules-path)
+  (add-hook 'vue-mode-hook 'flycheck-mode))
+
 (bind-keys*
  ("¥" . "\\")
  ("C-h" . backward-delete-char-untabify)
