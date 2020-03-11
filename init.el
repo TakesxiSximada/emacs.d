@@ -259,7 +259,7 @@
   (interactive (list
                 (read-from-minibuffer "Name of virtual environment: ")
                 (read-file-name "Python interpreter to use: "
-                                (file-name-directory (executable-find "python"))
+                                (file-name-directory (executable-find "python3.7"))
                                 nil nil "python")))
   (let ((venv-dir (concat (file-name-as-directory (pyvenv-workon-home))
                           venv-name)))
@@ -527,7 +527,6 @@
 	     (cdr (assoc 'key entry))
 	     repo name)
      cwd)))
-
 
 (defun our-git-config-apply (label cwd)
   (interactive
