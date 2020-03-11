@@ -641,7 +641,7 @@
    '(company-idle-delay .1)
    '(company-tooltip-idle-delay .1))
   )
-
+(global-company-mode)
 
 (defun our-buffer-copy-current-file-path ()
   "バッファのファイルパスをクリップボードにコピーする"
