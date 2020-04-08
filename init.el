@@ -609,6 +609,11 @@
  ("C-t k" . windmove-up)
  ("C-t l" . windmove-right)
 
+ ("C-t C-h" . windmove-left)
+ ("C-t C-j" . windmove-down)
+ ("C-t C-k" . windmove-up)
+ ("C-t C-l" . windmove-right)
+
  ;; Git
  ("C-x C-v" . magit-status)
 
