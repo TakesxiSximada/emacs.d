@@ -3,6 +3,7 @@
 
 ;; custom lisp
 (add-to-list 'load-path "~/.emacs.d/lib")
+(add-to-list 'load-path "/srv/sximada/elnode")
 
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -108,6 +109,7 @@
 			   ,(expand-file-name "~/development/flutter/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
+			   ,(expand-file-name "~/.poetry/bin")
 			   ,(expand-file-name "~/Library/Python/3.7/bin")
 			   ,(expand-file-name "~/Library/Python/3.8/bin")
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
@@ -609,11 +611,17 @@
  ("C-t k" . windmove-up)
  ("C-t l" . windmove-right)
 
+ ("C-t C-h" . windmove-left)
+ ("C-t C-j" . windmove-down)
+ ("C-t C-k" . windmove-up)
+ ("C-t C-l" . windmove-right)
+
  ;; Git
  ("C-x C-v" . magit-status)
 
  ;; My Customize
- ("M-_" . our-async-exec-interactive)
+ ;; ("M-_" . our-async-exec-interactive)
+ ("s-`" . our-async-exec-interactive)
 
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
@@ -637,6 +645,7 @@
 ;; (setq org-agenda-overriding-columns-format "%TODO %7EFFORT %PRIORITY     %100ITEM 100%TAGS")
 (use-package company :ensure t :pin melpa
   :config
+  (global-company-mode)
   (custom-set-variables
    '(company-idle-delay .1)
    '(company-tooltip-idle-delay .1))
@@ -664,3 +673,5 @@
 ;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 (put 'set-goal-column 'disabled nil)
+(bind-key "C-[ C-[" 'mark-word)
+(bind-key* "M-]" 'mark-word)
