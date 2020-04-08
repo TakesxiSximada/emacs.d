@@ -109,6 +109,7 @@
 			   ,(expand-file-name "~/development/flutter/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
+			   ,(expand-file-name "~/.poetry/bin")
 			   ,(expand-file-name "~/Library/Python/3.7/bin")
 			   ,(expand-file-name "~/Library/Python/3.8/bin")
 			   ,(expand-file-name "~/google-cloud-sdk/bin")
