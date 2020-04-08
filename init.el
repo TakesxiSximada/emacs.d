@@ -3,6 +3,7 @@
 
 ;; custom lisp
 (add-to-list 'load-path "~/.emacs.d/lib")
+(add-to-list 'load-path "/srv/sximada/elnode")
 
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
