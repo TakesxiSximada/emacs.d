@@ -620,7 +620,8 @@
  ("C-x C-v" . magit-status)
 
  ;; My Customize
- ("M-_" . our-async-exec-interactive)
+ ;; ("M-_" . our-async-exec-interactive)
+ ("s-`" . our-async-exec-interactive)
 
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
