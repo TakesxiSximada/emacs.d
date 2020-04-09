@@ -627,9 +627,6 @@
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
  ("S-<f12>" . our-open-user-task-file)
-
- ;; ignore key binding
- ;; TODO: command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
  )
 
 (load-file "~/.emacs.d/settings.el")
@@ -651,7 +648,6 @@
    '(company-idle-delay .1)
    '(company-tooltip-idle-delay .1))
   )
-
 
 (defun our-buffer-copy-current-file-path ()
   "バッファのファイルパスをクリップボードにコピーする"
@@ -676,3 +672,5 @@
 (put 'set-goal-column 'disabled nil)
 (bind-key "C-[ C-[" 'mark-word)
 (bind-key* "M-]" 'mark-word)
+
+(bind-key "s-t" nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
