@@ -622,6 +622,7 @@
  ;; My Customize
  ;; ("M-_" . our-async-exec-interactive)
  ("s-`" . our-async-exec-interactive)
+ ("C-t C-c" . our-async-exec-interactive)
 
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
