@@ -610,6 +610,10 @@
  ("C-t j" . windmove-down)
  ("C-t k" . windmove-up)
  ("C-t l" . windmove-right)
+ ("C-t C-h" . windmove-left)
+ ("C-t C-j" . windmove-down)
+ ("C-t C-k" . windmove-up)
+ ("C-t C-l" . windmove-right)
 
  ("C-t C-h" . windmove-left)
  ("C-t C-j" . windmove-down)
@@ -665,6 +669,7 @@
 
 (bind-key* "C-t C-a" 'org-agenda)
 (bind-key* "C-t a" 'org-agenda)
+;; (bind-key* "C-t C-j" 'org-capture)
 (bind-key* "C-t C-j" 'org-capture)
 
 ;; n https://github.com/tj/n
