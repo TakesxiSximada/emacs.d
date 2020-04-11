@@ -610,6 +610,10 @@
  ("C-t j" . windmove-down)
  ("C-t k" . windmove-up)
  ("C-t l" . windmove-right)
+ ("C-t C-h" . windmove-left)
+ ("C-t C-j" . windmove-down)
+ ("C-t C-k" . windmove-up)
+ ("C-t C-l" . windmove-right)
 
  ("C-t C-h" . windmove-left)
  ("C-t C-j" . windmove-down)
@@ -622,13 +626,11 @@
  ;; My Customize
  ;; ("M-_" . our-async-exec-interactive)
  ("s-`" . our-async-exec-interactive)
+ ("C-t C-c" . our-async-exec-interactive)
 
  ;; File open utility
  ("<f12>" . our-open-user-init-file)
  ("S-<f12>" . our-open-user-task-file)
-
- ;; ignore key binding
- ;; TODO: command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
  )
 
 (load-file "~/.emacs.d/settings.el")
@@ -651,7 +653,6 @@
    '(company-tooltip-idle-delay .1))
   )
 
-
 (defun our-buffer-copy-current-file-path ()
   "バッファのファイルパスをクリップボードにコピーする"
   (interactive)
@@ -668,6 +669,7 @@
 
 (bind-key* "C-t C-a" 'org-agenda)
 (bind-key* "C-t a" 'org-agenda)
+;; (bind-key* "C-t C-j" 'org-capture)
 (bind-key* "C-t C-j" 'org-capture)
 
 ;; n https://github.com/tj/n
@@ -675,3 +677,5 @@
 (put 'set-goal-column 'disabled nil)
 (bind-key "C-[ C-[" 'mark-word)
 (bind-key* "M-]" 'mark-word)
+
+(bind-key "s-t" nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
