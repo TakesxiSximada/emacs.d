@@ -73,6 +73,12 @@
   :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
 
 
+(use-package gist
+  :ensure t :defer t
+  :custom
+  (gist-ask-for-filename t)
+  (gist-ask-for-description t))
+
 ;;; My Package
 (quelpa '(change-case :fetcher git :url "git@gist.github.com:e8a10244aac6308de1323d1f6685658b.git"))
 
