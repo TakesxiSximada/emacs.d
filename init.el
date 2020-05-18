@@ -113,7 +113,7 @@
 			   ;; "/Users/sximada/.nvm/versions/node/v8.16.1/bin"
 			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
 			   ;; "/Users/sximada/development/flutter/bin"
-			   ;; "/usr/local/opt/openssl@1.1/bin"
+			   "/usr/local/opt/openssl@1.1/bin"
 			   ,(expand-file-name "~/development/flutter/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
@@ -139,6 +139,7 @@
 				 "-L/usr/local/opt/llvm/lib"
 				 "-L/usr/local/opt/openldap/lib"
 				 "-L/usr/local/opt/openssl/lib"
+				 "-L/usr/local/opt/openssl@1.1/lib"
 				 "-L/usr/local/opt/php@7.2/lib"
 				 "-L/usr/local/opt/readline/lib"
 				 "-L/usr/local/opt/readline/lib"
@@ -158,6 +159,7 @@
 				  "-I/usr/local/opt/llvm/include"
 				  "-I/usr/local/opt/openldap/include"
 				  "-I/usr/local/opt/openssl/include"
+				  "-I/usr/local/opt/openssl@1.1/include"
 				  "-I/usr/local/opt/php@7.2/include"
 				  "-I/usr/local/opt/readline/include"
 				  "-I/usr/local/opt/readline/include"
@@ -170,7 +172,7 @@
 					 "/usr/local/opt/libffi/lib/pkgconfig"
 					 "/usr/local/opt/libxml2/lib/pkgconfig"
 					 "/usr/local/opt/openssl/lib/pkgconfig"
-					 ;; "/usr/local/opt/openssl@1.1/lib/pkgconfig"
+					 "/usr/local/opt/openssl@1.1/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
 					 "/usr/local/opt/sqlite/lib/pkgconfig"
 					 "/usr/local/opt/curl-openssl/lib/pkgconfig"
