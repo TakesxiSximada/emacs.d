@@ -646,6 +646,12 @@
 (load-file "~/.emacs.d/settings.el")
 
 (use-package org
+  :config
+  (setq org-hide-leading-stars t)
+  (setq org-startup-indented t)
+  (setq org-display-inline-images t)
+  (setq org-redisplay-inline-images t)
+  (setq org-startup-with-inline-images "inlineimages")
   :bind (("<f9>" . 'org-set-effort)
 	 ("<S-f10>" . 'org-clock-in)
 	 ("<S-f11>" . 'org-clock-out)))
