@@ -695,3 +695,12 @@
 (bind-key* "M-]" 'mark-word)
 
 (bind-key "s-t" nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
+;; org-agenda
+(custom-set-variables
+ '(org-agenda-span 1)
+ '(org-todo-keywords '((sequence "TODO" "ISSUE" "WAIT" "|" "DONE" "CANCEL")))
+ '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89")))
+ '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
+ '(org-agenda-columns-add-appointments-to-effort-sum t)
+ '(org-deadline-warning-days 0))  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
+
