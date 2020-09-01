@@ -8,3 +8,5 @@ This repository is settings for my Emacs.
 | ./init.el                      | Remember, the Force will be with you, always. |
 | ./themes/sximada-dark-theme.el | That leads to the dark side.                  |
 |--------------------------------+-----------------------------------------------|
+
+[[./PROJECT.org]]
