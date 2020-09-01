@@ -27,18 +27,16 @@
 
 ;; fonts
 (set-face-attribute 'default nil :family "Menlo" :height 120)
+
 (let ((typ (frame-parameter nil 'font)))
   (unless (string-equal "tty" typ)
     (set-fontset-font typ 'japanese-jisx0208
                       (font-spec :family "Hiragino Kaku Gothic ProN"))))
-
 (add-to-list 'face-font-rescale-alist
              '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
-
 ;; backup file
 (setq make-backup-files nil)
 (setq auto-save-default nil)
-
 
 ;; Splash
 (setq initial-buffer-choice
@@ -56,7 +54,6 @@
 	("melpa-stable" . "http://stable.melpa.org/packages/")
 	))
 
-
 (progn ;; Setup packaging tools
   (package-install 'use-package)
   (use-package quelpa :ensure t)
@@ -64,14 +61,11 @@
    '(quelpa-use-package
      :fetcher git
      :url "https://github.com/quelpa/quelpa-use-package.git"))
-  (require 'quelpa-use-package)
-  )
-
+  (require 'quelpa-use-package))
 
 ;;; for qiita
 (use-package ox-qmd :ensure t
   :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
-
 
 (use-package gist
   :ensure t :defer t
@@ -82,7 +76,6 @@
 ;;; My Package
 (quelpa '(change-case :fetcher git :url "git@gist.github.com:e8a10244aac6308de1323d1f6685658b.git"))
 
-
 ;;; Environment Variable
 (require 'cl)
 (require 'subr-x)
@@ -90,8 +83,9 @@
 (setq exec-path (delete-duplicates
 		 (append `(
 			   "/Library/TeX/texbin"
+			   "/usr/local/opt/mysql-client/bin"
 			   "/usr/local/bin"
-			   "/usr/local/opt/ncurses/bin"
+			   "/usr/local/opt/openjdk/bin"
 			   "/usr/local/opt/apr-util/bin"
 			   "/usr/local/opt/binutils/bin"
 			   "/usr/local/opt/curl-openssl/bin"
@@ -101,6 +95,7 @@
 			   "/usr/local/opt/libpq/bin"
 			   "/usr/local/opt/libxml2/bin"
 			   "/usr/local/opt/llvm/bin"
+			   "/usr/local/opt/ncurses/bin"
 			   "/usr/local/opt/openldap/bin"
 			   "/usr/local/opt/openldap/sbin"
 			   "/usr/local/opt/openssl/bin"
@@ -114,6 +109,8 @@
 			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
 			   ;; "/Users/sximada/development/flutter/bin"
 			   "/usr/local/opt/openssl@1.1/bin"
+			   ,(expand-file-name "~/.goenv/bin")
+			   ,(expand-file-name "~/.goenv/shims")
 			   ,(expand-file-name "~/development/flutter/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.local/bin")
@@ -128,6 +125,7 @@
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "LDFLAGS" (string-join '(
+				 "-L/usr/local/opt/mysql-client/lib"
 				 "-L/usr/local/opt/binutils/lib"
 				 "-L/usr/local/opt/curl-openssl/lib"
 				 "-L/usr/local/opt/gettext/lib"
@@ -148,8 +146,9 @@
 				 "-L/usr/local/opt/ncurses/lib"
 				 ;; "-L/usr/local/opt/openssl@1.1/lib"
 				 ) " "))
-
 (setenv "CPPFLAGS" (string-join '(
+				  "-I/usr/local/opt/openjdk/include"
+				  "-I/usr/local/opt/mysql-client/include"
 				  "-I/usr/local/opt/binutils/include"
 				  "-I/usr/local/opt/curl-openssl/include"
 				  "-I/usr/local/opt/gettext/include"
@@ -179,6 +178,7 @@
 					 "/usr/local/opt/icu4c/lib/pkgconfig"
 					 "/usr/local/opt/readline/lib/pkgconfig"
 					 "/usr/local/opt/ncurses/lib/pkgconfig"
+					 "/usr/local/opt/mysql-client/lib/pkgconfig"
 					 ) ":"))
 
 ;;; Environment Variable Ends here
@@ -636,6 +636,7 @@
  ;; My Customize
  ;; ("M-_" . our-async-exec-interactive)
  ("s-`" . our-async-exec-interactive)
+ ("<C-ESC>" . our-async-exec-interactive)
  ("C-t C-c" . our-async-exec-interactive)
 
  ;; File open utility
@@ -686,7 +687,6 @@
 (bind-key* "C-t C-a" 'org-agenda)
 (bind-key* "C-t a" 'org-agenda)
 ;; (bind-key* "C-t C-j" 'org-capture)
-(bind-key* "C-t C-j" 'org-capture)
 
 ;; n https://github.com/tj/n
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
@@ -695,12 +695,106 @@
 (bind-key* "M-]" 'mark-word)
 
 (bind-key "s-t" nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
+(bind-key* "C-x C-w" 'ido-kill-buffer)
+(bind-key "M-SPC" 'our-async-exec-interactive)  ;; M-SPCでコマンド実行可能にする
+
+;; カレンダーの表示に星をつける
+(setq calendar-month-header
+      '(propertize (format " %s %d " (calendar-month-name month) year)
+		   'font-lock-face 'calendar-month-header))
+
+;; (use-package emoji-fontset
+;;   :if window-system
+;;   :init
+;;   (emoji-fontset-enable "Symbola"))
+
 ;; org-agenda
 (custom-set-variables
  '(org-agenda-span 1)
- '(org-todo-keywords '((sequence "TODO" "ISSUE" "WAIT" "|" "DONE" "CANCEL")))
- '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89")))
+ '(org-todo-keywords '((sequence
+			"INBOX" "MAYBE" "ACTION" "WAITING" "TODO"
+			"|"
+			"DONE" "CANCEL")))
+ '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-deadline-warning-days 0))  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
+ '(org-deadline-warning-days 0)  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
+ '(org-agenda-custom-commands
+   '(("W" "Weekly Review"
+      ((agenda "" ((org-agenda-span 7))); review upcoming deadlines and appointments
+					; type "l" in the agenda to review logged items
+       (stuck "") ; review stuck projects as designated by org-stuck-projects
+       (todo "ISSUE") ; review all projects (assuming you use todo keywords to designate projects)
+       (todo "INBOX")
+       (todo "MAYBE")
+       (todo "ACTION")
+       (todo "TODO")
+       (todo "WAITING")
+       (todo "DONE")
+       (todo "CANCEL")))
+     )))
 
+
+(bind-key* "C-t t" #'org-clock-jump-to-current-clock)
+
+(require 'org-agenda)
+(bind-keys :map org-agenda-mode-map
+	   ("C-c C-c" . org-agenda-todo)
+	   ("C-c C-e" . org-agenda-set-effort)
+	   ("C-c C-i" . org-agenda-clock-in)
+	   ;; ("C-c C-o" . org-agenda-clock-out)
+	   )
+
+;; #+PROPERTY: Effort_ALL 1 2 3 5 8 13 21 34 55 89 144 233
+;; #+STARTUP: indent hidestars inlineimages
+;; #+TODO: TODO(t) ISSUE(i) EPIC(e) IDEA(i) BLOCK(b) SURVEY(s) PENDING(p) WIP(w) | DONE(d!) CANCEL(c!) DOC SPEC
+;; #+COLUMNS: %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM
+;; (put 'narrow-to-region 'disabled nil)
+
+
+;; setup golang
+(progn
+  (use-package lsp-mode
+    :ensure t
+    :commands (lsp lsp-deferred)
+    :hook (go-mode . lsp-deferred))
+
+  ;; Set up before-save hooks to format buffer and add/delete imports.
+  ;; Make sure you don't have other gofmt/goimports hooks enabled.
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+  ;; Optional - provides fancier overlays.
+  (use-package lsp-ui
+    :ensure t
+    :commands lsp-ui-mode)
+
+  ;; Company mode is a standard completion package that works well with lsp-mode.
+  (use-package company
+    :ensure t
+    :config
+    ;; Optionally enable completion-as-you-type behavior.
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 1))
+
+  ;; Optional - provides snippet support.
+  (use-package yasnippet
+    :ensure t
+    :commands yas-minor-mode
+    :hook (go-mode . yas-minor-mode))
+  )
+
+;; org-agendaの項目を開いたら作業時間を自動で計測する
+(defun org-clock-in-interactive (&optional starting-p)
+  (when (yes-or-no-p "Clock In?")
+    (org-clock-in)))
+
+(add-hook 'org-agenda-after-show-hook #'org-narrow-to-subtree)
+(add-hook 'org-agenda-after-show-hook #'org-clock-in-interactive)
+(add-hook 'org-clock-out-hook #'org-agenda-list)
+(add-hook 'org-clock-out-hook #'widen)
+
+(bind-key "C-c C-x C-t o" #'org-clock-out)
+(bind-key "C-c C-x C-t b" #'org-clock-in-last)
