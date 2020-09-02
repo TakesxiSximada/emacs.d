@@ -798,3 +798,7 @@
 
 (bind-key "C-c C-x C-t o" #'org-clock-out)
 (bind-key "C-c C-x C-t b" #'org-clock-in-last)
+
+
+;; github-review
+(use-package github-review :defer t :ensure t)
