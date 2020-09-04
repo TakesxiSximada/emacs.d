@@ -238,7 +238,7 @@
 
 ;;; For babel
 (use-package ob-restclient :defer t :ensure t :no-require t)
-(use-package ob-async :defer t :ensure t)
+(use-package ob-async :ensure t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
