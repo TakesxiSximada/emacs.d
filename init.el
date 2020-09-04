@@ -46,13 +46,28 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
-(setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-	("org" . "https://orgmode.org/elpa/")
-	;; ("marmalade" . "http://marmalade-repo.org/packages/")
-	("melpa-stable" . "http://stable.melpa.org/packages/")
-	))
+;; package
+(require 'package nil 'noerror)
+
+;; elpa/gnutls workaround
+(if (string< emacs-version "26.3")
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+
+(setq
+ package-enable-at-startup t
+ package-user-dir (expand-file-name "~/.elpa")
+ package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+		    ("melpa" . "https://melpa.org/packages/")
+		    ("org" . "https://orgmode.org/elpa/")
+		    ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+		    ("melpa-stable" . "http://stable.melpa.org/packages/")
+		    ))
+(eval-when-compile
+  (unless (file-exists-p (locate-user-emacs-file "tmp/bootstrap-stamp"))
+    (package-refresh-contents)
+    (with-temp-buffer (write-file (locate-user-emacs-file "tmp/bootstrap-stamp")))
+    ))
+(package-initialize)
 
 (progn ;; Setup packaging tools
   (package-install 'use-package)
