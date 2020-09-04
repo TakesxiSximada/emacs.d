@@ -237,6 +237,9 @@
 (use-package restclient :defer t :ensure t :no-require t)
 
 ;;; For babel
+(require 'ob-plantuml)
+(setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.1/libexec/plantuml.jar")
+
 (use-package ob-restclient :defer t :ensure t :no-require t)
 (use-package ob-async :ensure t)
 (org-babel-do-load-languages
