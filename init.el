@@ -88,8 +88,6 @@
   (gist-ask-for-filename t)
   (gist-ask-for-description t))
 
-;;; My Package
-(quelpa '(change-case :fetcher git :url "git@gist.github.com:e8a10244aac6308de1323d1f6685658b.git"))
 
 ;;; Environment Variable
 (require 'cl)
@@ -820,3 +818,7 @@
 
 ;; github-review
 (use-package github-review :defer t :ensure t)
+
+;; My Package
+;; (quelpa '(change-case :fetcher git :url "git@gist.github.com:e8a10244aac6308de1323d1f6685658b.git"))
+(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case)
