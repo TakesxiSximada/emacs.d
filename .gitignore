@@ -13,15 +13,15 @@ ido.last
 init.el~
 lib/our-circleci.el
 org-capture-templates/
-quelpa/
+quelpa
 recentf
 request/
 settings.el
 smex-items
 snippets/
 testing.el
+tmp/
 tramp
 transient/
 url/
 var/
-tmp/
