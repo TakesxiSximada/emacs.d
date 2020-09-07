@@ -821,6 +821,17 @@
 (use-package github-review :defer t :ensure t)
 
 ;; My Package
-;; (quelpa '(change-case :fetcher git :url "git@gist.github.com:e8a10244aac6308de1323d1f6685658b.git"))
 (el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case)
 (require 'change-case)
+
+(el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon)
+(require 'mastodon)
+
+(el-get-bundle foreman-mode :type "git" :url "git@github.com:collective-el/foreman-mode.git")
+(require 'foreman-mode)
+
+(el-get-bundle dotenv-mode :type "git" :url "git@github.com:TakesxiSximada/emacs-dotenv-mode.git")
+(require 'dotenv-mode)
+
+(with-current-buffer (find-file-noselect "/Users/sximada/.config/mastodon/mstdn.jp")
+  (dotenv-mode-apply-all))
