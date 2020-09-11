@@ -713,7 +713,6 @@
 
 (bind-key "s-t" nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
 (bind-key* "C-x C-w" 'ido-kill-buffer)
-(bind-key "M-SPC" 'our-async-exec-interactive)  ;; M-SPCでコマンド実行可能にする
 
 ;; カレンダーの表示に星をつける
 (setq calendar-month-header
