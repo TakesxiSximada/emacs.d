@@ -199,6 +199,7 @@
 
 (require 'windmove)
 
+(setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
 (use-package magit :defer t :ensure t :no-require t)
 (use-package monky :defer t :ensure t :no-require t)
 (use-package transient :defer t :ensure t :no-require t)
