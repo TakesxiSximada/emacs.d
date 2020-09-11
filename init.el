@@ -4,6 +4,9 @@
 ;; custom lisp
 (add-to-list 'load-path "~/.emacs.d/lib")
 (add-to-list 'load-path "/srv/sximada/elnode")
+(add-to-list 'load-path "/srv/sallies/nvm.el/")
+(add-to-list 'load-path "/srv/sallies/our.el/")
+
 
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -372,7 +375,13 @@
     (message (format "Created a buffer: %s" buf-name))))
 
 
+;; ---------------
 ;; MONKEY PATCHING
+;; ---------------
+
+;; for simple.el
+;;
+;; async-shell-commandで長い出力を表示する場合にEmacsが固まる問題を回避する
 (defun comint-output-filter (process string)
   (let ((oprocbuf (process-buffer process)))
     ;; First check for killed buffer or no input.
@@ -817,6 +826,12 @@
 (bind-key "C-c C-x C-t b" #'org-clock-in-last)
 
 
+(use-package unicode-escape :ensure t :defer t)  ;; for qiita
+(use-package avy-menu :ensure t :defer t)  ;; for terraform
+(use-package sudden-death :ensure t :defer t)
+(use-package dired-filter :ensure t :defer t)
+(use-package google-translate :ensure t :defer t)
+
 ;; github-review
 (use-package github-review :defer t :ensure t)
 
@@ -835,3 +850,266 @@
 
 (with-current-buffer (find-file-noselect "/Users/sximada/.config/mastodon/mstdn.jp")
   (dotenv-mode-apply-all))
+
+
+;; -----------
+;; our-package
+;; -----------
+;; (require 'our)
+;; (require 'our-brew)
+;; (require 'our-cider)
+;; (require 'our-circleci)
+;; (require 'our-discord)
+;; (require 'our-freewifi)
+;; (require 'our-macos)
+;; (require 'our-magit)
+;; (require 'our-mastodon)
+;; (require 'our-need-install)
+;; (require 'our-org)
+;; (require 'our-pyvenv)
+;; (require 'our-qiita)
+;; (require 'our-simeji)
+;; (require 'our-terraform)
+;; (require 'our-wakatime)
+
+;; (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
+
+;; (load-file "~/.emacs.d/env/discord.el")
+;; (load-file "~/.emacs.d/env/mastodon.el")
+;; (load-file "~/.emacs.d/env/wakatime.el")
+;; (load-file "~/.emacs.d/env/cloudapp.el")
+
+;; -------------
+;; external tool
+;; -------------
+(unless (executable-find "redis-cli") (our-async-exec "brew install redis"))
+(unless (executable-find "chromedriver") (our-async-exec "brew cask install chromedriver"))
+
+
+
+;; -------
+;; clojure
+;; -------
+;; (unless (executable-find "java") (our-async-exec "brew cask install java"))
+;; (unless (executable-find "clj") (our-async-exec "brew install clojure"))
+;; (unless (executable-find "lein") (our-async-exec "brew install leiningen"))
+(use-package rainbow-delimiters :ensure t :defer t)
+(use-package paredit :ensure t :defer t
+  :config
+  (bind-keys :map paredit-mode-map
+             ("C-h" . paredit-backward-delete)))
+(use-package clojure-mode :ensure t :defer t)
+(use-package clj-refactor :ensure t :defer t
+  :diminish clj-refactor-mode
+  :config (cljr-add-keybindings-with-prefix "C-c j"))
+(use-package cider :ensure t :defer t
+  :init
+  (add-hook 'cider-mode-hook #'clj-refactor-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  :diminish subword-mode
+  :config
+  (setq nrepl-log-messages t
+        cider-repl-display-in-current-window t
+        cider-repl-use-clojure-font-lock t
+        cider-prompt-save-file-on-load 'always-save
+        cider-font-lock-dynamically '(macro core function var)
+        cider-overlays-use-font-lock t)
+  (cider-repl-toggle-pretty-printing))
+
+
+;; --------
+;; wakatime
+;; --------
+;; (require 'our-wakatime)
+;; (use-package wakatime-mode :ensure t :defer t
+;;   :init
+;;   (our-wakatime-setup)
+;;   (if (and wakatime-api-key
+;; 	   (file-exists-p wakatime-cli-path))
+;;       (global-wakatime-mode)))
+
+
+
+;; --------
+;; org-mode
+;; --------
+;; (defun our-org-mode-setup ()
+;;   (org-indent-mode)  ;; org-modeの表示をインデントモードにする
+;;   (org-display-inline-images)  ;; 画像表示
+;;   (setq org-src-fontify-natively t)
+
+;;   (setq org-todo-keywords
+;;       '((sequence
+;;          "TODO(t)"
+;; 	 "WIP(w)"
+;; 	 "PENDING(e)"
+;; 	 "REVIEW(r)"
+;; 	 "PROPOSAL(P)"
+;; 	 "PROBREM(p)"
+;; 	 "QUESTION(q)"
+;; 	 "RESEARCH(R)"
+;; 	 "FEEDBACK(f)"
+;; 	 "EPIC(g)"
+;; 	 "|"
+;;          "WHY(W)"
+;;          "DONE(x)"
+;; 	 "CANCEL(c)"
+;; 	 "RESOLVED(o)"
+;; 	 "KEEP(k)"
+;; 	 "DOC(d)"
+;; 	 "FAQ(f)"
+;; 	 "SPEC(s)"
+;; 	 "TIPS(t)")))
+
+;;   (setq org-global-properties
+;; 	(quote (("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89")
+;; 		("STYLE_ALL" . "habit")))))
+
+;; (add-hook 'org-mode-hook 'our-org-mode-setup)
+
+
+;; ---------
+;; org-babel
+;; ---------
+;; (use-package ob-restclient :ensure t :defer t)
+;; (use-package org-preview-html :ensure t :defer t)
+;; (our-need-install "plantuml" "plantuml" :darwin "brew install plantuml")
+;; (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.1/libexec/plantuml.jar")
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '(
+;;    (dot . t)
+;;    (emacs-lisp . t)
+;;    (plantuml . t)
+;;    (restclient . t)
+;;    (shell . t)
+;;    (python . t)
+;;    (sql . t)
+;;    ))
+
+
+;; ----------
+;; kubernetes
+;; ----------
+;; (use-package kubernetes
+;;   :ensure t
+;;   :commands (kubernetes-overview))
+
+
+
+;; ----------
+;; others
+;; ----------
+;; (our-need-install "basictex" "basictex" :darwin "brew cask install basictex # M-x our-latex-update")
+;; (defun our-latex-update ()
+;;   (interactive)
+;;   (our-async-exec
+;;    (string-join '(;; パッケージのアップデート
+;; 		  "sudo tlmgr update --self --all"
+;; 		  ;; デフォルトで A4 用紙を使う
+;; 		  "sudo tlmgr paper a4"
+;; 		  ;; 日本語用パッケージ群のインストール
+;; 		  "sudo tlmgr install collection-langjapanese"
+;; 		  ;; 和文フォント ヒラギノのインストールと設定
+;; 		  "sudo tlmgr repository add http://contrib.texlive.info/current tlcontrib"
+;; 		  "sudo tlmgr pinning add tlcontrib '*'"
+;; 		  "sudo tlmgr install japanese-otf-nonfree japanese-otf-uptex-nonfree ptex-fontmaps-macos cjk-gs-integrate-macos"
+;; 		  "sudo cjk-gs-integrate --link-texmf --cleanup"
+;; 		  "sudo cjk-gs-integrate-macos --link-texmf"
+;; 		  "sudo mktexlsr"
+;; 		  "sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron"
+;; 		  ;; 日本語環境でソースコードの埋め込み
+;; 		  ;; FIXME: ここではうまくjlisting.sty.bz2がダウンロード出来ていないのでコメントアウトするしかない
+;; 		  ;; "curl https://ja.osdn.net/projects/mytexpert/downloads/26068/jlisting.sty.bz2/ | bzip2 -d "
+;; 		  ;; "sudo mv ~/Downloads/jlisting.sty /usr/local/texlive/2018basic/texmf-dist/tex/latex/listings/"
+;; 		  ;; "sudo chmod +r /usr/local/texlive/2018basic/texmf-dist/tex/latex/listings/jlisting.sty"
+;; 		  ;; "sudo mktexlsr"
+;; 		  )
+;; 		" && ")))
+
+;; (our-need-install "ghostscript" "ghostscript" :darwin "brew install ghostscript")
+;; (our-need-install "latexit" "latexit" :darwin "brew cask install latexit")
+;; (our-need-install "pandoc" "pandoc" :darwin "brew install pandoc")
+
+
+;; -----
+;; elenv
+;; -----
+;; (setq elenv-root-directory "/srv/")
+;; (add-hook
+;;  'elenv-initialize-package-after-hook
+;;  (lambda ()
+;;    (require 'use-package)
+
+;;    (use-package powerline :ensure t :defer t)
+
+;;    (use-package exec-path-from-shell :ensure t :defer t
+;;      :init
+;;      (when (memq window-system '(mac ns x))
+;;        (exec-path-from-shell-initialize)))
+
+;;    (use-package helm :ensure t :defer t
+;;      :init
+;;      (require 'helm-config)
+;;      :config
+;;      (helm-mode t)
+;;      (dired-async-mode t)
+;;      (setq helm-M-x-fuzzy-match t)
+;;      (bind-keys :map helm-map
+;; 		("<tab>" . helm-execute-persistent-action)
+;; 		("C-i" . helm-execute-persistent-action)
+;; 		("C-z" . helm-select-action)))
+;;    (use-package helm-ag :ensure t :defer t
+;;      :init
+;;      (setq helm-ag-use-agignore t))
+;;    (use-package elscreen :ensure t
+;;      :init
+;;      (setq elscreen-display-tab nil)
+;;      (setq elscreen-tab-display-kill-screen nil)
+;;      (setq elscreen-tab-display-control nil)
+;;      (elscreen-start)
+;;      (elscreen-create))
+;;    (use-package magit :ensure t :defer t)
+
+;;    (use-package async-await :ensure t :defer t)
+;;    ;; (use-package json :ensure t :defer t)
+;;    (use-package request :ensure t :defer t)
+;;    (use-package async-await :ensure t :defer t)
+;;    (use-package gist :ensure t :defer t)
+;;    (use-package helm-themes :ensure t :defer t)
+;;    (use-package http :ensure t :defer t)
+;;    (use-package markdown-mode :ensure t)
+;;    (use-package quickrun :ensure t :defer t)
+;;    (use-package restclient :ensure t :defer t
+;;      :config
+;;      (add-to-list 'restclient-content-type-modes '("text/csv" . http-mode)))
+;;    (use-package websocket :ensure t :defer t)
+;;    (use-package yaml-mode :ensure t :defer t)
+;;    (use-package dockerfile-mode :ensure t :defer t)
+;;    (use-package company :ensure t :defer nil
+;;      :init
+;;      (setq company-idle-delay 0) ; default = 0.5
+;;      (setq company-minimum-prefix-length 2) ; default = 4
+;;      (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
+;;      :bind
+;;      ("C-M-i" . company-complete)
+;;      :config
+;;      (global-company-mode 1)
+;;      (bind-keys :map company-active-map
+;; 		("C-n" . company-select-next)
+;; 		("C-p" . company-select-previous)
+;; 		("C-s" . company-filter-candidates)
+;; 		("C-i" . company-complete-selection)
+;; 		("C-M-i" . company-complete)))
+
+;;    (use-package spacemacs-theme :ensure t :defer t
+;;      :no-require t
+;;      :init
+;;      (load-theme 'tsdh-dark t))
+;;    (use-package foreman-mode :ensure t :defer t)
+;;    ))
+
