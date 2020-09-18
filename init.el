@@ -693,8 +693,8 @@
   :config
   (global-company-mode)
   (custom-set-variables
-   '(company-idle-delay .1)
-   '(company-tooltip-idle-delay .1))
+   '(company-idle-delay nil)
+   '(company-tooltip-idle-delay nil))
   )
 
 (defun our-buffer-copy-current-file-path ()
