@@ -3,7 +3,6 @@
 
 ;; custom lisp
 (add-to-list 'load-path "~/.emacs.d/lib")
-(add-to-list 'load-path "/srv/sallies/nvm.el/")
 (add-to-list 'load-path "/srv/sallies/our.el/")
 
 
@@ -1114,4 +1113,3 @@
 ;;      (load-theme 'tsdh-dark t))
 ;;    (use-package foreman-mode :ensure t :defer t)
 ;;    ))
-
