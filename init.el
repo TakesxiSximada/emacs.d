@@ -1,9 +1,6 @@
 ;; -*- coding: utf-8 -*-
 (toggle-frame-fullscreen)
 
-;; custom lisp
-(add-to-list 'load-path "/srv/sallies/our.el/")
-
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (setq custom-theme-directory "~/.emacs.d/themes")
