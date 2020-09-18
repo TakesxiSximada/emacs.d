@@ -840,6 +840,9 @@
 (el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon)
 (require 'mastodon)
 
+(el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
+(require 'require-to-install-executable)
+
 (el-get-bundle foreman-mode :type "git" :url "git@github.com:collective-el/foreman-mode.git")
 (require 'foreman-mode)
 
