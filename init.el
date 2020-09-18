@@ -113,12 +113,8 @@
 			   "/usr/local/opt/php@7.2/sbin"
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
-			   ;; "/Users/sximada/.nvm/versions/node/v10.16.3/bin"
-			   ;; "/Users/sximada/.nvm/versions/node/v12.6.0/bin"
-			   ;; "/Users/sximada/.nvm/versions/node/v8.16.1/bin"
-			   "/Users/sximada/.nvm/versions/node/v8.15.0/bin"
-			   ;; "/Users/sximada/development/flutter/bin"
 			   "/usr/local/opt/openssl@1.1/bin"
+			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
 			   ,(expand-file-name "~/.goenv/bin")
 			   ,(expand-file-name "~/.goenv/shims")
 			   ,(expand-file-name "~/development/flutter/bin")
@@ -841,13 +837,13 @@
 (el-get-bundle foreman-mode :type "git" :url "git@github.com:collective-el/foreman-mode.git")
 (require 'foreman-mode)
 
-(el-get-bundle dotenv-mode :type "git" :url "git@github.com:TakesxiSximada/emacs-dotenv-mode.git")
+(el-get-bundle dotenv-mode :type "git" :url "git@github.com:collective-el/emacs-dotenv-mode.git")
 (require 'dotenv-mode)
 
 (el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
 (require 'elnode)
 
-(with-current-buffer (find-file-noselect "/Users/sximada/.config/mastodon/mstdn.jp")
+(with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
   (dotenv-mode-apply-all))
 
 ;; -------------
