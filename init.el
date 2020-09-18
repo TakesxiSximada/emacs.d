@@ -853,6 +853,16 @@
 (with-current-buffer (find-file-noselect "/Users/sximada/.config/mastodon/mstdn.jp")
   (dotenv-mode-apply-all))
 
+;; -------------
+;; external tool
+;; -------------
+(require-to-install-executable "redis" "redis-cli" :darwin "brew install redis")
+(require-to-install-executable "Chrome Driver" "chromedriver" :darwin "brew cask install chromedriver")
+(require-to-install-executable "basictex" "basictex" :darwin "brew cask install basictex # M-x our-latex-update")
+(require-to-install-executable "ghostscript" "ghostscript" :darwin "brew install ghostscript")
+(require-to-install-executable "pandoc" "pandoc" :darwin "brew install pandoc")
+(require-to-install-executable "plantuml" "plantuml" :darwin "brew install plantuml")
+
 
 ;; -----------
 ;; our-package
@@ -866,7 +876,6 @@
 ;; (require 'our-macos)
 ;; (require 'our-magit)
 ;; (require 'our-mastodon)
-;; (require 'our-need-install)
 ;; (require 'our-org)
 ;; (require 'our-pyvenv)
 ;; (require 'our-qiita)
@@ -880,13 +889,6 @@
 ;; (load-file "~/.emacs.d/env/mastodon.el")
 ;; (load-file "~/.emacs.d/env/wakatime.el")
 ;; (load-file "~/.emacs.d/env/cloudapp.el")
-
-;; -------------
-;; external tool
-;; -------------
-(unless (executable-find "redis-cli") (our-async-exec "brew install redis"))
-(unless (executable-find "chromedriver") (our-async-exec "brew cask install chromedriver"))
-
 
 
 ;; -------
@@ -979,7 +981,7 @@
 ;; ---------
 ;; (use-package ob-restclient :ensure t :defer t)
 ;; (use-package org-preview-html :ensure t :defer t)
-;; (our-need-install "plantuml" "plantuml" :darwin "brew install plantuml")
+
 ;; (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.1/libexec/plantuml.jar")
 ;; (org-babel-do-load-languages
 ;;  'org-babel-load-languages
@@ -1006,7 +1008,7 @@
 ;; ----------
 ;; others
 ;; ----------
-;; (our-need-install "basictex" "basictex" :darwin "brew cask install basictex # M-x our-latex-update")
+
 ;; (defun our-latex-update ()
 ;;   (interactive)
 ;;   (our-async-exec
@@ -1033,9 +1035,6 @@
 ;; 		  )
 ;; 		" && ")))
 
-;; (our-need-install "ghostscript" "ghostscript" :darwin "brew install ghostscript")
-;; (our-need-install "latexit" "latexit" :darwin "brew cask install latexit")
-;; (our-need-install "pandoc" "pandoc" :darwin "brew install pandoc")
 
 
 ;; -----
