@@ -75,7 +75,7 @@
   (require 'quelpa-use-package)
   (use-package el-get :ensure t))
 
-;;; for qiita
+
 (use-package ox-qmd :ensure t
   :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
 
