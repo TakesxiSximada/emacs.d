@@ -3,7 +3,6 @@
 
 ;; custom lisp
 (add-to-list 'load-path "~/.emacs.d/lib")
-(add-to-list 'load-path "/srv/sximada/elnode")
 (add-to-list 'load-path "/srv/sallies/nvm.el/")
 (add-to-list 'load-path "/srv/sallies/our.el/")
 
@@ -847,6 +846,9 @@
 
 (el-get-bundle dotenv-mode :type "git" :url "git@github.com:TakesxiSximada/emacs-dotenv-mode.git")
 (require 'dotenv-mode)
+
+(el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
+(require 'elnode)
 
 (with-current-buffer (find-file-noselect "/Users/sximada/.config/mastodon/mstdn.jp")
   (dotenv-mode-apply-all))
