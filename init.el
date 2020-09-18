@@ -834,10 +834,10 @@
 (use-package github-review :defer t :ensure t)
 
 ;; My Package
-(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case)
+(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
 (require 'change-case)
 
-(el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon)
+(el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
 (require 'mastodon)
 
 (el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
