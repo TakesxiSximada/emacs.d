@@ -92,6 +92,15 @@
 
 (setq exec-path (delete-duplicates
 		 (append `(
+			   ,(expand-file-name "~/.cargo/bin")
+			   ,(expand-file-name "~/.goenv/bin")
+			   ,(expand-file-name "~/.goenv/shims")
+			   ,(expand-file-name "~/.local/bin")
+			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
+			   ,(expand-file-name "~/.poetry/bin")
+			   ,(expand-file-name "~/Library/Python/.bin")
+			   ,(expand-file-name "~/development/flutter/bin")
+			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   "/Library/TeX/texbin"
 			   "/usr/local/opt/mysql-client/bin"
 			   "/usr/local/bin"
@@ -114,16 +123,6 @@
 			   "/usr/local/opt/sqlite/bin"
 			   "/usr/local/opt/texinfo/bin"
 			   "/usr/local/opt/openssl@1.1/bin"
-			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
-			   ,(expand-file-name "~/.goenv/bin")
-			   ,(expand-file-name "~/.goenv/shims")
-			   ,(expand-file-name "~/development/flutter/bin")
-			   ,(expand-file-name "~/.cargo/bin")
-			   ,(expand-file-name "~/.local/bin")
-			   ,(expand-file-name "~/.poetry/bin")
-			   ,(expand-file-name "~/Library/Python/3.7/bin")
-			   ,(expand-file-name "~/Library/Python/3.8/bin")
-			   ,(expand-file-name "~/google-cloud-sdk/bin")
 			   )
 			 (split-string (getenv "PATH") ":")
 			 exec-path)))
