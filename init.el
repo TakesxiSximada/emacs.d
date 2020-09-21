@@ -1105,3 +1105,13 @@
 ;;      (load-theme 'tsdh-dark t))
 ;;    (use-package foreman-mode :ensure t :defer t)
 ;;    ))
+
+(defun pip-requirements-user-install ()
+  (interactive)
+  (our-async-exec-interactive
+   (format "pip3 install -U --user -r %s" (buffer-file-name))))
+
+
+(use-package pip-requirements :ensure t :defer t
+  :bind (:map pip-requirements-mode-map
+	      ("C-c C-c" . pip-requirements-user-install)))

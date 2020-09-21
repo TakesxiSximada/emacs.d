@@ -1,3 +1,4 @@
+# -*- mode: pip-requirements-mode -*-
 ansible
 jedi
 pip
@@ -7,3 +8,4 @@ pyls-black
 pyls-isort
 pyls-mypy
 python-language-server[all]
+yamllint
