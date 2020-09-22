@@ -17,3 +17,7 @@ This repository is settings for my Emacs.
 #+BEGIN_EXAMPLE
 pip3 install -U --user -r python-mode-requirements.txt
 #+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+npm install -g prettier
+#+END_EXAMPLE

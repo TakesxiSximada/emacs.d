@@ -603,9 +603,20 @@
   (elscreen-start)
   (elscreen-create))
 
+(use-package prettier-js :ensure t :defer t
+  :init
+  (add-hook 'yaml-mode-hook 'prettier-js-mode))
+
 ;;; For flycheck
+(defun configure-flycheck-yamlint ()
+  (interactive)
+  (flycheck-select-checker 'yaml-yamllint)
+  (flycheck-mode))
+
+
 (use-package flycheck :defer :ensure t :no-require t
   :init
+  (add-hook 'yaml-mode-hook 'configure-flycheck-yamlint)
   (add-hook 'python-mode-hook 'flycheck-mode))
 
 ;;; For vue.js
@@ -1111,7 +1122,8 @@
   (our-async-exec-interactive
    (format "pip3 install -U --user -r %s" (buffer-file-name))))
 
-
 (use-package pip-requirements :ensure t :defer t
   :bind (:map pip-requirements-mode-map
 	      ("C-c C-c" . pip-requirements-user-install)))
+
+(setq-default indicate-empty-lines t)
