@@ -559,9 +559,9 @@
   (interactive
    (list
     (ido-completing-read
-	  "Git configuration: "
-	  (mapcar (lambda (n) (car n)) our-git-config)
-	  nil nil nil nil nil)
+     "Git configuration: "
+     (mapcar (lambda (n) (car n)) our-git-config)
+     nil nil nil nil nil)
     (ido-read-directory-name "Directory: ")))
 
   (let ((entry (cdr (assoc label our-git-config))))
@@ -617,7 +617,6 @@
   (interactive)
   (flycheck-select-checker 'yaml-yamllint)
   (flycheck-mode))
-
 
 (use-package flycheck :defer :ensure t :no-require t
   :init
@@ -706,9 +705,9 @@
   (interactive)
   (let ((path (buffer-file-name)))
     (if path
-      (progn
-        (kill-new path)
-        (message (format "Copied: %s" path)))
+	(progn
+          (kill-new path)
+          (message (format "Copied: %s" path)))
       (message (format "Cannot copied")))))
 
 (use-package kubernetes
