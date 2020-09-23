@@ -1158,7 +1158,6 @@
   (setq tabulated-list-entries (org-project-get-file-list)))
 
 
-
 (defcustom org-project-list-default-sort-key '("Name" . nil)
   "Sort key for projects."
   :group 'org-project-list
@@ -1174,7 +1173,7 @@
 (define-derived-mode org-project-list-mode tabulated-list-mode "Org Project"
   "Major mode for handling a list of docker images."
   (setq tabulated-list-format [("Name" 30 t) ("Path" 80 t)])
-  (setq tabulated-list-padding 2)
+  (setq tabulated-list-padding 3)
   (setq tabulated-list-sort-key org-project-list-default-sort-key)
   (add-hook 'tabulated-list-revert-hook 'org-project-refresh nil t)
   (tabulated-list-init-header)
@@ -1191,10 +1190,21 @@
 
 (defun org-project-open-file ()
   (interactive)
-  (let ((filename (aref (tabulated-list-get-entry) 1)))
+  (let ((filename (aref (tabulated-list-get-entry) 2)))
     (find-file-existing filename)))
 
 
+(defun org-project-menu-mark-x (&optional _num)
+  (interactive "p")
+  (tabulated-list-put-tag "x" t))
+
+
+(defun org-project-menu-unmark (&optional _num)
+  (interactive "p")
+  (tabulated-list-put-tag " " t))
+
 (bind-keys :map org-project-list-mode-map
 	   ("M-RET" . org-project-open-file)
+	   ("x" . org-project-menu-mark-x)
+	   ("u" . org-project-menu-unmark)
 	   )
