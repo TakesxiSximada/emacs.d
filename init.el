@@ -1131,3 +1131,70 @@
 	      ("C-c C-c" . pip-requirements-user-install)))
 
 (setq-default indicate-empty-lines t)
+
+
+;;; org-project
+(defun org-project-get-summary (path)
+  (or
+   (with-current-buffer (find-file-noselect path)
+     (let ((elms (org-element-parse-buffer)))
+       (org-element-property
+	:value (car (org-element-map elms 'keyword
+		      (lambda (el)
+			(when (string-match "\\\(TITLE\\\|CATEGORY\\\)"
+					    (org-element-property :key el))
+			  el)))))))
+   "NOTHING"))
+
+
+(defun org-project-get-file-list ()
+  (seq-map-indexed (lambda (elt idx)
+		     `(,idx [,(org-project-get-summary elt) ,elt]))
+		   org-agenda-files))
+
+
+(defun org-project-refresh ()
+  "Refresh the images list."
+  (setq tabulated-list-entries (org-project-get-file-list)))
+
+
+
+(defcustom org-project-list-default-sort-key '("Name" . nil)
+  "Sort key for projects."
+  :group 'org-project-list
+  :type '(cons (choice (const "Name")
+                       (const "Path")
+                       (const "Id")
+                       (const "Created")
+                       (const "Size"))
+               (choice (const :tag "Ascending" nil)
+                       (const :tag "Descending" t))))
+
+
+(define-derived-mode org-project-list-mode tabulated-list-mode "Org Project"
+  "Major mode for handling a list of docker images."
+  (setq tabulated-list-format [("Name" 30 t) ("Path" 80 t)])
+  (setq tabulated-list-padding 2)
+  (setq tabulated-list-sort-key org-project-list-default-sort-key)
+  (add-hook 'tabulated-list-revert-hook 'org-project-refresh nil t)
+  (tabulated-list-init-header)
+  (tablist-minor-mode))
+
+
+(defun org-project-list ()
+  "List docker images."
+  (interactive)
+  (pop-to-buffer "*Org Project*")
+  (org-project-list-mode)
+  (tablist-revert))
+
+
+(defun org-project-open-file ()
+  (interactive)
+  (let ((filename (aref (tabulated-list-get-entry) 1)))
+    (find-file-existing filename)))
+
+
+(bind-keys :map org-project-list-mode-map
+	   ("M-RET" . org-project-open-file)
+	   )
