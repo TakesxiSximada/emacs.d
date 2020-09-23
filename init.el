@@ -1147,9 +1147,25 @@
    "NOTHING"))
 
 
+
+
+(defun org-project-get-file-last-update (path)
+  (format-time-string "%Y-%m-%d"
+		      (file-attribute-modification-time
+		       (file-attributes path))))
+
+
+(defun org-project-create-entry (path)
+  [
+   (org-project-get-summary path)
+   (org-project-get-file-last-update path)
+   elt
+   ]
+
+
 (defun org-project-get-file-list ()
   (seq-map-indexed (lambda (elt idx)
-		     `(,idx [,(org-project-get-summary elt) ,elt]))
+		     `(,idx ,(org-project-create-entry elt)
 		   org-agenda-files))
 
 
@@ -1158,10 +1174,11 @@
   (setq tabulated-list-entries (org-project-get-file-list)))
 
 
-(defcustom org-project-list-default-sort-key '("Name" . nil)
+(defcustom org-project-list-default-sort-key '("Updated" . nil)
   "Sort key for projects."
   :group 'org-project-list
   :type '(cons (choice (const "Name")
+                       (const "Updated")
                        (const "Path")
                        (const "Id")
                        (const "Created")
@@ -1172,7 +1189,7 @@
 
 (define-derived-mode org-project-list-mode tabulated-list-mode "Org Project"
   "Major mode for handling a list of docker images."
-  (setq tabulated-list-format [("Name" 30 t) ("Path" 80 t)])
+  (setq tabulated-list-format [("Name" 30 t) ("Updated" 10 t) ("Path" 80 t)])
   (setq tabulated-list-padding 3)
   (setq tabulated-list-sort-key org-project-list-default-sort-key)
   (add-hook 'tabulated-list-revert-hook 'org-project-refresh nil t)
@@ -1202,6 +1219,7 @@
 (defun org-project-menu-unmark (&optional _num)
   (interactive "p")
   (tabulated-list-put-tag " " t))
+
 
 (bind-keys :map org-project-list-mode-map
 	   ("M-RET" . org-project-open-file)
