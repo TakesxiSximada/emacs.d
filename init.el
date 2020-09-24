@@ -839,26 +839,18 @@
 (use-package github-review :defer t :ensure t)
 
 ;; My Package
-(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
-(require 'change-case)
+(el-get-bundle gist:05de904cd0c320733cae:org-project :type "git" :features org-project)
+(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git" :features change-case)
+(el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git" :features mastodon
+  :after
+  (with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
+    (dotenv-mode-apply-all)))
+(el-get-bundle gist:73383aaf81656737fa533dd39dcb27a8:docker-compose-up-services :type "git" :features docker-compose-up-services)
+(el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git" :features require-to-install-executable)
 
-(el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
-(require 'mastodon)
-
-(el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
-(require 'require-to-install-executable)
-
-(el-get-bundle foreman-mode :type "git" :url "git@github.com:collective-el/foreman-mode.git")
-(require 'foreman-mode)
-
-(el-get-bundle dotenv-mode :type "git" :url "git@github.com:collective-el/emacs-dotenv-mode.git")
-(require 'dotenv-mode)
-
-(el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
-(require 'elnode)
-
-(with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
-  (dotenv-mode-apply-all))
+(el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git" :features dotenv-mode)
+(el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git" :features elnode)
+(el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git" :features foreman-mode)
 
 ;; -------------
 ;; external tool
