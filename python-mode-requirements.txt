@@ -8,4 +8,5 @@ pyls-black
 pyls-isort
 pyls-mypy
 python-language-server[all]
+tox
 yamllint
