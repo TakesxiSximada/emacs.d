@@ -223,6 +223,11 @@
 
 ;;; For Silver Searcher (ag)
 (use-package ag :ensure t :defer t :no-require t)
+(use-package wgrep :ensure t :defer t)
+(use-package wgrep-ag :ensure t :defer t)
+(autoload 'wgrep-ag-setup "wgrep-ag")
+(add-hook 'ag-mode-hook 'wgrep-ag-setup)
+
 
 ;;; For Nginx
 (use-package nginx-mode :ensure t)
