@@ -836,7 +836,6 @@
 (bind-key "C-c C-x C-t o" #'org-clock-out)
 (bind-key "C-c C-x C-t b" #'org-clock-in-last)
 
-
 (use-package unicode-escape :ensure t :defer t)  ;; for qiita
 (use-package avy-menu :ensure t :defer t)  ;; for terraform
 (use-package sudden-death :ensure t :defer t)
