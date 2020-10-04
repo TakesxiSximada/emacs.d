@@ -79,6 +79,9 @@
 (use-package ox-qmd :ensure t
   :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
 
+(use-package shogi-mode :ensure t
+  :quelpa (shogi-mode :fetcher github :repo "akicho8/shogi-mode"))
+
 (use-package gist
   :ensure t :defer t
   :custom
