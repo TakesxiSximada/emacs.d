@@ -726,6 +726,7 @@
 
 (bind-key* "C-t C-a" 'org-agenda)
 (bind-key* "C-t a" 'org-agenda)
+(bind-key* "M-RET" 'find-file-at-point)
 ;; (bind-key* "C-t C-j" 'org-capture)
 
 ;; n https://github.com/tj/n
