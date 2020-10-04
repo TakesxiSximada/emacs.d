@@ -12,7 +12,7 @@ This repository is settings for my Emacs.
 [[./PROJECT.org]]
 
 
-* setup
+* Setup
 
 #+BEGIN_EXAMPLE
 pip3 install -U --user -r python-mode-requirements.txt
