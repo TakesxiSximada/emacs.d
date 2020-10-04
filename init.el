@@ -900,13 +900,11 @@
 ;; (require 'our-qiita)
 ;; (require 'our-simeji)
 ;; (require 'our-terraform)
-;; (require 'our-wakatime)
 
 ;; (add-to-list 'our-org--target-dir-list "~/Dropbox/tasks")
 
 ;; (load-file "~/.emacs.d/env/discord.el")
 ;; (load-file "~/.emacs.d/env/mastodon.el")
-;; (load-file "~/.emacs.d/env/wakatime.el")
 ;; (load-file "~/.emacs.d/env/cloudapp.el")
 
 
@@ -943,19 +941,16 @@
         cider-overlays-use-font-lock t)
   (cider-repl-toggle-pretty-printing))
 
-
 ;; --------
 ;; wakatime
 ;; --------
-;; (require 'our-wakatime)
-;; (use-package wakatime-mode :ensure t :defer t
-;;   :init
-;;   (our-wakatime-setup)
-;;   (if (and wakatime-api-key
-;; 	   (file-exists-p wakatime-cli-path))
-;;       (global-wakatime-mode)))
+(use-package wakatime-mode :ensure t :defer t
+  :config
+  (global-wakatime-mode))
 
-
+(defun wakatime-open-dashboard ()
+  (interactive)
+  (browse-url "https://wakatime.com/dashboard"))
 
 ;; --------
 ;; org-mode
