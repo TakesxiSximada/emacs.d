@@ -952,6 +952,11 @@
   (interactive)
   (browse-url "https://wakatime.com/dashboard"))
 
+(defun wakatime-open-config ()
+  (interactive)
+  (find-file (expand-file-name "~/.wakatime.cfg")))
+
+
 ;; --------
 ;; org-mode
 ;; --------
