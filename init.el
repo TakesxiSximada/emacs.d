@@ -1150,7 +1150,7 @@
 
 
 ;; ------
-;; EDITOR
+;; Editor
 ;; ------
 (defvar editor-buffer-name "*EDITOR*")
 
