@@ -1147,8 +1147,6 @@
 
 (setq-default indicate-empty-lines t)
 
-
-
 ;; ------
 ;; Editor
 ;; ------
@@ -1171,7 +1169,7 @@
 (bind-key* "C-t C-w" 'editor-create-buffer)
 
 ;; -----------
-;; Application
+;; macOS
 ;; -----------
 (defun macos-app (&optional app buf)
   "Start macOS application from Emacs"
@@ -1180,5 +1178,5 @@
 		      (directory-files "/Applications" nil ".app$"))
 		     (get-buffer-create "*Application*")))
 
-  (let* ((cmd (format "open /Applications/%s" app)))
+  (let* ((cmd (format "open '/Applications/%s'" app)))
     (async-shell-command cmd buf buf)))
