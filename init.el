@@ -1171,3 +1171,14 @@
 (bind-key* "C-t C-w" 'editor-create-buffer)
 
 ;; -----------
+;; Application
+;; -----------
+(defun macos-app (&optional app buf)
+  "Start macOS application from Emacs"
+  (interactive (list (completing-read
+		      "Application: "
+		      (directory-files "/Applications" nil ".app$"))
+		     (get-buffer-create "*Application*")))
+
+  (let* ((cmd (format "open /Applications/%s" app)))
+    (async-shell-command cmd buf buf)))
