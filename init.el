@@ -1146,3 +1146,28 @@
 	      ("C-c C-c" . pip-requirements-user-install)))
 
 (setq-default indicate-empty-lines t)
+
+
+
+;; ------
+;; EDITOR
+;; ------
+(defvar editor-buffer-name "*EDITOR*")
+
+(defvar editor-map (make-sparse-keymap))
+
+(defun editor-create-buffer ()
+  (interactive)
+  (let ((buf-name editor-buffer-name))
+    (with-current-buffer (get-buffer-create buf-name)
+	(kill-all-local-variables)
+	(use-local-map editor-map))
+    (switch-to-buffer buf-name)))
+
+(define-derived-mode editor-mode org-mode
+  "Editor mode"
+  nil)
+
+(bind-key* "C-t C-w" 'editor-create-buffer)
+
+;; -----------
