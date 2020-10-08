@@ -210,16 +210,16 @@
   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   )
 
+(use-package ido-completing-read+ :ensure t :defer t :no-require t
+  :config
+  (ido-ubiquitous-mode 1))
+
 (use-package ido-vertical-mode :ensure t :no-require t
   :config
   (ido-vertical-mode 1)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only)
   (setq ido-vertical-show-count t)
   )
-
-(use-package ido-completing-read+ :ensure t :defer t :no-require t
-  :config
-  (ido-ubiquitous-mode 1))
 
 ;;; For Silver Searcher (ag)
 (use-package ag :ensure t :defer t :no-require t)
@@ -279,7 +279,6 @@
   :init
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-rls-pkg 'eglot))
-
 
 ;;; For Python
 (use-package pyvenv :ensure t :no-require t)
