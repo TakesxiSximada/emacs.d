@@ -63,6 +63,7 @@
     (package-refresh-contents)
     (with-temp-buffer (write-file (locate-user-emacs-file "tmp/bootstrap-stamp")))
     ))
+
 (package-initialize)
 
 (progn ;; Setup packaging tools
