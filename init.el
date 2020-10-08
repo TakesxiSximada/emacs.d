@@ -65,6 +65,7 @@
     ))
 
 (package-initialize)
+;; (package-refresh-contents)
 
 (progn ;; Setup packaging tools
   (package-install 'use-package)
