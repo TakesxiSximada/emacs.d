@@ -846,6 +846,10 @@
 
 ;; github-review
 (use-package github-review :defer t :ensure t)
+(use-package request :defer t :ensure t)
+(use-package fakir :defer t :ensure t)
+(use-package web :defer t :ensure t)
+(use-package db :defer t :ensure t)
 
 ;; My Package
 (el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git")
