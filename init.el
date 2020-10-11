@@ -1177,11 +1177,12 @@
 	    ;; エクスポートオプションの追加
 	    (save-excursion
               (goto-char 0)
-              (insert "#+DATE:\n#+TAGS: comment\n"))
+              (insert "#+DATE:\n#+TAGS: comment\n\n"))
 
 	    (editor-refresh-export-option-date)))
       (kill-all-local-variables)
-      (use-local-map editor-map))
+      (use-local-map editor-map)
+      (editor-mode))
     (switch-to-buffer buf-name)))
 
 (define-derived-mode editor-mode org-mode
