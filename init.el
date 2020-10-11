@@ -1159,6 +1159,15 @@
 
 (defvar editor-map (make-sparse-keymap))
 
+
+(defun editor-refresh-export-option-date ()
+  "DATEエクスポートオプションの更新"
+  (interactive)
+  (let* ((timestamp (format-time-string "%+FT%T%z"))
+	 (pattern (format "s/^\#+DATE:.*$/#+DATE: %s/g" timestamp)))
+    (call-process-region (point-min) (point-max) "sed" t t t "-e" pattern)))
+
+
 (defun editor-create-buffer ()
   (interactive)
   (let ((buf-name editor-buffer-name))
@@ -1170,10 +1179,7 @@
               (goto-char 0)
               (insert "#+DATE:\n#+TAGS: comment\n"))
 
-	    ;; DATEエクスポートオプションの更新
-	    (let* ((timestamp (format-time-string "%+FT%T%z"))
-		   (pattern (format "s/^\#+DATE:.*$/#+DATE: %s/g" timestamp)))
-              (call-process-region (point-min) (point-max) "sed" t t t "-e" pattern))))
+	    (editor-refresh-export-option-date)))
       (kill-all-local-variables)
       (use-local-map editor-map))
     (switch-to-buffer buf-name)))
