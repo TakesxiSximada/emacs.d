@@ -1171,6 +1171,40 @@
   "Editor mode"
   nil)
 
+(defcustom symdon-ga-post-directory "/ng/symdon/pages/posts"
+  "Path to directory of symdon-ga posts")
+
+
+(defun symdon-ga-create-new-file-path ()
+  (concat
+   (directory-file-name symdon-ga-post-directory)
+   "/"
+   (format "%s.org"
+	   (truncate (float-time)))))
+
+
+(defun symdon-ga-post (text)
+  (with-current-buffer (find-file-noselect (symdon-ga-create-new-file-path))
+    (insert text)
+    (save-buffer)
+    (current-buffer)))
+
+
+(defun editor-get-editor-buffer-text ()
+  (with-current-buffer (get-buffer editor-buffer-name)
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+
+(defun editor-save-as-kill ()
+  (interactive)
+  (symdon-ga-post
+   (editor-get-editor-buffer-text))
+  (kill-buffer editor-buffer-name))
+
+(custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
+
+(bind-keys :map editor-mode-map
+	   ("C-c C-c" . editor-save-as-kill))
 (bind-key* "C-t C-w" 'editor-create-buffer)
 
 ;; -----------
@@ -1185,3 +1219,5 @@
 
   (let* ((cmd (format "open '/Applications/%s'" app)))
     (async-shell-command cmd buf buf)))
+
+
