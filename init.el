@@ -1163,8 +1163,19 @@
   (interactive)
   (let ((buf-name editor-buffer-name))
     (with-current-buffer (get-buffer-create buf-name)
-	(kill-all-local-variables)
-	(use-local-map editor-map))
+      (if (= 0 (buffer-size))
+	  (progn
+	    ;; エクスポートオプションの追加
+	    (save-excursion
+              (goto-char 0)
+              (insert "#+DATE:\n#+TAGS: comment\n"))
+
+	    ;; DATEエクスポートオプションの更新
+	    (let* ((timestamp (format-time-string "%+FT%T%z"))
+		   (pattern (format "s/^\#+DATE:.*$/#+DATE: %s/g" timestamp)))
+              (call-process-region (point-min) (point-max) "sed" t t t "-e" pattern))))
+      (kill-all-local-variables)
+      (use-local-map editor-map))
     (switch-to-buffer buf-name)))
 
 (define-derived-mode editor-mode org-mode
@@ -1219,5 +1230,3 @@
 
   (let* ((cmd (format "open '/Applications/%s'" app)))
     (async-shell-command cmd buf buf)))
-
-
