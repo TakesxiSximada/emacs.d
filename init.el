@@ -1222,7 +1222,8 @@
 (custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
 
 (bind-keys :map editor-mode-map
-	   ("C-c C-c" . editor-save-as-kill))
+	   ("C-x C-s" . editor-save-as-kill))
+
 (bind-key* "C-t C-w" 'editor-create-buffer)
 
 ;; -----------
