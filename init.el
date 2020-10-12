@@ -1212,11 +1212,11 @@
   (with-current-buffer (get-buffer editor-buffer-name)
     (buffer-substring-no-properties (point-min) (point-max))))
 
-
 (defun editor-save-as-kill ()
   (interactive)
-  (symdon-ga-post
-   (editor-get-editor-buffer-text))
+  (switch-to-buffer
+   (symdon-ga-post
+    (editor-get-editor-buffer-text)))
   (kill-buffer editor-buffer-name))
 
 (custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
