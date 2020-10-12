@@ -1201,16 +1201,25 @@
 	   (truncate (float-time)))))
 
 
+(defun symdon-ga-add-comment ()
+  (interactive)
+  (let ((filename (buffer-name (current-buffer))))
+    (shell-command (format "git add %s" filename))
+    (shell-command (format "git commit -m 'Add comment.' %s" filename))))
+
+
 (defun symdon-ga-post (text)
   (with-current-buffer (find-file-noselect (symdon-ga-create-new-file-path))
     (insert text)
     (save-buffer)
+    (symdon-ga-add-comment)
     (current-buffer)))
 
 
 (defun editor-get-editor-buffer-text ()
   (with-current-buffer (get-buffer editor-buffer-name)
     (buffer-substring-no-properties (point-min) (point-max))))
+
 
 (defun editor-save-as-kill ()
   (interactive)
