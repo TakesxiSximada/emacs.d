@@ -1230,6 +1230,8 @@
 
 (custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
 
+(require 'transient)
+
 (transient-define-prefix editor-save-as ()
   "Editor mode save as..."
   [("s" "Symdon GA" editor-save-as-kill)])
