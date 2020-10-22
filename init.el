@@ -1236,7 +1236,7 @@
 
 (transient-define-prefix editor-save-as ()
   "Editor mode save as..."
-  [("s" "Symdon GA" editor-save-as-kill)])
+  [("C-s" "Symdon GA" editor-save-as-kill)])
 
 (bind-keys :map editor-mode-map
 	   ("C-x C-s" . editor-save-as))
