@@ -1,4 +1,6 @@
 ;; -*- coding: utf-8 -*-
+(yes-or-no-p "Continue?: Press y")
+
 (toggle-frame-fullscreen)
 
 ;; theme
