@@ -1232,11 +1232,26 @@
 
 (custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
 
+
+(defun editor-save-as-kill-discord ()
+  "Send to discord"
+  (interactive)
+  (request
+    discord-bot-webhook-url
+    :type "POST"
+    :data `(("username" . ,discord-bot-username)
+	    ("avatar_url" . ,discord-bot-avatar-url)
+	    ("content" . ,(format "\n%s\n" (editor-get-editor-buffer-text)))))
+  (kill-buffer editor-buffer-name))
+
+
 (require 'transient)
 
 (transient-define-prefix editor-save-as ()
   "Editor mode save as..."
-  [("C-s" "Symdon GA" editor-save-as-kill)])
+  [("C-s" "Symdon GA" editor-save-as-kill)
+   ("C-d" editor-save-as-kill-discord)
+   ])
 
 (bind-keys :map editor-mode-map
 	   ("C-x C-s" . editor-save-as))
