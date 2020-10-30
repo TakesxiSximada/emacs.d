@@ -1270,3 +1270,7 @@
 
   (let* ((cmd (format "open '/Applications/%s'" app)))
     (async-shell-command cmd buf buf)))
+
+(use-package py-isort :ensure t)
+(use-package blacken :ensure t)
+(use-package promql-mode :ensure t :defer t)
