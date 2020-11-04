@@ -1273,4 +1273,4 @@
 
 (use-package py-isort :ensure t)
 (use-package blacken :ensure t)
-(use-package promql-mode :ensure t :defer t)
+;; (use-package promql-mode :ensure t :defer t)
