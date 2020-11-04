@@ -62,7 +62,7 @@
 		    ))
 (eval-when-compile
   (unless (file-exists-p (locate-user-emacs-file "tmp/bootstrap-stamp"))
-    (package-refresh-contents)
+    ;; (package-refresh-contents)
     (with-temp-buffer (write-file (locate-user-emacs-file "tmp/bootstrap-stamp")))
     ))
 
