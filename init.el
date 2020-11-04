@@ -1233,15 +1233,18 @@
 (custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
 
 
-(defun editor-save-as-kill-discord ()
+(defun editor-save-as-kill-discord (&optional is-code )
   "Send to discord"
-  (interactive)
+  (interactive (list (yes-or-no-p "Is this code?")))
   (request
     discord-bot-webhook-url
     :type "POST"
     :data `(("username" . ,discord-bot-username)
 	    ("avatar_url" . ,discord-bot-avatar-url)
-	    ("content" . ,(format "\n%s\n" (editor-get-editor-buffer-text)))))
+	    ("content" .   ,(let ((text (editor-get-editor-buffer-text)))
+			      (if is-code
+				  (format (format "```\n%s\n```" text))
+				text)))))
   (kill-buffer editor-buffer-name))
 
 
