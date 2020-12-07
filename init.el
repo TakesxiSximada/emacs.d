@@ -245,8 +245,6 @@
 
 ;;; For LSP
 (use-package eglot :defer t :ensure t :no-require t
-  :init
-  (add-hook 'python-mode-hook 'eglot-ensure)
   :config
   (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
   (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark))
@@ -633,8 +631,7 @@
 
 (use-package flycheck :defer :ensure t :no-require t
   :init
-  (add-hook 'yaml-mode-hook 'configure-flycheck-yamlint)
-  (add-hook 'python-mode-hook 'flycheck-mode))
+  (add-hook 'yaml-mode-hook 'configure-flycheck-yamlint))
 
 ;;; For vue.js
 (use-package add-node-modules-path :ensure t :defer t)
@@ -1277,3 +1274,26 @@
 (use-package py-isort :ensure t)
 (use-package blacken :ensure t)
 ;; (use-package promql-mode :ensure t :defer t)
+
+;; for Python Mode
+(flycheck-define-checker python-doctest
+  "Python doctest flycheck checker"
+  :command ("python" "-m" "doctest" source-inplace)
+  :modes (python-mode)
+  :error-patterns  ((error
+		     line-start
+		     "File " "\"" (file-name) "\", line " line ", in " (message (+ printing)) line-end
+		     (group (* ascii))
+		     (+ "*")
+		     line-end)))
+
+(defun python-mode-configure ()
+  (interactive)
+  (flymake-mode-off)
+  (flycheck-disable-checker 'python-pylint)
+  (setq flycheck-highlighting-mode 'lines)
+  (setq flycheck-highlighting-style 'level-face)
+  (bind-key "s-n" 'flycheck-next-error)
+  (bind-key "s-p" 'flycheck-previous-error)
+  )
+(add-lhook 'python-mode-hook 'python-mode-configure)
