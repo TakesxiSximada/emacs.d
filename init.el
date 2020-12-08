@@ -1275,25 +1275,40 @@
 (use-package blacken :ensure t)
 ;; (use-package promql-mode :ensure t :defer t)
 
+
 ;; for Python Mode
 (flycheck-define-checker python-doctest
   "Python doctest flycheck checker"
   :command ("python" "-m" "doctest" source-inplace)
   :modes (python-mode)
-  :error-patterns  ((error
-		     line-start
-		     "File " "\"" (file-name) "\", line " line ", in " (message (+ printing)) line-end
-		     (group (* ascii))
-		     (+ "*")
-		     line-end)))
+  :enabled (lambda () t)
+  :error-patterns ((error
+		    line-start (repeat 70 "\*") "\n"
+		    line-start "File " "\"" (file-name) "\", line " line ", in " (+ printing) "\n"
+		    (message (+ (not "*"))))))
+
 
 (defun python-mode-configure ()
-  (interactive)
-  (flymake-mode-off)
-  (flycheck-disable-checker 'python-pylint)
-  (setq flycheck-highlighting-mode 'lines)
-  (setq flycheck-highlighting-style 'level-face)
   (bind-key "s-n" 'flycheck-next-error)
   (bind-key "s-p" 'flycheck-previous-error)
+  (flymake-mode-off)
+  (flycheck-mode)
+  (flycheck-add-next-checker 'python-pycompile 'python-doctest)
+  (flycheck-disable-checker 'python-pylint)
+  (flycheck-disable-checker 'python-flake8)
+  (flycheck-disable-checker 'python-mypy)
+  (flycheck-select-checker 'python-pycompile)
+  (flycheck-select-checker 'python-doctest)
+  (flycheck-mode)
+
+  ;; (flycheck-select-checker 'python-doctest)
+  ;; (setq flycheck-highlighting-mode 'lines)
+  ;; (setq flycheck-highlighting-style 'level-face)
+  ;; (add-to-list 'flycheck-checkers 'python-doctest)
+  ;; (message "ghreioahgioreahgoierai")
   )
-(add-lhook 'python-mode-hook 'python-mode-configure)
+(add-hook 'python-mode-hook 'python-mode-configure)
+
+(setq debug-on-error t)
+(use-package pcre2el :ensure t)
+
