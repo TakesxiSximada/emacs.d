@@ -243,6 +243,17 @@
 (use-package docker-tramp :defer t :ensure t :no-require t)
 (use-package dockerfile-mode :defer t :ensure t :no-require t)
 
+(defun dockerfile-read-image-name ()
+  "Read a docker image name."
+  (ido-completing-read "Image name: "
+		       dockerfile-image-name-history
+		       nil nil nil nil
+		       (car dockerfile-image-name-history)))
+
+(bind-key "C-c C-c" #'dockerfile-build-buffer 'dockerfile-mode-map)
+
+
+
 ;;; For LSP
 (use-package eglot :defer t :ensure t :no-require t
   :config
