@@ -1187,7 +1187,7 @@
 	    ;; エクスポートオプションの追加
 	    (save-excursion
               (goto-char 0)
-              (insert "#+DATE:\n#+TAGS: comment\n\n"))
+              (insert "#+DATE:\n#+TAGS[]: comment\n\n"))
 
 	    (editor-refresh-export-option-date)))
       (kill-all-local-variables)
