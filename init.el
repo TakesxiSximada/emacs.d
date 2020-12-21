@@ -1322,4 +1322,12 @@
 
 (setq debug-on-error t)
 (use-package pcre2el :ensure t)
+(defun scratch-buffer-create (buf-name)
+  "Create new scratch buffer"
+  (interactive "sBuffer Name: ")
+  (let ((buf (get-buffer-create buf-name)))
+    (with-current-buffer buf
+      (lisp-interaction-mode))
+    (switch-to-buffer buf)))
+
 
