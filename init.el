@@ -873,6 +873,9 @@
 (el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
 (require 'change-case)
 
+(el-get-bundle gist:6961ff8bfb228a7601ed470598fad513:django.el :type "git")
+(require 'django)
+
 (el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
 (require 'mastodon)
 (with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
