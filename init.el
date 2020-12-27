@@ -938,6 +938,9 @@ The build string will be of the format:
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
 (require 'foreman-mode)
 
+(el-get-bundle gist:d451221dc2a280b7e35d:switch-project.el :type "git")
+(require 'switch-project)
+
 ;; -------------
 ;; external tool
 ;; -------------
@@ -1390,5 +1393,5 @@ The build string will be of the format:
 	   ("<s-return>" . org-shiftright))
 
 (bind-keys*
- ("C-t C-p " . switch-project)
+ ("C-t C-p" . switch-project)
  )
