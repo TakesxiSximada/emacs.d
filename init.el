@@ -232,6 +232,7 @@
 (autoload 'wgrep-ag-setup "wgrep-ag")
 (add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
+(use-package s :ensure t)
 
 ;;; For Nginx
 (use-package nginx-mode :ensure t)
@@ -241,7 +242,9 @@
 (use-package docker :defer t :ensure t :no-require t)
 (use-package docker-compose-mode :defer t :ensure t :no-require t)
 (use-package docker-tramp :defer t :ensure t :no-require t)
-(use-package dockerfile-mode :defer t :ensure t :no-require t)
+
+(use-package dockerfile-mode :ensure t :no-require t)
+(require 'dockerfile-mode)
 
 (defun dockerfile-read-image-name ()
   "Read a docker image name."
