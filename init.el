@@ -1349,7 +1349,7 @@ The build string will be of the format:
 		    line-start "File " "\"" (file-name) "\", line " line ", in " (+ printing) "\n"
 		    (message (+ (not "*"))))))
 
-
+(require 'python)
 (defun python-mode-configure ()
   (bind-key "s-n" 'flycheck-next-error)
   (bind-key "s-p" 'flycheck-previous-error)
