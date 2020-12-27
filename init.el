@@ -1334,3 +1334,11 @@
     (switch-to-buffer buf)))
 
 
+(require 'sql)
+
+(defun switch-project (name)
+  (interactive (list
+		(completing-read "Name: "
+				 (mapcar #'car switch-project-config))))
+  (pcase name ,@switch-project-config))
+
