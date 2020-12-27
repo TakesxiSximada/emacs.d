@@ -242,7 +242,9 @@
 (use-package docker :defer t :ensure t :no-require t)
 (use-package docker-compose-mode :defer t :ensure t :no-require t)
 (use-package docker-tramp :defer t :ensure t :no-require t)
-(use-package dockerfile-mode :defer t :ensure t :no-require t)
+
+(use-package dockerfile-mode :ensure t :no-require t)
+(require 'dockerfile-mode)
 
 (defun dockerfile-read-image-name ()
   "Read a docker image name."
