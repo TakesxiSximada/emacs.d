@@ -26,12 +26,14 @@
 ;; fonts
 (set-face-attribute 'default nil :family "Menlo" :height 120)
 
+
 (let ((typ (frame-parameter nil 'font)))
   (unless (string-equal "tty" typ)
     (set-fontset-font typ 'japanese-jisx0208
                       (font-spec :family "Hiragino Kaku Gothic ProN"))))
 (add-to-list 'face-font-rescale-alist
              '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
+
 ;; backup file
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -239,6 +241,8 @@
 
 
 ;;; For Docker
+(use-package dockerfile-mode :ensure t)
+(require 'dockerfile-mode)
 (use-package docker :defer t :ensure t :no-require t)
 (use-package docker-compose-mode :defer t :ensure t :no-require t)
 (use-package docker-tramp :defer t :ensure t :no-require t)
@@ -246,15 +250,47 @@
 (use-package dockerfile-mode :ensure t :no-require t)
 (require 'dockerfile-mode)
 
+(defun dockerfile-get-docker-image-from-inbuffer ()
+  "# iamge: DockerImageName"
+  (interactive)
+  (let ((image-name-line (save-excursion
+		      (goto-char (point-min))
+		      (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
+    (s-trim (car (cdr (s-split ":" image-name-line))))))
+
+
 (defun dockerfile-read-image-name ()
   "Read a docker image name."
   (ido-completing-read "Image name: "
 		       dockerfile-image-name-history
 		       nil nil nil nil
-		       (car dockerfile-image-name-history)))
+		       (dockerfile-get-docker-image-from-inbuffer)))
+
+
+(defun dockerfile-build-buffer (image-name &optional no-cache)
+  "Build an image called IMAGE-NAME based upon the buffer.
+
+If prefix arg NO-CACHE is set, don't cache the image.
+The build string will be of the format:
+`sudo docker build --no-cache --tag IMAGE-NAME --build-args arg1.. -f filename directory`"
+
+  (interactive (list (dockerfile-read-image-name) prefix-arg))
+  (save-buffer)
+    (compilation-start
+        (format
+            "%s%s build --progress plain %s %s %s -f %s %s"  ;; FIX
+            (if dockerfile-use-sudo "sudo " "")
+            dockerfile-mode-command
+            (if no-cache "--no-cache" "")
+            (dockerfile-tag-string image-name)
+            (dockerfile-build-arg-string)
+            (shell-quote-argument (dockerfile-standard-filename (buffer-file-name)))
+            (shell-quote-argument (dockerfile-standard-filename default-directory)))
+    nil
+    (lambda (_) (format "*docker-build-output: %s *" image-name))))
+
 
 (bind-key "C-c C-c" #'dockerfile-build-buffer 'dockerfile-mode-map)
-
 
 
 ;;; For LSP
@@ -766,7 +802,7 @@
 (custom-set-variables
  '(org-agenda-span 1)
  '(org-todo-keywords '((sequence
-			"INBOX" "MAYBE" "ACTION" "WAITING" "TODO"
+			"INBOX" "MAYBE" "ACTION" "WAITING" "TODO" "EPIC"
 			"|"
 			"DONE" "CANCEL")))
  '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89 144 233 377 610 987")))
@@ -807,6 +843,8 @@
 
 
 ;; setup golang
+(use-package go-mode :ensure t :defer t)
+
 (progn
   (use-package lsp-mode
     :ensure t
@@ -845,10 +883,14 @@
   (when (yes-or-no-p "Clock In?")
     (org-clock-in)))
 
-(add-hook 'org-agenda-after-show-hook #'org-narrow-to-subtree)
-(add-hook 'org-agenda-after-show-hook #'org-clock-in-interactive)
-(add-hook 'org-clock-out-hook #'org-agenda-list)
-(add-hook 'org-clock-out-hook #'widen)
+;; (add-hook 'org-agenda-after-show-hook #'org-narrow-to-subtree)
+;; (add-hook 'org-agenda-after-show-hook #'org-clock-in-interactive)
+;; (add-hook 'org-clock-out-hook #'org-agenda-list)
+;; (add-hook 'org-clock-out-hook #'widen)
+
+
+(remove-hook 'org-clock-out-hook #'org-agenda-list)
+(remove-hook 'org-clock-out-hook #'widen)
 
 (bind-key "C-c C-x C-t o" #'org-clock-out)
 (bind-key "C-c C-x C-t b" #'org-clock-in-last)
@@ -1339,4 +1381,14 @@
 
 (require 'sql)
 
+(bind-keys :map python-mode-map
+	   ("s-n" . flymake-goto-next-error)
+	   ("s-p" . flymake-goto-prev-error)
+	   ("C-c C-c" . python-shell-send-region))
 
+(bind-keys :map org-mode-map
+	   ("<s-return>" . org-shiftright))
+
+(bind-keys*
+ ("C-t C-p " . switch-project)
+ )
