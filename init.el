@@ -232,6 +232,7 @@
 (autoload 'wgrep-ag-setup "wgrep-ag")
 (add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
+(use-package s :ensure t)
 
 ;;; For Nginx
 (use-package nginx-mode :ensure t)
