@@ -1393,5 +1393,5 @@ The build string will be of the format:
 	   ("<s-return>" . org-shiftright))
 
 (bind-keys*
- ("C-t C-p" . switch-project)
+ ("C-t C-p" . projectile-switch-project)
  )
