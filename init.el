@@ -1308,11 +1308,10 @@ The build string will be of the format:
 
 
 (require 'transient)
-
 (transient-define-prefix editor-save-as ()
   "Editor mode save as..."
   [("C-s" "Symdon GA" editor-save-as-kill)
-   ("C-d" editor-save-as-kill-discord)
+   ;; ("C-d" editor-save-as-kill-discord)  # FIXME: If this line is enabled, transient will fail to start. Investigation is needed.
    ])
 
 (bind-keys :map editor-mode-map
@@ -1338,38 +1337,32 @@ The build string will be of the format:
 ;; (use-package promql-mode :ensure t :defer t)
 
 
+;; FIXME: python-doctest flycheck checker is not fully completed.
 ;; for Python Mode
-(flycheck-define-checker python-doctest
-  "Python doctest flycheck checker"
-  :command ("python" "-m" "doctest" source-inplace)
-  :modes (python-mode)
-  :enabled (lambda () t)
-  :error-patterns ((error
-		    line-start (repeat 70 "\*") "\n"
-		    line-start "File " "\"" (file-name) "\", line " line ", in " (+ printing) "\n"
-		    (message (+ (not "*"))))))
-
-(require 'python)
-(defun python-mode-configure ()
-  (bind-key "s-n" 'flycheck-next-error)
-  (bind-key "s-p" 'flycheck-previous-error)
-  (flymake-mode-off)
-  (flycheck-mode)
-  (flycheck-add-next-checker 'python-pycompile 'python-doctest)
-  (flycheck-disable-checker 'python-pylint)
-  (flycheck-disable-checker 'python-flake8)
-  (flycheck-disable-checker 'python-mypy)
-  (flycheck-select-checker 'python-pycompile)
-  (flycheck-select-checker 'python-doctest)
-  (flycheck-mode)
-
-  ;; (flycheck-select-checker 'python-doctest)
-  ;; (setq flycheck-highlighting-mode 'lines)
-  ;; (setq flycheck-highlighting-style 'level-face)
-  ;; (add-to-list 'flycheck-checkers 'python-doctest)
-  ;; (message "ghreioahgioreahgoierai")
-  )
-(add-hook 'python-mode-hook 'python-mode-configure)
+;; (flycheck-define-checker python-doctest
+;;   "Python doctest flycheck checker"
+;;   :command ("python" "-m" "doctest" source-inplace)
+;;   :modes (python-mode)
+;;   :enabled (lambda () t)
+;;   :error-patterns ((error
+;; 		    line-start (repeat 70 "\*") "\n"
+;; 		    line-start "File " "\"" (file-name) "\", line " line ", in " (+ printing) "\n"
+;; 		    (message (+ (not "*"))))))
+;; (require 'python)
+;; (defun python-mode-configure ()
+;;   (bind-key "s-n" 'flycheck-next-error)
+;;   (bind-key "s-p" 'flycheck-previous-error)
+;;   (flymake-mode-off)
+;;   (flycheck-mode)
+;;   (flycheck-add-next-checker 'python-pycompile 'python-doctest)
+;;   (flycheck-disable-checker 'python-pylint)
+;;   (flycheck-disable-checker 'python-flake8)
+;;   (flycheck-disable-checker 'python-mypy)
+;;   (flycheck-select-checker 'python-pycompile)
+;;   (flycheck-select-checker 'python-doctest)
+;;   (flycheck-mode)
+;;   )
+;; (add-hook 'python-mode-hook 'python-mode-configure)
 
 (setq debug-on-error t)
 (use-package pcre2el :ensure t)
