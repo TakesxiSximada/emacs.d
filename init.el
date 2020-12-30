@@ -1327,9 +1327,10 @@ The build string will be of the format:
 		      "Application: "
 		      (directory-files "/Applications" nil ".app$"))
 		     (get-buffer-create "*Application*")))
-
-  (let* ((cmd (format "open '/Applications/%s'" app)))
-    (async-shell-command cmd buf buf)))
+  (make-process :name "*App*"
+		:buffer (get-buffer-create "*App*")
+		:command `("open" "-g" ,(format "/Applications/%s" app))
+		))
 
 (use-package py-isort :ensure t)
 (use-package blacken :ensure t)
