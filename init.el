@@ -1376,7 +1376,7 @@ The build string will be of the format:
 
 
 (require 'sql)
-
+(require 'python)
 (bind-keys :map python-mode-map
 	   ("s-n" . flymake-goto-next-error)
 	   ("s-p" . flymake-goto-prev-error)
