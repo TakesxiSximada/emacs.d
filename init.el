@@ -1376,7 +1376,7 @@ The build string will be of the format:
 
 
 (require 'sql)
-
+(require 'python)
 (bind-keys :map python-mode-map
 	   ("s-n" . flymake-goto-next-error)
 	   ("s-p" . flymake-goto-prev-error)
@@ -1388,3 +1388,8 @@ The build string will be of the format:
 (bind-keys*
  ("C-t C-p" . projectile-switch-project)
  )
+
+(add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
+(projectile-mode)
+(custom-set-variables
+ '(projectile-switch-project-action #'projectile-dired))
