@@ -774,7 +774,6 @@ The build string will be of the format:
   :ensure t
   :commands (kubernetes-overview))
 
-(bind-key* "C-t C-a" 'org-agenda)
 (bind-key* "C-t a" 'org-agenda)
 (bind-key* "M-RET" 'find-file-at-point)
 ;; (bind-key* "C-t C-j" 'org-capture)
@@ -1387,6 +1386,7 @@ The build string will be of the format:
 
 (bind-keys*
  ("C-t C-p" . projectile-switch-project)
+ ("C-t C-o" . macos-app)
  )
 
 (add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
