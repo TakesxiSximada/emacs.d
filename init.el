@@ -1380,7 +1380,8 @@ The build string will be of the format:
 (bind-keys :map python-mode-map
 	   ("s-n" . flymake-goto-next-error)
 	   ("s-p" . flymake-goto-prev-error)
-	   ("C-c C-c" . python-shell-send-region))
+           ("C-c C-c" . python-shell-send-buffer))
+
 
 (bind-keys :map org-mode-map
 	   ("<s-return>" . org-shiftright))
