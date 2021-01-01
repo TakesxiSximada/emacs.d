@@ -1392,6 +1392,58 @@ The build string will be of the format:
  )
 
 (add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
+
 (projectile-mode)
+
 (custom-set-variables
  '(projectile-switch-project-action #'projectile-dired))
+
+
+;; Symdon Shell Command
+(defvar symdon-shell-command-line nil)
+
+(define-derived-mode symdon-shell-mode fundamental-mode "Symdon SHELL"
+  "Major mode for Symdon shell."
+  )
+
+
+(defun symdon-shell-command (cmd &optional cwd)
+  (interactive (list
+		(read-string "Command: " "" 'our-async-exec-cmd-history "")
+		(read-string "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
+
+  (with-current-buffer (get-buffer-create "*SHELL*")
+    (symdon-shell-mode)
+    (erase-buffer)
+    (switch-to-buffer (current-buffer))
+
+    (setq-local default-directory cwd)
+    (setq-local symdon-shell-command-line `("bash" "-c" ,cmd))
+    (apply #'make-process `(:name "*SHELL*"
+				  :buffer ,(current-buffer)
+				  :command ,symdon-shell-command-line
+				  :filter (lambda (proc output)
+					    (with-current-buffer (process-buffer proc)
+					      (let ((cur (point-min)))
+						(insert output)
+						(ansi-color-apply-on-region cur (point-max)))))))))
+
+(defun symdon-shell-command-retry ()
+  (interactive)
+  (with-current-buffer (get-buffer-create "*SHELL*")
+    (apply #'make-process `(:name "*SHELL*"
+				  :buffer ,(current-buffer)
+				  :command ,foo
+				  :filter (lambda (proc output)
+					    (with-current-buffer (process-buffer proc)
+					      (let ((cur (point-min)))
+						(insert output)
+						(ansi-color-apply-on-region cur (point-max)))))))))
+
+
+
+(bind-keys*
+ ("C-t C-c" . symdon-shell-command))
+
+(bind-keys :map symdon-shell-mode-map
+	   ("C-c C-r" . symdon-shell-command-retry))
