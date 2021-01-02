@@ -1431,9 +1431,10 @@ The build string will be of the format:
 (defun symdon-shell-command-retry ()
   (interactive)
   (with-current-buffer (get-buffer-create "*SHELL*")
+    (goto-char (point-max))
     (apply #'make-process `(:name "*SHELL*"
 				  :buffer ,(current-buffer)
-				  :command ,foo
+				  :command ,symdon-shell-command-line
 				  :filter (lambda (proc output)
 					    (with-current-buffer (process-buffer proc)
 					      (let ((cur (point-min)))
@@ -1446,4 +1447,9 @@ The build string will be of the format:
  ("C-t C-c" . symdon-shell-command))
 
 (bind-keys :map symdon-shell-mode-map
-	   ("C-c C-r" . symdon-shell-command-retry))
+	   ("C-c C-v" . symdon-shell-command-retry))
+
+
+(defun google ()
+  (interactive)
+  (xwidget-webkit-browse-url "https://google.com" t))
