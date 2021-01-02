@@ -1441,15 +1441,18 @@ The build string will be of the format:
 						(insert output)
 						(ansi-color-apply-on-region cur (point-max)))))))))
 
-
-
 (bind-keys*
  ("C-t C-c" . symdon-shell-command))
 
 (bind-keys :map symdon-shell-mode-map
 	   ("C-c C-v" . symdon-shell-command-retry))
 
-
 (defun google ()
   (interactive)
   (xwidget-webkit-browse-url "https://google.com" t))
+
+;; for xwidget-webkit
+(bind-keys :map xwidget-webkit-mode-map
+	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
+	   ("s-c" . xwidget-webkit-copy-selection-as-kill)  ;; Other System Style
+	   )
