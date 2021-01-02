@@ -1447,3 +1447,7 @@ The build string will be of the format:
 
 (bind-keys :map symdon-shell-mode-map
 	   ("C-c C-r" . symdon-shell-command-retry))
+
+(defun google ()
+  (interactive)
+  (xwidget-webkit-browse-url "https://google.com" t))
