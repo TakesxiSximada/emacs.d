@@ -1447,11 +1447,31 @@ The build string will be of the format:
 (bind-keys :map symdon-shell-mode-map
 	   ("C-c C-v" . symdon-shell-command-retry))
 
-(defun google ()
-  (interactive)
-  (xwidget-webkit-browse-url "https://google.com" t))
+
+(defun goolge-build-query-words (&optional words)
+  (when (> (length words) 0)
+    (url-encode-url
+     (string-join
+      (--filter (not (string-empty-p it))
+		(s-split " " words))
+      "+"))))
+
+
+(defun google (&optional words)
+  (interactive "sSearch Word: ")
+  ;; gvg=1 javascript off
+  (xwidget-webkit-browse-url
+   (format "https://google.com/?gbv=1&q=%s" (or (goolge-build-query-words words) ""))
+   t))
+
+
+(bind-keys*
+ ("C-t C-g" . google))
+
 
 ;; for xwidget-webkit
+(require 'xwidget)
+
 (bind-keys :map xwidget-webkit-mode-map
 	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
 	   ("s-c" . xwidget-webkit-copy-selection-as-kill)  ;; Other System Style
