@@ -1470,6 +1470,8 @@ The build string will be of the format:
 
 
 ;; for xwidget-webkit
+(require 'xwidget)
+
 (bind-keys :map xwidget-webkit-mode-map
 	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
 	   ("s-c" . xwidget-webkit-copy-selection-as-kill)  ;; Other System Style
