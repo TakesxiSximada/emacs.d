@@ -1513,3 +1513,4 @@ The build string will be of the format:
 				(ansi-color-apply-on-region cur (point-max))))))))
 
 (use-package slime :ensure t)
+(setq inferior-lisp-program "sbcl")
