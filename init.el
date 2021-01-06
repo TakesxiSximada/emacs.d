@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8 -*-
-(yes-or-no-p "Continue?: Press y")
+(read-key "Press any key...")
 
 (toggle-frame-fullscreen)
 
