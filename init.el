@@ -1476,3 +1476,17 @@ The build string will be of the format:
 	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
 	   ("s-c" . xwidget-webkit-copy-selection-as-kill)  ;; Other System Style
 	   )
+
+
+(defun http-server-start (port)
+  (interactive "nPort: ")
+  (with-current-buffer (get-buffer-create "*HTTP Server*")
+    (goto-char (point-max))
+    (make-process :name "*HTTP Server*"
+		  :buffer (current-buffer)
+		  :command `("python3" ,(expand-file-name "~/.emacs.d/http_server.py") ,(number-to-string port))
+		  :filter (lambda (proc output)
+			    (with-current-buffer (process-buffer proc)
+			      (let ((cur (point-min)))
+				(insert output)
+				(ansi-color-apply-on-region cur (point-max))))))))
