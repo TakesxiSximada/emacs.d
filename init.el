@@ -1478,6 +1478,27 @@ The build string will be of the format:
 	   )
 
 
+;; Mission
+(defun mission-show ()
+  (interactive)
+  (with-current-buffer (get-buffer-create "*MISSION*")
+    (insert
+     (if mission-task-list
+	 (car mission-task-list)
+       (substring-no-properties org-clock-current-task)))
+    (display-buffer (current-buffer))))
+
+(defvar mission-task-list nil)
+
+(defun mission-register (&optional name)
+  (interactive "sMISSION: ")
+  (setq mission-task-list (cons name mission-task-list)))
+
+(defun mission-finish ()
+  (interactive)
+  (setq mission-task-list (cdr mission-task-list)))
+
+
 (defun http-server-start (port)
   (interactive "nPort: ")
   (with-current-buffer (get-buffer-create "*HTTP Server*")
