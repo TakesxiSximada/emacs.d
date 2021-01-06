@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8 -*-
-(yes-or-no-p "Continue?: Press y")
+(read-key "Press any key...")
 
 (toggle-frame-fullscreen)
 
@@ -1476,3 +1476,38 @@ The build string will be of the format:
 	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
 	   ("s-c" . xwidget-webkit-copy-selection-as-kill)  ;; Other System Style
 	   )
+
+
+;; Mission
+(defun mission-show ()
+  (interactive)
+  (with-current-buffer (get-buffer-create "*MISSION*")
+    (insert
+     (if mission-task-list
+	 (car mission-task-list)
+       (substring-no-properties org-clock-current-task)))
+    (display-buffer (current-buffer))))
+
+(defvar mission-task-list nil)
+
+(defun mission-register (&optional name)
+  (interactive "sMISSION: ")
+  (setq mission-task-list (cons name mission-task-list)))
+
+(defun mission-finish ()
+  (interactive)
+  (setq mission-task-list (cdr mission-task-list)))
+
+
+(defun http-server-start (port)
+  (interactive "nPort: ")
+  (with-current-buffer (get-buffer-create "*HTTP Server*")
+    (goto-char (point-max))
+    (make-process :name "*HTTP Server*"
+		  :buffer (current-buffer)
+		  :command `("python3" ,(expand-file-name "~/.emacs.d/http_server.py") ,(number-to-string port))
+		  :filter (lambda (proc output)
+			    (with-current-buffer (process-buffer proc)
+			      (let ((cur (point-min)))
+				(insert output)
+				(ansi-color-apply-on-region cur (point-max))))))))
