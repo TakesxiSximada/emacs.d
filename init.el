@@ -1514,4 +1514,5 @@ The build string will be of the format:
 
 
 (use-package slime :ensure t)
+(use-package slime-company :ensure t)
 (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
