@@ -1513,6 +1513,34 @@ The build string will be of the format:
 				(ansi-color-apply-on-region cur (point-max))))))))
 
 
+(defvar proxy-buffer-name "*PROXY haproxy*")
+(defvar proxy-process-name "*PROXY haproxy*")
+(defvar proxy-default-directory "/ng/symdon")
+
+
+(defun proxy-start ()
+  (interactive)
+  (with-current-buffer (get-buffer-create proxy-buffer-name)
+    (goto-char (point-max))
+    (let ((default-directory proxy-default-directory))
+      (make-process :name proxy-process-name
+		    :buffer (current-buffer)
+		    :command '("docker-compose" "up")
+		    :filter (lambda (proc output)
+			      (with-current-buffer (process-buffer proc)
+				(let ((cur (point-min)))
+				  (insert output)
+				  (ansi-color-apply-on-region cur (point-max)))))))))
+
+
+(defun proxy-stop ()
+  (interactive)
+  (with-current-buffer (get-buffer proxy-buffer-name)
+    (signal-process
+     (get-buffer-process (current-buffer))
+     1)))
+
+
 (use-package slime :ensure t)
 (use-package slime-company :ensure t)
 (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
