@@ -870,11 +870,6 @@ The build string will be of the format:
     (setq company-idle-delay 0)
     (setq company-minimum-prefix-length 1))
 
-  ;; Optional - provides snippet support.
-  (use-package yasnippet
-    :ensure t
-    :commands yas-minor-mode
-    :hook (go-mode . yas-minor-mode))
   )
 
 ;; org-agendaの項目を開いたら作業時間を自動で計測する
@@ -1544,3 +1539,11 @@ The build string will be of the format:
 (use-package slime :ensure t)
 (use-package slime-company :ensure t)
 (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
+;; Optional - provides snippet support.
+(use-package yasnippet
+  :ensure t
+  :commands yas-minor-mode
+  :hook (go-mode . yas-minor-mode)
+  :init
+  (custom-set-variables
+   '(yas-snippet-dirs '("/ng/symdon/snippets"))))
