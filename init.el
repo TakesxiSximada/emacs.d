@@ -40,10 +40,6 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-;; Splash
-(setq initial-buffer-choice
-      (lambda ()
-	(switch-to-buffer "*Messages*")))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq custom-file (locate-user-emacs-file "custom.el"))
@@ -1541,6 +1537,7 @@ The build string will be of the format:
 (use-package slime :ensure t)
 (use-package slime-company :ensure t)
 (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
+
 ;; Optional - provides snippet support.
 (use-package yasnippet
   :ensure t
