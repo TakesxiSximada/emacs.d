@@ -1,4 +1,6 @@
 ;; -*- coding: utf-8 -*-
+
+;; Waiting initialize process
 (read-key "Press any key...")
 
 (toggle-frame-fullscreen)
