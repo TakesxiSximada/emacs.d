@@ -1546,3 +1546,7 @@ The build string will be of the format:
   :init
   (custom-set-variables
    '(yas-snippet-dirs '("/ng/symdon/snippets"))))
+
+;; for shell-mode
+(custom-set-variables
+ '(explicit-shell-file-name "/usr/local/bin/bash"))
