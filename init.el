@@ -311,6 +311,7 @@ The build string will be of the format:
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
+   (scheme . t)
    (emacs-lisp . t)
    (python . t)
    (restclient . t)
