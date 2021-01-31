@@ -311,6 +311,7 @@ The build string will be of the format:
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
+   (scheme . t)
    (emacs-lisp . t)
    (python . t)
    (restclient . t)
@@ -334,6 +335,7 @@ The build string will be of the format:
 (use-package pyvenv :ensure t :no-require t)
 
 ;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
+(require 'pyvenv)
 (defun pyvenv-create (venv-name python-executable)
   "Create virtualenv.  VENV-NAME  PYTHON-EXECUTABLE."
   (interactive (list
@@ -1546,3 +1548,7 @@ The build string will be of the format:
   :init
   (custom-set-variables
    '(yas-snippet-dirs '("/ng/symdon/snippets"))))
+
+;; for shell-mode
+(custom-set-variables
+ '(explicit-shell-file-name "/usr/local/bin/bash"))
