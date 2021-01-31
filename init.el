@@ -1535,10 +1535,9 @@ The build string will be of the format:
      (get-buffer-process (current-buffer))
      1)))
 
-
 (use-package slime :ensure t)
-(use-package slime-company :ensure t)
-(setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
+;; (use-package slime-company :ensure t)　　
+;; (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
 
 ;; Optional - provides snippet support.
 (use-package yasnippet
@@ -1552,3 +1551,12 @@ The build string will be of the format:
 ;; for shell-mode
 (custom-set-variables
  '(explicit-shell-file-name "/usr/local/bin/bash"))
+
+
+(defun org-todo-list-from-buffer (&optional arg buf)
+  "Generate an agenda view from the selected buffer."
+  (interactive "P\nbBuffer")
+  (if-let ((org-agenda-files (or (buffer-file-name buf)
+				 org-agenda-files)))
+      (org-todo-list arg)
+    (error "%s is not visiting a file" (buffer-name buf))))
