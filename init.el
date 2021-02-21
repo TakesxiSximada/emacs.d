@@ -932,8 +932,8 @@ The build string will be of the format:
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
 (require 'foreman-mode)
 
-(el-get-bundle gist:d451221dc2a280b7e35d:switch-project.el :type "git")
-(require 'switch-project)
+(el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
+(require 'kpt)
 
 ;; -------------
 ;; external tool
@@ -1244,68 +1244,68 @@ The build string will be of the format:
   "Editor mode"
   nil)
 
-(defcustom symdon-ga-post-directory "/ng/symdon/pages/posts"
-  "Path to directory of symdon-ga posts")
+(defcustom editor-base-directory "/ng/symdon/pages/posts"
+  "Editor mode")
+(defcustom editor-file-path-directory-style nil
+  "Editor mode")
 
+(defun editor-make-new-file-path ()
+  "エディターモードの保存先ファイルのパス返す。
 
-(defun symdon-ga-create-new-file-path ()
-  (concat
-   (directory-file-name symdon-ga-post-directory)
-   "/"
-   (format "%s.org"
-	   (truncate (float-time)))))
+通常ではファイルスタイルorgファイル (XXXX.org) のパスを返す。
+`editor-file-path-directory-style` をNONE NILにするとディレクトリスタ
+イルのパス(XXXX/index.org)を返す。
+"
+  (let ((file-style-path (concat (directory-file-name editor-base-directory)
+				 (format "/%s.org" (truncate (float-time))))))
+    (if editor-file-path-directory-style
+	(concat (directory-file-name (file-name-sans-extension file-style-path)) "/index.org")
+      file-style-path)))
 
-
-(defun symdon-ga-add-comment ()
-  (interactive)
-  (let ((filename (buffer-name (current-buffer))))
-    (shell-command (format "git add %s" filename))
-    (shell-command (format "git commit -m 'Add comment.' %s" filename))))
-
-
-(defun symdon-ga-post (text)
-  (with-current-buffer (find-file-noselect (symdon-ga-create-new-file-path))
-    (insert text)
-    (save-buffer)
-    (symdon-ga-add-comment)
-    (current-buffer)))
-
-
-(defun editor-get-editor-buffer-text ()
-  (with-current-buffer (get-buffer editor-buffer-name)
-    (buffer-substring-no-properties (point-min) (point-max))))
-
+(defcustom editor-new-file-path #'editor-make-new-file-path
+  "Editor mode")
 
 (defun editor-save-as-kill ()
+  "エディターバッファの内容をファイルに保存してgit commitする"
   (interactive)
-  (switch-to-buffer
-   (symdon-ga-post
-    (editor-get-editor-buffer-text)))
-  (kill-buffer editor-buffer-name))
+  (let ((new-file-path (funcall editor-new-file-path)))
 
-(custom-set-variables '(symdon-ga-post-directory "/ng/symdon/pages/posts"))
+    ;; Create parent directory.
+    (make-directory (file-name-directory new-file-path) t)
 
+    ;; Copy buffer content
+    (switch-to-buffer
+     (with-current-buffer (find-file-noselect new-file-path)
+       (insert-buffer-substring (get-buffer editor-buffer-name))
+       (save-buffer)
+       (current-buffer)))
 
-(defun editor-save-as-kill-discord (&optional is-code )
-  "Send to discord"
-  (interactive (list (yes-or-no-p "Is this code?")))
-  (request
-    discord-bot-webhook-url
-    :type "POST"
-    :data `(("username" . ,discord-bot-username)
-	    ("avatar_url" . ,discord-bot-avatar-url)
-	    ("content" .   ,(let ((text (editor-get-editor-buffer-text)))
-			      (if is-code
-				  (format (format "```\n%s\n```" text))
-				text)))))
+    ;; Git commit
+    (let ((default-directory (file-name-directory new-file-path)))
+      (shell-command (format "git add %s" new-file-path))
+      (shell-command (format "git commit -m 'Add comment.' %s" new-file-path))))
+
   (kill-buffer editor-buffer-name))
 
 
-(require 'transient)
+(defun editor-save-as-kill-file-style ()
+  "ファイルスタイルでエディターバッファの内容を保存する"
+  (interactive)
+  (let ((editor-file-path-directory-style nil))
+    (editor-save-as-kill)))
+
+(defun editor-save-as-kill-directory-style ()
+  "ディレクトリスタイルでエディターバッファの内容を保存する"
+  (interactive)
+  (let ((editor-file-path-directory-style t))
+    (editor-save-as-kill)))
+
 (transient-define-prefix editor-save-as ()
   "Editor mode save as..."
-  [("C-s" "Symdon GA" editor-save-as-kill)
-   ;; ("C-d" editor-save-as-kill-discord)  # FIXME: If this line is enabled, transient will fail to start. Investigation is needed.
+  ["Save as"
+   ("f" "Save as file style" editor-save-as-kill-file-style)
+   ("d" "Save as directory style" editor-save-as-kill-directory-style)
+   ("s" "Save as default" editor-save-as-kill)
    ])
 
 (bind-keys :map editor-mode-map
@@ -1385,8 +1385,6 @@ The build string will be of the format:
  ("C-t C-p" . projectile-switch-project)
  ("C-t C-o" . macos-app)
  )
-
-(add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
 
 (projectile-mode)
 
@@ -1560,3 +1558,37 @@ The build string will be of the format:
 				 org-agenda-files)))
       (org-todo-list arg)
     (error "%s is not visiting a file" (buffer-name buf))))
+
+(require 'python)
+(require 'eglot)
+
+(add-hook 'python-mode-hook 'eglot-ensure)
+
+;; (global-display-line-numbers-mode)
+
+(use-package terraform-mode :ensure t)
+
+;; process-environment initialization
+(setq process-environment-original (copy-alist process-environment))
+
+(defun process-environment-init ()
+  "Reset process-environment to initial state"
+  (interactive)
+  (setq process-environment (copy-alist process-environment-original)))
+
+(add-hook 'projectile-before-switch-project-hook #'process-environment-init)
+(add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
+
+;; Mew
+(use-package mew :ensure t)
+(autoload 'mew "mew" nil t)
+(autoload 'mew-send "mew" nil t)
+(setq mew-smtp-server "host.docker.internal")
+(setq mew-smtp-port 1025)
+
+;; json-mode
+(add-hook 'js-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+
