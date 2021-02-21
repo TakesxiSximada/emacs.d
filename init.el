@@ -932,8 +932,8 @@ The build string will be of the format:
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
 (require 'foreman-mode)
 
-(el-get-bundle gist:d451221dc2a280b7e35d:switch-project.el :type "git")
-(require 'switch-project)
+(el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
+(require 'kpt)
 
 ;; -------------
 ;; external tool
