@@ -1,11 +1,11 @@
 ;; -*- coding: utf-8 -*-
-
 ;; Waiting initialize process
 (read-key "Press any key...")
 
 (toggle-frame-fullscreen)
 
 ;; theme
+(message "Setup theme")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (setq custom-theme-directory "~/.emacs.d/themes")
 (load-theme 'sximada-dark t)
@@ -17,15 +17,18 @@
   (global-hl-line-mode))
 
 ;; locale
+(message "Setup locale")
 (setenv "LANG" "ja_JP.UTF-8")
 (set-buffer-file-coding-system 'utf-8-unix)
 
 ;; toolbar
+(message "Setup toolbar")
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
 ;; fonts
+(message "Setup fonts")
 (set-face-attribute 'default nil :family "Menlo" :height 120)
 
 
@@ -37,6 +40,7 @@
              '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
 
 ;; backup file
+(message "Setup backup file")
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
@@ -45,6 +49,7 @@
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
 ;; package
+(message "Setup backup file")
 (require 'package nil 'noerror)
 
 ;; elpa/gnutls workaround
@@ -76,9 +81,8 @@
    '(quelpa-use-package
      :fetcher git
      :url "https://github.com/quelpa/quelpa-use-package.git"))
-  (require 'quelpa-use-package)
-  (use-package el-get :ensure t))
-
+  (require 'quelpa-use-package))
+  ;; (use-package el-get :ensure t))
 
 (use-package ox-qmd :ensure t
   :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
@@ -94,6 +98,7 @@
 
 
 ;;; Environment Variable
+(message "Setup Environment Variable")
 (require 'cl)
 (require 'subr-x)
 
@@ -194,7 +199,7 @@
 					 ) ":"))
 
 ;;; Environment Variable Ends here
-
+(message "Environment Variable Ends here")
 (require 'windmove)
 
 (setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
@@ -203,6 +208,7 @@
 (use-package transient :defer t :ensure t :no-require t)
 
 ;; Input I/F
+(message "Input I/F")
 (ido-mode 1)
 (ido-everywhere 1)
 (setq ido-enable-flex-matching t)
@@ -226,6 +232,8 @@
   )
 
 ;;; For Silver Searcher (ag)
+(message "For Silver Searcher (ag)")
+
 (use-package ag :ensure t :defer t :no-require t)
 (use-package wgrep :ensure t :defer t)
 (use-package wgrep-ag :ensure t :defer t)
@@ -235,10 +243,12 @@
 (use-package s :ensure t)
 
 ;;; For Nginx
+(message "For Nginx")
 (use-package nginx-mode :ensure t)
 
 
 ;;; For Docker
+(message "For Docker")
 (use-package dockerfile-mode :ensure t)
 (require 'dockerfile-mode)
 (use-package docker :defer t :ensure t :no-require t)
@@ -292,15 +302,18 @@ The build string will be of the format:
 
 
 ;;; For LSP
+(message "For LSP")
 (use-package eglot :defer t :ensure t :no-require t
   :config
   (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
   (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark))
 
 ;;; For restclient
+(message "For restclient")
 (use-package restclient :defer t :ensure t :no-require t)
 
 ;;; For babel
+(message "For babel")
 (use-package ob-async :defer t :ensure t)
 (require 'ob-async)
 (require 'ob-plantuml)
@@ -320,18 +333,21 @@ The build string will be of the format:
    (sql . t)))
 
 ;;; Editorconfig
+(message "Editorconfig")
 (use-package editorconfig
   :ensure t
   :config
   (editorconfig-mode 1))
 
 ;;; For Rust
+(message "For Rust")
 (use-package rustic :defer t :ensure t :no-require t
   :init
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-rls-pkg 'eglot))
 
 ;;; For Python
+(message "For Python")
 (use-package pyvenv :ensure t :no-require t)
 
 ;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
@@ -360,6 +376,7 @@ The build string will be of the format:
   (custom-set-variables '(typescript-indent-level 2)))
 
 ;;; For React
+(message "For React")
 (use-package rjsx-mode :defer t :ensure t :no-require t
   :config
   (setq indent-tabs-mode nil)
@@ -367,6 +384,7 @@ The build string will be of the format:
   (setq js2-strict-missing-semi-warning nil))
 
 ;;; Our Async Exec
+(message "Our Async Exec")
 (defvar our-async-exec-cmd-history nil)
 (defvar our-async-exec-cwd-history nil)
 (defvar our-async-exec-cmd nil)
@@ -429,7 +447,8 @@ The build string will be of the format:
 ;; ---------------
 
 ;; for simple.el
-;;
+(message "for simple.el")
+
 ;; async-shell-commandで長い出力を表示する場合にEmacsが固まる問題を回避する
 (defun comint-output-filter (process string)
   (let ((oprocbuf (process-buffer process)))
@@ -543,6 +562,7 @@ The build string will be of the format:
 ;;; Our Async Exec Ends here.
 
 ;;; Our Git Clone
+(message "Our Git Clone")
 (defun our-git-config-entry (name email ssh-private-key-path)
   `((name . ,name)
     (email . ,email)
@@ -674,6 +694,7 @@ The build string will be of the format:
   )
 
 ;;; For flycheck
+(message "For flycheck")
 (defun configure-flycheck-yamlint ()
   (interactive)
   (flycheck-select-checker 'yaml-yamllint)
@@ -734,7 +755,8 @@ The build string will be of the format:
  ("S-<f12>" . our-open-user-task-file)
  )
 
-(load-file "~/.emacs.d/settings.el")
+(use-package projectile :ensure t :defer t)
+(load-file "/usr/local/ng/symdon/settings.el")
 
 (use-package org
   :config
@@ -842,6 +864,7 @@ The build string will be of the format:
 
 
 ;; setup golang
+(message "Setup golang")
 (use-package go-mode :ensure t :defer t)
 
 (progn
@@ -876,7 +899,6 @@ The build string will be of the format:
 (defun org-clock-in-interactive (&optional starting-p)
   (when (yes-or-no-p "Clock In?")
     (org-clock-in)))
-
 ;; (add-hook 'org-agenda-after-show-hook #'org-narrow-to-subtree)
 ;; (add-hook 'org-agenda-after-show-hook #'org-clock-in-interactive)
 ;; (add-hook 'org-clock-out-hook #'org-agenda-list)
@@ -902,7 +924,36 @@ The build string will be of the format:
 (use-package web :defer t :ensure t)
 (use-package db :defer t :ensure t)
 
-;; My Package
+;; (require 'el-get
+;; (package-delete' el-get t)
+;; (require 'cl-lib)
+
+;; For el-get
+(message "Require el-get start")
+(add-to-list 'load-path "/usr/local/ng/el-get")
+(custom-set-variables
+ '(el-get-dir (expand-file-name "~/.el-get")))
+(require 'el-get nil 'noerror)
+(add-to-list 'el-get-recipe-path "/usr/local/ng/el-get/recipes")
+;; (setq el-get-dir (expand-file-name "~/.el-get"))
+(message "Require el-get done")
+
+;; (add-to-list 'load-path "/usr/local/ng/el-get")
+
+;; (add-to-list 'el-get-recipe-path "/usr/local/ng/el-get/recipes")
+
+;; (unless (require 'el-get nil 'noerror)
+;;   (with-current-buffer
+;;       (url-retrieve-synchronously
+;;        "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+;;     (goto-char (point-max))
+;;     (eval-print-last-sexp)))
+
+;; (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+
+
+;; MyPackage
+(message "My Pakcage")
 (el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git")
 (require 'dotenv-mode)
 
@@ -1534,7 +1585,7 @@ The build string will be of the format:
      1)))
 
 (use-package slime :ensure t)
-;; (use-package slime-company :ensure t)　　
+;; (use-package slime-company :ensure t
 ;; (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
 
 ;; Optional - provides snippet support.
@@ -1565,7 +1616,6 @@ The build string will be of the format:
 (add-hook 'python-mode-hook 'eglot-ensure)
 
 ;; (global-display-line-numbers-mode)
-
 (use-package terraform-mode :ensure t)
 
 ;; process-environment initialization
@@ -1592,3 +1642,4 @@ The build string will be of the format:
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
 
+(message "Finished to initialize emacs")
