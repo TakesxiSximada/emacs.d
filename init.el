@@ -1295,7 +1295,7 @@ The build string will be of the format:
   "Editor mode"
   nil)
 
-(defcustom editor-base-directory "/ng/symdon/pages/posts"
+(defcustom editor-base-directory "/usr/local/ng/symdon/pages/posts"
   "Editor mode")
 (defcustom editor-file-path-directory-style nil
   "Editor mode")
