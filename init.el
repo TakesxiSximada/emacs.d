@@ -1629,12 +1629,17 @@ The build string will be of the format:
 (add-hook 'projectile-before-switch-project-hook #'process-environment-init)
 (add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
 
+(setq smtpmail-smtp-server "host.docker.internal")
+(setq smtpmail-smtp-service 1025)
+
 ;; Mew
 (use-package mew :ensure t)
 (autoload 'mew "mew" nil t)
 (autoload 'mew-send "mew" nil t)
 (setq mew-smtp-server "host.docker.internal")
 (setq mew-smtp-port 1025)
+
+(setq send-mail-function #'smtpmail-send-it)
 
 ;; json-mode
 (add-hook 'js-mode-hook
