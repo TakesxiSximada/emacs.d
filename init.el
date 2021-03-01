@@ -102,8 +102,17 @@
 (require 'cl)
 (require 'subr-x)
 
+;;; Whalebrew configuration.
+(setq whalebrew-config-dir (expand-file-name "~/.whalebrew"))
+(setq whalebrew-install-path (concat whalebrew-config-dir "/bin"))
+(setenv "WHALEBREW_INSTALL_PATH" whalebrew-install-path)
+(mkdir whalebrew-install-path t)
+
+
 (setq exec-path (delete-duplicates
 		 (append `(
+			   ,whalebrew-install-path
+			   ,(expand-file-name "~/.whalebrew-bin/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.goenv/bin")
 			   ,(expand-file-name "~/.goenv/shims")
@@ -1295,7 +1304,7 @@ The build string will be of the format:
   "Editor mode"
   nil)
 
-(defcustom editor-base-directory "/usr/local/ng/symdon/pages/posts"
+(defcustom editor-base-directory "/opt/ng/symdon/pages/posts"
   "Editor mode")
 (defcustom editor-file-path-directory-style nil
   "Editor mode")
