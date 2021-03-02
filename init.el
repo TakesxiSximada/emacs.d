@@ -765,7 +765,7 @@ The build string will be of the format:
  )
 
 (use-package projectile :ensure t :defer t)
-(load-file "/usr/local/ng/symdon/settings.el")
+(load-file "/opt/ng/symdon/settings.el")
 
 (use-package org
   :config
@@ -939,11 +939,11 @@ The build string will be of the format:
 
 ;; For el-get
 (message "Require el-get start")
-(add-to-list 'load-path "/usr/local/ng/el-get")
+(add-to-list 'load-path "/opt/ng/el-get")
 (custom-set-variables
  '(el-get-dir (expand-file-name "~/.el-get")))
 (require 'el-get nil 'noerror)
-(add-to-list 'el-get-recipe-path "/usr/local/ng/el-get/recipes")
+(add-to-list 'el-get-recipe-path "/opt/ng/el-get/recipes")
 ;; (setq el-get-dir (expand-file-name "~/.el-get"))
 (message "Require el-get done")
 
