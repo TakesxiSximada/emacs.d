@@ -995,6 +995,11 @@ The build string will be of the format:
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
 (require 'kpt)
 
+
+(el-get-bundle gist:10985431:go-template-mode :type "git")
+(require 'go-template-mode)
+
+
 ;; -------------
 ;; external tool
 ;; -------------
