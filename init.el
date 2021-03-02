@@ -1464,18 +1464,18 @@ The build string will be of the format:
   "Major mode for Symdon shell."
   )
 
+(require 'term)
+
 (defun symdon-shell-command (line &optional cwd)
   (interactive (list
 		(read-string "Command: " "" 'our-async-exec-cmd-history "")
-		(read-string "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
-  (let* ((parsed-line (split-string line))
-	 (abspath (expand-file-name cwd))
-	 (cmd (car parsed-line))
-	 (name (format "%s: In %s" cmd abspath))
-	 (args `(,name ,cmd ,nil ,@(cdr parsed-line)))
-	 (default-directory abspath))
+		(read-directory-name "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
+  (let ((default-directory cwd))
     (switch-to-buffer
-     (apply #'term-ansi-make-term args))))
+     (funcall #'term-ansi-make-term
+	      (format "%s: In %s" (car (split-string line)) (expand-file-name cwd))
+	      "bash" nil "-c" line))))
+
 
 (defun symdon-shell-command-retry ()
   (interactive)
