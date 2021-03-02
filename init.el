@@ -1459,27 +1459,18 @@ The build string will be of the format:
   "Major mode for Symdon shell."
   )
 
-
-(defun symdon-shell-command (cmd &optional cwd)
+(defun symdon-shell-command (line &optional cwd)
   (interactive (list
 		(read-string "Command: " "" 'our-async-exec-cmd-history "")
 		(read-string "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
-
-  (with-current-buffer (get-buffer-create "*SHELL*")
-    (symdon-shell-mode)
-    (erase-buffer)
-    (switch-to-buffer (current-buffer))
-
-    (setq-local default-directory cwd)
-    (setq-local symdon-shell-command-line `("bash" "-c" ,cmd))
-    (apply #'make-process `(:name "*SHELL*"
-				  :buffer ,(current-buffer)
-				  :command ,symdon-shell-command-line
-				  :filter (lambda (proc output)
-					    (with-current-buffer (process-buffer proc)
-					      (let ((cur (point-min)))
-						(insert output)
-						(ansi-color-apply-on-region cur (point-max)))))))))
+  (let* ((parsed-line (split-string line))
+	 (abspath (expand-file-name cwd))
+	 (cmd (car parsed-line))
+	 (name (format "%s: In %s" cmd abspath))
+	 (args `(,name ,cmd ,nil ,@(cdr parsed-line)))
+	 (default-directory abspath))
+    (switch-to-buffer
+     (apply #'term-ansi-make-term args))))
 
 (defun symdon-shell-command-retry ()
   (interactive)
