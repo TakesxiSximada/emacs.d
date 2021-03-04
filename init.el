@@ -102,8 +102,17 @@
 (require 'cl)
 (require 'subr-x)
 
+;;; Whalebrew configuration.
+(setq whalebrew-config-dir (expand-file-name "~/.whalebrew"))
+(setq whalebrew-install-path (concat whalebrew-config-dir "/bin"))
+(setenv "WHALEBREW_INSTALL_PATH" whalebrew-install-path)
+(mkdir whalebrew-install-path t)
+
+
 (setq exec-path (delete-duplicates
 		 (append `(
+			   ,whalebrew-install-path
+			   ,(expand-file-name "~/.whalebrew-bin/bin")
 			   ,(expand-file-name "~/.cargo/bin")
 			   ,(expand-file-name "~/.goenv/bin")
 			   ,(expand-file-name "~/.goenv/shims")
@@ -756,7 +765,7 @@ The build string will be of the format:
  )
 
 (use-package projectile :ensure t :defer t)
-(load-file "/usr/local/ng/symdon/settings.el")
+(load-file "/opt/ng/symdon/settings.el")
 
 (use-package org
   :config
@@ -930,11 +939,11 @@ The build string will be of the format:
 
 ;; For el-get
 (message "Require el-get start")
-(add-to-list 'load-path "/usr/local/ng/el-get")
+(add-to-list 'load-path "/opt/ng/el-get")
 (custom-set-variables
  '(el-get-dir (expand-file-name "~/.el-get")))
 (require 'el-get nil 'noerror)
-(add-to-list 'el-get-recipe-path "/usr/local/ng/el-get/recipes")
+(add-to-list 'el-get-recipe-path "/opt/ng/el-get/recipes")
 ;; (setq el-get-dir (expand-file-name "~/.el-get"))
 (message "Require el-get done")
 
@@ -985,6 +994,11 @@ The build string will be of the format:
 
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
 (require 'kpt)
+
+
+(el-get-bundle gist:10985431:go-template-mode :type "git")
+(require 'go-template-mode)
+
 
 ;; -------------
 ;; external tool
@@ -1295,7 +1309,7 @@ The build string will be of the format:
   "Editor mode"
   nil)
 
-(defcustom editor-base-directory "/ng/symdon/pages/posts"
+(defcustom editor-base-directory "/opt/ng/symdon/pages/posts"
   "Editor mode")
 (defcustom editor-file-path-directory-style nil
   "Editor mode")
@@ -1450,27 +1464,18 @@ The build string will be of the format:
   "Major mode for Symdon shell."
   )
 
+(require 'term)
 
-(defun symdon-shell-command (cmd &optional cwd)
+(defun symdon-shell-command (line &optional cwd)
   (interactive (list
 		(read-string "Command: " "" 'our-async-exec-cmd-history "")
-		(read-string "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
+		(read-directory-name "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
+  (let ((default-directory cwd))
+    (switch-to-buffer
+     (funcall #'term-ansi-make-term
+	      (format "%s: In %s" (car (split-string line)) (expand-file-name cwd))
+	      "bash" nil "-c" line))))
 
-  (with-current-buffer (get-buffer-create "*SHELL*")
-    (symdon-shell-mode)
-    (erase-buffer)
-    (switch-to-buffer (current-buffer))
-
-    (setq-local default-directory cwd)
-    (setq-local symdon-shell-command-line `("bash" "-c" ,cmd))
-    (apply #'make-process `(:name "*SHELL*"
-				  :buffer ,(current-buffer)
-				  :command ,symdon-shell-command-line
-				  :filter (lambda (proc output)
-					    (with-current-buffer (process-buffer proc)
-					      (let ((cur (point-min)))
-						(insert output)
-						(ansi-color-apply-on-region cur (point-max)))))))))
 
 (defun symdon-shell-command-retry ()
   (interactive)
@@ -1629,12 +1634,17 @@ The build string will be of the format:
 (add-hook 'projectile-before-switch-project-hook #'process-environment-init)
 (add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
 
+(setq smtpmail-smtp-server "host.docker.internal")
+(setq smtpmail-smtp-service 1025)
+
 ;; Mew
 (use-package mew :ensure t)
 (autoload 'mew "mew" nil t)
 (autoload 'mew-send "mew" nil t)
 (setq mew-smtp-server "host.docker.internal")
 (setq mew-smtp-port 1025)
+
+(setq send-mail-function #'smtpmail-send-it)
 
 ;; json-mode
 (add-hook 'js-mode-hook
@@ -1643,3 +1653,64 @@ The build string will be of the format:
             (setq js-indent-level 2)))
 
 (message "Finished to initialize emacs")
+
+
+
+;;; for compilation-mode ansi escaping
+(add-hook 'term-mode-hook 'compilation-shell-minor-mode)
+
+(require 'ansi-color)
+
+
+(defun endless/colorize-compilation ()
+  "Colorize from `compilation-filter-start' to `point'."
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region
+     compilation-filter-start (point))))
+
+(add-hook 'compilation-filter-hook
+          #'endless/colorize-compilation)
+
+
+;; Stolen from (https://oleksandrmanzyuk.wordpress.com/2011/11/05/better-emacs-shell-part-i/)
+(progn 
+  (defun regexp-alternatives (regexps)
+    "Return the alternation of a list of regexps."
+    (mapconcat (lambda (regexp)
+		 (concat "\\(?:" regexp "\\)"))
+               regexps "\\|"))
+
+  (defvar non-sgr-control-sequence-regexp nil
+    "Regexp that matches non-SGR control sequences.")
+
+  (setq non-sgr-control-sequence-regexp
+	(regexp-alternatives
+	 '(;; icon name escape sequences
+           "\033\\][0-2];.*?\007"
+           ;; non-SGR CSI escape sequences
+           "\033\\[\\??[0-9;]*[^0-9;m]"
+           ;; noop
+           "\012\033\\[2K\033\\[1F"
+           )))
+
+  (defun filter-non-sgr-control-sequences-in-region (begin end)
+    (save-excursion
+      (goto-char begin)
+      (while (re-search-forward
+              non-sgr-control-sequence-regexp end t)
+	(replace-match ""))))
+
+  (defun filter-non-sgr-control-sequences-in-output (ignored)
+    (let ((start-marker
+           (or comint-last-output-start
+               (point-min-marker)))
+          (end-marker
+           (process-mark
+            (get-buffer-process (current-buffer)))))
+      (filter-non-sgr-control-sequences-in-region
+       start-marker
+       end-marker)))
+
+  (add-hook 'comint-output-filter-functions
+            'filter-non-sgr-control-sequences-in-output)
+  )
