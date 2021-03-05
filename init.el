@@ -151,6 +151,7 @@
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "LDFLAGS" (string-join '(
+				 "-L/usr/local/Cellar/python@3.7/3.7.10_2/Frameworks/Python.framework/Versions/Current/lib"
 				 "-L/usr/local/opt/mysql-client/lib"
 				 "-L/usr/local/opt/binutils/lib"
 				 "-L/usr/local/opt/curl-openssl/lib"
@@ -173,6 +174,7 @@
 				 ;; "-L/usr/local/opt/openssl@1.1/lib"
 				 ) " "))
 (setenv "CPPFLAGS" (string-join '(
+				 "-L/usr/local/Cellar/python@3.7/3.7.10_2/Frameworks/Python.framework/Versions/Current/include"
 				  "-I/usr/local/opt/openjdk/include"
 				  "-I/usr/local/opt/mysql-client/include"
 				  "-I/usr/local/opt/binutils/include"
@@ -194,6 +196,7 @@
 				  ) " "))
 
 (setenv "PKG_CONFIG_PATH" (string-join '(
+					 "/usr/local/Cellar/python@3.7/3.7.10_2/lib/pkgconfig"
 					 "/usr/local/opt/libffi/lib/pkgconfig"
 					 "/usr/local/opt/libxml2/lib/pkgconfig"
 					 "/usr/local/opt/openssl/lib/pkgconfig"
@@ -361,12 +364,14 @@ The build string will be of the format:
 
 ;; https://github.com/jorgenschaefer/pyvenv/blob/fa6a028349733b0ecb407c4cfb3a715b71931eec/pyvenv.el#L168-L184
 (require 'pyvenv)
+(setenv "WORKON_HOME" (expand-file-name "~/.virtualenvs"))
+
 (defun pyvenv-create (venv-name python-executable)
   "Create virtualenv.  VENV-NAME  PYTHON-EXECUTABLE."
   (interactive (list
                 (read-from-minibuffer "Name of virtual environment: ")
                 (read-file-name "Python interpreter to use: "
-                                (file-name-directory (executable-find "python3.7"))
+                                (file-name-directory (executable-find "python3.9"))
                                 nil nil "python")))
   (let ((venv-dir (concat (file-name-as-directory (pyvenv-workon-home))
                           venv-name)))
