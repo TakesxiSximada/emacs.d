@@ -219,6 +219,9 @@
 (use-package monky :defer t :ensure t :no-require t)
 (use-package transient :defer t :ensure t :no-require t)
 
+(use-package s :ensure t)
+(require 's)
+
 ;; Input I/F
 (message "Input I/F")
 (ido-mode 1)
@@ -252,7 +255,6 @@
 (autoload 'wgrep-ag-setup "wgrep-ag")
 (add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
-(use-package s :ensure t)
 
 ;;; For Nginx
 (message "For Nginx")
