@@ -1390,13 +1390,19 @@ The build string will be of the format:
 ;; -----------
 (defun macos-app (&optional app buf)
   "Start macOS application from Emacs"
-  (interactive (list (completing-read
-		      "Application: "
-		      (directory-files "/Applications" nil ".app$"))
+  (interactive (list (completing-read "Application: "
+				      (apply #'append
+					     (mapcar (lambda (application-path)
+						       (mapcar (lambda (name) (concat (directory-file-name application-path) "/" name))
+							       (directory-files application-path nil ".app")))
+						     '("/Applications"
+						       "/Applications/Utilities"
+						       "/System/Applications"
+						       "/System/Applications/Utilities"))))
 		     (get-buffer-create "*Application*")))
   (make-process :name "*App*"
 		:buffer (get-buffer-create "*App*")
-		:command `("open" "-g" ,(format "/Applications/%s" app))
+		:command `("open" "-g" ,app)
 		))
 
 (use-package py-isort :ensure t)
