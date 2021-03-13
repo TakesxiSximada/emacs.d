@@ -700,14 +700,14 @@ The build string will be of the format:
   (elscreen-start)
   (elscreen-create))
 
-(use-package prettier-js :ensure t :defer t
-  :init
-  (add-hook 'yaml-mode-hook 'prettier-js-mode)
-  (add-hook 'json-mode-hook 'prettier-js-mode)
-  (add-hook 'html-mode-hook 'prettier-js-mode)
-  (add-hook 'css-mode-hook 'prettier-js-mode)
-  (add-hook 'js-mode-hook 'prettier-js-mode)
-  )
+;; (use-package prettier-js :ensure t :defer t
+;;   :init
+;;   (add-hook 'yaml-mode-hook 'prettier-js-mode)
+;;   (add-hook 'json-mode-hook 'prettier-js-mode)
+;;   (add-hook 'html-mode-hook 'prettier-js-mode)
+;;   (add-hook 'css-mode-hook 'prettier-js-mode)
+;;   (add-hook 'js-mode-hook 'prettier-js-mode)
+;;   )
 
 ;;; For flycheck
 (message "For flycheck")
