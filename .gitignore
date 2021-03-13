@@ -16,6 +16,7 @@ init.el~
 lib/our-circleci.el
 network-security.data
 org-capture-templates/
+projectile-bookmarks.eld
 quelpa
 recentf
 request/
