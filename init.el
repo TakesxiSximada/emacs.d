@@ -1727,3 +1727,7 @@ The build string will be of the format:
   (add-hook 'comint-output-filter-functions
             'filter-non-sgr-control-sequences-in-output)
   )
+
+
+(use-package vagrant-tramp :ensure t :defer t)
+;; (use-package vterm :ensure t)
