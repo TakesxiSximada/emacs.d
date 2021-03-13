@@ -1686,7 +1686,7 @@ The build string will be of the format:
 
 
 ;; Stolen from (https://oleksandrmanzyuk.wordpress.com/2011/11/05/better-emacs-shell-part-i/)
-(progn 
+(progn
   (defun regexp-alternatives (regexps)
     "Return the alternation of a list of regexps."
     (mapconcat (lambda (regexp)
