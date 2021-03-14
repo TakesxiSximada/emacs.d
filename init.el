@@ -1,6 +1,6 @@
 ;; -*- coding: utf-8 -*-
 ;; Waiting initialize process
-
+(setq debug-on-error t)
 (read-key "Press any key...")
 
 (require 'package)
@@ -22,7 +22,6 @@
      :fetcher git
      :url "https://github.com/quelpa/quelpa-use-package.git"))
 (require 'quelpa-use-package)
-
 
 (require 'cl)
 (require 'subr-x)
@@ -70,12 +69,9 @@
     (global-hl-line-mode)))
 
 ;; locale
-(message "Setup locale")
-(setenv "LANG" "ja_JP.UTF-8")
 (set-buffer-file-coding-system 'utf-8-unix)
 
 ;; toolbar
-(message "Setup toolbar")
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
@@ -95,12 +91,7 @@
  auto-save-default nil
  custom-file (locate-user-emacs-file "custom.el")
  )
-
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;; package
-(require 'package nil 'noerror)
-
 ;; elpa/gnutls workaround
 (if (string< emacs-version "26.3")
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
@@ -108,8 +99,8 @@
 (setq  ;; Whalebrew configuration.
  whalebrew-config-dir (expand-file-name "~/.whalebrew")
  whalebrew-install-path (concat whalebrew-config-dir "/bin"))
-
 (setenv "WHALEBREW_INSTALL_PATH" whalebrew-install-path)
+
 (mkdir whalebrew-install-path t)
 
 (setq exec-path (delete-duplicates
@@ -205,6 +196,9 @@
 
 (setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
 (setenv "WORKON_HOME" (expand-file-name "~/.venv"))
+(setenv "N_PREFIX" (expand-file-name "~/.local"))
+(setenv "LANG" "ja_JP.UTF-8")
+(setq process-environment-original (copy-alist process-environment))
 
 ;; Configure el-get
 (add-to-list 'load-path "/opt/ng/el-get")
@@ -287,16 +281,15 @@
   :config
   (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
   (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark))
-
-(require 'flycheck)
-(require 'dockerfile-mode)
-(require 's)
-(require 'ob-async)
-(require 'ob-plantuml)
-(require 'pyvenv)
-(require 'eglot)
-
-
+(use-package elscreen :ensure t
+  :init
+  (setq
+   elscreen-display-tab nil
+   elscreen-tab-display-kill-screen nil
+   elscreen-tab-display-control nil)
+  :config
+  (elscreen-start)
+  (elscreen-create))
 (use-package ox-qmd :ensure t
   :quelpa (ox-qmd :fetcher github :repo "0x60df/ox-qmd"))
 (use-package shogi-mode :ensure t
@@ -336,16 +329,8 @@
    indent-tabs-mode nil
    js-indent-level 2
    js2-strict-missing-semi-warning nil))
-(use-package vue-mode :ensure t :defer t
-  :init
-  (flycheck-add-mode 'javascript-eslint 'vue-mode)
-  (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
-  (flycheck-add-mode 'javascript-eslint 'css-mode)
-  :config
-  (add-hook 'vue-mode-hook #'add-node-modules-path)
-  (add-hook 'vue-mode-hook 'flycheck-mode))
+(use-package vue-mode :ensure t :defer t)
 (use-package projectile :ensure t :defer t)
-
 (use-package org
   :config
   (setq org-hide-leading-stars t
@@ -358,7 +343,6 @@
          ("C-c C-c" . org-agenda-todo)
 	 ("C-c C-e" . org-agenda-set-effort)
 	 ("C-c C-i" . org-agenda-clock-in)))
-
 (use-package company :ensure t :pin melpa
   :config
   (global-company-mode)
@@ -366,11 +350,9 @@
    '(company-idle-delay nil)
    '(company-tooltip-idle-delay nil))
   )
-
 (use-package kubernetes
   :ensure t
   :commands (kubernetes-overview))
-
 (use-package go-mode :ensure t :defer t)
 (use-package lsp-mode
   :ensure t
@@ -395,13 +377,6 @@
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c j"))
 (use-package cider :ensure t :defer t
-  :init
-  (add-hook 'cider-mode-hook #'clj-refactor-mode)
-  (add-hook 'cider-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'eldoc-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   :diminish subword-mode
   :config
   (setq nrepl-log-messages t
@@ -411,18 +386,6 @@
         cider-font-lock-dynamically '(macro core function var)
         cider-overlays-use-font-lock t)
   (cider-repl-toggle-pretty-printing))
-(use-package wakatime-mode :ensure t :defer t
-  :config
-  (global-wakatime-mode))
-
-(defun wakatime-open-dashboard ()
-  (interactive)
-  (browse-url "https://wakatime.com/dashboard"))
-
-(defun wakatime-open-config ()
-  (interactive)
-  (find-file (expand-file-name "~/.wakatime.cfg")))
-
 (use-package pip-requirements :ensure t :defer t
   :bind (:map pip-requirements-mode-map
 	      ("C-c C-c" . pip-requirements-user-install)))
@@ -435,17 +398,121 @@
   (setq ido-vertical-define-keys 'C-n-and-C-p-only
 	ido-vertical-show-count t)
   )
+;; (use-package wakatime-mode :ensure t :defer t
+;;   :config
+;;   (global-wakatime-mode))
+;; (use-package prettier-js :ensure t :defer t
+;;   :init
+;;   (add-hook 'yaml-mode-hook 'prettier-js-mode)
+;;   (add-hook 'json-mode-hook 'prettier-js-mode)
+;;   (add-hook 'html-mode-hook 'prettier-js-mode)
+;;   (add-hook 'css-mode-hook 'prettier-js-mode)
+;;   (add-hook 'js-mode-hook 'prettier-js-mode)
+;;   )
+;; (use-package vterm :ensure t)
+;; (use-package emoji-fontset
+;;   :if window-system
+;;   :init
+;;   (emoji-fontset-enable "Symbola"))
+;; (use-package ob-restclient :ensure t :defer t)
+;; (use-package org-preview-html :ensure t :defer t)
+;; (use-package kubernetes
+;;   :ensure t
+;;   :commands (kubernetes-overview))
+;;    (use-package exec-path-from-shell :ensure t :defer t
+;;      :init
+;;      (when (memq window-system '(mac ns x))
+;;        (exec-path-from-shell-initialize)))
+
+;;    (use-package powerline :ensure t :defer t)
+;;    (use-package helm :ensure t :defer t
+;;      :init
+;;      (require 'helm-config)
+;;      :config
+;;      (helm-mode t)
+;;      (dired-async-mode t)
+;;      (setq helm-M-x-fuzzy-match t)
+;;      (bind-keys :map helm-map
+;; 		("<tab>" . helm-execute-persistent-action)
+;; 		("C-i" . helm-execute-persistent-action)
+;; 		("C-z" . helm-select-action)))
+;;    (use-package helm-ag :ensure t :defer t
+;;      :init
+;;      (setq helm-ag-use-agignore t))
+;;    (use-package elscreen :ensure t
+;;      :init
+;;      (setq elscreen-display-tab nil)
+;;      (setq elscreen-tab-display-kill-screen nil)
+;;      (setq elscreen-tab-display-control nil)
+;;      (elscreen-start)
+;;      (elscreen-create))
+;;    (use-package magit :ensure t :defer t)
+;;    (use-package async-await :ensure t :defer t)
+;;    ;; (use-package json :ensure t :defer t)
+;;    (use-package request :ensure t :defer t)
+;;    (use-package async-await :ensure t :defer t)
+;;    (use-package gist :ensure t :defer t)
+;;    (use-package helm-themes :ensure t :defer t)
+;;    (use-package http :ensure t :defer t)
+;;    (use-package markdown-mode :ensure t)
+;;    (use-package quickrun :ensure t :defer t)
+;;    (use-package restclient :ensure t :defer t
+;;      :config
+;;      (add-to-list 'restclient-content-type-modes '("text/csv" . http-mode)))
+;;    (use-package websocket :ensure t :defer t)
+;;    (use-package yaml-mode :ensure t :defer t)
+;;    (use-package dockerfile-mode :ensure t :defer t)
+;;    (use-package company :ensure t :defer nil
+;;      :init
+;;      (setq company-idle-delay 0) ; default = 0.5
+;;      (setq company-minimum-prefix-length 2) ; default = 4
+;;      (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
+;;      :bind
+;;      ("C-M-i" . company-complete)
+;;      :config
+;;      (global-company-mode 1)
+;;      (bind-keys :map company-active-map
+;; 		("C-n" . company-select-next)
+;; 		("C-p" . company-select-previous)
+;; 		("C-s" . company-filter-candidates)
+;; 		("C-i" . company-complete-selection)
+;; 		("C-M-i" . company-complete)))
+
+;;    (use-package spacemacs-theme :ensure t :defer t
+;;      :no-require t
+;;      :init
+;;      (load-theme 'tsdh-dark t))
+;;    (use-package foreman-mode :ensure t :defer t)
+;; (use-package slime-company :ensure t
+
+(require 'dockerfile-mode)
+(require 'eglot)
+(require 'flycheck)
+(require 'ob-async)
+(require 'ob-plantuml)
+(require 'pyvenv)
+(require 's)
+(require 'org-agenda)
+(autoload 'wgrep-ag-setup "wgrep-ag")
+(autoload 'mew "mew" nil t)
+(autoload 'mew-send "mew" nil t)
+
+
+(defun wakatime-open-dashboard ()
+  (interactive)
+  (browse-url "https://wakatime.com/dashboard"))
+
+(defun wakatime-open-config ()
+  (interactive)
+  (find-file (expand-file-name "~/.wakatime.cfg")))
+
 
 ;; Input I/F
-(message "Input I/F")
 (ido-mode 1)
 (ido-everywhere 1)
 (setq ido-enable-flex-matching t)
 
 ;;; For Silver Searcher (ag)
-(message "For Silver Searcher (ag)")
-(autoload 'wgrep-ag-setup "wgrep-ag")
-(add-hook 'ag-mode-hook 'wgrep-ag-setup)
 
 ;;; For Docker
 (defun dockerfile-get-docker-image-from-inbuffer ()
@@ -498,7 +565,6 @@ The build string will be of the format:
    (emacs-lisp . t)
    (python . t)
    (restclient . t)
-   ;;(rustic . t)
    (shell . t)
    (sql . t)))
 
@@ -812,37 +878,14 @@ The build string will be of the format:
   (async-shell-command "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)"))
 
 ;;; For elscreen
-(use-package elscreen :ensure t :no-require t
-  :init
-  (setq elscreen-display-tab nil)
-  (setq elscreen-tab-display-kill-screen nil)
-  (setq elscreen-tab-display-control nil)
-  (bind-key* "C-t C-t" 'elscreen-previous)
-  :config
-  (elscreen-start)
-  (elscreen-create))
 
-;; (use-package prettier-js :ensure t :defer t
-;;   :init
-;;   (add-hook 'yaml-mode-hook 'prettier-js-mode)
-;;   (add-hook 'json-mode-hook 'prettier-js-mode)
-;;   (add-hook 'html-mode-hook 'prettier-js-mode)
-;;   (add-hook 'css-mode-hook 'prettier-js-mode)
-;;   (add-hook 'js-mode-hook 'prettier-js-mode)
-;;   )
 
 ;;; For flycheck
-(message "For flycheck")
 (defun configure-flycheck-yamlint ()
   (interactive)
   (flycheck-select-checker 'yaml-yamllint)
   (flycheck-mode))
 
-(use-package flycheck :defer :ensure t :no-require t
-  :init
-  (add-hook 'yaml-mode-hook 'configure-flycheck-yamlint))
-
-;;; For vue.js
 
 
 (load-file "/opt/ng/symdon/settings.el")
@@ -867,7 +910,6 @@ The build string will be of the format:
 ;; (bind-key* "C-t C-j" 'org-capture)
 
 ;; n https://github.com/tj/n
-(setenv "N_PREFIX" (expand-file-name "~/.local"))
 (put 'set-goal-column 'disabled nil)
 
 ;; カレンダーの表示に星をつける
@@ -875,10 +917,6 @@ The build string will be of the format:
       '(propertize (format " %s %d " (calendar-month-name month) year)
 		   'font-lock-face 'calendar-month-header))
 
-;; (use-package emoji-fontset
-;;   :if window-system
-;;   :init
-;;   (emoji-fontset-enable "Symbola"))
 
 ;; org-agenda
 (custom-set-variables
@@ -906,7 +944,6 @@ The build string will be of the format:
        (todo "CANCEL")))
      )))
 
-(require 'org-agenda)
 ;; #+PROPERTY: Effort_ALL 1 2 3 5 8 13 21 34 55 89 144 233
 ;; #+STARTUP: indent hidestars inlineimages
 ;; #+TODO: TODO(t) ISSUE(i) EPIC(e) IDEA(i) BLOCK(b) SURVEY(s) PENDING(p) WIP(w) | DONE(d!) CANCEL(c!) DOC SPEC
@@ -914,20 +951,6 @@ The build string will be of the format:
 ;; (put 'narrow-to-region 'disabled nil)
 
 
-;; setup golang
-(message "Setup golang")
-
-(progn
-  ;; Set up before-save hooks to format buffer and add/delete imports.
-  ;; Make sure you don't have other gofmt/goimports hooks enabled.
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-
-  ;; Optional - provides fancier overlays.
-  ;; Company mode is a standard completion package that works well with lsp-mode.
-  )
 
 ;; org-agendaの項目を開いたら作業時間を自動で計測する
 (defun org-clock-in-interactive (&optional starting-p)
@@ -937,10 +960,6 @@ The build string will be of the format:
 ;; (add-hook 'org-agenda-after-show-hook #'org-clock-in-interactive)
 ;; (add-hook 'org-clock-out-hook #'org-agenda-list)
 ;; (add-hook 'org-clock-out-hook #'widen)
-
-
-(remove-hook 'org-clock-out-hook #'org-agenda-list)
-(remove-hook 'org-clock-out-hook #'widen)
 
 ;; github-review
 
@@ -1023,8 +1042,6 @@ The build string will be of the format:
 ;; ---------
 ;; org-babel
 ;; ---------
-;; (use-package ob-restclient :ensure t :defer t)
-;; (use-package org-preview-html :ensure t :defer t)
 
 ;; (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2019.1/libexec/plantuml.jar")
 ;; (org-babel-do-load-languages
@@ -1043,9 +1060,6 @@ The build string will be of the format:
 ;; ----------
 ;; kubernetes
 ;; ----------
-;; (use-package kubernetes
-;;   :ensure t
-;;   :commands (kubernetes-overview))
 
 
 
@@ -1079,84 +1093,6 @@ The build string will be of the format:
 ;; 		  )
 ;; 		" && ")))
 
-
-
-;; -----
-;; elenv
-;; -----
-;; (setq elenv-root-directory "/srv/")
-;; (add-hook
-;;  'elenv-initialize-package-after-hook
-;;  (lambda ()
-;;    (require 'use-package)
-
-;;    (use-package powerline :ensure t :defer t)
-
-;;    (use-package exec-path-from-shell :ensure t :defer t
-;;      :init
-;;      (when (memq window-system '(mac ns x))
-;;        (exec-path-from-shell-initialize)))
-
-;;    (use-package helm :ensure t :defer t
-;;      :init
-;;      (require 'helm-config)
-;;      :config
-;;      (helm-mode t)
-;;      (dired-async-mode t)
-;;      (setq helm-M-x-fuzzy-match t)
-;;      (bind-keys :map helm-map
-;; 		("<tab>" . helm-execute-persistent-action)
-;; 		("C-i" . helm-execute-persistent-action)
-;; 		("C-z" . helm-select-action)))
-;;    (use-package helm-ag :ensure t :defer t
-;;      :init
-;;      (setq helm-ag-use-agignore t))
-;;    (use-package elscreen :ensure t
-;;      :init
-;;      (setq elscreen-display-tab nil)
-;;      (setq elscreen-tab-display-kill-screen nil)
-;;      (setq elscreen-tab-display-control nil)
-;;      (elscreen-start)
-;;      (elscreen-create))
-;;    (use-package magit :ensure t :defer t)
-
-;;    (use-package async-await :ensure t :defer t)
-;;    ;; (use-package json :ensure t :defer t)
-;;    (use-package request :ensure t :defer t)
-;;    (use-package async-await :ensure t :defer t)
-;;    (use-package gist :ensure t :defer t)
-;;    (use-package helm-themes :ensure t :defer t)
-;;    (use-package http :ensure t :defer t)
-;;    (use-package markdown-mode :ensure t)
-;;    (use-package quickrun :ensure t :defer t)
-;;    (use-package restclient :ensure t :defer t
-;;      :config
-;;      (add-to-list 'restclient-content-type-modes '("text/csv" . http-mode)))
-;;    (use-package websocket :ensure t :defer t)
-;;    (use-package yaml-mode :ensure t :defer t)
-;;    (use-package dockerfile-mode :ensure t :defer t)
-;;    (use-package company :ensure t :defer nil
-;;      :init
-;;      (setq company-idle-delay 0) ; default = 0.5
-;;      (setq company-minimum-prefix-length 2) ; default = 4
-;;      (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
-;;      :bind
-;;      ("C-M-i" . company-complete)
-;;      :config
-;;      (global-company-mode 1)
-;;      (bind-keys :map company-active-map
-;; 		("C-n" . company-select-next)
-;; 		("C-p" . company-select-previous)
-;; 		("C-s" . company-filter-candidates)
-;; 		("C-i" . company-complete-selection)
-;; 		("C-M-i" . company-complete)))
-
-;;    (use-package spacemacs-theme :ensure t :defer t
-;;      :no-require t
-;;      :init
-;;      (load-theme 'tsdh-dark t))
-;;    (use-package foreman-mode :ensure t :defer t)
-;;    ))
 
 (defun pip-requirements-user-install ()
   (interactive)
@@ -1317,7 +1253,6 @@ The build string will be of the format:
 ;;   )
 ;; (add-hook 'python-mode-hook 'python-mode-configure)
 
-(setq debug-on-error t)
 
 (defun scratch-buffer-create (buf-name)
   "Create new scratch buffer"
@@ -1449,7 +1384,6 @@ The build string will be of the format:
      1)))
 
 
-;; (use-package slime-company :ensure t
 ;; (setq inferior-lisp-program "sbcl")  ;; Need SBCL http://www.sbcl.org/
 
 ;; Optional - provides snippet support.
@@ -1466,55 +1400,27 @@ The build string will be of the format:
       (org-todo-list arg)
     (error "%s is not visiting a file" (buffer-name buf))))
 
-(add-hook 'python-mode-hook 'eglot-ensure)
-
-;; (global-display-line-numbers-mode)
 
 ;; process-environment initialization
-(setq process-environment-original (copy-alist process-environment))
-
 (defun process-environment-init ()
   "Reset process-environment to initial state"
   (interactive)
   (setq process-environment (copy-alist process-environment-original)))
 
-(add-hook 'projectile-before-switch-project-hook #'process-environment-init)
-(add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
-
-(setq smtpmail-smtp-server "host.docker.internal")
-(setq smtpmail-smtp-service 1025)
-
-;; Mew
-(autoload 'mew "mew" nil t)
-(autoload 'mew-send "mew" nil t)
-(setq mew-smtp-server "host.docker.internal")
-(setq mew-smtp-port 1025)
-
-(setq send-mail-function #'smtpmail-send-it)
-
-;; json-mode
-(add-hook 'js-mode-hook
-          (lambda ()
-            (make-local-variable 'js-indent-level)
-            (setq js-indent-level 2)))
-
-(message "Finished to initialize emacs")
-
-
+(setq ;; Email
+ smtpmail-smtp-server "host.docker.internal"
+ smtpmail-smtp-service 1025)
+(setq  ;; Mew
+ mew-smtp-server "host.docker.internal"
+ mew-smtp-port 1025
+ send-mail-function #'smtpmail-send-it)
 
 ;;; for compilation-mode ansi escaping
-(add-hook 'term-mode-hook 'compilation-shell-minor-mode)
-
-
 (defun endless/colorize-compilation ()
   "Colorize from `compilation-filter-start' to `point'."
   (let ((inhibit-read-only t))
     (ansi-color-apply-on-region
      compilation-filter-start (point))))
-
-(add-hook 'compilation-filter-hook
-          #'endless/colorize-compilation)
-
 
 ;; Stolen from (https://oleksandrmanzyuk.wordpress.com/2011/11/05/better-emacs-shell-part-i/)
 (defun regexp-alternatives (regexps)
@@ -1554,13 +1460,48 @@ The build string will be of the format:
      start-marker
      end-marker)))
 
+  ;; :init
+  ;; (flycheck-add-mode 'javascript-eslint 'vue-mode)
+  ;; (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
+  ;; (flycheck-add-mode 'javascript-eslint 'css-mode))
+(add-hook 'ag-mode-hook 'wgrep-ag-setup)
+(add-hook 'cider-mode-hook #'clj-refactor-mode)
+(add-hook 'cider-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'eldoc-mode)
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-repl-mode-hook #'eldoc-mode)
+(add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'projectile-after-switch-project-hook  #'configur-after-project-for-projectile)
+(add-hook 'projectile-before-switch-project-hook #'process-environment-init)
+(add-hook 'python-mode-hook 'eglot-ensure)
+(add-hook 'term-mode-hook 'compilation-shell-minor-mode)
+(add-hook 'vue-mode-hook #'add-node-modules-path)
+(add-hook 'vue-mode-hook 'flycheck-mode)
+(add-hook 'yaml-mode-hook 'configure-flycheck-yamlint)
 (add-hook 'comint-output-filter-functions
           'filter-non-sgr-control-sequences-in-output)
-
-;; (use-package vterm :ensure t)
+(add-hook 'compilation-filter-hook
+          #'endless/colorize-compilation)
+(add-hook 'js-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))
+(remove-hook 'org-clock-out-hook #'org-agenda-list)
+(remove-hook 'org-clock-out-hook #'widen)
+(progn
+  ;; Set up before-save hooks to format buffer and add/delete imports.
+  ;; Make sure you don't have other gofmt/goimports hooks enabled.
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  ;; Optional - provides fancier overlays.
+  ;; Company mode is a standard completion package that works well with lsp-mode.
+  )
 
 ;; Key configurations
-(bind-key "C-c C-c" #'dockerfile-build-buffer 'dockerfile-mode-map)
+(bind-keys :map dockerfile-mode-map
+	   ("C-c C-c" . dockerfile-build-buffer))
 (bind-keys :map xwidget-webkit-mode-map
 	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
 	   ("s-c" . xwidget-webkit-copy-selection-as-kill)  ;; Other System Style
@@ -1571,9 +1512,6 @@ The build string will be of the format:
 	   ("s-n" . flymake-goto-next-error)
 	   ("s-p" . flymake-goto-prev-error)
            ("C-c C-c" . python-shell-send-buffer))
-
-;; (bind-keys :map org-mode-map
-
 (bind-keys :map editor-mode-map
 	   ("C-x C-s" . editor-save-as))
 
@@ -1594,7 +1532,8 @@ The build string will be of the format:
  ("C-t C-g" . google)
  ("C-t C-o" . macos-app)
  ("C-t C-p" . projectile-switch-project)
- ("C-t C-w" editor-create-buffer)
+ ("C-t C-t" 'elscreen-previous)
+ ("C-t C-w" . editor-create-buffer)
  ("C-t a" . org-agenda)
  ("C-t t" . org-clock-jump-to-current-clock)
  ("C-x C-v" . magit-status)
