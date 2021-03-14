@@ -1,4 +1,4 @@
-#+TITLE: May the force be with you.
+#+TITLE: My Emacs configuration files.
 
 This repository is settings for my Emacs.
 
@@ -8,8 +8,6 @@ This repository is settings for my Emacs.
 | ./init.el                      | Remember, the Force will be with you, always. |
 | ./themes/sximada-dark-theme.el | That leads to the dark side.                  |
 |--------------------------------+-----------------------------------------------|
-
-[[./PROJECT.org]]
 
 * Setup
 
