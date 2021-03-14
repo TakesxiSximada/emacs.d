@@ -1,91 +1,31 @@
 ;; -*- coding: utf-8 -*-
 ;; Waiting initialize process
+
 (read-key "Press any key...")
 
-(toggle-frame-fullscreen)
-
-;; theme
-(message "Setup theme")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(setq custom-theme-directory "~/.emacs.d/themes")
-(load-theme 'sximada-dark t)
-
-(when window-system
-  (global-hl-line-mode t))
-(unless window-system
-  (setq hl-line-face 'underline)
-  (global-hl-line-mode))
-
-;; locale
-(message "Setup locale")
-(setenv "LANG" "ja_JP.UTF-8")
-(set-buffer-file-coding-system 'utf-8-unix)
-
-;; toolbar
-(message "Setup toolbar")
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-
-;; fonts
-(message "Setup fonts")
-(set-face-attribute 'default nil :family "Menlo" :height 120)
-
-
-(let ((typ (frame-parameter nil 'font)))
-  (unless (string-equal "tty" typ)
-    (set-fontset-font typ 'japanese-jisx0208
-                      (font-spec :family "Hiragino Kaku Gothic ProN"))))
-(add-to-list 'face-font-rescale-alist
-             '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
-
+(require 'package)
 (setq
- make-backup-files nil
- auto-save-default nil
- custom-file (locate-user-emacs-file "custom.el")
- )
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; package
-(require 'package nil 'noerror)
-
-;; elpa/gnutls workaround
-(if (string< emacs-version "26.3")
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-
-(setq
- package-enable-at-startup t
  package-user-dir (expand-file-name "~/.elpa")
  package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 		    ("melpa" . "https://melpa.org/packages/")
 		    ("org" . "https://orgmode.org/elpa/")
-		    ;; ("marmalade" . "http://marmalade-repo.org/packages/")  ;; marmalade is already not mainted
 		    ("melpa-stable" . "http://stable.melpa.org/packages/")
+		    ;; marmalade is already not mainted
+		    ;; ("marmalade" . "http://marmalade-repo.org/packages/")
 		    ))
-(eval-when-compile
-  (unless (file-exists-p (locate-user-emacs-file "tmp/bootstrap-stamp"))
-    ;; (package-refresh-contents)
-    (with-temp-buffer (write-file (locate-user-emacs-file "tmp/bootstrap-stamp")))
-    ))
-
 (package-initialize)
-;; (package-refresh-contents)
+
+(unless (package-installed-p 'use-package) (package-install 'use-package))
+(use-package quelpa :ensure t)
 (quelpa
    '(quelpa-use-package
      :fetcher git
      :url "https://github.com/quelpa/quelpa-use-package.git"))
 (require 'quelpa-use-package)
-;; Setup packaging tools
-(package-install 'use-package)
-(use-package quelpa :ensure t)
 
-;; (require 'ansi-color)
+
 (require 'cl)
-;; (require 'python)
-;; (require 'sql)
 (require 'subr-x)
-;; (require 'term)
 (require 'windmove)
 (require 'xwidget)
 
@@ -111,8 +51,59 @@
  ("C-x C-w" . ido-kill-buffer)
  ("M-RET" . find-file-at-point)
  ("M-]" . mark-word)
+ ("s-t" . nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
  ("¥" . "\\")
  )
+
+(toggle-frame-fullscreen)
+
+;; theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(setq custom-theme-directory "~/.emacs.d/themes")
+(load-theme 'sximada-dark t)
+
+(if window-system
+    (progn
+      (global-hl-line-mode t))
+  (progn
+    (setq hl-line-face 'underline)
+    (global-hl-line-mode)))
+
+;; locale
+(message "Setup locale")
+(setenv "LANG" "ja_JP.UTF-8")
+(set-buffer-file-coding-system 'utf-8-unix)
+
+;; toolbar
+(message "Setup toolbar")
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+
+;; fonts
+(set-face-attribute 'default nil :family "Menlo" :height 120)
+
+(let ((typ (frame-parameter nil 'font)))
+  (unless (string-equal "tty" typ)
+    (set-fontset-font typ 'japanese-jisx0208
+                      (font-spec :family "Hiragino Kaku Gothic ProN"))))
+(add-to-list 'face-font-rescale-alist
+             '(".*Hiragino Kaku Gothic ProN.*" . 1.2))
+
+(setq
+ make-backup-files nil
+ auto-save-default nil
+ custom-file (locate-user-emacs-file "custom.el")
+ )
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; package
+(require 'package nil 'noerror)
+
+;; elpa/gnutls workaround
+(if (string< emacs-version "26.3")
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
 (setq  ;; Whalebrew configuration.
  whalebrew-config-dir (expand-file-name "~/.whalebrew")
@@ -1569,7 +1560,6 @@ The build string will be of the format:
 ;; (use-package vterm :ensure t)
 
 ;; Key configurations
-(bind-key "s-t" nil)  ;; command + t でfontの設定画面が開いてしまうが使わないので開かないように設定する.
 (bind-key "C-c C-c" #'dockerfile-build-buffer 'dockerfile-mode-map)
 (bind-keys :map xwidget-webkit-mode-map
 	   ("M-w" . xwidget-webkit-copy-selection-as-kill)  ;; Emacs Style
