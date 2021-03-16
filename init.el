@@ -340,7 +340,7 @@
 	org-startup-with-inline-images "inlineimages")
   :bind (:map org-mode-map
 	 ("<s-return>" . org-shiftright)
-         ("C-c C-c" . org-agenda-todo)
+         ("C-c C-c" . org-ctrl-c-ctrl-c)
 	 ("C-c C-e" . org-agenda-set-effort)
 	 ("C-c C-i" . org-agenda-clock-in)))
 (use-package company :ensure t :pin melpa
