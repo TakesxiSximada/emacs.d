@@ -1461,6 +1461,37 @@ The build string will be of the format:
      start-marker
      end-marker)))
 
+;; aws-cli
+(autoload #'string-join "subr-x")
+(autoload #'term-ansi-make-term "term")
+
+(defvar aws-cli-buffer-name
+  "A queue of strings whose echo we want suppressed.")
+
+(setq aws-cli-buffer-name "*AWS*"
+  "AWS CLI execution buffer name.")
+
+(setq aws-cli-endpoint-url "http://localhost:4566"
+  "AWS API endpoint.")
+
+(setq aws-cli-profile "default"
+  "Profile name in ~/.aws/config.")
+
+
+(defun aws-cli (line)
+  "Execute AWS CLI command."
+  (interactive "MCommand Line: ")
+  (switch-to-buffer
+   (funcall #'term-ansi-make-term
+	    aws-cli-buffer-name
+	    "bash" nil "-c" (string-join `("aws" "--no-paginate"
+					   "--endpoint-url" ,aws-cli-endpoint-url
+					   "--profile" ,aws-cli-profile
+					   ,line)
+					 " "))))
+
+;; aws-cli ends here.
+
   ;; :init
   ;; (flycheck-add-mode 'javascript-eslint 'vue-mode)
   ;; (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
