@@ -1,5 +1,6 @@
 ;; -*- coding: utf-8 -*-
 ;; Waiting initialize process
+(setq find-function-C-source-directory "/opt/ng/emacs/src")
 (setq debug-on-error t)
 (read-key "Press any key...")
 
