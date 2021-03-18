@@ -1468,13 +1468,13 @@ The build string will be of the format:
 (defvar aws-cli-buffer-name
   "A queue of strings whose echo we want suppressed.")
 
-(setq aws-cli-buffer-name "*AWS*"
+(defvar aws-cli-buffer-name "*AWS*"
   "AWS CLI execution buffer name.")
 
-(setq aws-cli-endpoint-url "http://localhost:4566"
+(defvar aws-cli-endpoint-url "http://localhost:4566"
   "AWS API endpoint.")
 
-(setq aws-cli-profile "default"
+(defvar aws-cli-profile "default"
   "Profile name in ~/.aws/config.")
 
 
@@ -1491,6 +1491,16 @@ The build string will be of the format:
 					 " "))))
 
 ;; aws-cli ends here.
+
+(defun voice ()
+  (interactive)
+  (call-process-region (region-beginning) (region-end)
+		       "/usr/local/bin/open_jtalk"
+		       nil "*OPEN JTALK*" t
+		       "-x" "/usr/local/Cellar/open-jtalk/1.11/dic"
+		       "-m" "/usr/local/Cellar/open-jtalk/1.11/voice/mei/mei_normal.htsvoice"
+		       "-ow" "/tmp/sample.wav")
+  (call-process "afplay" nil nil nil "/tmp/sample.wav"))
 
   ;; :init
   ;; (flycheck-add-mode 'javascript-eslint 'vue-mode)
@@ -1564,7 +1574,8 @@ The build string will be of the format:
  ("C-t C-g" . google)
  ("C-t C-o" . macos-app)
  ("C-t C-p" . projectile-switch-project)
- ("C-t C-t" 'elscreen-previous)
+ ("C-t C-t" . elscreen-toggle)
+ ("C-t C-v" . voice)
  ("C-t C-w" . editor-create-buffer)
  ("C-t a" . org-agenda)
  ("C-t t" . org-clock-jump-to-current-clock)
