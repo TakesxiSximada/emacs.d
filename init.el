@@ -195,7 +195,6 @@
 					 "/usr/local/opt/sqlite/lib/pkgconfig"
 					 "/usr/local/opt/tcl-tk/lib/pkgconfig") " "))
 
-(setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
 (setenv "WORKON_HOME" (expand-file-name "~/.venv"))
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 (setenv "LANG" "ja_JP.UTF-8")
@@ -207,6 +206,9 @@
 (require 'el-get nil 'noerror)
 (add-to-list 'el-get-recipe-path "/opt/ng/el-get/recipes")
 
+;; pager configuration
+(setenv "PAGER" "cat")
+(setenv "GIT_PAGER" "cat")
 
 ;; My Package
 (el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mod.el.git" :type "git")
