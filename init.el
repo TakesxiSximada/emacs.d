@@ -4,6 +4,10 @@
 (setq debug-on-error t)
 (read-key "Press any key...")
 
+;; Record emacs startup time
+(setq initialize-start-time (float-time))
+
+;; start initialize
 (require 'package)
 (setq
  package-user-dir (expand-file-name "~/.elpa")
@@ -1585,3 +1589,13 @@ The build string will be of the format:
  ("S-<f12>" . our-open-user-task-file)
  ("s-`" . our-async-exec-interactive)
  )
+
+
+;; Record emacs startup time
+(setq initialize-end-time (float-time))
+(setq initialize-time-log-file-path "~/.emacs.d/starting-time.log")
+(start-process-shell-command "EMACS STARTING TIME" nil
+			     (format "echo '%s initialize time %f sec' >> %s"
+				     (time-stamp-string "%Y-%02m-%02d %02H:%02M:%02S")
+				     (- initialize-end-time initialize-start-time)
+				     initialize-time-log-file-path)
