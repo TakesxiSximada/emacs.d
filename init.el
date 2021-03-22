@@ -1593,4 +1593,4 @@ The build string will be of the format:
 			     (format "echo '%s initialize time %f sec' >> %s"
 				     (time-stamp-string "%Y-%02m-%02d %02H:%02M:%02S")
 				     (- initialize-end-time initialize-start-time)
-				     initialize-time-log-file-path)
+				     initialize-time-log-file-path))
