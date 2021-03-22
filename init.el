@@ -1323,11 +1323,6 @@ The build string will be of the format:
    (format "https://google.com/?gbv=1&q=%s" (or (goolge-build-query-words words) ""))
    t))
 
-
-
-;; for xwidget-webkit
-
-
 ;; Mission
 (defun mission-show ()
   (interactive)
