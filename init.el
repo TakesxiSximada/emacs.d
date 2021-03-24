@@ -417,6 +417,8 @@
   (setq ido-vertical-define-keys 'C-n-and-C-p-only
 	ido-vertical-show-count t)
   )
+(use-package vterm :ensure t :defer t)
+
 ;; (use-package wakatime-mode :ensure t :defer t
 ;;   :config
 ;;   (global-wakatime-mode))
@@ -1299,11 +1301,11 @@ The build string will be of the format:
   (interactive (list
 		(read-string "Command: " "" 'our-async-exec-cmd-history "")
 		(read-directory-name "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
-  (let ((default-directory cwd))
-    (switch-to-buffer
-     (funcall #'term-ansi-make-term
-	      (format "%s: In %s" (car (split-string line)) (expand-file-name cwd))
-	      "bash" nil "-c" line))))
+  (let ((default-directory cwd)
+	(vterm-shell line)
+	(vterm-buffer-name (format "%s: In %s" (car (split-string line)) (expand-file-name cwd)))
+	(vterm-kill-buffer-on-exit nil))
+    (vterm)))
 
 (defun symdon-shell-command-retry ()
   (interactive)
