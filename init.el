@@ -1608,3 +1608,4 @@ The build string will be of the format:
 				     (time-stamp-string "%Y-%02m-%02d %02H:%02M:%02S")
 				     (- initialize-end-time initialize-start-time)
 				     initialize-time-log-file-path))
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
