@@ -153,6 +153,18 @@
 			 (split-string (getenv "PATH") ":")
 			 exec-path)))
 
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path whalebrew-install-path)
+(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/shims"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v8.15.0/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.poetry/bin"))
+(add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
+(add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
+(add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "LDFLAGS" (string-join '("-L/usr/local/opt/apr/lib"
