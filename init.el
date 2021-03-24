@@ -108,51 +108,6 @@
 
 (mkdir whalebrew-install-path t)
 
-(setq exec-path (delete-duplicates
-		 (append `(
-			   ,whalebrew-install-path
-			   ,(expand-file-name "~/.whalebrew-bin/bin")
-			   ,(expand-file-name "~/.cargo/bin")
-			   ,(expand-file-name "~/.goenv/bin")
-			   ,(expand-file-name "~/.goenv/shims")
-			   ,(expand-file-name "~/.local/bin")
-			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
-			   ,(expand-file-name "~/.poetry/bin")
-			   ,(expand-file-name "~/Library/Python/.bin")
-			   ,(expand-file-name "~/development/flutter/bin")
-			   ,(expand-file-name "~/google-cloud-sdk/bin")
-			   "/Library/TeX/texbin"
-			   "/usr/local/opt/mysql-client/bin"
-			   "/usr/local/bin"
-			   ;; For homebrew
-			   "/usr/local/opt/apr-util/bin"
-			   "/usr/local/opt/apr/bin"
-			   "/usr/local/opt/binutils/bin"
-			   "/usr/local/opt/curl/bin"
-			   "/usr/local/opt/gnu-getopt/bin"
-			   "/usr/local/opt/icu4c/bin"
-			   "/usr/local/opt/icu4c/sbin"
-			   "/usr/local/opt/krb5/bin"
-			   "/usr/local/opt/krb5/sbin"
-			   "/usr/local/opt/libpq/bin"
-			   "/usr/local/opt/libxml2/bin"
-			   "/usr/local/opt/llvm/bin"
-			   "/usr/local/opt/mysql-client/bin"
-			   "/usr/local/opt/mysql@5.7/bin"
-			   "/usr/local/opt/ncurses/bin"
-			   "/usr/local/opt/openjdk/bin"
-			   "/usr/local/opt/openldap/bin"
-			   "/usr/local/opt/openldap/sbin"
-			   "/usr/local/opt/openssl@1.1/bin"
-			   "/usr/local/opt/php@7.2/bin"
-			   "/usr/local/opt/php@7.2/sbin"
-			   "/usr/local/opt/sqlite/bin"
-			   "/usr/local/opt/tcl-tk/bin"
-			   "/usr/local/opt/texinfo/bin"
-			   )
-			 (split-string (getenv "PATH") ":")
-			 exec-path)))
-
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path whalebrew-install-path)
 (add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
@@ -167,49 +122,100 @@
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
 (setenv "PATH" (string-join exec-path ":"))
 
-(setenv "LDFLAGS" (string-join '("-L/usr/local/opt/apr/lib"
-				 "-L/usr/local/opt/binutils/lib"
-				 "-L/usr/local/opt/curl/lib"
-				 "-L/usr/local/opt/icu4c/lib"
-				 "-L/usr/local/opt/krb5/lib"
-				 "-L/usr/local/opt/libffi/lib"
-				 "-L/usr/local/opt/libxml2/lib"
-				 "-L/usr/local/opt/llvm/lib"
-				 "-L/usr/local/opt/ncurses/lib"
-				 "-L/usr/local/opt/openldap/lib"
-				 "-L/usr/local/opt/openssl@1.1/lib"
-				 "-L/usr/local/opt/readline/lib"
-				 "-L/usr/local/opt/sqlite/lib"
-				 "-L/usr/local/opt/tcl-tk/lib") " "))
 
-(setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/apr/include"
-				  "-I/usr/local/opt/binutils/include"
-				  "-I/usr/local/opt/curl/include"
-				  "-I/usr/local/opt/icu4c/include"
-				  "-I/usr/local/opt/krb5/include"
-				  "-I/usr/local/opt/libffi/include"
-				  "-I/usr/local/opt/libxml2/include"
-				  "-I/usr/local/opt/llvm/include"
-				  "-I/usr/local/opt/ncurses/include"
-				  "-I/usr/local/opt/openjdk/include"
-				  "-I/usr/local/opt/openldap/include"
-				  "-I/usr/local/opt/openssl@1.1/include"
-				  "-I/usr/local/opt/readline/include"
-				  "-I/usr/local/opt/sqlite/include"
-				  "-I/usr/local/opt/tcl-tk/include") " "))
+;; (setq exec-path (delete-duplicates
+;; 		 (append `(
+;; 			   ,whalebrew-install-path
+;; 			   ,(expand-file-name "~/.whalebrew-bin/bin")
+;; 			   ,(expand-file-name "~/.cargo/bin")
+;; 			   ,(expand-file-name "~/.goenv/bin")
+;; 			   ,(expand-file-name "~/.goenv/shims")
+;; 			   ,(expand-file-name "~/.local/bin")
+;; 			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
+;; 			   ,(expand-file-name "~/.poetry/bin")
+;; 			   ,(expand-file-name "~/Library/Python/.bin")
+;; 			   ,(expand-file-name "~/development/flutter/bin")
+;; 			   ,(expand-file-name "~/google-cloud-sdk/bin")
+;; 			   "/Library/TeX/texbin"
+;; 			   "/usr/local/opt/mysql-client/bin"
+;; 			   "/usr/local/bin"
+;; 			   ;; For homebrew
+;; 			   "/usr/local/opt/apr-util/bin"
+;; 			   "/usr/local/opt/apr/bin"
+;; 			   "/usr/local/opt/binutils/bin"
+;; 			   "/usr/local/opt/curl/bin"
+;; 			   "/usr/local/opt/gnu-getopt/bin"
+;; 			   "/usr/local/opt/icu4c/bin"
+;; 			   "/usr/local/opt/icu4c/sbin"
+;; 			   "/usr/local/opt/krb5/bin"
+;; 			   "/usr/local/opt/krb5/sbin"
+;; 			   "/usr/local/opt/libpq/bin"
+;; 			   "/usr/local/opt/libxml2/bin"
+;; 			   "/usr/local/opt/llvm/bin"
+;; 			   "/usr/local/opt/mysql-client/bin"
+;; 			   "/usr/local/opt/mysql@5.7/bin"
+;; 			   "/usr/local/opt/ncurses/bin"
+;; 			   "/usr/local/opt/openjdk/bin"
+;; 			   "/usr/local/opt/openldap/bin"
+;; 			   "/usr/local/opt/openldap/sbin"
+;; 			   "/usr/local/opt/openssl@1.1/bin"
+;; 			   "/usr/local/opt/php@7.2/bin"
+;; 			   "/usr/local/opt/php@7.2/sbin"
+;; 			   "/usr/local/opt/sqlite/bin"
+;; 			   "/usr/local/opt/tcl-tk/bin"
+;; 			   "/usr/local/opt/texinfo/bin"
+;; 			   )
+;; 			 (split-string (getenv "PATH") ":")
+;; 			 exec-path)))
+
+;; (setenv "PATH" (string-join exec-path ":"))
+
+;; (setenv "LDFLAGS" (string-join '("-L/usr/local/lib"
+;; 				 "-L/usr/local/opt/apr/lib"
+;; 				 "-L/usr/local/opt/binutils/lib"
+;; 				 "-L/usr/local/opt/curl/lib"
+;; 				 "-L/usr/local/opt/icu4c/lib"
+;; 				 "-L/usr/local/opt/krb5/lib"
+;; 				 "-L/usr/local/opt/libffi/lib"
+;; 				 "-L/usr/local/opt/libxml2/lib"
+;; 				 "-L/usr/local/opt/llvm/lib"
+;; 				 "-L/usr/local/opt/ncurses/lib"
+;; 				 "-L/usr/local/opt/openldap/lib"
+;; 				 "-L/usr/local/opt/openssl@1.1/lib"
+;; 				 "-L/usr/local/opt/readline/lib"
+;; 				 "-L/usr/local/opt/sqlite/lib"
+;; 				 "-L/usr/local/opt/tcl-tk/lib") " "))
+
+;; (setenv "CPPFLAGS" (string-join '("-I/usr/local/include"
+;; 				  "-I/usr/local/opt/apr/include"
+;; 				  "-I/usr/local/opt/binutils/include"
+;; 				  "-I/usr/local/opt/curl/include"
+;; 				  "-I/usr/local/opt/icu4c/include"
+;; 				  "-I/usr/local/opt/krb5/include"
+;; 				  "-I/usr/local/opt/libffi/include"
+;; 				  "-I/usr/local/opt/libxml2/include"
+;; 				  "-I/usr/local/opt/llvm/include"
+;; 				  "-I/usr/local/opt/ncurses/include"
+;; 				  "-I/usr/local/opt/openjdk/include"
+;; 				  "-I/usr/local/opt/openldap/include"
+;; 				  "-I/usr/local/opt/openssl@1.1/include"
+;; 				  "-I/usr/local/opt/readline/include"
+;; 				  "-I/usr/local/opt/sqlite/include"
+;; 				  "-I/usr/local/opt/tcl-tk/include") " "))
 
 
-(setenv "PKG_CONFIG_PATH" (string-join '("/usr/local/opt/apr/lib/pkgconfig"
-					 "/usr/local/opt/curl/lib/pkgconfig"
-					 "/usr/local/opt/icu4c/lib/pkgconfig"
-					 "/usr/local/opt/krb5/lib/pkgconfig"
-					 "/usr/local/opt/libffi/lib/pkgconfig"
-					 "/usr/local/opt/libxml2/lib/pkgconfig"
-					 "/usr/local/opt/ncurses/lib/pkgconfig"
-					 "/usr/local/opt/openssl@1.1/lib/pkgconfig"
-					 "/usr/local/opt/readline/lib/pkgconfig"
-					 "/usr/local/opt/sqlite/lib/pkgconfig"
-					 "/usr/local/opt/tcl-tk/lib/pkgconfig") " "))
+;; (setenv "PKG_CONFIG_PATH" (string-join '("/usr/local/share/pkgconfig"
+;; 					 "/usr/local/opt/apr/lib/pkgconfig"
+;; 					 "/usr/local/opt/curl/lib/pkgconfig"
+;; 					 "/usr/local/opt/icu4c/lib/pkgconfig"
+;; 					 "/usr/local/opt/krb5/lib/pkgconfig"
+;; 					 "/usr/local/opt/libffi/lib/pkgconfig"
+;; 					 "/usr/local/opt/libxml2/lib/pkgconfig"
+;; 					 "/usr/local/opt/ncurses/lib/pkgconfig"
+;; 					 "/usr/local/opt/openssl@1.1/lib/pkgconfig"
+;; 					 "/usr/local/opt/readline/lib/pkgconfig"
+;; 					 "/usr/local/opt/sqlite/lib/pkgconfig"
+;; 					 "/usr/local/opt/tcl-tk/lib/pkgconfig") " "))
 
 (setenv "WORKON_HOME" (expand-file-name "~/.venv"))
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
