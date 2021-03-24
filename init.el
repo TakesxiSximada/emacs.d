@@ -1,8 +1,13 @@
 ;; -*- coding: utf-8 -*-
 ;; Waiting initialize process
+(setq find-function-C-source-directory "/opt/ng/emacs/src")
 (setq debug-on-error t)
 (read-key "Press any key...")
 
+;; Record emacs startup time
+(setq initialize-start-time (float-time))
+
+;; start initialize
 (require 'package)
 (setq
  package-user-dir (expand-file-name "~/.elpa")
@@ -103,98 +108,115 @@
 
 (mkdir whalebrew-install-path t)
 
-(setq exec-path (delete-duplicates
-		 (append `(
-			   ,whalebrew-install-path
-			   ,(expand-file-name "~/.whalebrew-bin/bin")
-			   ,(expand-file-name "~/.cargo/bin")
-			   ,(expand-file-name "~/.goenv/bin")
-			   ,(expand-file-name "~/.goenv/shims")
-			   ,(expand-file-name "~/.local/bin")
-			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
-			   ,(expand-file-name "~/.poetry/bin")
-			   ,(expand-file-name "~/Library/Python/.bin")
-			   ,(expand-file-name "~/development/flutter/bin")
-			   ,(expand-file-name "~/google-cloud-sdk/bin")
-			   "/Library/TeX/texbin"
-			   "/usr/local/opt/mysql-client/bin"
-			   "/usr/local/bin"
-			   ;; For homebrew
-			   "/usr/local/opt/apr-util/bin"
-			   "/usr/local/opt/apr/bin"
-			   "/usr/local/opt/binutils/bin"
-			   "/usr/local/opt/curl/bin"
-			   "/usr/local/opt/gnu-getopt/bin"
-			   "/usr/local/opt/icu4c/bin"
-			   "/usr/local/opt/icu4c/sbin"
-			   "/usr/local/opt/krb5/bin"
-			   "/usr/local/opt/krb5/sbin"
-			   "/usr/local/opt/libpq/bin"
-			   "/usr/local/opt/libxml2/bin"
-			   "/usr/local/opt/llvm/bin"
-			   "/usr/local/opt/mysql-client/bin"
-			   "/usr/local/opt/mysql@5.7/bin"
-			   "/usr/local/opt/ncurses/bin"
-			   "/usr/local/opt/openjdk/bin"
-			   "/usr/local/opt/openldap/bin"
-			   "/usr/local/opt/openldap/sbin"
-			   "/usr/local/opt/openssl@1.1/bin"
-			   "/usr/local/opt/php@7.2/bin"
-			   "/usr/local/opt/php@7.2/sbin"
-			   "/usr/local/opt/sqlite/bin"
-			   "/usr/local/opt/tcl-tk/bin"
-			   "/usr/local/opt/texinfo/bin"
-			   )
-			 (split-string (getenv "PATH") ":")
-			 exec-path)))
-
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path whalebrew-install-path)
+(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/shims"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v8.15.0/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.poetry/bin"))
+(add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
+(add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
+(add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
 (setenv "PATH" (string-join exec-path ":"))
 
-(setenv "LDFLAGS" (string-join '("-L/usr/local/opt/apr/lib"
-				 "-L/usr/local/opt/binutils/lib"
-				 "-L/usr/local/opt/curl/lib"
-				 "-L/usr/local/opt/icu4c/lib"
-				 "-L/usr/local/opt/krb5/lib"
-				 "-L/usr/local/opt/libffi/lib"
-				 "-L/usr/local/opt/libxml2/lib"
-				 "-L/usr/local/opt/llvm/lib"
-				 "-L/usr/local/opt/ncurses/lib"
-				 "-L/usr/local/opt/openldap/lib"
-				 "-L/usr/local/opt/openssl@1.1/lib"
-				 "-L/usr/local/opt/readline/lib"
-				 "-L/usr/local/opt/sqlite/lib"
-				 "-L/usr/local/opt/tcl-tk/lib") " "))
 
-(setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/apr/include"
-				  "-I/usr/local/opt/binutils/include"
-				  "-I/usr/local/opt/curl/include"
-				  "-I/usr/local/opt/icu4c/include"
-				  "-I/usr/local/opt/krb5/include"
-				  "-I/usr/local/opt/libffi/include"
-				  "-I/usr/local/opt/libxml2/include"
-				  "-I/usr/local/opt/llvm/include"
-				  "-I/usr/local/opt/ncurses/include"
-				  "-I/usr/local/opt/openjdk/include"
-				  "-I/usr/local/opt/openldap/include"
-				  "-I/usr/local/opt/openssl@1.1/include"
-				  "-I/usr/local/opt/readline/include"
-				  "-I/usr/local/opt/sqlite/include"
-				  "-I/usr/local/opt/tcl-tk/include") " "))
+;; (setq exec-path (delete-duplicates
+;; 		 (append `(
+;; 			   ,whalebrew-install-path
+;; 			   ,(expand-file-name "~/.whalebrew-bin/bin")
+;; 			   ,(expand-file-name "~/.cargo/bin")
+;; 			   ,(expand-file-name "~/.goenv/bin")
+;; 			   ,(expand-file-name "~/.goenv/shims")
+;; 			   ,(expand-file-name "~/.local/bin")
+;; 			   ,(expand-file-name "~/.nvm/versions/node/v8.15.0/bin")
+;; 			   ,(expand-file-name "~/.poetry/bin")
+;; 			   ,(expand-file-name "~/Library/Python/.bin")
+;; 			   ,(expand-file-name "~/development/flutter/bin")
+;; 			   ,(expand-file-name "~/google-cloud-sdk/bin")
+;; 			   "/Library/TeX/texbin"
+;; 			   "/usr/local/opt/mysql-client/bin"
+;; 			   "/usr/local/bin"
+;; 			   ;; For homebrew
+;; 			   "/usr/local/opt/apr-util/bin"
+;; 			   "/usr/local/opt/apr/bin"
+;; 			   "/usr/local/opt/binutils/bin"
+;; 			   "/usr/local/opt/curl/bin"
+;; 			   "/usr/local/opt/gnu-getopt/bin"
+;; 			   "/usr/local/opt/icu4c/bin"
+;; 			   "/usr/local/opt/icu4c/sbin"
+;; 			   "/usr/local/opt/krb5/bin"
+;; 			   "/usr/local/opt/krb5/sbin"
+;; 			   "/usr/local/opt/libpq/bin"
+;; 			   "/usr/local/opt/libxml2/bin"
+;; 			   "/usr/local/opt/llvm/bin"
+;; 			   "/usr/local/opt/mysql-client/bin"
+;; 			   "/usr/local/opt/mysql@5.7/bin"
+;; 			   "/usr/local/opt/ncurses/bin"
+;; 			   "/usr/local/opt/openjdk/bin"
+;; 			   "/usr/local/opt/openldap/bin"
+;; 			   "/usr/local/opt/openldap/sbin"
+;; 			   "/usr/local/opt/openssl@1.1/bin"
+;; 			   "/usr/local/opt/php@7.2/bin"
+;; 			   "/usr/local/opt/php@7.2/sbin"
+;; 			   "/usr/local/opt/sqlite/bin"
+;; 			   "/usr/local/opt/tcl-tk/bin"
+;; 			   "/usr/local/opt/texinfo/bin"
+;; 			   )
+;; 			 (split-string (getenv "PATH") ":")
+;; 			 exec-path)))
+
+;; (setenv "PATH" (string-join exec-path ":"))
+
+;; (setenv "LDFLAGS" (string-join '("-L/usr/local/lib"
+;; 				 "-L/usr/local/opt/apr/lib"
+;; 				 "-L/usr/local/opt/binutils/lib"
+;; 				 "-L/usr/local/opt/curl/lib"
+;; 				 "-L/usr/local/opt/icu4c/lib"
+;; 				 "-L/usr/local/opt/krb5/lib"
+;; 				 "-L/usr/local/opt/libffi/lib"
+;; 				 "-L/usr/local/opt/libxml2/lib"
+;; 				 "-L/usr/local/opt/llvm/lib"
+;; 				 "-L/usr/local/opt/ncurses/lib"
+;; 				 "-L/usr/local/opt/openldap/lib"
+;; 				 "-L/usr/local/opt/openssl@1.1/lib"
+;; 				 "-L/usr/local/opt/readline/lib"
+;; 				 "-L/usr/local/opt/sqlite/lib"
+;; 				 "-L/usr/local/opt/tcl-tk/lib") " "))
+
+;; (setenv "CPPFLAGS" (string-join '("-I/usr/local/include"
+;; 				  "-I/usr/local/opt/apr/include"
+;; 				  "-I/usr/local/opt/binutils/include"
+;; 				  "-I/usr/local/opt/curl/include"
+;; 				  "-I/usr/local/opt/icu4c/include"
+;; 				  "-I/usr/local/opt/krb5/include"
+;; 				  "-I/usr/local/opt/libffi/include"
+;; 				  "-I/usr/local/opt/libxml2/include"
+;; 				  "-I/usr/local/opt/llvm/include"
+;; 				  "-I/usr/local/opt/ncurses/include"
+;; 				  "-I/usr/local/opt/openjdk/include"
+;; 				  "-I/usr/local/opt/openldap/include"
+;; 				  "-I/usr/local/opt/openssl@1.1/include"
+;; 				  "-I/usr/local/opt/readline/include"
+;; 				  "-I/usr/local/opt/sqlite/include"
+;; 				  "-I/usr/local/opt/tcl-tk/include") " "))
 
 
-(setenv "PKG_CONFIG_PATH" (string-join '("/usr/local/opt/apr/lib/pkgconfig"
-					 "/usr/local/opt/curl/lib/pkgconfig"
-					 "/usr/local/opt/icu4c/lib/pkgconfig"
-					 "/usr/local/opt/krb5/lib/pkgconfig"
-					 "/usr/local/opt/libffi/lib/pkgconfig"
-					 "/usr/local/opt/libxml2/lib/pkgconfig"
-					 "/usr/local/opt/ncurses/lib/pkgconfig"
-					 "/usr/local/opt/openssl@1.1/lib/pkgconfig"
-					 "/usr/local/opt/readline/lib/pkgconfig"
-					 "/usr/local/opt/sqlite/lib/pkgconfig"
-					 "/usr/local/opt/tcl-tk/lib/pkgconfig") " "))
+;; (setenv "PKG_CONFIG_PATH" (string-join '("/usr/local/share/pkgconfig"
+;; 					 "/usr/local/opt/apr/lib/pkgconfig"
+;; 					 "/usr/local/opt/curl/lib/pkgconfig"
+;; 					 "/usr/local/opt/icu4c/lib/pkgconfig"
+;; 					 "/usr/local/opt/krb5/lib/pkgconfig"
+;; 					 "/usr/local/opt/libffi/lib/pkgconfig"
+;; 					 "/usr/local/opt/libxml2/lib/pkgconfig"
+;; 					 "/usr/local/opt/ncurses/lib/pkgconfig"
+;; 					 "/usr/local/opt/openssl@1.1/lib/pkgconfig"
+;; 					 "/usr/local/opt/readline/lib/pkgconfig"
+;; 					 "/usr/local/opt/sqlite/lib/pkgconfig"
+;; 					 "/usr/local/opt/tcl-tk/lib/pkgconfig") " "))
 
-(setenv "GIT_PAGER" "cat")  ;; Do not use the git command pager
 (setenv "WORKON_HOME" (expand-file-name "~/.venv"))
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 (setenv "LANG" "ja_JP.UTF-8")
@@ -206,6 +228,9 @@
 (require 'el-get nil 'noerror)
 (add-to-list 'el-get-recipe-path "/opt/ng/el-get/recipes")
 
+;; pager configuration
+(setenv "PAGER" "cat")
+(setenv "GIT_PAGER" "cat")
 
 ;; My Package
 (el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mod.el.git" :type "git")
@@ -340,7 +365,7 @@
 	org-startup-with-inline-images "inlineimages")
   :bind (:map org-mode-map
 	 ("<s-return>" . org-shiftright)
-         ("C-c C-c" . org-agenda-todo)
+         ("C-c C-c" . org-ctrl-c-ctrl-c)
 	 ("C-c C-e" . org-agenda-set-effort)
 	 ("C-c C-i" . org-agenda-clock-in)))
 (use-package company :ensure t :pin melpa
@@ -398,6 +423,8 @@
   (setq ido-vertical-define-keys 'C-n-and-C-p-only
 	ido-vertical-show-count t)
   )
+(use-package vterm :ensure t :defer t)
+
 ;; (use-package wakatime-mode :ensure t :defer t
 ;;   :config
 ;;   (global-wakatime-mode))
@@ -1280,11 +1307,11 @@ The build string will be of the format:
   (interactive (list
 		(read-string "Command: " "" 'our-async-exec-cmd-history "")
 		(read-directory-name "Directory: " default-directory 'our-async-exec-cwd-history default-directory)))
-  (let ((default-directory cwd))
-    (switch-to-buffer
-     (funcall #'term-ansi-make-term
-	      (format "%s: In %s" (car (split-string line)) (expand-file-name cwd))
-	      "bash" nil "-c" line))))
+  (let ((default-directory cwd)
+	(vterm-shell line)
+	(vterm-buffer-name (format "%s: In %s" (car (split-string line)) (expand-file-name cwd)))
+	(vterm-kill-buffer-on-exit nil))
+    (vterm)))
 
 (defun symdon-shell-command-retry ()
   (interactive)
@@ -1315,11 +1342,6 @@ The build string will be of the format:
   (xwidget-webkit-browse-url
    (format "https://google.com/?gbv=1&q=%s" (or (goolge-build-query-words words) ""))
    t))
-
-
-
-;; for xwidget-webkit
-
 
 ;; Mission
 (defun mission-show ()
@@ -1460,6 +1482,47 @@ The build string will be of the format:
      start-marker
      end-marker)))
 
+;; aws-cli
+(autoload #'string-join "subr-x")
+(autoload #'term-ansi-make-term "term")
+
+(defvar aws-cli-buffer-name
+  "A queue of strings whose echo we want suppressed.")
+
+(defvar aws-cli-buffer-name "*AWS*"
+  "AWS CLI execution buffer name.")
+
+(defvar aws-cli-endpoint-url "http://localhost:4566"
+  "AWS API endpoint.")
+
+(defvar aws-cli-profile "default"
+  "Profile name in ~/.aws/config.")
+
+
+(defun aws-cli (line)
+  "Execute AWS CLI command."
+  (interactive "MCommand Line: ")
+  (switch-to-buffer
+   (funcall #'term-ansi-make-term
+	    aws-cli-buffer-name
+	    "bash" nil "-c" (string-join `("aws" "--no-paginate"
+					   "--endpoint-url" ,aws-cli-endpoint-url
+					   "--profile" ,aws-cli-profile
+					   ,line)
+					 " "))))
+
+;; aws-cli ends here.
+
+(defun voice ()
+  (interactive)
+  (call-process-region (region-beginning) (region-end)
+		       "/usr/local/bin/open_jtalk"
+		       nil "*OPEN JTALK*" t
+		       "-x" "/usr/local/Cellar/open-jtalk/1.11/dic"
+		       "-m" "/usr/local/Cellar/open-jtalk/1.11/voice/mei/mei_normal.htsvoice"
+		       "-ow" "/tmp/sample.wav")
+  (call-process "afplay" nil nil nil "/tmp/sample.wav"))
+
   ;; :init
   ;; (flycheck-add-mode 'javascript-eslint 'vue-mode)
   ;; (flycheck-add-mode 'javascript-eslint 'vue-html-mode)
@@ -1532,7 +1595,8 @@ The build string will be of the format:
  ("C-t C-g" . google)
  ("C-t C-o" . macos-app)
  ("C-t C-p" . projectile-switch-project)
- ("C-t C-t" 'elscreen-previous)
+ ("C-t C-t" . elscreen-toggle)
+ ("C-t C-v" . voice)
  ("C-t C-w" . editor-create-buffer)
  ("C-t a" . org-agenda)
  ("C-t t" . org-clock-jump-to-current-clock)
@@ -1540,3 +1604,14 @@ The build string will be of the format:
  ("S-<f12>" . our-open-user-task-file)
  ("s-`" . our-async-exec-interactive)
  )
+
+
+;; Record emacs startup time
+(setq initialize-end-time (float-time))
+(setq initialize-time-log-file-path "~/.emacs.d/starting-time.log")
+(start-process-shell-command "EMACS STARTING TIME" nil
+			     (format "echo '%s initialize time %f sec' >> %s"
+				     (time-stamp-string "%Y-%02m-%02d %02H:%02M:%02S")
+				     (- initialize-end-time initialize-start-time)
+				     initialize-time-log-file-path))
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
