@@ -423,8 +423,11 @@
   (setq ido-vertical-define-keys 'C-n-and-C-p-only
 	ido-vertical-show-count t)
   )
-(use-package vterm :ensure t :defer t)
-
+(use-package vterm :ensure t :defer t
+  :bind (:map vterm-mode-map
+	      ("C-c C-v" . vterm-copy-mode)))
+(use-package rg :ensure t :defer t)
+(use-package ripgrep :ensure t :defer t)
 ;; (use-package wakatime-mode :ensure t :defer t
 ;;   :config
 ;;   (global-wakatime-mode))
@@ -1577,7 +1580,6 @@ The build string will be of the format:
            ("C-c C-c" . python-shell-send-buffer))
 (bind-keys :map editor-mode-map
 	   ("C-x C-s" . editor-save-as))
-
 ;; (bind-keys :map org-agenda-mode-map
 ;; 	   ("C-c C-c" . org-agenda-todo)
 ;; 	   ("C-c C-e" . org-agenda-set-effort)
