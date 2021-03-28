@@ -330,7 +330,7 @@
   :hook (go-mode . yas-minor-mode)
   :init
   (custom-set-variables
-   '(yas-snippet-dirs '("/ng/symdon/snippets"))))
+   '(yas-snippet-dirs '("/opt/ng/symdon/snippets"))))
 (use-package smex :ensure t :no-require t
   :config
   (global-set-key (kbd "M-x") 'smex)
@@ -978,7 +978,6 @@ The build string will be of the format:
 ;; #+STARTUP: indent hidestars inlineimages
 ;; #+TODO: TODO(t) ISSUE(i) EPIC(e) IDEA(i) BLOCK(b) SURVEY(s) PENDING(p) WIP(w) | DONE(d!) CANCEL(c!) DOC SPEC
 ;; #+COLUMNS: %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM
-;; (put 'narrow-to-region 'disabled nil)
 
 
 
@@ -1607,7 +1606,6 @@ The build string will be of the format:
  ("s-`" . our-async-exec-interactive)
  )
 
-
 ;; Record emacs startup time
 (setq initialize-end-time (float-time))
 (setq initialize-time-log-file-path "~/.emacs.d/starting-time.log")
@@ -1617,3 +1615,4 @@ The build string will be of the format:
 				     (- initialize-end-time initialize-start-time)
 				     initialize-time-log-file-path))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
+(put 'narrow-to-region 'disabled nil)
