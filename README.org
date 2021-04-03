@@ -1,15 +1,10 @@
 #+TITLE: trans.el - Translation utility.
 #+CATEGORY: trans.el
 
-trans.el is translation utility using by translation-shell.
-
-[[https://github.com/soimort/translate-shell]]
-
-translate-shell has emacs extention.
-[[https://github.com/soimort/translate-shell/blob/develop/google-translate-mode.el]]
-
-But this package do not use google-translate-mode.el. Becouse it is
-created as a emacs lisp plactice.
+trans.el is translation utility using by [[https://github.com/soimort/translate-shell][translation-shell]].
+[[https://github.com/soimort/translate-shell/blob/develop/google-translate-mode.el][translate-shell has emacs extention]].  But this package do not use
+google-translate-mode.el. Becouse it is created as a emacs lisp
+plactice.
 
 * How to use.
 
