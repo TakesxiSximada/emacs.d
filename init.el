@@ -243,6 +243,7 @@
 (el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
 (el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
+(el-get-bundle trans :type "git" :url "git@gist.github.com:0a849059d1fb61de397f57477ed38c92.git")
 (el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
 
 (require 'change-case)
@@ -253,9 +254,10 @@
 (require 'foreman-mode)
 (require 'go-template-mode)
 (require 'kpt)
+(require 'mastodon)
 (require 'org-file-table)
 (require 'require-to-install-executable)
-(require 'mastodon)
+(require 'trans)
 
 (with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
   (dotenv-mode-apply-all))
