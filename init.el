@@ -243,7 +243,6 @@
 (el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
 (el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
-(el-get-bundle trans :type "git" :url "git@gist.github.com:0a849059d1fb61de397f57477ed38c92.git")
 (el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
 
 (require 'change-case)
@@ -257,7 +256,6 @@
 (require 'mastodon)
 (require 'org-file-table)
 (require 'require-to-install-executable)
-(require 'trans)
 
 (with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
   (dotenv-mode-apply-all))
@@ -370,6 +368,7 @@
          ("C-c C-c" . org-ctrl-c-ctrl-c)
 	 ("C-c C-e" . org-agenda-set-effort)
 	 ("C-c C-i" . org-agenda-clock-in)))
+(use-package org-agenda-property :ensure t)
 (use-package company :ensure t :pin melpa
   :config
   (global-company-mode)
@@ -954,9 +953,9 @@ The build string will be of the format:
 (custom-set-variables
  '(org-agenda-span 1)
  '(org-todo-keywords '((sequence
-			"INBOX" "MAYBE" "ACTION" "WAITING" "TODO" "EPIC"
+			"TODO(t)" "WIP(w)" "ISSUE(i)"
 			"|"
-			"DONE" "CANCEL")))
+			"CLOSE" "DONE" "FIX")))
  '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
@@ -1618,3 +1617,6 @@ The build string will be of the format:
 				     initialize-time-log-file-path))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
 (put 'narrow-to-region 'disabled nil)
+
+;; (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
+;; (require 'trans)
