@@ -358,7 +358,8 @@
 (use-package projectile :ensure t :defer t)
 (use-package org
   :config
-  (setq org-hide-leading-stars t
+  (setq org-archive-location "::* Archived Tasks"
+	org-hide-leading-stars t
 	org-startup-indented t
 	org-display-inline-images t
 	org-redisplay-inline-images t
