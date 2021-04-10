@@ -1621,3 +1621,23 @@ The build string will be of the format:
 
 ;; (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
 ;; (require 'trans)
+
+
+;; Graceful shutdown
+(setq
+ SIGKILL 9
+ SIGTERM 15)
+
+(defun process-graceful-shutdown-send-signal-running-process (proc signal)
+  "実行中のプロセスにシグナルを送信する。"
+  (when (eq (process-status proc) 'run)
+    (signal-process proc signal)))
+
+
+(defun process-graceful-shutdown (proc)
+  "Graceful shutdownする。"
+  (interactive (list
+                (completing-read "Process: " (mapcar #'process-name (process-list))
+                                 nil nil nil nil (tabulated-list-get-id))))
+  (process-graceful-shutdown-send-signal-running-process proc SIGTERM)
+  (run-at-time 30 nil #'process-graceful-shutdown-send-signal-running-process proc SIGKILL))
