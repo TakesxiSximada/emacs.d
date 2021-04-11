@@ -253,9 +253,9 @@
 (require 'foreman-mode)
 (require 'go-template-mode)
 (require 'kpt)
+(require 'mastodon)
 (require 'org-file-table)
 (require 'require-to-install-executable)
-(require 'mastodon)
 
 (with-current-buffer (find-file-noselect (expand-file-name "~/.config/mastodon/mstdn.jp"))
   (dotenv-mode-apply-all))
@@ -330,7 +330,7 @@
   :hook (go-mode . yas-minor-mode)
   :init
   (custom-set-variables
-   '(yas-snippet-dirs '("/ng/symdon/snippets"))))
+   '(yas-snippet-dirs '("/opt/ng/symdon/snippets"))))
 (use-package smex :ensure t :no-require t
   :config
   (global-set-key (kbd "M-x") 'smex)
@@ -358,7 +358,8 @@
 (use-package projectile :ensure t :defer t)
 (use-package org
   :config
-  (setq org-hide-leading-stars t
+  (setq org-archive-location "::* Archived Tasks"
+	org-hide-leading-stars t
 	org-startup-indented t
 	org-display-inline-images t
 	org-redisplay-inline-images t
@@ -368,6 +369,7 @@
          ("C-c C-c" . org-ctrl-c-ctrl-c)
 	 ("C-c C-e" . org-agenda-set-effort)
 	 ("C-c C-i" . org-agenda-clock-in)))
+(use-package org-agenda-property :ensure t)
 (use-package company :ensure t :pin melpa
   :config
   (global-company-mode)
@@ -423,8 +425,11 @@
   (setq ido-vertical-define-keys 'C-n-and-C-p-only
 	ido-vertical-show-count t)
   )
-(use-package vterm :ensure t :defer t)
-
+(use-package vterm :ensure t :defer t
+  :bind (:map vterm-mode-map
+	      ("C-c C-v" . vterm-copy-mode)))
+(use-package rg :ensure t :defer t)
+(use-package ripgrep :ensure t :defer t)
 ;; (use-package wakatime-mode :ensure t :defer t
 ;;   :config
 ;;   (global-wakatime-mode))
@@ -949,9 +954,9 @@ The build string will be of the format:
 (custom-set-variables
  '(org-agenda-span 1)
  '(org-todo-keywords '((sequence
-			"INBOX" "MAYBE" "ACTION" "WAITING" "TODO" "EPIC"
+			"TODO(t)" "WIP(w)" "ISSUE(i)"
 			"|"
-			"DONE" "CANCEL")))
+			"CLOSE" "DONE" "FIX")))
  '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
@@ -975,7 +980,6 @@ The build string will be of the format:
 ;; #+STARTUP: indent hidestars inlineimages
 ;; #+TODO: TODO(t) ISSUE(i) EPIC(e) IDEA(i) BLOCK(b) SURVEY(s) PENDING(p) WIP(w) | DONE(d!) CANCEL(c!) DOC SPEC
 ;; #+COLUMNS: %40ITEM(Task) %17Effort(Estimated Effort){:} %CLOCKSUM
-;; (put 'narrow-to-region 'disabled nil)
 
 
 
@@ -1577,7 +1581,6 @@ The build string will be of the format:
            ("C-c C-c" . python-shell-send-buffer))
 (bind-keys :map editor-mode-map
 	   ("C-x C-s" . editor-save-as))
-
 ;; (bind-keys :map org-agenda-mode-map
 ;; 	   ("C-c C-c" . org-agenda-todo)
 ;; 	   ("C-c C-e" . org-agenda-set-effort)
@@ -1605,7 +1608,6 @@ The build string will be of the format:
  ("s-`" . our-async-exec-interactive)
  )
 
-
 ;; Record emacs startup time
 (setq initialize-end-time (float-time))
 (setq initialize-time-log-file-path "~/.emacs.d/starting-time.log")
@@ -1615,3 +1617,30 @@ The build string will be of the format:
 				     (- initialize-end-time initialize-start-time)
 				     initialize-time-log-file-path))
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
+(put 'narrow-to-region 'disabled nil)
+
+;; (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
+;; (require 'trans)
+
+
+;; Graceful shutdown
+(setq
+ SIGKILL 9
+ SIGTERM 15)
+
+(defun process-graceful-shutdown-send-signal-running-process (proc signal)
+  "実行中のプロセスにシグナルを送信する。"
+  (when (eq (process-status proc) 'run)
+    (signal-process proc signal)))
+
+
+(defun process-graceful-shutdown (proc)
+  "Graceful shutdownする。"
+  (interactive (list
+                (completing-read "Process: " (mapcar #'process-name (process-list))
+                                 nil nil nil nil (tabulated-list-get-id))))
+  (process-graceful-shutdown-send-signal-running-process proc SIGTERM)
+  (run-at-time 30 nil #'process-graceful-shutdown-send-signal-running-process proc SIGKILL))
+
+
+(bind-key "s-t" #'org-agenda-list)
