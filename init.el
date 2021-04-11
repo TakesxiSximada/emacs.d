@@ -1641,3 +1641,6 @@ The build string will be of the format:
                                  nil nil nil nil (tabulated-list-get-id))))
   (process-graceful-shutdown-send-signal-running-process proc SIGTERM)
   (run-at-time 30 nil #'process-graceful-shutdown-send-signal-running-process proc SIGKILL))
+
+
+(bind-key "s-t" #'org-agenda-list)
