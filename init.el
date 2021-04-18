@@ -1644,3 +1644,8 @@ The build string will be of the format:
 
 
 (bind-key "s-t" #'org-agenda-list)
+
+
+;; (use-package org-habit-plus :ensure t
+;;   :quelpa (org-habit-plus :fetcher github :repo "myshevchuk/org-habit-plus"))
+
