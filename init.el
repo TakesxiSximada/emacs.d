@@ -1651,3 +1651,15 @@ The build string will be of the format:
 
 (bind-keys :map org-agenda-mode-map
 	   ("<s-return>" . org-agenda-todo))
+
+
+(setq org-agenda-prefix-format '((agenda . "%3e %-4.4c %-20.20b ")
+                                (todo . " %i %-12:c %-6e")
+                                (tags . " %i %-12:c")
+                                (search . " %i %-12:c")))
+(setq org-columns-default-format "%60ITEM(Task) %6Effort(Estim){:} ")
+(setq org-agenda-sorting-strategy
+  '((agenda deadline-up time-down scheduled-down priority-down effort-up tag-up)
+    (todo   priority-down category-keep)
+    (tags   priority-down category-keep)
+    (search category-keep)))
