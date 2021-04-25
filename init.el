@@ -957,7 +957,7 @@ The build string will be of the format:
 			"TODO(t)" "WIP(w)" "ISSUE(i)"
 			"|"
 			"CLOSE" "DONE" "FIX")))
- '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89 144 233 377 610 987")))
+ '(org-global-properties '(("Effort_ALL" . "5 13 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
  '(org-deadline-warning-days 0)  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
