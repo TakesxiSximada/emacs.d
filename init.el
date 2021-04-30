@@ -1681,7 +1681,7 @@ The build string will be of the format:
                                 (search . " %i %-12:c")))
 (setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
 (setq org-agenda-sorting-strategy
-  '((agenda deadline-up time-down scheduled-down priority-down effort-up tag-up)
+  '((agenda deadline-up time-down scheduled-down priority-down effort-down tag-up)
     (todo   priority-down category-keep)
     (tags   priority-down category-keep)
     (search category-keep)))
