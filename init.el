@@ -359,6 +359,7 @@
 (use-package org
   :config
   (setq org-archive-location "::* Archived Tasks"
+	org-startup-folded 'overview
 	org-hide-leading-stars t
 	org-startup-indented t
 	org-display-inline-images t
