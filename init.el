@@ -1653,8 +1653,29 @@ The build string will be of the format:
 (bind-keys :map org-agenda-mode-map
 	   ("<s-return>" . org-agenda-todo))
 
+(require 'org-clock)
 
-(setq org-agenda-prefix-format '((agenda . "%3e %-4.4c %-20.20b ")
+(defun org-clock-get-item-content ()
+  (save-excursion
+    (let ((start-point (progn (org-back-to-heading t)
+			      (point)))
+	  (end-point (progn (org-end-of-subtree t t)
+			    (point))))
+      (buffer-substring-no-properties start-point end-point))))
+
+
+(defun org-clock-sum-current-item-custom ()
+  (interactive)
+  (condition-case err-var
+      (let* ((content (org-clock-get-item-content))
+	     (minute (with-temp-buffer (insert content)
+				       (org-clock-sum-current-item))))
+	(if (> minute 0)
+	    minute
+	  ""))
+    (error "-")))
+
+(setq org-agenda-prefix-format '((agenda . "%3(org-clock-sum-current-item-custom) %3e %-4.4c %-20.20b ")
                                 (todo . " %i %-12:c %-6e")
                                 (tags . " %i %-12:c")
                                 (search . " %i %-12:c")))
