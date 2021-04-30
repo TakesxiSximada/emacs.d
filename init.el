@@ -1664,3 +1664,5 @@ The build string will be of the format:
     (todo   priority-down category-keep)
     (tags   priority-down category-keep)
     (search category-keep)))
+
+(require 'org-archive)
