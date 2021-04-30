@@ -1679,7 +1679,7 @@ The build string will be of the format:
                                 (todo . " %i %-12:c %-6e")
                                 (tags . " %i %-12:c")
                                 (search . " %i %-12:c")))
-(setq org-columns-default-format "%60ITEM(Task) %6Effort(Estim){:} ")
+(setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
 (setq org-agenda-sorting-strategy
   '((agenda deadline-up time-down scheduled-down priority-down effort-up tag-up)
     (todo   priority-down category-keep)
