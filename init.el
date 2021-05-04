@@ -1686,4 +1686,9 @@ The build string will be of the format:
     (tags   priority-down category-keep)
     (search category-keep)))
 
+
+;; org-todoの論理構造を強制し、依存しているタスクを完了していいないと次のタスクに進めない
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-track-ordered-property-with-tag t)
 (require 'org-archive)
