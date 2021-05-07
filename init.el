@@ -957,7 +957,7 @@ The build string will be of the format:
  '(org-todo-keywords '((sequence
 			"TODO(t)" "WIP(w)" "ISSUE(i)"
 			"|"
-			"CLOSE" "DONE" "FIX")))
+			"DONE" "CLOSE" "FIX")))
  '(org-global-properties '(("Effort_ALL" . "5 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
@@ -1681,7 +1681,7 @@ The build string will be of the format:
                                 (search . " %i %-12:c")))
 (setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
 (setq org-agenda-sorting-strategy
-  '((agenda deadline-up time-down scheduled-down priority-down effort-down tag-up)
+  '((agenda deadline-up tag-up time-down scheduled-down priority-down effort-up)
     (todo   priority-down category-keep)
     (tags   priority-down category-keep)
     (search category-keep)))
