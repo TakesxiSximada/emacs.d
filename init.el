@@ -1675,13 +1675,13 @@ The build string will be of the format:
 	  ""))
     (error "-")))
 
-(setq org-agenda-prefix-format '((agenda . "%3(org-clock-sum-current-item-custom) %3e %-4.4c %-20.20b ")
+(setq org-agenda-prefix-format '((agenda . "%4(org-clock-sum-current-item-custom) %4e  %-4.4c %-20.20b ")
                                 (todo . " %i %-12:c %-6e")
                                 (tags . " %i %-12:c")
                                 (search . " %i %-12:c")))
 (setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
 (setq org-agenda-sorting-strategy
-  '((agenda deadline-up tag-up time-down scheduled-down priority-down effort-up)
+  '((agenda deadline-up  time-down scheduled-down priority-down effort-up habit-down tag-up)
     (todo   priority-down category-keep)
     (tags   priority-down category-keep)
     (search category-keep)))
