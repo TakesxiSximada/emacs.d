@@ -359,6 +359,7 @@
 (use-package org
   :config
   (setq org-archive-location "::* Archived Tasks"
+	org-startup-folded 'overview
 	org-hide-leading-stars t
 	org-startup-indented t
 	org-display-inline-images t
@@ -956,8 +957,8 @@ The build string will be of the format:
  '(org-todo-keywords '((sequence
 			"TODO(t)" "WIP(w)" "ISSUE(i)"
 			"|"
-			"CLOSE" "DONE" "FIX")))
- '(org-global-properties '(("Effort_ALL" . "1 2 3 5 8 13 21 34 55 89 144 233 377 610 987")))
+			"DONE" "CLOSE" "FIX")))
+ '(org-global-properties '(("Effort_ALL" . "5 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
  '(org-deadline-warning-days 0)  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
@@ -1644,3 +1645,50 @@ The build string will be of the format:
 
 
 (bind-key "s-t" #'org-agenda-list)
+
+;; (use-package org-habit-plus :ensure t
+;;   :quelpa (org-habit-plus :fetcher github :repo "myshevchuk/org-habit-plus"))
+
+
+(bind-keys :map org-agenda-mode-map
+	   ("<s-return>" . org-agenda-todo))
+
+(require 'org-clock)
+
+(defun org-clock-get-item-content ()
+  (save-excursion
+    (let ((start-point (progn (org-back-to-heading t)
+			      (point)))
+	  (end-point (progn (org-end-of-subtree t t)
+			    (point))))
+      (buffer-substring-no-properties start-point end-point))))
+
+
+(defun org-clock-sum-current-item-custom ()
+  (interactive)
+  (condition-case err-var
+      (let* ((content (org-clock-get-item-content))
+	     (minute (with-temp-buffer (insert content)
+				       (org-clock-sum-current-item))))
+	(if (> minute 0)
+	    minute
+	  ""))
+    (error "-")))
+
+(setq org-agenda-prefix-format '((agenda . "%4(org-clock-sum-current-item-custom) %4e  %-4.4c %-20.20b ")
+                                (todo . " %i %-12:c %-6e")
+                                (tags . " %i %-12:c")
+                                (search . " %i %-12:c")))
+(setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
+(setq org-agenda-sorting-strategy
+  '((agenda deadline-up  time-down scheduled-down priority-down effort-up habit-down tag-up)
+    (todo   priority-down category-keep)
+    (tags   priority-down category-keep)
+    (search category-keep)))
+
+
+;; org-todoの論理構造を強制し、依存しているタスクを完了していいないと次のタスクに進めない
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-track-ordered-property-with-tag t)
+(require 'org-archive)

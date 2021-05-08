@@ -1,6 +1,6 @@
 # -*- mode: pip-requirements-mode -*-
 ansible
-jedi
+jedi<0.18.0
 pip
 pipenv
 poetry
