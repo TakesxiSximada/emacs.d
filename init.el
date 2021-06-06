@@ -1692,3 +1692,7 @@ The build string will be of the format:
 (setq org-enforce-todo-checkbox-dependencies t)
 (setq org-track-ordered-property-with-tag t)
 (require 'org-archive)
+
+;; org-scheduleで挿入される曜日を英語表記にする
+;; https://qiita.com/tnoda_/items/9fefa1575f3bd5273b64
+(setq system-time-locale "C")
