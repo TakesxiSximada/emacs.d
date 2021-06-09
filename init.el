@@ -120,6 +120,7 @@
 (add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
 (add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
+(add-to-list 'exec-path (expand-file-name "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"))
 (setenv "PATH" (string-join exec-path ":"))
 
 
