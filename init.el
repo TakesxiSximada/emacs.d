@@ -1675,22 +1675,22 @@ The build string will be of the format:
 	  ""))
     (error "-")))
 
-(setq org-agenda-prefix-format '((agenda . "%4(org-clock-sum-current-item-custom) %4e  %-4.4c %-20.20b ")
+(setq org-agenda-prefix-format '((agenda . " %4(org-clock-sum-current-item-custom) %4e %.8s %-4.4c %-50.50b ")
                                 (todo . " %i %-12:c %-6e")
                                 (tags . " %i %-12:c")
                                 (search . " %i %-12:c")))
 (setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
 (setq org-agenda-sorting-strategy
-  '((agenda deadline-up  time-down scheduled-down priority-down effort-up habit-down tag-up)
+  '((agenda deadline-down time-down scheduled-down todo-state-up priority-down effort-up habit-up tag-up)
     (todo   priority-down category-keep)
     (tags   priority-down category-keep)
     (search category-keep)))
-
 
 ;; org-todoの論理構造を強制し、依存しているタスクを完了していいないと次のタスクに進めない
 (setq org-enforce-todo-dependencies t)
 (setq org-enforce-todo-checkbox-dependencies t)
 (setq org-track-ordered-property-with-tag t)
+
 (require 'org-archive)
 
 ;; org-scheduleで挿入される曜日を英語表記にする
