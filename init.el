@@ -956,26 +956,25 @@ The build string will be of the format:
 (custom-set-variables
  '(org-agenda-span 1)
  '(org-todo-keywords '((sequence
-			"TODO(t)" "WIP(w)" "ISSUE(i)"
+			"TODO(t)" "WIP(w)" "IDEA(I)" "ISSUE(i)"
 			"|"
 			"DONE" "CLOSE" "FIX")))
  '(org-global-properties '(("Effort_ALL" . "5 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-deadline-warning-days 0)  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
+ '(org-deadline-warning-days 7)
  '(org-agenda-custom-commands
    '(("W" "Weekly Review"
       ((agenda "" ((org-agenda-span 7))); review upcoming deadlines and appointments
 					; type "l" in the agenda to review logged items
        (stuck "") ; review stuck projects as designated by org-stuck-projects
        (todo "ISSUE") ; review all projects (assuming you use todo keywords to designate projects)
-       (todo "INBOX")
-       (todo "MAYBE")
-       (todo "ACTION")
-       (todo "TODO")
-       (todo "WAITING")
+       (todo "WIP")
+       (todo "IDEA")
+       (todo "ISSUE")
        (todo "DONE")
-       (todo "CANCEL")))
+       (todo "CLOSE")
+       (todo "FIX")))
      )))
 
 ;; #+PROPERTY: Effort_ALL 1 2 3 5 8 13 21 34 55 89 144 233
