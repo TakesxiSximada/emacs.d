@@ -359,7 +359,7 @@
 (use-package projectile :ensure t :defer t)
 (use-package org
   :config
-  (setq org-archive-location "::* Archived Tasks"
+  (setq org-archive-location (format-time-string "ARCHIVE_%Y.org::" (current-time))
 	org-startup-folded 'overview
 	org-hide-leading-stars t
 	org-startup-indented t
