@@ -120,6 +120,7 @@
 (add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
 (add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
+(add-to-list 'exec-path (expand-file-name "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"))
 (setenv "PATH" (string-join exec-path ":"))
 
 
@@ -358,7 +359,7 @@
 (use-package projectile :ensure t :defer t)
 (use-package org
   :config
-  (setq org-archive-location "::* Archived Tasks"
+  (setq org-archive-location (format-time-string "ARCHIVE_%Y.org::" (current-time))
 	org-startup-folded 'overview
 	org-hide-leading-stars t
 	org-startup-indented t
@@ -955,26 +956,25 @@ The build string will be of the format:
 (custom-set-variables
  '(org-agenda-span 1)
  '(org-todo-keywords '((sequence
-			"TODO(t)" "WIP(w)" "ISSUE(i)"
+			"TODO(t)" "WIP(w)" "IDEA(I)" "ISSUE(i)"
 			"|"
 			"DONE" "CLOSE" "FIX")))
  '(org-global-properties '(("Effort_ALL" . "5 13 21 34 55 89 144 233 377 610 987")))
  '(org-columns-default-format "%TODO %PRIORITY %Effort{:} %DEADLINE %ITEM %TAGS")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-deadline-warning-days 0)  ;; 当日分のeffortを集計するためにdeadlineが今日でないものは除外する
+ '(org-deadline-warning-days 7)
  '(org-agenda-custom-commands
    '(("W" "Weekly Review"
       ((agenda "" ((org-agenda-span 7))); review upcoming deadlines and appointments
 					; type "l" in the agenda to review logged items
        (stuck "") ; review stuck projects as designated by org-stuck-projects
        (todo "ISSUE") ; review all projects (assuming you use todo keywords to designate projects)
-       (todo "INBOX")
-       (todo "MAYBE")
-       (todo "ACTION")
-       (todo "TODO")
-       (todo "WAITING")
+       (todo "WIP")
+       (todo "IDEA")
+       (todo "ISSUE")
        (todo "DONE")
-       (todo "CANCEL")))
+       (todo "CLOSE")
+       (todo "FIX")))
      )))
 
 ;; #+PROPERTY: Effort_ALL 1 2 3 5 8 13 21 34 55 89 144 233
@@ -1675,20 +1675,24 @@ The build string will be of the format:
 	  ""))
     (error "-")))
 
-(setq org-agenda-prefix-format '((agenda . "%4(org-clock-sum-current-item-custom) %4e  %-4.4c %-20.20b ")
+(setq org-agenda-prefix-format '((agenda . " %4(org-clock-sum-current-item-custom) %4e %.8s %-4.4c %-50.50b ")
                                 (todo . " %i %-12:c %-6e")
                                 (tags . " %i %-12:c")
                                 (search . " %i %-12:c")))
 (setq org-columns-default-format "%6Effort(Estim){:}  %60ITEM(Task) ")
 (setq org-agenda-sorting-strategy
-  '((agenda deadline-up  time-down scheduled-down priority-down effort-up habit-down tag-up)
+  '((agenda deadline-down time-down scheduled-down todo-state-up priority-down effort-up habit-up tag-up)
     (todo   priority-down category-keep)
     (tags   priority-down category-keep)
     (search category-keep)))
-
 
 ;; org-todoの論理構造を強制し、依存しているタスクを完了していいないと次のタスクに進めない
 (setq org-enforce-todo-dependencies t)
 (setq org-enforce-todo-checkbox-dependencies t)
 (setq org-track-ordered-property-with-tag t)
+
 (require 'org-archive)
+
+;; org-scheduleで挿入される曜日を英語表記にする
+;; https://qiita.com/tnoda_/items/9fefa1575f3bd5273b64
+(setq system-time-locale "C")
