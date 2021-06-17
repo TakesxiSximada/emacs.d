@@ -102,8 +102,7 @@
     (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
 (setq  ;; Whalebrew configuration.
- whalebrew-config-dir (expand-file-name "~/.whalebrew")
- whalebrew-install-path (concat whalebrew-config-dir "/bin"))
+ whalebrew-install-path (expand-file-name "~/.emacs.d/whalebrew"))
 (setenv "WHALEBREW_INSTALL_PATH" whalebrew-install-path)
 
 (mkdir whalebrew-install-path t)
