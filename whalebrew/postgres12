@@ -1,0 +1,11 @@
+#!/usr/bin/env whalebrew
+image: postgres:12-alpine
+ports:
+  - "5432:5432"
+expose:
+  - "5432"
+environment:
+  - "POSTGRES_PASSWORD=postgres"
+volumes:
+  - "postgres-12-data:/var/lib/postgresql/data"
+keep_container_user: true

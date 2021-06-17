@@ -1,0 +1,10 @@
+#!/usr/bin/env whalebrew
+image: oracle/database:19.3.0-ee
+ports:
+  - "1521:1521"
+  - "5500:5500"
+environment:
+  - "ORACLE_PWD=testing1234"
+volumes:
+  - "oracle-db-data:/opt/oracle/oradata"
+keep_container_user: true

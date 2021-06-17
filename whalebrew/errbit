@@ -1,0 +1,16 @@
+#!/usr/bin/env whalebrew
+image: errbit/errbit:v0.9.0
+ports:
+  - "8088:8080"
+entrypoint:
+  - "/bin/sh"
+  - "-c"
+  - "cd /app && bundle exec puma -C config/puma.default.rb"
+environment:
+  - "ERRBIT_ADMIN_EMAIL=admin@example.com"
+  - "ERRBIT_ADMIN_PASSWORD=testing1234"
+  - "ERRBIT_ADMIN_USER=admin"
+  - "MONGO_URL=mongodb://host.docker.internal:27017/errbit"
+  - "RACK_ENV=production"
+keep_container_user: true
+# working_dir: "/app"
