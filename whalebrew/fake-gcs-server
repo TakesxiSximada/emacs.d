@@ -1,0 +1,16 @@
+#!/usr/bin/env whalebrew
+# -*- mode: yaml -*-
+image: fsouza/fake-gcs-server
+entrypoint:
+  - "/bin/fake-gcs-server"
+  - "-scheme"
+  - "http"
+  - "-public-host"
+  - "host.docker.internal"
+ports:
+  - "4443:4443"
+expose:
+  - "4443"
+volumes:
+  - "fake-gcs-server-data:/storage"
+keep_container_user: true

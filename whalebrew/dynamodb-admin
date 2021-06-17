@@ -1,0 +1,9 @@
+#!/usr/bin/env whalebrew
+image: aaronshaf/dynamodb-admin
+entrypoint:
+  - "/bin/dynamodb-admin.js"
+ports:
+  - "8001:8001"
+environment:
+  - "DYNAMO_ENDPOINT=http://host.docker.internal:4566"
+  - "AWS_REGION=ap-northeast-1"

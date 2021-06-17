@@ -1,0 +1,7 @@
+#!/usr/bin/env whalebrew
+image: localstack/localstack:0.12.6
+keep_container_user: true
+ports:
+  - "4566:4566"
+  - "4571:4571"
+  - "8080:8080"

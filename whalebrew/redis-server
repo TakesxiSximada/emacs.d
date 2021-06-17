@@ -1,0 +1,4 @@
+#!/usr/bin/env whalebrew
+image: redis:alpine3.13
+ports:
+  - "6379:6379"

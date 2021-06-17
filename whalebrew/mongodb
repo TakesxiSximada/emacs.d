@@ -1,0 +1,9 @@
+#!/usr/bin/env whalebrew
+image: mongo:4.1
+volumes:
+  - "mongo-data:/data/db"
+ports:
+  - "27017:27017"  # main
+  - "27018:27018"  # --shardsvr
+  - "27019:27019"  # --configsvr
+keep_container_user: true
