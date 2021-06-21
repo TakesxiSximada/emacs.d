@@ -1695,3 +1695,10 @@ The build string will be of the format:
 ;; org-scheduleで挿入される曜日を英語表記にする
 ;; https://qiita.com/tnoda_/items/9fefa1575f3bd5273b64
 (setq system-time-locale "C")
+
+
+(setq org-src-fontify-natively t
+    org-src-window-setup 'current-window
+    org-src-strip-leading-and-trailing-blank-lines t
+    org-src-preserve-indentation t
+    org-src-tab-acts-natively nil)
