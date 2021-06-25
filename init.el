@@ -930,6 +930,14 @@ The build string will be of the format:
 ;; org-agenda
 ;; (setq org-agenda-overriding-columns-format "%TODO %7EFFORT %PRIORITY     %100ITEM 100%TAGS")
 
+(defun rust-compile-current-buffer ()
+  (interactive)
+  (let* ((path (buffer-file-name))
+	 (vterm-shell (format "rustc %s" path))
+	 (vterm-buffer-name "*Rust COMPILE*")
+	 (vterm-kill-buffer-on-exit nil))
+    (vterm)))
+
 (defun our-buffer-copy-current-file-path ()
   "バッファのファイルパスをクリップボードにコピーする"
   (interactive)
