@@ -1,0 +1,5 @@
+# iamge: stylint:20210627
+# syntax=docker/dockerfile:1
+FROM node:16.3.0-alpine3.12
+RUN npm install -g stylint
+ENTRYPOINT /usr/local/lib/node_modules/stylint/bin/stylint
