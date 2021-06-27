@@ -1627,9 +1627,6 @@ The build string will be of the format:
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . html-mode))
 (put 'narrow-to-region 'disabled nil)
 
-;; (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
-;; (require 'trans)
-
 
 ;; Graceful shutdown
 (setq
@@ -1710,3 +1707,8 @@ The build string will be of the format:
     org-src-strip-leading-and-trailing-blank-lines t
     org-src-preserve-indentation t
     org-src-tab-acts-natively nil)
+
+;; (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
+(add-to-list 'load-path (expand-file-name "~/.el-get/trans"))
+(require 'trans)
+
