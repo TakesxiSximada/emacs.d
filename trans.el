@@ -51,13 +51,13 @@
 (setq trans-process-name "*Trans Process")
 (setq trans-process-buffer-name " *Transprocess*")
 (setq trans-process-command '("trans"
-				   "en:ja"
-				   "-show-original" "n"
-				   "-show-prompt-message" "n"
-				   "-brief"
-				   "-no-pager"
-				   "-no-ansi"
-				   ))
+			      "en:ja"
+			      "-show-original" "n"
+			      "-show-prompt-message" "n"
+			      "-brief"
+			      "-no-pager"
+			      "-no-ansi"
+			      ))
 
 (defvar trans-process nil)
 
@@ -82,9 +82,6 @@
     (replace-regexp "\n" " " nil (point-min) (point-max))
     (buffer-substring-no-properties (point-min) (point-max))))
 
-
-
-;;;###autoload
 (defun trans-start ()
   (interactive)
   (unless trans-process
@@ -96,21 +93,18 @@
 			))
     (set-process-filter-multibyte trans-process t)))
 
-
 ;;;###autoload
 (defun trans-restart ()
   (interactive)
   (trans-stop)
   (trans-start))
 
-
 ;;;###autoload
 (defun trans-stop ()
   (interactive)
   (when trans-process
-    (signal-process (get-process trans-process) 15)  ;; Send SIGTERM
+    (signal-process (get-process trans-process) 15)
     (setq trans-process nil)))
-
 
 ;;;###autoload
 (defun trans-region ()
@@ -123,7 +117,6 @@
 			     (eval (trans-get-sentence)))
 			    "\n"))
     (error "No translation process")))
-
 
 (provide 'trans)
 ;;; trans.el ends here

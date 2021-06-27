@@ -25,7 +25,6 @@ If the translation is successful, the text will be displayed in
 
 =M-x trans-stop RET=
 
-
 * Install
 
 1. Download trans.el
@@ -53,4 +52,4 @@ GPL v3
 
 - First implements.
 - Supported translation.
-  - en to ja 
+  - en to ja
