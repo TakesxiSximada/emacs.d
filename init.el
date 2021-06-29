@@ -1293,14 +1293,6 @@ The build string will be of the format:
 ;; (add-hook 'python-mode-hook 'python-mode-configure)
 
 
-(defun scratch-buffer-create (buf-name)
-  "Create new scratch buffer"
-  (interactive "sBuffer Name: ")
-  (let ((buf (get-buffer-create buf-name)))
-    (with-current-buffer buf
-      (lisp-interaction-mode))
-    (switch-to-buffer buf)))
-
 (projectile-mode)
 
 (custom-set-variables
@@ -1712,3 +1704,17 @@ The build string will be of the format:
 (add-to-list 'load-path (expand-file-name "~/.el-get/trans"))
 (require 'trans)
 
+;; scratch buffer configuration
+(with-current-buffer "*scratch*"
+  (setq-local buffer-file-name (expand-file-name "~/scratch.el"))
+  (setq-local auto-save-visited-interval 1)
+  (insert-file-contents buffer-file-name)
+  (auto-save-visited-mode))
+
+(defun scratch-buffer-create (buf-name)
+  "Create new scratch buffer"
+  (interactive "sBuffer Name: ")
+  (let ((buf (get-buffer-create buf-name)))
+    (with-current-buffer buf
+      (lisp-interaction-mode))
+    (switch-to-buffer buf)))
