@@ -577,7 +577,7 @@ The build string will be of the format:
   (save-buffer)
     (compilation-start
         (format
-            "%s%s build --progress plain %s %s %s -f %s %s"  ;; FIX
+            "%s%s build --progress plain --ssh=default %s %s %s -f %s %s"  ;; FIX
             (if dockerfile-use-sudo "sudo " "")
             dockerfile-mode-command
             (if no-cache "--no-cache" "")
