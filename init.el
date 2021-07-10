@@ -1718,3 +1718,9 @@ The build string will be of the format:
     (with-current-buffer buf
       (lisp-interaction-mode))
     (switch-to-buffer buf)))
+
+;; for asciidoc
+(defun asciidoc-view ()
+  (interactive)
+  (shell-command (format "asciidoc -o /tmp/foo.html %s" (buffer-file-name)))
+  (eww-open-file "/tmp/foo.html"))
