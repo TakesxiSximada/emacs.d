@@ -1724,3 +1724,14 @@ The build string will be of the format:
   (interactive)
   (shell-command (format "asciidoc -o /tmp/foo.html %s" (buffer-file-name)))
   (eww-open-file "/tmp/foo.html"))
+
+
+(require 'url-util)
+
+(defun our-url-encode ()
+  (interactive)
+  (kill-new
+   (url-hexify-string
+    (buffer-substring-no-properties
+     (region-beginning) (region-end)))))
+
