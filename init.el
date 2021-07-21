@@ -417,9 +417,9 @@
 (use-package pip-requirements :ensure t :defer t
   :bind (:map pip-requirements-mode-map
 	      ("C-c C-c" . pip-requirements-user-install)))
-(use-package ido-completing-read+ :ensure t :defer t :no-require t
-  :config
-  (ido-ubiquitous-mode 1))
+;; (use-package ido-completing-read+ :ensure t :defer t :no-require t
+;;   :config
+;;   (ido-ubiquitous-mode 1))
 (use-package ido-vertical-mode :ensure t :no-require t
   :config
   (ido-vertical-mode 1)
