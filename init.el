@@ -349,3 +349,7 @@
 (global-set-key (kbd "C-c C-v") 'magit-status)
 (global-set-key (kbd "C-t C-c") 'vterm-command)
 (global-set-key (kbd "C-t C-w") 'editor-create-buffer)
+
+(global-set-key (kbd "s-t") 'make-frame)
+(global-set-key (kbd "C-t C-t") 'other-frame)
+
