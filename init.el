@@ -89,7 +89,9 @@
 ;; -----------------------------
 (use-package vterm :ensure t :defer t
   :bind (:map vterm-mode-map
-  	      ("C-c C-v" . vterm-copy-mode)))
+  	      ("C-c C-v" . vterm-copy-mode)
+	      ("C-t" . nil)))
+
 
 (defun vterm-command (line &optional cwd)
   (interactive (list
@@ -346,7 +348,7 @@
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(global-set-key (kbd "C-c C-v") 'magit-status)
+(global-set-key (kbd "C-x C-v") 'magit-status)
 (global-set-key (kbd "C-t C-c") 'vterm-command)
 (global-set-key (kbd "C-t C-w") 'editor-create-buffer)
 
@@ -371,6 +373,7 @@
 (add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
 (add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
+(add-to-list 'exec-path "/opt/ng/symdon/whalebrew")
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
