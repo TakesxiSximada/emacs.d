@@ -322,6 +322,24 @@
      (region-beginning) (region-end)))))
 
 ;; -----------------------------
+;; sql-fmt
+;; - https://github.com/maxcountryman/forma
+;; - https://www.emacswiki.org/emacs/SqlBeautify
+;; -----------------------------
+(defvar sql-fmt-command "forma --max-width 60")
+
+(defun sql-fmt-region (beg end)
+  (interactive "r")
+  (save-restriction
+    (shell-command-on-region beg end
+			     sql-fmt-command
+			     nil t)))
+
+(defun sql-fmt-buffer ()
+  (interactive)
+  (sql-fmt-region (point-min) (point-max)))
+
+;; -----------------------------
 ;; Extend Key binding
 ;; -----------------------------
 (global-set-key (kbd "C-M-i") 'company-complete)
