@@ -353,3 +353,24 @@
 (global-set-key (kbd "s-t") 'make-frame)
 (global-set-key (kbd "C-t C-t") 'other-frame)
 
+;; -----------------------------
+;; Path
+;; -----------------------------
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/opt/openjdk/bin")
+(add-to-list 'exec-path (expand-file-name "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.emacs.d/whalebrew"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/shims"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v8.15.0/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.poetry/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
+(add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
+(add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
+(add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
+(setenv "PATH" (string-join exec-path ":"))
+
+(setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
