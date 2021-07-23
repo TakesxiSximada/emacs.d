@@ -165,6 +165,10 @@
    company-tooltip-idle-delay nil)
   )
 
+(use-package typescript-mode :defer t :ensure t
+  :config
+  (setq typescript-indent-level 2))
+
 ;; -----------------------------
 ;; My Packages
 ;; -----------------------------
