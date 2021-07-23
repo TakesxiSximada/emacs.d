@@ -72,6 +72,10 @@
   :init
   (ido-vertical-mode))
 
+(defun ido-vertical-define-keys-custom ()
+  (define-key ido-completion-map (kbd "M-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "M-p") 'ido-prev-match)
+  )
 
 ;; -----------------------------
 ;; Org
