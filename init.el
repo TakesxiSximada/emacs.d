@@ -157,6 +157,7 @@
 (use-package transient :ensure t)
 (use-package unicode-escape :ensure t :defer t)
 (use-package vagrant-tramp :ensure t :defer t)
+(use-package vue-mode :ensure t :defer t)
 (use-package web :ensure t :defer t)
 (use-package wgrep :ensure t :defer t)
 (use-package wgrep-ag :ensure t :defer t)
