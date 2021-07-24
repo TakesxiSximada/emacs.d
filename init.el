@@ -375,6 +375,16 @@
 (global-set-key (kbd "C-t C-t") 'other-frame)
 
 ;; -----------------------------
+;; Debugger aliases
+;; -----------------------------
+(defalias 'debug-on-c 'gdb)
+(defalias 'debug-on-java 'jdb)
+(defalias 'debug-on-perl 'perldb)
+(defalias 'debug-on-python 'pdb)
+;; dbx
+;; sdb
+
+;; -----------------------------
 ;; Path
 ;; -----------------------------
 (add-to-list 'exec-path "/usr/local/bin")
