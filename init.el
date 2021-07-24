@@ -77,6 +77,14 @@
   (define-key ido-completion-map (kbd "M-p") 'ido-prev-match)
   )
 
+;; WHY DID I USE ido-completing-read+ PACKAGE?:
+;;   I changed value t to ido-everywhere, but ido-vertical-mode did
+;;   not work. Should be enabled ido-ubiquitous-mode to work it.
+
+(use-package ido-completing-read+ :ensure t :defer t
+  :init
+  (ido-ubiquitous-mode 1))
+
 ;; -----------------------------
 ;; Org
 ;; -----------------------------
