@@ -155,7 +155,6 @@
 (use-package s :ensure t :defer t)
 (use-package slime :ensure t :defer t)
 (use-package smex :ensure t :defer t)
-(use-package edit-indirect :ensure t :defer t)
 (use-package sudden-death :ensure t :defer t)
 (use-package terraform-mode :ensure t :defer t)
 (use-package transient :ensure t)
@@ -184,6 +183,18 @@
 (use-package typescript-mode :defer t :ensure t
   :config
   (setq typescript-indent-level 2))
+
+(use-package edit-indirect :ensure t :defer t
+  :config
+  (setq edit-indirect-guess-mode-function #'edit-indirect-guess-custom))
+
+(defun edit-indirect-guess-custom (_parent-buffer _beg _end)
+  "Switch major-mode to parent-buffer major-mode."
+  (funcall
+   (with-current-buffer _parent-buffer
+     ;; Being changed major-mode by cursor position in case of mmm-mode.
+     (goto-char _beg)
+     major-mode)))
 
 ;; -----------------------------
 ;; My Packages
