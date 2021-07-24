@@ -376,6 +376,7 @@
 
 (global-set-key (kbd "s-t") 'make-frame)
 (global-set-key (kbd "C-t C-t") 'other-frame)
+(global-set-key (kbd "C-t C-o") 'macos-app)
 
 ;; -----------------------------
 ;; Debugger aliases
