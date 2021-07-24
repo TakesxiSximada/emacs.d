@@ -1,7 +1,8 @@
 (setq find-function-C-source-directory "/opt/ng/emacs/src")
 (setq debug-on-error t)
 
-(load-theme 'tsdh-dark)
+(setq custom-theme-directory (expand-file-name "~/.emacs.d/themes"))
+(load-theme 'sximada-dark t)
 (toggle-frame-fullscreen)
 
 ;; -----------------------------
