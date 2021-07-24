@@ -71,7 +71,9 @@
 (setq ido-enable-flex-matching t)
 (use-package ido-vertical-mode :ensure t :defer
   :init
-  (ido-vertical-mode))
+  (ido-vertical-mode)
+  (add-hook 'ido-setup-hook #'ido-vertical-define-keys-custom))
+
 
 (defun ido-vertical-define-keys-custom ()
   (define-key ido-completion-map (kbd "M-n") 'ido-next-match)
