@@ -152,6 +152,7 @@
 (use-package s :ensure t :defer t)
 (use-package slime :ensure t :defer t)
 (use-package smex :ensure t :defer t)
+(use-package edit-indirect :ensure t :defer t)
 (use-package sudden-death :ensure t :defer t)
 (use-package terraform-mode :ensure t :defer t)
 (use-package transient :ensure t)
@@ -365,6 +366,7 @@
 ;; Extend Key binding
 ;; -----------------------------
 (global-set-key (kbd "C-M-i") 'company-complete)
+(global-set-key (kbd "M-i") 'edit-indirect-region)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
