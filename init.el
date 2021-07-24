@@ -186,15 +186,25 @@
 
 (use-package edit-indirect :ensure t :defer t
   :config
-  (setq edit-indirect-guess-mode-function #'edit-indirect-guess-custom))
+  (setq edit-indirect-guess-mode-function #'edit-indirect-custom-apply-major-mode))
 
-(defun edit-indirect-guess-custom (_parent-buffer _beg _end)
-  "Switch major-mode to parent-buffer major-mode."
-  (funcall
-   (with-current-buffer _parent-buffer
-     ;; Being changed major-mode by cursor position in case of mmm-mode.
-     (goto-char _beg)
-     major-mode)))
+(defun edit-indirect-custom-guess-major-mode (_parent-buffer _beg _end)
+  "Guess major-mode to parent-buffer major-mode.
+
+Returns symbol of major-mode.
+"
+  (with-current-buffer _parent-buffer
+    (goto-char _beg)
+
+    (if (eq major-mode 'org-mode)
+	(if-let ((lang (nth 0 (org-babel-get-src-block-info))))
+	    (intern (format "%s-mode" lang))
+	  'org-mode)
+      major-mode)))
+
+(defun edit-indirect-custom-apply-major-mode  (_parent-buffer _beg _end)
+  "Apply major-mode to parent-buffer major-mode."
+  (funcall (edit-indirect-custom-guess-major-mode _parent-buffer _beg _end)))
 
 ;; -----------------------------
 ;; My Packages
