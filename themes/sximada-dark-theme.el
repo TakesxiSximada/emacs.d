@@ -24,11 +24,11 @@
 
 ;;; Code:
 
-(deftheme sximada
+(deftheme sximada-dark
   "Created 2021-07-24.")
 
 (custom-theme-set-faces
- 'sximada
+ 'sximada-dark
  '(default ((t (:inherit nil :extend nil :stipple nil :background "Black" :foreground "white smoke" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Menlo"))))
  '(cursor ((((background light)) (:background "black")) (((background dark)) (:background "white"))))
  '(fixed-pitch ((t (:family "Monospace"))))
@@ -74,4 +74,4 @@
  '(next-error ((t (:inherit (region)))))
  '(query-replace ((t (:inherit (isearch))))))
 
-(provide-theme 'sximada)
+(provide-theme 'sximada-dark)
