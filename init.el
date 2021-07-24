@@ -123,6 +123,9 @@
 ;; -----------------------------
 ;; Others
 ;; -----------------------------
+(use-package sgml-mode :ensure t :defer t
+  :config
+  (setq sgml-quick-keys 'close))
 (use-package add-node-modules-path :ensure t :defer t)
 (use-package ag :ensure t :defer t :no-require t)
 (use-package avy-menu :ensure t :defer t)
