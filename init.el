@@ -183,6 +183,9 @@
   :config
   (setq typescript-indent-level 2))
 
+;; -----------------------------
+;; edit-indirect
+;; -----------------------------
 (use-package edit-indirect :ensure t :defer t
   :config
   (setq edit-indirect-guess-mode-function #'edit-indirect-custom-apply-major-mode))
