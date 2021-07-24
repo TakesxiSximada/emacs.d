@@ -160,7 +160,6 @@
 (use-package transient :ensure t)
 (use-package unicode-escape :ensure t :defer t)
 (use-package vagrant-tramp :ensure t :defer t)
-(use-package vue-mode :ensure t :defer t)
 (use-package web :ensure t :defer t)
 (use-package wgrep :ensure t :defer t)
 (use-package wgrep-ag :ensure t :defer t)
@@ -205,6 +204,51 @@ Returns symbol of major-mode.
 (defun edit-indirect-custom-apply-major-mode  (_parent-buffer _beg _end)
   "Apply major-mode to parent-buffer major-mode."
   (funcall (edit-indirect-custom-guess-major-mode _parent-buffer _beg _end)))
+
+;; -----------------------------
+;; Vue.js
+;; -----------------------------
+(use-package vue-mode :ensure t :defer t
+  :requires (vue-mode
+	     vue-html-mode
+	     css-mode
+	     js-mode
+	     typescript-mode)
+  :config
+  (define-key css-mode-map (kbd "C-c i") #'vue-mode-edit-all-indirect)
+  (define-key css-mode-map (kbd "M-i") #'vue-mode-edit-indirect-at-point)
+  (define-key js-mode-map (kbd "C-c i") #'vue-mode-edit-all-indirect)
+  (define-key js-mode-map (kbd "M-i") #'vue-mode-edit-indirect-at-point)
+  (define-key typescript-mode-map (kbd "C-c i") #'vue-mode-edit-all-indirect)
+  (define-key typescript-mode-map (kbd "M-i") #'vue-mode-edit-indirect-at-point)
+  (define-key vue-html-mode-map (kbd "C-c i") #'vue-mode-edit-all-indirect)
+  (define-key vue-html-mode-map (kbd "M-i") #'vue-mode-edit-indirect-at-point)
+  (define-key vue-mode-map (kbd "C-c i") #'vue-mode-edit-all-indirect)
+  (define-key vue-mode-map (kbd "M-i") #'vue-mode-edit-indirect-at-point)
+
+  (defun vue-mode-edit-all-indirect (&optional keep-windows)
+    "Open all subsections with `edit-indirect-mode' in seperate windows.
+  If KEEP-WINDOWS is set, do not delete other windows and keep the root window
+  open."
+    (interactive "P")
+    (when (not keep-windows)
+      (delete-other-windows))
+    (save-selected-window
+      (split-window-horizontally)
+      (dolist (ol (mmm-overlays-contained-in (point-min) (point-max)))
+        (let* ((window (split-window-below))
+               (mode (or (plist-get vue-dedicated-modes (overlay-get ol 'mmm-mode))
+                         (overlay-get ol 'mmm-mode)))
+               (buffer (edit-indirect-region (overlay-start ol) (overlay-end ol))))
+          (maximize-window)
+          (with-current-buffer buffer
+            (funcall mode))
+          (set-window-buffer window buffer)))
+      (balance-windows))
+    (when (not keep-windows)
+      (delete-window)
+      (balance-windows)))
+  )
 
 ;; -----------------------------
 ;; My Packages
