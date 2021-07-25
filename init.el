@@ -164,11 +164,6 @@
 (use-package wgrep :ensure t :defer t)
 (use-package wgrep-ag :ensure t :defer t)
 
-(use-package eglot :defer t :ensure t
-  :config
-  (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
-  (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark))
-
 (use-package company :ensure t :pin melpa
   :config
   (global-company-mode)
@@ -182,6 +177,20 @@
 (use-package typescript-mode :defer t :ensure t
   :config
   (setq typescript-indent-level 2))
+
+;; -----------------------------
+;; eglot
+;; -----------------------------
+(use-package eglot :defer t :ensure t
+  :config
+  (add-to-list 'eglot-server-programs '(vue-mode . ("vls")))
+
+  (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
+  (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark)
+
+  :if (eq system-type 'darwin)
+  :ensure-system-package
+  ("vls" . "npm install -g vls"))
 
 ;; -----------------------------
 ;; edit-indirect
