@@ -193,9 +193,10 @@
   (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
   (define-key eglot-mode-map (kbd "M-,") 'pop-tag-mark)
 
-  :if (eq system-type 'darwin)
-  :ensure-system-package
-  ("vls" . "npm install -g vls"))
+  ;; :if (eq system-type 'darwin)
+  ;; :ensure-system-package
+  ;; ("vls" . "npm install -g vls")
+  )
 
 ;; -----------------------------
 ;; edit-indirect
