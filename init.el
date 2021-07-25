@@ -33,7 +33,12 @@
 ;; -----------------------------
 ;; Base Key binding
 ;; -----------------------------
-(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+(global-set-key (kbd "<f1>") #'start-kbd-macro)
+(global-set-key (kbd "<f2>") #'end-kbd-macro)
+(global-set-key (kbd "<f3>") #'call-last-kbd-macro)
+(global-set-key (kbd "<f4>") #'insert-kbd-macro)
+
+(global-set-key (kbd "C-h") #'backward-delete-char-untabify)
 (global-set-key (kbd "C-t")  nil)
 (global-set-key (kbd "C-t h") 'windmove-left)
 (global-set-key (kbd "C-t C-h") 'windmove-left)
