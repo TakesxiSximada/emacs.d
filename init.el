@@ -179,6 +179,13 @@
 ;; eglot
 ;; -----------------------------
 (use-package eglot :defer t :ensure t
+  :init
+  (defun eglot-install-language-server-python ()
+    (interactive)
+    (make-process :name "*EGLOT INSTALL*"
+  		  :buffer (get-buffer-create "*EGLOT INSTALL*")
+  		  :command `("pip" "install" "python-language-server")))
+
   :config
   (add-to-list 'eglot-server-programs '(vue-mode . ("vls")))
 
