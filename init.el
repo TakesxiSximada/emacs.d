@@ -94,7 +94,7 @@
   (ido-ubiquitous-mode 1))
 
 ;; -----------------------------
-;; Org
+;; org-mode
 ;; -----------------------------
 (use-package org :ensure t :defer t
   :config
