@@ -141,7 +141,6 @@
 (use-package github-review  :ensure t :defer t)
 (use-package google-translate :ensure t :defer t)
 (use-package magit :ensure t :defer t)
-(use-package magit :ensure t :defer t)
 (use-package mew :ensure t :defer t)
 (use-package monky :ensure t :defer t)
 (use-package nginx-mode :ensure t :defer t)
