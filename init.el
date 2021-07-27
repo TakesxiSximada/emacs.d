@@ -134,7 +134,6 @@
 (use-package add-node-modules-path :ensure t :defer t)
 (use-package ag :ensure t :defer t :no-require t)
 (use-package avy-menu :ensure t :defer t)
-(use-package blacken :ensure t :defer t)
 (use-package db :ensure t :defer t)
 (use-package dired-filter :ensure t :defer t)
 (use-package docker :ensure t :defer t)
@@ -153,8 +152,6 @@
 (use-package ob-async :ensure t :defer t )
 (use-package ob-restclient :ensure t :defer t)
 (use-package pcre2el :ensure t :defer t)
-(use-package py-isort :ensure t :defer t)
-(use-package pyvenv :ensure t :defer t)
 (use-package request :ensure t :defer t)
 (use-package restclient :ensure t :defer t)
 (use-package s :ensure t :defer t)
@@ -267,6 +264,20 @@ Returns symbol of major-mode.
       (delete-window)
       (balance-windows)))
   )
+
+;; -----------------------------
+;; Python
+;; -----------------------------
+(use-package python :ensure t :defer t
+  :requires (eglot)
+  :config
+  (add-hook 'python-mode-hook 'eglot-ensure)
+  )
+(use-package py-isort :ensure t :defer t)
+(use-package blacken :ensure t :defer t)
+(use-package pyvenv :ensure t :defer t
+  :config
+  (setenv "WORKON_HOME" (expand-file-name "~/.venv")))
 
 ;; -----------------------------
 ;; My Packages
