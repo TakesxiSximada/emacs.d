@@ -515,6 +515,45 @@ Returns symbol of major-mode.
   (sql-fmt-region (point-min) (point-max)))
 
 ;; -----------------------------
+;; wakatime
+;; -----------------------------
+(setq wakatime-response-buffer nil)
+
+(defun restclient-http-handle-response (status method url bufname raw stay-in-window)
+  "Switch to the buffer returned by `url-retreive'.
+The buffer contains the raw HTTP response sent by the server."
+  (setq restclient-within-call nil)
+  (setq restclient-request-time-end (current-time))
+  (if (= (point-min) (point-max))
+      (signal (car (plist-get status :error)) (cdr (plist-get status :error)))
+    (when (buffer-live-p (current-buffer))
+      (with-current-buffer (restclient-decode-response
+                            (current-buffer)
+                            bufname
+                            restclient-same-buffer-response)
+        (run-hooks 'restclient-response-received-hook)
+        (unless raw
+          (restclient-prettify-response method url))
+        (buffer-enable-undo)
+	(restclient-response-mode)
+        (run-hooks 'restclient-response-loaded-hook))))
+  (current-buffer))
+
+(defun wakatime-update-response-buffer ()
+  (setq wakatime-response-buffer (current-buffer)))
+
+(defun wakatime-send-heatbeat ()
+  (interactive)
+  (with-current-buffer (find-file-noselect (expand-file-name "~/.emacs.d/wakatime.http"))
+    (when (buffer-live-p wakatime-response-buffer)
+      (let ((kill-buffer-query-functions nil))
+	(kill-buffer wakatime-response-buffer)))
+    (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window))))
+
+(add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
+(setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
+
+;; -----------------------------
 ;; Extend Key binding
 ;; -----------------------------
 (global-set-key (kbd "C-M-i") 'company-complete)
