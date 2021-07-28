@@ -1,0 +1,19 @@
+# -*- restclient -*-
+:ORIGIN := "https://wakatime.com"
+:API_KEY := (base64-encode-string (getenv+ "WAKATIME_API_KEY"))
+:TYPE := "file" ;; app file domain
+:CATEGORY := "learning" ;;
+:TIMESTAMP := (float-time)
+
+POST :ORIGIN/api/v1/users/current/heartbeats
+Authorization: Basic :API_KEY
+Content-Type: application/json
+
+{
+  "entity": "foo",
+  "project": "symdon",
+  "category": ":CATEGORY",
+  "language": "org-mode",
+  "time": :TIMESTAMP,
+  "is_write": true
+}
