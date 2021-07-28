@@ -592,7 +592,7 @@ The buffer contains the raw HTTP response sent by the server."
 ;; -----------------------------
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path "/usr/local/opt/openjdk/bin")
-(add-to-list 'exec-path (expand-file-name "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin"))
+(add-to-list 'exec-path "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin")
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 (add-to-list 'exec-path (expand-file-name "~/.emacs.d/whalebrew"))
 (add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
