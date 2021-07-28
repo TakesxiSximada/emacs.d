@@ -68,6 +68,14 @@
       custom-file (locate-user-emacs-file "custom.el")
       )
 
+;; ------------------------------
+;; environment variable utilities
+;; ------------------------------
+(defun getenv+ (name)
+  "環境変数から値を取得し、さもなければシンボルから値を取得する"
+  (or (getenv name)
+      (symbol-value (intern-soft name))))
+
 ;; -----------------------------
 ;; IDO
 ;; -----------------------------
@@ -545,7 +553,7 @@ The buffer contains the raw HTTP response sent by the server."
 (defun wakatime-send-heatbeat ()
   (interactive)
   (with-current-buffer (find-file-noselect (expand-file-name "~/.emacs.d/wakatime.http"))
-    (when (buffer-live-p wakatime-response-buffer)
+    (if (buffer-live-p wakatime-response-buffer)
       (let ((kill-buffer-query-functions nil))
 	(kill-buffer wakatime-response-buffer)))
     (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window))))
