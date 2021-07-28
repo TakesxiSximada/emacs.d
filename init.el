@@ -601,3 +601,8 @@ The buffer contains the raw HTTP response sent by the server."
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
+
+;; -----------------------------
+;; CUSTOM
+;; -----------------------------
+(load-file "/opt/ng/symdon/emacs.d/after.el")
