@@ -110,7 +110,14 @@
   (setq org-startup-indented t
         org-archive-location (format-time-string "ARCHIVE_%Y.org::" (current-time))
         ))
+
 (require 'org-clock)
+
+:; automatic timeout timer
+(setq org-clock-automatic-timeout (* 60 10))
+(setq org-clock-automatic-timeout-timer
+      (run-with-idle-timer org-clock-automatic-timeout
+			   t 'org-clock-out))
 
 ;; -----------------------------
 ;; Vterm
