@@ -587,7 +587,7 @@ The buffer contains the raw HTTP response sent by the server."
       (with-current-buffer current-task-buffer
 	(save-excursion
 	  (goto-char (marker-position org-clock-marker))
-	  (cdr (assoc org-wakatime-work-type-property-name (org-entry-properties)))))
+	  (cdr (assoc org-waka-work-type-property-name (org-entry-properties)))))
     "planning"))
 
 (defun waka-get-entity ()
