@@ -557,16 +557,70 @@ The buffer contains the raw HTTP response sent by the server."
 (defun wakatime-update-response-buffer ()
   (setq wakatime-response-buffer (current-buffer)))
 
+(setq waka-work-type-list '(
+			    "browsing"
+			    "building"
+			    "code reviewing"
+			    "coding"
+			    "debugging"
+			    "designing"
+			    "indexing"
+			    "learning"
+			    "manual testing"
+			    "planning"
+			    "researching"
+			    "running tests"
+			    "writing docs"
+			    "writing tests"
+			    ))
+
+(setq org-waka-work-type-property-name "WAKATIME_WORK_TYPE")
+
+(defun org-waka-set-work-type (work-type)
+  (interactive (list (completing-read "WORK TYPE: "
+				      waka-work-type-list)))
+  (org-set-property org-waka-work-type-property-name work-type))
+
+
+(defun waka-get-category ()
+  (interactive)
+  (if-let ((current-task-buffer (org-clock-is-active)))
+      (with-current-buffer current-task-buffer
+	(save-excursion
+	  (goto-char (marker-position org-clock-marker))
+	  (cdr (assoc org-wakatime-work-type-property-name (org-entry-properties)))))
+    "planning"))
+
+(defun waka-get-entity ()
+  (interactive)
+  (buffer-name))
+
+(defun waka-get-language ()
+  (interactive)
+  major-mode)
+
+(defun waka-get-project ()
+  (interactive)
+  (if-let ((current-task-buffer (org-clock-is-active)))
+      (with-current-buffer current-task-buffer
+	(org-get-category))
+    "GLOBAL"))
+
 (defun wakatime-send-heatbeat ()
   (interactive)
-  (with-current-buffer (find-file-noselect (expand-file-name "~/.emacs.d/wakatime.http"))
-    (if (buffer-live-p wakatime-response-buffer)
-      (let ((kill-buffer-query-functions nil))
-	(kill-buffer wakatime-response-buffer)))
-    (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window))))
+  (let ((wakatime-request-entity (buffer-name))
+	(wakatime-request-language major-mode)
+	(wakatime-request-project (
+    (with-current-buffer (find-file-noselect
+			  (expand-file-name "~/.emacs.d/wakatime.http"))
+      (if (buffer-live-p wakatime-response-buffer)
+	  (let ((kill-buffer-query-functions nil))
+	    (kill-buffer wakatime-response-buffer)))
+      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window)))))
 
 (add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
 (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
+(define-key org-mode-map (kbd "C-c C-w") #'org-waka-set-work-type)
 
 ;; -----------------------------
 ;; Extend Key binding
