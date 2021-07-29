@@ -621,7 +621,7 @@ The buffer contains the raw HTTP response sent by the server."
 
 (add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
 (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
-(define-key org-mode-map (kbd "C-c C-w") #'org-waka-set-work-type)
+(define-key org-mode-map (kbd "C-c C-x C-w") #'org-waka-set-work-type)
 
 ;; -----------------------------
 ;; Extend Key binding
