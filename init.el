@@ -607,15 +607,12 @@ The buffer contains the raw HTTP response sent by the server."
 
 (defun wakatime-send-heatbeat ()
   (interactive)
-  (let ((wakatime-request-entity (buffer-name))
-	(wakatime-request-language major-mode)
-	(wakatime-request-project (
-    (with-current-buffer (find-file-noselect
-			  (expand-file-name "~/.emacs.d/wakatime.http"))
-      (if (buffer-live-p wakatime-response-buffer)
-	  (let ((kill-buffer-query-functions nil))
-	    (kill-buffer wakatime-response-buffer)))
-      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window))))))))
+  (with-current-buffer (find-file-noselect
+			(expand-file-name "~/.emacs.d/wakatime.http"))
+    (if (buffer-live-p wakatime-response-buffer)
+	(let ((kill-buffer-query-functions nil))
+	  (kill-buffer wakatime-response-buffer))
+      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window)))))
 
 (add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
 (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
