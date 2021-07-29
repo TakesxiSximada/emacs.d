@@ -617,7 +617,7 @@ The buffer contains the raw HTTP response sent by the server."
       (if (buffer-live-p wakatime-response-buffer)
 	  (let ((kill-buffer-query-functions nil))
 	    (kill-buffer wakatime-response-buffer)))
-      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window)))))
+      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window))))))))
 
 (add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
 (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
