@@ -2,18 +2,21 @@
 :ORIGIN := "https://wakatime.com"
 :API_KEY := (base64-encode-string (getenv+ "WAKATIME_API_KEY"))
 :TYPE := "file" ;; app file domain
-:CATEGORY := "learning" ;;
+:CATEGORY := (waka-get-category)
 :TIMESTAMP := (float-time)
+:LANGUAGE := (waka-get-language)
+:ENTITY := (waka-get-entity)
+:PROJECT := (waka-get-project)
 
 POST :ORIGIN/api/v1/users/current/heartbeats
 Authorization: Basic :API_KEY
 Content-Type: application/json
 
 {
-  "entity": "foo",
-  "project": "symdon",
+  "entity": ":ENTITY",
+  "project": ":PROJECT",
   "category": ":CATEGORY",
-  "language": "org-mode",
+  "language": ":LANGUAGE",
   "time": :TIMESTAMP,
   "is_write": true
 }
