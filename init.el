@@ -629,22 +629,6 @@ The buffer contains the raw HTTP response sent by the server."
 (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
 (define-key org-mode-map (kbd "C-c C-x C-w") #'org-waka-set-work-type)
 
-;; -----------------------------
-;; Extend Key binding
-;; -----------------------------
-(bind-key* "C-M-i" #'company-complete)
-(bind-key* "M-i" #'edit-indirect-region)
-(bind-key* "M-x" #'smex)
-(bind-key* "M-X" #'smex-major-mode-commands)
-;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
-(bind-key* "C-x C-v" #'magit-status)
-(bind-key* "C-t C-c" #'vterm-command)
-(bind-key* "C-t C-w" #'editor-create-buffer)
-
-(bind-key* "s-t" #'make-frame)
-(bind-key* "C-t C-t" #'other-frame)
-(bind-key* "C-t C-o" #'macos-app)
-
 ;; -------------------------
 ;; Load README configuration
 ;; -------------------------
