@@ -644,40 +644,6 @@ The buffer contains the raw HTTP response sent by the server."
 (bind-key* "s-t" #'make-frame)
 (bind-key* "C-t C-t" #'other-frame)
 (bind-key* "C-t C-o" #'macos-app)
-
-;; -----------------------------
-;; Debugger aliases
-;; -----------------------------
-(defalias 'debug-on-c 'gdb)
-(defalias 'debug-on-java 'jdb)
-(defalias 'debug-on-perl 'perldb)
-(defalias 'debug-on-python 'pdb)
-;; dbx
-;; sdb
-
-;; -----------------------------
-;; Path
-;; -----------------------------
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "/usr/local/opt/openjdk/bin")
-(add-to-list 'exec-path "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin")
-(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.emacs.d/whalebrew"))
-(add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.goenv/shims"))
-(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v8.15.0/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.poetry/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
-(add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
-(add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
-(add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
-(add-to-list 'exec-path "/opt/ng/symdon/whalebrew")
-(setenv "PATH" (string-join exec-path ":"))
-
-(setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
-
 ;; -----------------------------
 ;; our
 ;; -----------------------------
@@ -691,7 +657,11 @@ The buffer contains the raw HTTP response sent by the server."
           (message (format "Copied: %s" path)))
       (message (format "Cannot copied")))))
 
-;; -----------------------------
-;; CUSTOM
-;; -----------------------------
-(load-file "/opt/ng/symdon/emacs.d/after.el")
+;; -------------------------
+;; Load README configuration
+;; -------------------------
+(require 'org)
+
+(save-window-excursion
+  (org-babel-load-file
+   (expand-file-name "README.org" user-emacs-directory) nil))
