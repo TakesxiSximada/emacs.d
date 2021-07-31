@@ -20,7 +20,11 @@ pip3 install -U --user -r python-mode-requirements.txt
 npm install -g prettier
 #+END_EXAMPLE
 
-* Debugger aliases
+* デバッガーの起動コマンドへのエイリアス
+
+Emacsには標準でいくつかのデバッガーが付属していますが、それぞれのツー
+ルの名前がそのまま付いています。=M-x debug-on-XXXX= で全てのデバッガー
+を起動できるようにエイリアスを設定しています。
 
 #+begin_src emacs-lisp
 (defalias 'debug-on-c 'gdb)
@@ -31,7 +35,7 @@ npm install -g prettier
 ;; sdb
 #+end_src
 
-* Add find path of executable and environment variable.
+* 実行ファイルへのパスやその他環境変数の設定
 
 #+begin_src emacs-lisp
 (add-to-list 'exec-path "/usr/local/bin")
@@ -55,9 +59,9 @@ npm install -g prettier
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
 #+end_src
 
-* Custom files
+* 環境固有の設定
 
-環境固有の設定ファイルを読み込む。
+環境固有の設定ファイルを読み込みます。
 
 #+begin_src emacs-lisp
 (load-file "/opt/ng/symdon/emacs.d/after.el")
