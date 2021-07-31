@@ -35,6 +35,22 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 ;; sdb
 #+end_src
 
+* バッファのファイルパスをクリップボードにコピーする
+
+カレントバッファのファイルパスをクリップボードのコピーするコマンドを追加しています。
+
+#+begin_src emacs-lisp
+(defun our-buffer-copy-current-file-path ()
+  "バッファのファイルパスをクリップボードにコピーする"
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (if path
+  	(progn
+          (kill-new path)
+          (message (format "Copied: %s" path)))
+      (message (format "Cannot copied")))))
+#+end_src
+
 * 実行ファイルへのパスやその他環境変数の設定
 
 #+begin_src emacs-lisp

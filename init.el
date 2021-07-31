@@ -644,18 +644,6 @@ The buffer contains the raw HTTP response sent by the server."
 (bind-key* "s-t" #'make-frame)
 (bind-key* "C-t C-t" #'other-frame)
 (bind-key* "C-t C-o" #'macos-app)
-;; -----------------------------
-;; our
-;; -----------------------------
-(defun our-buffer-copy-current-file-path ()
-  "バッファのファイルパスをクリップボードにコピーする"
-  (interactive)
-  (let ((path (buffer-file-name)))
-    (if path
-  	(progn
-          (kill-new path)
-          (message (format "Copied: %s" path)))
-      (message (format "Cannot copied")))))
 
 ;; -------------------------
 ;; Load README configuration
