@@ -32,25 +32,24 @@
 
 ;; -----------------------------
 ;; Base Key binding
-;; -----------------------------
-(global-set-key (kbd "<f1>") #'start-kbd-macro)
-(global-set-key (kbd "<f2>") #'end-kbd-macro)
-(global-set-key (kbd "<f3>") #'call-last-kbd-macro)
-(global-set-key (kbd "<f4>") #'insert-kbd-macro)
+;; ----------------------------
+(bind-key* "C-t" nil)
 
-(global-set-key (kbd "C-h") #'backward-delete-char-untabify)
-(global-set-key (kbd "C-t")  nil)
-(global-set-key (kbd "C-t h") 'windmove-left)
-(global-set-key (kbd "C-t C-h") 'windmove-left)
-(global-set-key (kbd "C-t j") 'windmove-down)
-(global-set-key (kbd "C-t C-j") 'windmove-down)
-(global-set-key (kbd "C-t k") 'windmove-up)
-(global-set-key (kbd "C-t C-k") 'windmove-up)
-(global-set-key (kbd "C-t l") 'windmove-right)
-(global-set-key (kbd "C-t C-l") 'windmove-right)
-(global-set-key (kbd "C-c C-w") 'comment-or-uncomment-region)
-(global-set-key (kbd "C-x C-w") 'kill-buffer)
-(global-set-key (kbd "C-x C-w") 'kill-buffer)
+(bind-key* "<f1>" #'start-kbd-macro)
+(bind-key* "<f2>" #'end-kbd-macro)
+(bind-key* "<f3>" #'call-last-kbd-macro)
+(bind-key* "<f4>" #'insert-kbd-macro)
+(bind-key* "C-c C-w" 'comment-or-uncomment-region)
+(bind-key* "C-h" #'backward-delete-char-untabify)
+(bind-key* "C-t C-h" 'windmove-left)
+(bind-key* "C-t C-j" 'windmove-down)
+(bind-key* "C-t C-k" 'windmove-up)
+(bind-key* "C-t C-l" 'windmove-right)
+(bind-key* "C-t h" 'windmove-left)
+(bind-key* "C-t j" 'windmove-down)
+(bind-key* "C-t k" 'windmove-up)
+(bind-key* "C-t l" 'windmove-right)
+(bind-key* "C-x C-w" 'kill-buffer)
 
 ;; -----------------------------
 ;; Emacs UI
@@ -186,10 +185,6 @@
    company-tooltip-idle-delay nil)
   )
 
-(use-package typescript-mode :defer t :ensure t
-  :config
-  (setq typescript-indent-level 2))
-
 ;; -----------------------------
 ;; eglot
 ;; -----------------------------
@@ -236,6 +231,20 @@ Returns symbol of major-mode.
 (defun edit-indirect-custom-apply-major-mode  (_parent-buffer _beg _end)
   "Apply major-mode to parent-buffer major-mode."
   (funcall (edit-indirect-custom-guess-major-mode _parent-buffer _beg _end)))
+
+;; -----------------------------
+;; Javascript and Typescript
+;; -----------------------------
+(use-package typescript-mode :defer t :ensure t
+  :config
+  (setq typescript-indent-level 2))
+
+(use-package js-mode :defer t
+  :config
+  (setq js-indent-level 2))
+(use-package js2-mode :defer t :ensure t
+  :config
+  (setq js-indent-level 2))
 
 ;; -----------------------------
 ;; Vue.js
@@ -557,32 +566,84 @@ The buffer contains the raw HTTP response sent by the server."
 (defun wakatime-update-response-buffer ()
   (setq wakatime-response-buffer (current-buffer)))
 
+(setq waka-work-type-list
+      '("browsing"
+        "building"
+        "code reviewing"
+        "coding"
+        "debugging"
+        "designing"
+        "indexing"
+        "learning"
+        "manual testing"
+        "meeting"
+        "planning"
+        "researching"
+        "running tests"
+        "writing docs"
+        "writing tests"
+        ))
+
+(setq org-waka-work-type-property-name "WAKATIME_WORK_TYPE")
+
+(defun org-waka-set-work-type (work-type)
+  (interactive (list (completing-read "WORK TYPE: "
+				      waka-work-type-list)))
+  (org-set-property org-waka-work-type-property-name work-type))
+
+
+(defun waka-get-category ()
+  (interactive)
+  (if-let ((current-task-buffer (org-clock-is-active)))
+      (with-current-buffer current-task-buffer
+	(save-excursion
+	  (goto-char (marker-position org-clock-marker))
+	  (cdr (assoc org-waka-work-type-property-name (org-entry-properties)))))
+    "planning"))
+
+(defun waka-get-entity ()
+  (interactive)
+  (buffer-name))
+
+(defun waka-get-language ()
+  (interactive)
+  major-mode)
+
+(defun waka-get-project ()
+  (interactive)
+  (if-let ((current-task-buffer (org-clock-is-active)))
+      (with-current-buffer current-task-buffer
+	(org-get-category))
+    "GLOBAL"))
+
 (defun wakatime-send-heatbeat ()
   (interactive)
-  (with-current-buffer (find-file-noselect (expand-file-name "~/.emacs.d/wakatime.http"))
+  (with-current-buffer (find-file-noselect
+			(expand-file-name "~/.emacs.d/wakatime.http"))
     (if (buffer-live-p wakatime-response-buffer)
-      (let ((kill-buffer-query-functions nil))
-	(kill-buffer wakatime-response-buffer)))
-    (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window))))
+	(let ((kill-buffer-query-functions nil))
+	  (kill-buffer wakatime-response-buffer))
+      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window)))))
 
 (add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
 (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
+(define-key org-mode-map (kbd "C-c C-x C-w") #'org-waka-set-work-type)
 
 ;; -----------------------------
 ;; Extend Key binding
 ;; -----------------------------
-(global-set-key (kbd "C-M-i") 'company-complete)
-(global-set-key (kbd "M-i") 'edit-indirect-region)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(global-set-key (kbd "C-x C-v") 'magit-status)
-(global-set-key (kbd "C-t C-c") 'vterm-command)
-(global-set-key (kbd "C-t C-w") 'editor-create-buffer)
+(bind-key* "C-M-i" #'company-complete)
+(bind-key* "M-i" #'edit-indirect-region)
+(bind-key* "M-x" #'smex)
+(bind-key* "M-X" #'smex-major-mode-commands)
+;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
+(bind-key* "C-x C-v" #'magit-status)
+(bind-key* "C-t C-c" #'vterm-command)
+(bind-key* "C-t C-w" #'editor-create-buffer)
 
-(global-set-key (kbd "s-t") 'make-frame)
-(global-set-key (kbd "C-t C-t") 'other-frame)
-(global-set-key (kbd "C-t C-o") 'macos-app)
+(bind-key* "s-t" #'make-frame)
+(bind-key* "C-t C-t" #'other-frame)
+(bind-key* "C-t C-o" #'macos-app)
 
 ;; -----------------------------
 ;; Debugger aliases
@@ -616,6 +677,19 @@ The buffer contains the raw HTTP response sent by the server."
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
+
+;; -----------------------------
+;; our
+;; -----------------------------
+(defun our-buffer-copy-current-file-path ()
+  "バッファのファイルパスをクリップボードにコピーする"
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (if path
+  	(progn
+          (kill-new path)
+          (message (format "Copied: %s" path)))
+      (message (format "Cannot copied")))))
 
 ;; -----------------------------
 ;; CUSTOM
