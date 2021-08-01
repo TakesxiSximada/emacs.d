@@ -3,9 +3,19 @@
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
 * TODO 明日以降の計画を頻繁に見たくない
+:PROPERTIES:
+:Effort:   21
+:END:
 
 気が散る。
 
+=s-1= にbindしているorg-agenda-listで今日の計画だけ表示するようにできれば良さそう。
+
 * TODO タスクに集中できない
+:PROPERTIES:
+:Effort:   21
+:END:
 
 他の情報が目に入って気が散る。
+
+org-clock-inするときにそれ以外の情報をframeに表示させないようにしたい。
