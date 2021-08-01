@@ -2,6 +2,11 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO wakatime-record-language-alistにorg-agenda-modeを追加する
+:PROPERTIES:
+:Effort:   5
+:END:
+
 * TODO 明日以降の計画を頻繁に見たくない
 :PROPERTIES:
 :Effort:   21
