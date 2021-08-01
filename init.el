@@ -541,93 +541,94 @@ Returns symbol of major-mode.
 ;; -----------------------------
 ;; wakatime
 ;; -----------------------------
-(setq wakatime-response-buffer nil)
+;; (setq wakatime-response-buffer nil)
 
-(defun restclient-http-handle-response (status method url bufname raw stay-in-window)
-  "Switch to the buffer returned by `url-retreive'.
-The buffer contains the raw HTTP response sent by the server."
-  (setq restclient-within-call nil)
-  (setq restclient-request-time-end (current-time))
-  (if (= (point-min) (point-max))
-      (signal (car (plist-get status :error)) (cdr (plist-get status :error)))
-    (when (buffer-live-p (current-buffer))
-      (with-current-buffer (restclient-decode-response
-                            (current-buffer)
-                            bufname
-                            restclient-same-buffer-response)
-        (run-hooks 'restclient-response-received-hook)
-        (unless raw
-          (restclient-prettify-response method url))
-        (buffer-enable-undo)
-	(restclient-response-mode)
-        (run-hooks 'restclient-response-loaded-hook))))
-  (current-buffer))
+;; (defun restclient-http-handle-response (status method url bufname raw stay-in-window)
+;;   "Switch to the buffer returned by `url-retreive'.
+;; The buffer contains the raw HTTP response sent by the server."
+;;   (setq restclient-within-call nil)
+;;   (setq restclient-request-time-end (current-time))
+;;   (if (= (point-min) (point-max))
+;;       (signal (car (plist-get status :error)) (cdr (plist-get status :error)))
+;;     (when (buffer-live-p (current-buffer))
+;;       (with-current-buffer (restclient-decode-response
+;;                             (current-buffer)
+;;                             bufname
+;;                             restclient-same-buffer-response)
+;;         (run-hooks 'restclient-response-received-hook)
+;;         (unless raw
+;;           (restclient-prettify-response method url))
+;;         (buffer-enable-undo)
+;; 	(restclient-response-mode)
+;;         (run-hooks 'restclient-response-loaded-hook))))
+;;   (current-buffer))
 
-(defun wakatime-update-response-buffer ()
-  (setq wakatime-response-buffer (current-buffer)))
+;; (defun wakatime-update-response-buffer ()
+;;   (setq wakatime-response-buffer (current-buffer)))
 
-(setq waka-work-type-list
-      '("browsing"
-        "building"
-        "code reviewing"
-        "coding"
-        "debugging"
-        "designing"
-        "indexing"
-        "learning"
-        "manual testing"
-        "meeting"
-        "planning"
-        "researching"
-        "running tests"
-        "writing docs"
-        "writing tests"
-        ))
+;; (setq waka-work-type-list
+;;       '("browsing"
+;;         "building"
+;;         "code reviewing"
+;;         "coding"
+;;         "debugging"
+;;         "designing"
+;;         "indexing"
+;;         "learning"
+;;         "manual testing"
+;;         "meeting"
+;;         "planning"
+;;         "researching"
+;;         "running tests"
+;;         "writing docs"
+;;         "writing tests"
+;;         ))
 
-(setq org-waka-work-type-property-name "WAKATIME_WORK_TYPE")
+;; (setq org-waka-work-type-property-name "WAKATIME_WORK_TYPE")
 
-(defun org-waka-set-work-type (work-type)
-  (interactive (list (completing-read "WORK TYPE: "
-				      waka-work-type-list)))
-  (org-set-property org-waka-work-type-property-name work-type))
+;; (defun org-waka-set-work-type (work-type)
+;;   (interactive (list (completing-read "WORK TYPE: "
+;; 				      waka-work-type-list)))
+;;   (org-set-property org-waka-work-type-property-name work-type))
 
 
-(defun waka-get-category ()
-  (interactive)
-  (if-let ((current-task-buffer (org-clock-is-active)))
-      (with-current-buffer current-task-buffer
-	(save-excursion
-	  (goto-char (marker-position org-clock-marker))
-	  (cdr (assoc org-waka-work-type-property-name (org-entry-properties)))))
-    "planning"))
+;; (defun waka-get-category ()
+;;   (interactive)
+;;   (if-let ((current-task-buffer (org-clock-is-active)))
+;;       (with-current-buffer current-task-buffer
+;; 	(save-excursion
+;; 	  (goto-char (marker-position org-clock-marker))
+;; 	  (cdr (assoc org-waka-work-type-property-name (org-entry-properties)))))
+;;     "planning"))
 
-(defun waka-get-entity ()
-  (interactive)
-  (buffer-name))
+;; (defun waka-get-entity ()
+;;   (interactive)
+;;   (buffer-name))
 
-(defun waka-get-language ()
-  (interactive)
-  major-mode)
+;; (defun waka-get-language ()
+;;   (interactive)
+;;   major-mode)
 
-(defun waka-get-project ()
-  (interactive)
-  (if-let ((current-task-buffer (org-clock-is-active)))
-      (with-current-buffer current-task-buffer
-	(org-get-category))
-    "GLOBAL"))
+;; (defun waka-get-project ()
+;;   (interactive)
+;;   (if-let ((current-task-buffer (org-clock-is-active)))
+;;       (with-current-buffer current-task-buffer
+;; 	(org-get-category))
+;;     "GLOBAL"))
 
-(defun wakatime-send-heatbeat ()
-  (interactive)
-  (with-current-buffer (find-file-noselect
-			(expand-file-name "~/.emacs.d/wakatime.http"))
-    (if (buffer-live-p wakatime-response-buffer)
-	(let ((kill-buffer-query-functions nil))
-	  (kill-buffer wakatime-response-buffer))
-      (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window)))))
+;; (defun wakatime-send-heatbeat ()
+;;   (interactive)
+;;   (with-current-buffer (find-file-noselect
+;; 			(expand-file-name "~/.emacs.d/wakatime.http"))
+;;     (if (buffer-live-p wakatime-response-buffer)
+;; 	(let ((kill-buffer-query-functions nil))
+;; 	  (kill-buffer wakatime-response-buffer))
+;;       (setq wakatime-response-buffer (restclient-http-send-current-stay-in-window)))))
 
-(add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
-(setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
-(define-key org-mode-map (kbd "C-c C-x C-w") #'org-waka-set-work-type)
+;; (add-hook 'restclient-response-loaded-hook 'wakatime-update-response-buffer)
+;; (setq wakatime-timer (run-with-idle-timer 20 t 'wakatime-send-heatbeat))
+;; (define-key org-mode-map (kbd "C-c C-x C-w") #'org-waka-set-work-type)
+
 
 ;; -------------------------
 ;; Load README configuration

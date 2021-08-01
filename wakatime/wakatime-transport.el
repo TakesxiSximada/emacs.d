@@ -60,7 +60,6 @@
   (interactive)
   (wakatime-transport-turn-off)
   (setq wakatime-transport-timer
-	(run-with-idle-timer 20 t #'wakatime-transport-heartbeats)))
-
+	(run-with-idle-timer 60 t #'wakatime-transport-heartbeats)))
 
 (provide 'wakatime-transport)

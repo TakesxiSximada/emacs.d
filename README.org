@@ -92,6 +92,52 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
 #+end_src
 
+* wakatime
+
+作業時間計測のためのサービス[[https://wakatime.com/dashboard][wakatime]]を利用している。wakatimeには公式のEmacs拡張がある。
+
+- [[https://wakatime.com/emacs]]
+- [[https://melpa.org/#/getting-started]]
+- [[https://github.com/wakatime/wakatime-mode]]
+
+公式のEmacs拡張はPython製のwakatimeコマンドを用いてデータを送信する実装となっていた。
+
+プロジェクトやカテゴリーの値はorg-clock-inしているorg-todoの属性から取
+得し設定したかった。Python製のwakatimeコマンドと公式wakatime-modeを使っ
+てコマンドを調整しそれらを実現するよりもEmacsから制御したほうが見通し
+がよくなると考え自前で実装することにした。
+
+パッケージとして独立させるほどでもなかったためこのリポジトリの =wakatime= ディレクトリにファイルを配置している。
+そのためload-pathを追加する必要がある。
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
+#+end_src
+
+** wakatime-record.el
+
+wakatime-record.elは計測した結果をローカルのファイルにキャッシュする。
+wakatimeへのデータの送信は行わない。 =(wakatime-record-tunrn-on)= する
+ことで有効になる。
+
+#+begin_src emacs-lisp
+(require 'wakatime-record)
+
+(wakatime-record-tunrn-on)
+#+end_src
+
+** wakatime-transport.el
+
+wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwakatimeへ送信する。
+=(wakatime-transport-turn-on))= することで有効になる。
+
+#+begin_src emacs-lisp
+(require 'wakatime-transport)
+
+(wakatime-record-tunrn-on)
+#+end_src
+
+
 * 環境固有の設定
 
 環境固有の設定ファイルを読み込みます。

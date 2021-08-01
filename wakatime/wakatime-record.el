@@ -56,7 +56,7 @@
 
 
 (defun make-wakatime-record-current-heartbeat ()
-  (make-wakatime-heartbeat
+  (make-wakatime-record-heartbeat
    :time (float-time)
    :type "file"
    :user_agent "Emacs"
@@ -66,7 +66,6 @@
    :is_write t
    :category "coding"
    ))
-
 
 (defun wakatime-record-serialize (heatbeat)
   (concat
@@ -79,7 +78,7 @@
 
 (defun wakatime-record-save-heatbeat ()
   (let ((serialized-heatbeat (wakatime-record-serialize
-			      (make-wakatime-current-heartbeat))))
+			      (make-wakatime-record-current-heartbeat))))
     (with-current-buffer (get-buffer-create wakatime-record-buffer-name)
       (insert serialized-heatbeat)
       (write-region (point-min) (point-max)
@@ -91,7 +90,7 @@
   (interactive)
   (when (timerp wakatime-record-timer)
     (cancel-timer wakatime-record-timer)))
-    
+
 
 (defun wakatime-record-tunrn-on ()
   (interactive)
