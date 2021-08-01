@@ -1,0 +1,11 @@
+#+TITLE: Emacs
+#+CATEGORY: Emacs
+#+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
+
+* TODO 明日以降の計画を頻繁に見たくない
+
+気が散る。
+
+* TODO タスクに集中できない
+
+他の情報が目に入って気が散る。

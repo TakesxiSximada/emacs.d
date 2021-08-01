@@ -139,6 +139,14 @@ wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwa
 (wakatime-transport-tunrn-on)
 #+end_src
 
+* org-agenda
+
+タスクの管理に =org-agenda= を使用しています。agendaファイルを追加します。
+
+#+begin_src emacs-lisp
+(add-to-list 'org-agenda-files (expand-file-name "~/.emacs.d/PROJECT.org"))
+#+end_src
+
 * 環境固有の設定
 
 環境固有の設定ファイルを読み込みます。
