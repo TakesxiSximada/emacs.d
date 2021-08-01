@@ -5,7 +5,7 @@
 (require 'restclient)
 
 (defvar wakatime-transport-buffer-name "*WAKATIME TRANSPORT*")
-(defvar wakatime-transport-file-path "/Users/sximada/.wakatime.heartbeat.json")
+(defvar wakatime-transport-file-path (expand-file-name "~/.wakatime.heartbeat.json"))
 (defvar wakatime-transport-response-buffer nil)
 (defvar wakatime-transport-restclient-file (expand-file-name
 					    "~/.emacs.d/wakatime.heartbeat.bulk.http"))
