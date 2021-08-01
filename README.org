@@ -134,7 +134,7 @@ wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwa
 #+begin_src emacs-lisp
 (require 'wakatime-transport)
 
-(wakatime-record-tunrn-on)
+(wakatime-transport-tunrn-on)
 #+end_src
 
 
