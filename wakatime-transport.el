@@ -1,3 +1,8 @@
+(require 'json)
+(require 'seq)
+(require 'timer)
+
+(require 'restclient)
 
 (defvar wakatime-transport-buffer-name "*WAKATIME TRANSPORT*")
 (defvar wakatime-transport-file-path "/Users/sximada/.wakatime.heartbeat.json")
