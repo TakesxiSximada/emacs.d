@@ -94,21 +94,21 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 
 * wakatime
 
-作業時間計測のためのサービス[[https://wakatime.com/dashboard][wakatime]]を利用している。wakatimeには公式のEmacs拡張がある。
+作業時間計測のためのサービス[[https://wakatime.com/dashboard][wakatime]]を利用しています。wakatimeには公式のEmacs拡張があります。
 
 - [[https://wakatime.com/emacs]]
 - [[https://melpa.org/#/getting-started]]
 - [[https://github.com/wakatime/wakatime-mode]]
 
-公式のEmacs拡張はPython製のwakatimeコマンドを用いてデータを送信する実装となっていた。
+公式のEmacs拡張はPython製のwakatimeコマンドを用いてデータを送信する実装となっていました。
 
 プロジェクトやカテゴリーの値はorg-clock-inしているorg-todoの属性から取
-得し設定したかった。Python製のwakatimeコマンドと公式wakatime-modeを使っ
+得し設定したかったため、Python製のwakatimeコマンドと公式wakatime-modeを使っ
 てコマンドを調整しそれらを実現するよりもEmacsから制御したほうが見通し
-がよくなると考え自前で実装することにした。
+がよくなると考え自前で実装することにしました。
 
-パッケージとして独立させるほどでもなかったためこのリポジトリの =wakatime= ディレクトリにファイルを配置している。
-そのためload-pathを追加する必要がある。
+パッケージとして独立させるほどでもなかったため、このリポジトリの =wakatime= ディレクトリにファイルを配置しました。
+そのためload-pathを追加する必要があります。
 
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
@@ -116,9 +116,9 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 
 ** wakatime-record.el
 
-wakatime-record.elは計測した結果をローカルのファイルにキャッシュする。
+wakatime-record.elは計測した結果をローカルのファイルにキャッシュします。
 wakatimeへのデータの送信は行わない。 =(wakatime-record-tunrn-on)= する
-ことで有効になる。
+ことで有効になります。
 
 #+begin_src emacs-lisp
 (require 'wakatime-record)
@@ -128,8 +128,8 @@ wakatimeへのデータの送信は行わない。 =(wakatime-record-tunrn-on)= 
 
 ** wakatime-transport.el
 
-wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwakatimeへ送信する。
-=(wakatime-transport-turn-on))= することで有効になる。
+wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwakatimeへ送信します。
+=(wakatime-transport-turn-on))= することで有効になります。
 
 #+begin_src emacs-lisp
 (require 'wakatime-transport)
