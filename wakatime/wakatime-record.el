@@ -31,12 +31,39 @@
 
 ;; Code:
 
-(require 'json)
 (require 'cl-lib)
+(require 'json)
+(require 'org-clock)
 
 (defvar wakatime-record-buffer-name "*WAKATIME RECORD*")
 (defvar wakatime-record-file-path (expand-file-name "~/.wakatime.heartbeat.json"))
 (defvar wakatime-record-timer nil)
+
+(setq wakatime-record-language-alist
+      '(
+	(css-mode . "CSS")
+	(dired-mode . "Dired")
+	(emacs-lisp-mode . "Lisp")
+	(fundamental-mode . "Lisp")
+	(go-mode . "Go")
+	(html-mode . "HTML")
+	(js-mode . "JavaScript")
+	(js2-mode . "JavaScript")
+	(json-mode . "JSON")
+	(lisp-interaction-mode . "Lisp")
+	(magit-status-mode . "Git")
+	(messages-buffer-mode . "Emacs")
+	(mhtml-mode . "HTML")
+	(org-mode . "Org")
+	(python-mode . "Python")
+	(restclient-mode . "HTTP")
+	(rustic-mode . "Rust")
+	(scss-mode . "CSS")
+	(shell-script-mode . "Sehll")
+	(typescript-mode . "TypeScript")
+	(vterm-mode . "Shell")
+	(vue-mode . "Vue")
+	(yaml-mode . "YAML")))
 
 (cl-defstruct wakatime-record-heartbeat
   time
@@ -61,8 +88,11 @@
    :type "file"
    :user_agent "Emacs"
    :entity (buffer-name)
-   :language major-mode
-   :project "GLOBAL"
+   :language (or (cdr (assoc major-mode wakatime-record-language-alist)) major-mode)
+   :project (if-let ((current-task-buffer (org-clock-is-active)))
+		(with-current-buffer current-task-buffer
+		  (org-get-category))
+	      "GLOBAL")
    :is_write t
    :category "coding"
    ))

@@ -609,12 +609,6 @@ Returns symbol of major-mode.
 ;;   (interactive)
 ;;   major-mode)
 
-;; (defun waka-get-project ()
-;;   (interactive)
-;;   (if-let ((current-task-buffer (org-clock-is-active)))
-;;       (with-current-buffer current-task-buffer
-;; 	(org-get-category))
-;;     "GLOBAL"))
 
 ;; (defun wakatime-send-heatbeat ()
 ;;   (interactive)
