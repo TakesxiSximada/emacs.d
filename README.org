@@ -114,7 +114,7 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
 #+end_src
 
-** wakatime-record.el
+** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/wakatime-record.el][wakatime-record.el]]
 
 wakatime-record.elは計測した結果をローカルのファイルにキャッシュします。
 wakatimeへのデータの送信は行わない。 =(wakatime-record-tunrn-on)= する
@@ -126,7 +126,7 @@ wakatimeへのデータの送信は行わない。 =(wakatime-record-tunrn-on)= 
 (wakatime-record-tunrn-on)
 #+end_src
 
-** wakatime-transport.el
+** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/wakatime-transport.el][wakatime-transport.el]]
 
 wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwakatimeへ送信します。
 =(wakatime-transport-turn-on))= することで有効になります。
@@ -136,7 +136,6 @@ wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwa
 
 (wakatime-transport-tunrn-on)
 #+end_src
-
 
 * 環境固有の設定
 
