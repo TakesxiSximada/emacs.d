@@ -2,6 +2,11 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO whalebrewでdotenvファイルを指定できると良いのではないか
+:PROPERTIES:
+:Effort:   55
+:END:
+
 * TODO wakatime-record-language-alistにorg-agenda-modeを追加する
 :PROPERTIES:
 :Effort:   5
