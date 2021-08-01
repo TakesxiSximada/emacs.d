@@ -23,18 +23,20 @@ npm install -g prettier
 * 追加のキーバインドの設定
 
 #+begin_src emacs-lisp
+(require 'org-agenda)
+
 (bind-key* "C-M-i" #'company-complete)
+;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
+(bind-key* "C-t C-c" #'vterm-command)
+(bind-key* "C-t C-o" #'macos-app)
+(bind-key* "C-t C-t" #'other-frame)
+(bind-key* "C-t C-w" #'editor-create-buffer)
+(bind-key* "C-x C-v" #'magit-status)
+(bind-key* "M-X" #'smex-major-mode-commands)
 (bind-key* "M-i" #'edit-indirect-region)
 (bind-key* "M-x" #'smex)
-(bind-key* "M-X" #'smex-major-mode-commands)
-;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
-(bind-key* "C-x C-v" #'magit-status)
-(bind-key* "C-t C-c" #'vterm-command)
-(bind-key* "C-t C-w" #'editor-create-buffer)
-
+(bind-key* "s-1" #'org-agenda-list)
 (bind-key* "s-t" #'make-frame)
-(bind-key* "C-t C-t" #'other-frame)
-(bind-key* "C-t C-o" #'macos-app)
 #+end_src
 
 * デバッガーの起動コマンドへのエイリアス
