@@ -1,0 +1,10 @@
+# -*- restclient -*-
+:ORIGIN := "https://wakatime.com"
+:API_KEY := (base64-encode-string (getenv+ "WAKATIME_API_KEY"))
+:HEATBEAT_LIST := (wakatime-transport-get-heartbeeats-cache)
+
+POST :ORIGIN/api/v1/users/current/heartbeats.bulk
+Authorization: Basic :API_KEY
+Conytent-Type: application/json
+
+:HEATBEAT_LIST
