@@ -41,6 +41,7 @@
 
 (setq wakatime-record-language-alist
       '(
+	(Info-mode . "Emacs")
 	(compilation-mode . "Completion")
 	(completion-list-mode . "Completion")
 	(css-mode . "CSS")
@@ -67,12 +68,14 @@
 	(sql-interactive-mode . "SQL")
 	(typescript-mode . "TypeScript")
 	(vterm-mode . "Shell")
+	(vue-html-mode . "Vue")
 	(vue-mode . "Vue")
 	(yaml-mode . "YAML")
 	))
 
 (setq wakatime-record-category-alist
       '(
+	(Info-mode . "coding")
 	(compilation-mode . "Completion")
 	(compilation-mode . "building")
 	(completion-list-mode . "Completion")
@@ -99,6 +102,7 @@
 	(sql-interactive-mode . "coding")
 	(typescript-mode . "coding")
 	(vterm-mode . "coding")
+	(vue-html-mode . "coding")
 	(vue-mode . "coding")
 	(yaml-mode . "coding")
 	(nil . "browsing")
