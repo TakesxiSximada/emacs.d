@@ -42,6 +42,7 @@
 (setq wakatime-record-language-alist
       '(
 	(Info-mode . "Emacs")
+	(c-mode . "C")
 	(compilation-mode . "Completion")
 	(completion-list-mode . "Completion")
 	(css-mode . "CSS")
@@ -76,8 +77,9 @@
 (setq wakatime-record-category-alist
       '(
 	(Info-mode . "coding")
-	(compilation-mode . "coding")
+	(c-mode . "coding")
 	(compilation-mode . "building")
+	(compilation-mode . "coding")
 	(completion-list-mode . "coding")
 	(css-mode . "coding")
 	(dired-mode . "planning")
