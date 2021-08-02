@@ -2,6 +2,16 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO wakatime-recordにwork typeの実装を移植する
+SCHEDULED: <2021-08-02 Mon>
+:PROPERTIES:
+:Effort:   5
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-02 Mon 06:00]--[2021-08-02 Mon 06:01] =>  0:01
+CLOCK: [2021-08-02 Mon 04:01]--[2021-08-02 Mon 06:00] =>  1:59
+:END:
+
 * TODO whalebrewでdotenvファイルを指定できると良いのではないか
 :PROPERTIES:
 :Effort:   55
