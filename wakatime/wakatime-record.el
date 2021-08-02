@@ -76,9 +76,9 @@
 (setq wakatime-record-category-alist
       '(
 	(Info-mode . "coding")
-	(compilation-mode . "Completion")
+	(compilation-mode . "coding")
 	(compilation-mode . "building")
-	(completion-list-mode . "Completion")
+	(completion-list-mode . "coding")
 	(css-mode . "coding")
 	(dired-mode . "planning")
 	(emacs-lisp-mode . "coding")

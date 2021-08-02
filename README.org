@@ -139,6 +139,21 @@ wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwa
 (wakatime-transport-turn-on)
 #+end_src
 
+** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/org-wakatime.el][org-wakatime.el]]
+
+org-modeのプロパティにwakatimeのカテゴリーを登録するための関数を提供しています。
+=wakatime-record-get-category= 関数を上書きすることでorg-modeのプロパティからカテゴリーの取得を試みます。
+設定されていなければ、メジャーモードからカテゴリーを推測します。
+
+#+begin_src emacs-lisp
+(require 'org-wakatime)
+
+(defun wakatime-record-get-category ()
+  (interactive)
+  (or (org-wakatime-get-category)
+      (wakatime-record-get-category-by-major-mode)))
+#+end_src
+
 * org-agenda
 
 タスクの管理に =org-agenda= を使用しています。agendaファイルを追加します。
