@@ -147,7 +147,7 @@
   (make-wakatime-record-heartbeat
    :time (float-time)
    :type "file"
-   :user_agent "Emacs"
+   :user_agent "emacs"
    :entity (buffer-name)
    :language (or (cdr (assoc major-mode wakatime-record-language-alist)) major-mode)
    :project (if-let ((current-task-buffer (org-clock-is-active)))

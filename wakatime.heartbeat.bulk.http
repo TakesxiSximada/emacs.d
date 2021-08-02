@@ -4,6 +4,7 @@
 :HEATBEAT_LIST := (wakatime-transport-get-heartbeeats-cache)
 
 POST :ORIGIN/api/v1/users/current/heartbeats.bulk
+UserAgent: wakatime/13.1.0 macOS-10.16-x86_64-i386-64bit Emacs28.0.50 emacs-wakatime
 Authorization: Basic :API_KEY
 Conytent-Type: application/json
 
