@@ -17,9 +17,10 @@ CLOCK: [2021-08-02 Mon 04:01]--[2021-08-02 Mon 06:00] =>  1:59
 * TODO whalebrewでdotenvファイルを指定できると良いのではないか
 :PROPERTIES:
 :Effort:   55
+:WAKATIME_CATEGORY: designing
 :END:
 
-* TODO wakatime-record-language-alistにorg-agenda-modeを追加する
+* DONE wakatime-record-language-alistにorg-agenda-modeを追加する
 :PROPERTIES:
 :Effort:   5
 :END:
@@ -27,6 +28,7 @@ CLOCK: [2021-08-02 Mon 04:01]--[2021-08-02 Mon 06:00] =>  1:59
 * TODO 明日以降の計画を頻繁に見たくない
 :PROPERTIES:
 :Effort:   21
+:WAKATIME_CATEGORY: designing
 :END:
 
 気が散る。
@@ -36,6 +38,7 @@ CLOCK: [2021-08-02 Mon 04:01]--[2021-08-02 Mon 06:00] =>  1:59
 * TODO タスクに集中できない
 :PROPERTIES:
 :Effort:   21
+:WAKATIME_CATEGORY: designing
 :END:
 
 他の情報が目に入って気が散る。
