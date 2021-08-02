@@ -41,9 +41,12 @@
 
 (setq wakatime-record-language-alist
       '(
+	(compilation-mode . "Completion")
+	(completion-list-mode . "Completion")
 	(css-mode . "CSS")
 	(dired-mode . "Dired")
 	(emacs-lisp-mode . "Lisp")
+	(foreman-mode . "Foreman")
 	(fundamental-mode . "Lisp")
 	(go-mode . "Go")
 	(html-mode . "HTML")
@@ -54,16 +57,62 @@
 	(magit-status-mode . "Git")
 	(messages-buffer-mode . "Emacs")
 	(mhtml-mode . "HTML")
+	(org-agenda-mode . "Org")
 	(org-mode . "Org")
 	(python-mode . "Python")
 	(restclient-mode . "HTTP")
 	(rustic-mode . "Rust")
 	(scss-mode . "CSS")
 	(shell-script-mode . "Sehll")
+	(sql-interactive-mode . "SQL")
 	(typescript-mode . "TypeScript")
 	(vterm-mode . "Shell")
 	(vue-mode . "Vue")
-	(yaml-mode . "YAML")))
+	(yaml-mode . "YAML")
+	))
+
+(setq wakatime-record-category-alist
+      '(
+	(compilation-mode . "Completion")
+	(compilation-mode . "building")
+	(completion-list-mode . "Completion")
+	(css-mode . "coding")
+	(dired-mode . "planning")
+	(emacs-lisp-mode . "coding")
+	(fundamental-mode . "coding")
+	(go-mode . "coding")
+	(html-mode . "coding")
+	(js-mode . "coding")
+	(js2-mode . "coding")
+	(json-mode . "coding")
+	(lisp-interaction-mode . "coding")
+	(magit-status-mode . "coding")
+	(messages-buffer-mode . "planning")
+	(mhtml-mode . "coding")
+	(org-agenda-mode . "planning")
+	(org-mode . "writing docs")
+	(python-mode . "coding")
+	(restclient-mode . "coding")
+	(rustic-mode . "coding")
+	(scss-mode . "coding")
+	(shell-script-mode . "coding")
+	(sql-interactive-mode . "coding")
+	(typescript-mode . "coding")
+	(vterm-mode . "coding")
+	(vue-mode . "coding")
+	(yaml-mode . "coding")
+	(nil . "browsing")
+	(nil . "code reviewing")
+	(nil . "debugging")
+	(nil . "designing")
+	(nil . "indexing")
+	(nil . "learning")
+	(nil . "manual testing")
+	(nil . "meeting")
+	(nil . "researching")
+	(nil . "running tests")
+	(nil . "writing tests")))
+
 
 (cl-defstruct wakatime-record-heartbeat
   time
@@ -81,6 +130,12 @@
   ;; cursorpos
   )
 
+(defun wakatime-record-get-category-by-major-mode ()
+  (or
+   (cdr (assoc major-mode wakatime-record-category-alist))
+   "planning"))
+
+(defalias 'wakatime-record-get-category 'wakatime-record-get-category-by-major-mode)
 
 (defun make-wakatime-record-current-heartbeat ()
   (make-wakatime-record-heartbeat
@@ -94,7 +149,7 @@
 		  (org-get-category))
 	      "GLOBAL")
    :is_write t
-   :category "coding"
+   :category (wakatime-record-get-category)
    ))
 
 (defun wakatime-record-serialize (heatbeat)
@@ -107,6 +162,7 @@
 
 
 (defun wakatime-record-save-heatbeat ()
+  (interactive)
   (let ((serialized-heatbeat (wakatime-record-serialize
 			      (make-wakatime-record-current-heartbeat))))
     (with-current-buffer (get-buffer-create wakatime-record-buffer-name)
