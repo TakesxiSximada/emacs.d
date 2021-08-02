@@ -2,6 +2,12 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO org-agendaの表示を親も含めて表示する
+:PROPERTIES:
+:Effort:   21
+:WAKATIME_CATEGORY: coding
+:END:
+
 * DONE wakatime-transportのuser agentを設定する
 SCHEDULED: <2021-08-02 Mon>
 :PROPERTIES:
