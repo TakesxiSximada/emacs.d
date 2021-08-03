@@ -65,8 +65,8 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
   (let ((path (buffer-file-name)))
     (if path
   	(progn
-          (kill-new path)
-          (message (format "Copied: %s" path)))
+         (kill-new path)
+         (message (format "Copied: %s" path)))
       (message (format "Cannot copied")))))
 #+end_src
 
@@ -152,6 +152,18 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
   (interactive)
   (or (org-wakatime-get-category)
       (wakatime-record-get-category-by-major-mode)))
+#+end_src
+
+* org-src
+
+コードブロックのインデントや見栄えをカスタマイズします。
+
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t
+    org-src-window-setup 'current-window
+    org-src-strip-leading-and-trailing-blank-lines t
+    org-src-preserve-indentation t
+    org-src-tab-acts-natively nil)
 #+end_src
 
 * org-agenda
