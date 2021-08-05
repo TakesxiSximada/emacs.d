@@ -174,6 +174,56 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 (add-to-list 'org-agenda-files (expand-file-name "~/.emacs.d/PROJECT.org"))
 #+end_src
 
+今すべきタスクに集中するため概要では今日のタスクのみを表示します。
+
+#+begin_src emacs-lisp
+(setq org-agenda-span 'day)
+#+end_src
+
+デフォルトのアジェンダビューはタスクの見積もり時間と所要時間が表示され
+ていないためタスクのボリュームを判断できません。そこで見積もり時間と所
+要時間を集計する関数を追加しそれを用いてアジェンダビューに表示するよう
+に変更します。
+
+#+begin_src emacs-lisp
+(require 'org)
+(require 'org-clock)
+
+(defun org-clock-get-item-content ()
+  (save-excursion
+    (let ((start-point (progn (org-back-to-heading t)
+			      (point)))
+	  (end-point (progn (org-end-of-subtree t t)
+			    (point))))
+      (buffer-substring-no-properties start-point end-point))))
+
+
+(defun org-clock-sum-current-item-custom ()
+  (interactive)
+  (condition-case err-var
+      (let* ((content (org-clock-get-item-content))
+	     (minute (with-temp-buffer (insert content)
+				       (org-clock-sum-current-item))))
+	(if (> minute 0)
+	    minute
+	  ""))
+    (error "-")))
+#+end_src
+
+アジェンダビューでタスクのタイトルだけではタスクの内容を推測しにくいた
+め親のタスクのタイトルも表示します。 =%-10.20b= などの表示を入れること
+で親タスクも表示できます。
+
+ここまで用事した機能を用いてアジェンダビューの表示を変更します。
+
+#+begin_src emacs-lisp
+(setq org-agenda-prefix-format
+      '((agenda . " %4(org-clock-sum-current-item-custom) %4e %.8s %-4.4c %-25.50b ")
+        (todo . " %i %-12:c %-6e")
+        (tags . " %i %-12:c")
+        (search . " %i %-12:c")))
+#+end_src
+
 * 環境固有の設定
 
 環境固有の設定ファイルを読み込みます。
