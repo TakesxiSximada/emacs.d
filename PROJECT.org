@@ -2,10 +2,49 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
-* TODO org-agendaの表示を親も含めて表示する
+* TODO whalebrewでdotenvファイルを指定できると良いのではないか
+:PROPERTIES:
+:Effort:   55
+:WAKATIME_CATEGORY: researching
+:END:
+
+
+
+* TODO 明日以降の計画を頻繁に見たくない
+SCHEDULED: <2021-08-06 Fri>
+:PROPERTIES:
+:Effort:   21
+:WAKATIME_CATEGORY: designing
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-06 Fri 04:29]--[2021-08-06 Fri 05:14] =>  0:45
+:END:
+
+気が散る。
+
+=s-1= にbindしているorg-agenda-listで今日の計画だけ表示するようにできれば良さそう。
+
+* TODO タスクに集中できない
+SCHEDULED: <2021-08-06 Fri>
+:PROPERTIES:
+:Effort:   21
+:WAKATIME_CATEGORY: designing
+:END:
+
+他の情報が目に入って気が散る。
+
+org-clock-inするときにそれ以外の情報をframeに表示させないようにしたい。
+
+
+* DONE org-agendaの表示を親も含めて表示する
+SCHEDULED: <2021-08-06 Fri>
 :PROPERTIES:
 :Effort:   21
 :WAKATIME_CATEGORY: coding
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-06 Fri 05:14]--[2021-08-06 Fri 05:14] =>  0:00
+CLOCK: [2021-08-06 Fri 04:31]--[2021-08-06 Fri 04:47] =>  0:16
 :END:
 
 * DONE wakatime-transportのuser agentを設定する
@@ -29,33 +68,8 @@ CLOCK: [2021-08-02 Mon 06:00]--[2021-08-02 Mon 06:01] =>  0:01
 CLOCK: [2021-08-02 Mon 04:01]--[2021-08-02 Mon 06:00] =>  1:59
 :END:
 
-* TODO whalebrewでdotenvファイルを指定できると良いのではないか
-:PROPERTIES:
-:Effort:   55
-:WAKATIME_CATEGORY: designing
-:END:
-
 * DONE wakatime-record-language-alistにorg-agenda-modeを追加する
 :PROPERTIES:
 :Effort:   5
 :END:
 
-* TODO 明日以降の計画を頻繁に見たくない
-:PROPERTIES:
-:Effort:   21
-:WAKATIME_CATEGORY: designing
-:END:
-
-気が散る。
-
-=s-1= にbindしているorg-agenda-listで今日の計画だけ表示するようにできれば良さそう。
-
-* TODO タスクに集中できない
-:PROPERTIES:
-:Effort:   21
-:WAKATIME_CATEGORY: designing
-:END:
-
-他の情報が目に入って気が散る。
-
-org-clock-inするときにそれ以外の情報をframeに表示させないようにしたい。
