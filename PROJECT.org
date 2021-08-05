@@ -14,6 +14,9 @@ SCHEDULED: <2021-08-06 Fri>
 :Effort:   21
 :WAKATIME_CATEGORY: designing
 :END:
+:LOGBOOK:
+CLOCK: [2021-08-06 Fri 05:35]--[2021-08-06 Fri 05:45] =>  0:10
+:END:
 
 他の情報が目に入って気が散る。
 
