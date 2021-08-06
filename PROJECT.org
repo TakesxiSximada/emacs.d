@@ -7,21 +7,61 @@
 :Effort:   55
 :WAKATIME_CATEGORY: researching
 :END:
+:LOGBOOK:
+CLOCK: [2021-08-06 Fri 08:41]--[2021-08-06 Fri 08:41] =>  0:00
+:END:
 
-* TODO タスクに集中できない
+* DONE mode-lineを表示しないように設定を更新する
+SCHEDULED: <2021-08-06 Fri>
+:PROPERTIES:
+:Effort:   5
+:WAKATIME_CATEGORY: coding
+:ORDERED:  t
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-06 Fri 09:04]--[2021-08-06 Fri 09:05] =>  0:01
+CLOCK: [2021-08-06 Fri 08:42]--[2021-08-06 Fri 09:04] =>  0:22
+:END:
+
+* DONE タスクに集中できない
 SCHEDULED: <2021-08-06 Fri>
 :PROPERTIES:
 :Effort:   21
 :WAKATIME_CATEGORY: designing
 :END:
 :LOGBOOK:
+CLOCK: [2021-08-06 Fri 08:41]--[2021-08-06 Fri 08:41] =>  0:00
+CLOCK: [2021-08-06 Fri 08:10]--[2021-08-06 Fri 08:41] =>  0:31
 CLOCK: [2021-08-06 Fri 05:35]--[2021-08-06 Fri 05:45] =>  0:10
 :END:
 
 他の情報が目に入って気が散る。
 
 org-clock-inするときにそれ以外の情報をframeに表示させないようにしたい。
+(org-clock-in)
+(make-frame)
+(edit-indirect-region)
+(org-narrow-to-subtree)
+(set-frame-name "xxxxxxxxx")
 
+;; headlineの取得
+(nth 4 (org-heading-components))
+
+(org-clock-is-active)
+
+org-clock-in-hook
+
+org-clock-out-hook
+
+=C-c C-x <TAB>=
+
+(org-clock-is-active)
+でclock-inしているか確認する。
+
+YES -> org-clock-outする
+NO  -> (get-buffer-create "OOOO")
+
+mode-lineを消す。
 * DONE 明日以降の計画を頻繁に見たくない
 SCHEDULED: <2021-08-06 Fri>
 :PROPERTIES:
