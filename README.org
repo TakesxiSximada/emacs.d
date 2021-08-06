@@ -26,7 +26,7 @@ npm install -g prettier
 
 #+begin_src emacs-lisp
 (global-hl-line-mode 1)
-(set-face-attribute hl-line-face nil :underline t :background "#116")
+(set-face-attribute hl-line-face nil :underline t :background "selectedTextColor")
 #+end_src
 
 * mode-line
