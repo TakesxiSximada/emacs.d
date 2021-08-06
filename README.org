@@ -20,6 +20,17 @@ pip3 install -U --user -r python-mode-requirements.txt
 npm install -g prettier
 #+END_EXAMPLE
 
+* mode-line
+
+モードラインは本当に必要でしょうか？画面上に必要のない情報が表示されて
+いることで着が散ってしまいます。最初は無効にし、それぞれの必要性に応じ
+て成長させていくこで自分のニーズにあったモードラインに成長していきます。
+そのためここでは無効にします。
+
+#+begin_src emacs-lisp
+(setq-default mode-line-format nil)
+#+end_src
+
 * 追加のキーバインドの設定
 
 #+begin_src emacs-lisp
