@@ -630,5 +630,11 @@ Returns symbol of major-mode.
 (require 'org)
 
 (save-window-excursion
-  (org-babel-load-file
-   (expand-file-name "README.org" user-emacs-directory) nil))
+
+  ;; Almost the same as org-babel-load-file, But the tangled filenames
+  ;; are added dot to prefix for make it easier to choose in dird.
+  (let ((tangled-file (org-babel-tangle-file
+		       (expand-file-name "README.org" user-emacs-directory)
+		       ".README.el"
+		       "emacs-lisp\\|elisp")))
+    (load-file tangled-file)))
