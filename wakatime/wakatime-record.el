@@ -1,36 +1,35 @@
-;; wakatime-record.el --- Yet Another Wakatime plugin for Emacs.
+;;; wakatime-record.el --- Yet Another Wakatime plugin for Emacs.
 
-; Copyright (C) 2021 TakesxiSximada <sximada@gmail.com>
+;; Copyright (C) 2021 TakesxiSximada <sximada@gmail.com>
 
-; Author: TakesxiSximada <sximada@gmail.com>
-; Maintainer: TakesxiSximada <sximada@gmail.com>
-; Website: https://github.com/TakesxiSximada/emacs.d/master/wakatime/
-; Keywords: calendar, comm
-; Package-Version: 20210730.240
-; Package-Commit: 5e6deddda7a70f4b79832e9e8b6636418812e162
-; Version: 1.0.0
+;; Author: TakesxiSximada <sximada@gmail.com>
+;; Maintainer: TakesxiSximada <sximada@gmail.com>
+;; Website: https://github.com/TakesxiSximada/emacs.d/master/wakatime/
+;; Keywords: calendar, comm
+;; Package-Version: 20210730.240
+;; Package-Commit: 5e6deddda7a70f4b79832e9e8b6636418812e162
+;; Version: 1.0.0
 
-; This program is free software; you can redistribute it and/or modify
-; it under the terms of the GNU General Public License as published by
-; the Free Software Foundation, either version 3 of the License, or
-; (at your option) any later version.
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
 
-; This program is distributed in the hope that it will be useful,
-; but WITHOUT ANY WARRANTY; without even the implied warranty of
-; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-; GNU General Public License for more details.
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-; You should have received a copy of the GNU General Public License
-; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;; Commentary:
 
-;; Commentary:
+;; wakatime-record.el is an unofficial wakatime plugin for Emacs.
+;; It was implemented based on a different design philosophy.
+;; Heartbeats are recorded as Line-delimited JSON in a temporary journal.
 
-; wakatime-record.el is an unofficial wakatime plugin for Emacs.
-; It was implemented based on a different design philosophy.
-; Heartbeats are recorded as Line-delimited JSON in a temporary journal.
-
-;; Code:
-
+;;; Code:
 (require 'cl-lib)
 (require 'json)
 (require 'org-clock)
