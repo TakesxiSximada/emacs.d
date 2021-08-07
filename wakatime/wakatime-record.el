@@ -4,7 +4,7 @@
 
 ; Author: TakesxiSximada <sximada@gmail.com>
 ; Maintainer: TakesxiSximada <sximada@gmail.com>
-; Website: https://wakatime.com
+; Website: https://github.com/TakesxiSximada/emacs.d/master/wakatime/
 ; Keywords: calendar, comm
 ; Package-Version: 20210730.240
 ; Package-Commit: 5e6deddda7a70f4b79832e9e8b6636418812e162
@@ -25,7 +25,7 @@
 
 ;; Commentary:
 
-; wakatime-record.el is Unofficial wakatime plugin for Emacs.
+; wakatime-record.el is an unofficial wakatime plugin for Emacs.
 ; It was implemented based on a different design philosophy.
 ; Heartbeats are recorded as Line-delimited JSON in a temporary journal.
 
