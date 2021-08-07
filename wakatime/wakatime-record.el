@@ -76,6 +76,7 @@
 	(vterm-mode . "Shell")
 	(vue-html-mode . "Vue")
 	(vue-mode . "Vue")
+	(xwidget-webkit-mode . "HTML")
 	(yaml-mode . "YAML")
 	))
 
@@ -117,6 +118,7 @@
 	(vterm-mode . "coding")
 	(vue-html-mode . "coding")
 	(vue-mode . "coding")
+	(xwidget-webkit-mode . "coding")
 	(yaml-mode . "coding")
 	(nil . "code reviewing")
 	(nil . "debugging")
