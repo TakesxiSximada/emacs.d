@@ -132,6 +132,16 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
 #+end_src
 
+* CSS
+
+CSS編集のためのタブ幅などを設定します。
+
+#+begin_src emacs-lisp
+(require 'css-mode)
+
+(setq css-indent-offset 2)
+#+end_src
+
 * [[https://github.com/TakesxiSximada/emacs.d/blob/main/prettier/prettier-buffer.el][prettier-buffer.el]]
 
 フロントエンドのコードフォーマッターとして[[https://github.com/prettier/prettier][prettier]]を用いています。公式
