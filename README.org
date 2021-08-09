@@ -12,6 +12,14 @@ This repository is settings for my Emacs.
 
 * Setup
 
+#+begin_example
+git clone git@github.com:TakesxiSximada/emacs.d.git ~/.emacs.d
+#+end_example
+
+#+begin_src
+git clone git@github.com:TakesxiSximada/emacs.d.git $HOME/.emacs.d
+#+end_src
+
 #+BEGIN_EXAMPLE
 pip3 install -U --user -r python-mode-requirements.txt
 #+END_EXAMPLE
