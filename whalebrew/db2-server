@@ -3,6 +3,8 @@ set -e -x
 
 DOCKER_IMAGE=ibmcom/db2:11.5.5.0
 docker run -it -v "$(pwd)":/workdir -w /workdir \
+       --name='db2-server' \
+       --rm \
        --privileged=true \
        --publish="50000:50000" \
        --env="LICENSE=accept" \

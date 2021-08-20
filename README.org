@@ -16,10 +16,6 @@ This repository is settings for my Emacs.
 git clone git@github.com:TakesxiSximada/emacs.d.git ~/.emacs.d
 #+end_example
 
-#+begin_src
-git clone git@github.com:TakesxiSximada/emacs.d.git $HOME/.emacs.d
-#+end_src
-
 #+BEGIN_EXAMPLE
 pip3 install -U --user -r python-mode-requirements.txt
 #+END_EXAMPLE
@@ -296,6 +292,28 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
         (tags . " %i %-12:c")
         (search . " %i %-12:c")))
 #+end_src
+
+
+* Databases
+
+各種データベースへの接続設定をします。
+
+** IBM DB2
+
+私はlocalで使うDB2の環境をDockerを用いて構築しています。
+そのためDB2サーバへの接続はコンテナに直接入る方法を採用しました。
+
+sql-db2-programとsql-db2-optionsを設定します。
+
+#+begin_src emacs-lisp
+(setq sql-db2-program "docker")
+(setq sql-db2-options '("exec" "-ti" "db2-server" "bash" "-c" "su - db2inst1 -c db2"))
+#+end_src
+
+接続する前には必ずDB2サーバコンテナを起動しておく必要があります。
+起動するためのスクリプトはwhalebrewディレクトリにあります。
+[[https://github.com/TakesxiSximada/emacs.d/blob/main/whalebrew/db2-server]]
+
 
 * 環境固有の設定
 
