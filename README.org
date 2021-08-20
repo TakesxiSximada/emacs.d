@@ -307,8 +307,11 @@ sql-db2-programとsql-db2-optionsを設定します。
 
 #+begin_src emacs-lisp
 (setq sql-db2-program "docker")
-(setq sql-db2-options '("exec" "-ti" "db2-server" "bash" "-c" "su - db2inst1 -c db2"))
+(setq sql-db2-options '("exec" "-ti" "db2-server" "bash" "-c" "su - db2inst1 -c 'db2 -t'"))
 #+end_src
+
+DB2は改行でSQLを実行します。その場合複数行にまたがるSQLは改行を削除して実行する必要があります。
+=-t= を指定すると改行ではなくセミコロン(;)でSQLを実行するようになります。
 
 接続する前には必ずDB2サーバコンテナを起動しておく必要があります。
 起動するためのスクリプトはwhalebrewディレクトリにあります。
