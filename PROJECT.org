@@ -2,7 +2,31 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO [#C] postgresに接続するときに接続情報の指定を毎回行わないといけない
+SCHEDULED: <2021-08-22 Sun>
+
+* TODO [#C] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
+SCHEDULED: <2021-08-22 Sun>
+
+* TODO [#C] ウィンドウサイズの変更がキーボード上からできない
+SCHEDULED: <2021-08-22 Sun>
+
+リサイズがとても面倒。
+
+* TODO adoc-modeのコメントが小さすぎて見えない
+SCHEDULED: <2021-08-22 Sun>
+:PROPERTIES:
+:Effort:   34
+:ORDERED:  t
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-22 Sun 19:26]--[2021-08-22 Sun 19:26] =>  0:00
+CLOCK: [2021-08-22 Sun 18:24]--[2021-08-22 Sun 18:25] =>  0:01
+:END:
+
+
 * TODO whalebrewでdotenvファイルを指定できると良いのではないか
+SCHEDULED: <2021-08-22 Sun>
 :PROPERTIES:
 :Effort:   55
 :WAKATIME_CATEGORY: researching
