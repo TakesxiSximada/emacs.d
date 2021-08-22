@@ -325,3 +325,17 @@ DB2は改行でSQLを実行します。その場合複数行にまたがるSQL�
 #+begin_src emacs-lisp
 (load-file "/opt/ng/symdon/emacs.d/after.el")
 #+end_src
+
+* ユーティリティ
+
+** face
+
+現在のカーソル位置のface名を表示します。
+
+#+begin_src emacs-lisp
+(defun what-face (pos)
+  "Display current position face name."
+  (interactive "d")
+  (if-let ((face-name (get-text-property pos 'face)))
+      (message "Face: %s" face-name)))
+#+end_src
