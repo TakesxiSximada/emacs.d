@@ -30,7 +30,7 @@ npm install -g prettier
 
 #+begin_src emacs-lisp
 (global-hl-line-mode 1)
-(set-face-attribute hl-line-face nil :underline nil :background "#2f2f3f")
+(set-face-attribute hl-line-face nil :underline nil :background "#3f3f4f")
 #+end_src
 
 * ウィンドウの分割表示
