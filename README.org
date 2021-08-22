@@ -339,3 +339,22 @@ DB2は改行でSQLを実行します。その場合複数行にまたがるSQL�
   (if-let ((face-name (get-text-property pos 'face)))
       (message "Face: %s" face-name)))
 #+end_src
+
+* AsciiDoc
+
+AsciiDocはマークアップのため記法(Nortation)の一つです。
+AsciiDocをEmacsで表示したり編集する場合様々な方法があります。
+
+** adoc-mode
+
+adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャーモードです。
+しかしデフォルトの設定ではコメントやメタ情報の表示サイズがとても小さくなっています。
+これでは編集時に読めないので、ちょうどよい値に設定し直します。
+
+#+begin_src emacs-lisp
+(use-package adoc-mode :ensure t :defer t
+  :config
+  (set-face-attribute markup-comment-face nil :width 'normal :height 1)
+  (set-face-attribute markup-meta-face nil :width 'normal :height 1 :foreground "red")
+  )
+#+end_src
