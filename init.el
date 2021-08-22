@@ -636,4 +636,4 @@ Returns symbol of major-mode.
 		       (expand-file-name "README.org" user-emacs-directory)
 		       ".README.el"
 		       "emacs-lisp\\|elisp")))
-    (load-file tangled-file)))
+    (load-file (car tangled-file))))
