@@ -96,22 +96,6 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 ;; sdb
 #+end_src
 
-* バッファのファイルパスをクリップボードにコピーする
-
-カレントバッファのファイルパスをクリップボードのコピーするコマンドを追加しています。
-
-#+begin_src emacs-lisp
-(defun our-buffer-copy-current-file-path ()
-  "バッファのファイルパスをクリップボードにコピーする"
-  (interactive)
-  (let ((path (buffer-file-name)))
-    (if path
-  	(progn
-         (kill-new path)
-         (message (format "Copied: %s" path)))
-      (message (format "Cannot copied")))))
-#+end_src
-
 * 実行ファイルへのパスやその他環境変数の設定
 
 #+begin_src emacs-lisp
@@ -327,6 +311,24 @@ DB2は改行でSQLを実行します。その場合複数行にまたがるSQL�
 #+end_src
 
 * ユーティリティ
+
+ここでは必要に応じて定義した様々な目的の関数を記述します。
+
+** バッファのファイルパスをクリップボードにコピーする
+
+カレントバッファのファイルパスをクリップボードのコピーするコマンドを追加しています。
+
+#+begin_src emacs-lisp
+(defun our-buffer-copy-current-file-path ()
+  "バッファのファイルパスをクリップボードにコピーする"
+  (interactive)
+  (let ((path (buffer-file-name)))
+    (if path
+  	(progn
+         (kill-new path)
+         (message (format "Copied: %s" path)))
+      (message (format "Cannot copied")))))
+#+end_src
 
 ** face
 
