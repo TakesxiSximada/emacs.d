@@ -282,6 +282,14 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 
 各種データベースへの接続設定をします。
 
+** PostgreSQL
+
+#+begin_src emacs-lisp
+(setq sql-postgres-program "docker")
+(setq sql-postgres-options '("exec" "-ti" "compassionate_euclid" "psql" "-U" "postgres"))
+(setq sql-postgres-login-params nil)
+#+end_src
+
 ** IBM DB2
 
 私はlocalで使うDB2の環境をDockerを用いて構築しています。
