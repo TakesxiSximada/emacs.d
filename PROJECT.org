@@ -2,38 +2,79 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
-* TODO [#C] postgresに接続するときに接続情報の指定を毎回行わないといけない
-SCHEDULED: <2021-08-22 Sun>
+* TODO [#C] fontの設定を等幅に変更する
+SCHEDULED: <2021-08-24 Tue>
+:PROPERTIES:
+:Effort:   34
+:END:
+
+* TODO [#C] edit-indirect-bufferでC-c C-cが保存になっているがC-c C-cは他のモードで重要なキーバインドとなっているため別のキーにバインドし直す
+SCHEDULED: <2021-08-24 Tue>
+:PROPERTIES:
+:Effort:   34
+:END:
+
+* TODO [#C] org-todoのプライオリティを三段階ではなく任意の数値を設定できるようにして実施順序を決められるようにできないか？
+SCHEDULED: <2021-08-24 Tue>
+:PROPERTIES:
+:Effort:   21
+:END:
+
+org-agendaを用いてタスクの調整を行っている。
+その中でタスクの優先順位付けを行い実施の順番を組みたい。
+しかしorg-todoのpriorityはA, B Cの3段階でしかプライオリティを設定できない。
+それでは順序を固定することができない。
+
+任意の自然数を設定し、小さい数値ほど実施タイミングを早く行うようにすればこの問題を解決できる。
+
+* DONE postgresに接続するときに接続情報の指定を毎回行わないといけない
+SCHEDULED: <2021-08-24 Tue>
+:LOGBOOK:
+CLOCK: [2021-08-23 Mon 09:03]--[2021-08-23 Mon 09:23] =>  0:20
+:END:
 
 * TODO [#C] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
-SCHEDULED: <2021-08-22 Sun>
+SCHEDULED: <2021-08-24 Tue>
 
 * TODO [#C] ウィンドウサイズの変更がキーボード上からできない
-SCHEDULED: <2021-08-22 Sun>
+SCHEDULED: <2021-08-24 Tue>
 
 リサイズがとても面倒。
 
-* TODO adoc-modeのコメントが小さすぎて見えない
+* DONE adoc-modeのコメントが小さすぎて見えない
 SCHEDULED: <2021-08-22 Sun>
 :PROPERTIES:
 :Effort:   34
 :ORDERED:  t
 :END:
 :LOGBOOK:
-CLOCK: [2021-08-22 Sun 19:26]--[2021-08-22 Sun 19:26] =>  0:00
-CLOCK: [2021-08-22 Sun 18:24]--[2021-08-22 Sun 18:25] =>  0:01
+CLOCK: [2021-08-22 Sun 18:24]--[2021-08-22 Sun 19:26] =>  1:02
 :END:
 
-
-* TODO whalebrewでdotenvファイルを指定できると良いのではないか
-SCHEDULED: <2021-08-22 Sun>
+* TODO [#C] whalebrewでdotenvファイルを指定できると良いのではないか
+SCHEDULED: <2021-08-24 Tue>
 :PROPERTIES:
 :Effort:   55
 :WAKATIME_CATEGORY: researching
 :END:
 :LOGBOOK:
+CLOCK: [2021-08-24 Tue 08:03]--[2021-08-24 Tue 08:09] =>  0:06
 CLOCK: [2021-08-06 Fri 08:41]--[2021-08-06 Fri 08:41] =>  0:00
 :END:
+
+whalebrewは良い実装だが、dockerの全てのオプションを指定できるわけでは
+ない。Goで実装する必要もないし、設計思想がそもそも良くない。
+
+- Goで実装することで柔軟性を失っている。
+- 開発ツールは限りなく柔軟でなければならない。
+
+YAMLからコマンドラインを生成するという方針は良い。その処理をGoのような
+コンパイル言語で行う必要はない。Goもあってよいが、仕様を決めることが重
+要で、その仕様に沿った各種言語での実装が必要。実装言語として適切だと思
+われるものは、Perl、Ruby、PHP、Python、Bash、GNU Guile、Emacs Lisp、
+Common Lispあたりだと考える。Dockerの起動オプションを生成したら、プロ
+セスの起動はOSの機能に任せるのが良い。別途、環境変数の読み込みの設定を
+可能にする必要があると思われる。
 
 * DONE mode-lineを表示しないように設定を更新する
 SCHEDULED: <2021-08-06 Fri>
