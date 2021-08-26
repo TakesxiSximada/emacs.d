@@ -375,10 +375,20 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 
 #+begin_src emacs-lisp
 (set-fontset-font nil 'unicode (font-spec :family "Menlo" :size 14))
-(set-fontset-font nil 'katakana-jisx0201 (font-spec :family "IPA明朝" :size 16))
-(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "IPA明朝" :size 16))
-(set-fontset-font nil '(#x1F004 . #x1FFFD) (font-spec :family "Symbola" :size 14))
+(set-fontset-font nil 'katakana-jisx0201 (font-spec :family "游明朝体+36ポかな" :size 16))
+(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "游明朝体+36ポかな" :size 16))
+(set-fontset-font nil '(#x1F004 . #x1FFFD) (font-spec :family "Symbola" :size 16))
 #+end_src
+
+| 類似文字 |
+|----------|
+| l I 1    |
+| o O 0    |
+| q 9      |
+| s S 5    |
+| x X      |
+| z Z 2    |
+| 一 ―     |
 
 | ずれ確認用 半角40字、全角20字            |                    |
 |------------------------------------------+--------------------|
