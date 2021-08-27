@@ -18,6 +18,9 @@ org-agendaを用いてタスクの調整を行っている。
 SCHEDULED: <2021-08-27 Fri>
 * TODO [#C] ウィンドウサイズの変更がキーボード上からできない
 SCHEDULED: <2021-08-27 Fri>
+:LOGBOOK:
+CLOCK: [2021-08-27 Fri 23:37]--[2021-08-28 Sat 00:06] =>  0:29
+:END:
 
 リサイズがとても面倒。
 * TODO [#C] whalebrewでdotenvファイルを指定できると良いのではないか
