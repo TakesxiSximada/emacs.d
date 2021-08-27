@@ -374,11 +374,15 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 フォントを調節して文字幅が合うようにします。
 
 #+begin_src emacs-lisp
-(set-fontset-font nil 'unicode (font-spec :family "Menlo" :size 12))
-(set-fontset-font nil 'katakana-jisx0201 (font-spec :family "游明朝体+36ポかな" :size 14))
-(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "游明朝体+36ポかな" :size 14))
-(set-fontset-font nil '(#x1F004 . #x1FFFD) (font-spec :family "Symbola" :size 14))
+(set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 15))
+(set-fontset-font nil 'ascii (font-spec :family "FreeMono" :size 16))
+(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "しっぽり明朝" :size 20))
+(set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "しっぽり明朝" :size 20))
+(set-fontset-font nil 'japanese-jisx0212 (font-spec :family "しっぽり明朝" :size 20))
+(set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "しっぽり明朝" :size 20))
+(set-fontset-font nil 'jisx0201 (font-spec :family "IPA明朝" :size 20))
 #+end_src
+
 
 | 類似文字 |
 |----------|
@@ -400,7 +404,8 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 | ＡＢＣＤＥＡＢＣＤＥＡＢＣＤＥＡＢＣＤＥ | 同英字             |
 | 亜唖娃阿哀亜唖娃阿哀亜唖娃阿哀亜唖娃阿哀 | 同漢字             |
 | 𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽 | JIS X 0213漢字     |
-| 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈                 | 絵文字             |
+| 😃😇😍😜😸🙈🐺🐰👽🐉💰🏡🎅🍪🍕🚀🚻💩📷📦 | 絵文字             |
 | ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺                       | 絵文字             |
+| 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈                 | 絵文字             |
 
 (この文字列は https://qiita.com/query1000/items/4b0b8db872adc1a5e2e9V から抜粋)
