@@ -2,23 +2,8 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
-* DONE [#C] fontの設定を等幅に変更する
-SCHEDULED: <2021-08-25 Wed>
-:PROPERTIES:
-:Effort:   34
-:END:
-:LOGBOOK:
-CLOCK: [2021-08-24 Tue 18:41]--[2021-08-24 Tue 19:02] =>  0:21
-:END:
-
-* TODO [#C] edit-indirect-bufferでC-c C-cが保存になっているがC-c C-cは他のモードで重要なキーバインドとなっているため別のキーにバインドし直す
-SCHEDULED: <2021-08-26 Thu>
-:PROPERTIES:
-:Effort:   34
-:END:
-
 * TODO [#C] org-todoのプライオリティを三段階ではなく任意の数値を設定できるようにして実施順序を決められるようにできないか？
-SCHEDULED: <2021-08-26 Thu>
+SCHEDULED: <2021-08-27 Fri>
 :PROPERTIES:
 :Effort:   21
 :END:
@@ -29,33 +14,14 @@ org-agendaを用いてタスクの調整を行っている。
 それでは順序を固定することができない。
 
 任意の自然数を設定し、小さい数値ほど実施タイミングを早く行うようにすればこの問題を解決できる。
-
-* DONE postgresに接続するときに接続情報の指定を毎回行わないといけない
-SCHEDULED: <2021-08-24 Tue>
-:LOGBOOK:
-CLOCK: [2021-08-23 Mon 09:03]--[2021-08-23 Mon 09:23] =>  0:20
-:END:
-
 * TODO [#C] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
-SCHEDULED: <2021-08-26 Thu>
-
+SCHEDULED: <2021-08-27 Fri>
 * TODO [#C] ウィンドウサイズの変更がキーボード上からできない
-SCHEDULED: <2021-08-26 Thu>
+SCHEDULED: <2021-08-27 Fri>
 
 リサイズがとても面倒。
-
-* DONE adoc-modeのコメントが小さすぎて見えない
-SCHEDULED: <2021-08-22 Sun>
-:PROPERTIES:
-:Effort:   34
-:ORDERED:  t
-:END:
-:LOGBOOK:
-CLOCK: [2021-08-22 Sun 18:24]--[2021-08-22 Sun 19:26] =>  1:02
-:END:
-
 * TODO [#C] whalebrewでdotenvファイルを指定できると良いのではないか
-SCHEDULED: <2021-08-26 Thu>
+SCHEDULED: <2021-08-27 Fri>
 :PROPERTIES:
 :Effort:   55
 :WAKATIME_CATEGORY: researching
@@ -78,7 +44,39 @@ YAMLからコマンドラインを生成するという方針は良い。その�
 Common Lispあたりだと考える。Dockerの起動オプションを生成したら、プロ
 セスの起動はOSの機能に任せるのが良い。別途、環境変数の読み込みの設定を
 可能にする必要があると思われる。
+* DONE [#C] fontの設定を等幅に変更する
+SCHEDULED: <2021-08-25 Wed>
+:PROPERTIES:
+:Effort:   34
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-24 Tue 18:41]--[2021-08-24 Tue 19:02] =>  0:21
+:END:
 
+* DONE [#C] edit-indirect-bufferでC-c C-cが保存になっているがC-c C-cは他のモードで重要なキーバインドとなっているため別のキーにバインドし直す
+SCHEDULED: <2021-08-27 Fri>
+:PROPERTIES:
+:Effort:   34
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-27 Fri 19:40]
+:END:
+
+* DONE postgresに接続するときに接続情報の指定を毎回行わないといけない
+SCHEDULED: <2021-08-24 Tue>
+:LOGBOOK:
+CLOCK: [2021-08-23 Mon 09:03]--[2021-08-23 Mon 09:23] =>  0:20
+:END:
+
+* DONE adoc-modeのコメントが小さすぎて見えない
+SCHEDULED: <2021-08-22 Sun>
+:PROPERTIES:
+:Effort:   34
+:ORDERED:  t
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-22 Sun 18:24]--[2021-08-22 Sun 19:26] =>  1:02
+:END:
 * DONE mode-lineを表示しないように設定を更新する
 SCHEDULED: <2021-08-06 Fri>
 :PROPERTIES:
@@ -181,4 +179,3 @@ CLOCK: [2021-08-02 Mon 04:01]--[2021-08-02 Mon 06:00] =>  1:59
 :PROPERTIES:
 :Effort:   5
 :END:
-
