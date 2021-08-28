@@ -428,5 +428,7 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 化します。
 
 #+begin_src emacs-lisp
+(require 'edit-indirect)
+
 (define-key edit-indirect-mode-map (kbd "C-c C-c") nil)
 #+end_src
