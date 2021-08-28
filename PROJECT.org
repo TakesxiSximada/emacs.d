@@ -11,7 +11,7 @@ SCHEDULED: <2021-08-28 Sat>
 CLOCK: [2021-08-28 Sat 09:40]---[2021-08-28 Sat 09:50] =>  0:10
 :END:
 
-* TODO postgresのコンテナ名を固定する
+* TODO [#B] postgresのコンテナ名を固定する
 SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
 :Effort:   21

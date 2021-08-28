@@ -294,7 +294,7 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 
 #+begin_src emacs-lisp
 (setq sql-postgres-program "docker")
-(setq sql-postgres-options '("exec" "-ti" "gifted_wilson" "psql" "-U" "postgres"))
+(setq sql-postgres-options '("exec" "-ti" "postgres" "psql" "-U" "postgres"))
 (setq sql-postgres-login-params nil)
 #+end_src
 
