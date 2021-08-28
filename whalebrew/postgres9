@@ -9,8 +9,8 @@ exec docker run -it --rm \
      --expose="5432" \
      --workdir="/workdir" \
      --volume "$(pwd):/workdir" \
-     --volume "postgres-12-data:/var/lib/postgresql/data" \
+     --volume "postgres-data:/var/lib/postgresql/data" \
      --name="postgres" \
      --env-file="${SCRIPT_DIR}/.env.postgres" \
-     postgres:12-alpine \
+     postgres:9.6-alpine \
      "$@"
