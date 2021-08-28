@@ -2,8 +2,14 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO postgresのコンテナ名を固定する
+SCHEDULED: <2021-08-28 Sat>
+:PROPERTIES:
+:Effort:   21
+:END:
+
 * TODO [#C] org-todoのプライオリティを三段階ではなく任意の数値を設定できるようにして実施順序を決められるようにできないか？
-SCHEDULED: <2021-08-27 Fri>
+SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
 :Effort:   21
 :END:
@@ -15,8 +21,8 @@ org-agendaを用いてタスクの調整を行っている。
 
 任意の自然数を設定し、小さい数値ほど実施タイミングを早く行うようにすればこの問題を解決できる。
 * TODO [#C] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
-SCHEDULED: <2021-08-27 Fri>
-* TODO [#C] ウィンドウサイズの変更がキーボード上からできない
+SCHEDULED: <2021-08-28 Sat>
+* DONE [#C] ウィンドウサイズの変更がキーボード上からできない
 SCHEDULED: <2021-08-27 Fri>
 :LOGBOOK:
 CLOCK: [2021-08-27 Fri 23:37]--[2021-08-28 Sat 00:06] =>  0:29
@@ -24,7 +30,7 @@ CLOCK: [2021-08-27 Fri 23:37]--[2021-08-28 Sat 00:06] =>  0:29
 
 リサイズがとても面倒。
 * TODO [#C] whalebrewでdotenvファイルを指定できると良いのではないか
-SCHEDULED: <2021-08-27 Fri>
+SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
 :Effort:   55
 :WAKATIME_CATEGORY: researching
@@ -62,7 +68,7 @@ SCHEDULED: <2021-08-27 Fri>
 :Effort:   34
 :END:
 :LOGBOOK:
-CLOCK: [2021-08-27 Fri 19:40]
+CLOCK: [2021-08-27 Fri 19:40]--[2021-08-28 Sat 07:44] => 12:04
 :END:
 
 * DONE postgresに接続するときに接続情報の指定を毎回行わないといけない
