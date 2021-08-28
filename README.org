@@ -50,7 +50,6 @@ EmacsにおいてウィンドウはEmacsの画面(フレーム)内に表示さ�
 (window-divider-mode)
 #+end_src
 
-
 * mode-line
 
 モードラインは本当に必要でしょうか？画面上に必要のない情報が表示されて
@@ -295,7 +294,7 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 
 #+begin_src emacs-lisp
 (setq sql-postgres-program "docker")
-(setq sql-postgres-options '("exec" "-ti" "practical_shockley" "psql" "-U" "postgres"))
+(setq sql-postgres-options '("exec" "-ti" "gifted_wilson" "psql" "-U" "postgres"))
 (setq sql-postgres-login-params nil)
 #+end_src
 
@@ -383,13 +382,14 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 フォントを調節して文字幅が合うようにします。
 
 #+begin_src emacs-lisp
-(set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 15))
-(set-fontset-font nil 'ascii (font-spec :family "FreeMono" :size 16))
-(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "しっぽり明朝" :size 20))
-(set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "しっぽり明朝" :size 20))
-(set-fontset-font nil 'japanese-jisx0212 (font-spec :family "しっぽり明朝" :size 20))
-(set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "しっぽり明朝" :size 20))
-(set-fontset-font nil 'jisx0201 (font-spec :family "IPA明朝" :size 20))
+(set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 12))
+(set-fontset-font nil 'ascii (font-spec :family "FreeMono" :size 14))
+(set-fontset-font nil 'japanese-jisx0208 (font-spec :family "しっぽり明朝" :size 16))
+(set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "しっぽり明朝" :size 16))
+(set-fontset-font nil 'japanese-jisx0212 (font-spec :family "しっぽり明朝" :size 16))
+(set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "しっぽり明朝" :size 16))
+(set-fontset-font nil 'jisx0201 (font-spec :family "IPA明朝" :size 16))
+
 #+end_src
 
 
@@ -416,6 +416,7 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 | 😃😇😍😜😸🙈🐺🐰👽🐉💰🏡🎅🍪🍕🚀🚻💩📷📦 | 絵文字             |
 | ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺                       | 絵文字             |
 | 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈                 | 絵文字             |
+
 
 (この文字列は https://qiita.com/query1000/items/4b0b8db872adc1a5e2e9V から抜粋)
 

@@ -2,6 +2,15 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* DONE fontの微調整
+SCHEDULED: <2021-08-28 Sat>
+:PROPERTIES:
+:Effort:   13
+:END:
+:LOGBOOK:
+CLOCK: [2021-08-28 Sat 09:40]---[2021-08-28 Sat 09:50] =>  0:10
+:END:
+
 * TODO postgresのコンテナ名を固定する
 SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
