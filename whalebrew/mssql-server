@@ -1,8 +1,14 @@
-#!/usr/bin/env whalebrew
-image: mcr.microsoft.com/mssql/server:2017-latest
-ports:
-  - "1443:1443"
-environment:
-  - "ACCEPT_EULA=Y"
-  - "SA_PASSWORD=Testing1234!"
-keep_container_user: true
+#!/usr/bin/env bash
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="1443:1443" \
+     --expose="1443" \
+     --workdir="/workdir" \
+     --volume="$(pwd):/workdir" \
+     --env-file="${SCRIPT_DIR}/.env.mssql" \
+     mcr.microsoft.com/mssql/server:2017-latest \
+     "$@"
