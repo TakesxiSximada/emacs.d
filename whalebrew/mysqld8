@@ -1,8 +1,16 @@
-#!/usr/bin/env whalebrew
-image: mysql:8.0.23
-environment:
-  - "MYSQL_ALLOW_EMPTY_PASSWORD=1"
-ports:
-  - "3306:3306"
-volumes:
-  - "mysql-server-8-data:/var/lib/mysql"
+#!/usr/bin/env bash
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="3306:3306" \
+     --expose="3306" \
+     --workdir="/workdir" \
+     --volume "$(pwd):/workdir" \
+     --volume "mysql-server-8-data:/var/lib/mysql" \
+     --name="mysqld" \
+     --env-file="${SCRIPT_DIR}/.env.mysqld" \
+     mysql:8.0.23 \
+     "$@"
