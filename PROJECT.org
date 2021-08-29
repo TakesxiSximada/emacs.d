@@ -11,14 +11,14 @@ SCHEDULED: <2021-08-28 Sat>
 CLOCK: [2021-08-28 Sat 09:40]---[2021-08-28 Sat 09:50] =>  0:10
 :END:
 
-* TODO [#B] postgresのコンテナ名を固定する
+* DONE [#B] postgresのコンテナ名を固定する
 SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
 :Effort:   21
 :END:
 
 * TODO [#C] org-todoのプライオリティを三段階ではなく任意の数値を設定できるようにして実施順序を決められるようにできないか？
-SCHEDULED: <2021-08-28 Sat>
+SCHEDULED: <2021-08-29 Sun>
 :PROPERTIES:
 :Effort:   21
 :END:
@@ -30,7 +30,7 @@ org-agendaを用いてタスクの調整を行っている。
 
 任意の自然数を設定し、小さい数値ほど実施タイミングを早く行うようにすればこの問題を解決できる。
 * TODO [#C] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
-SCHEDULED: <2021-08-28 Sat>
+SCHEDULED: <2021-08-29 Sun>
 * DONE [#C] ウィンドウサイズの変更がキーボード上からできない
 SCHEDULED: <2021-08-27 Fri>
 :LOGBOOK:
@@ -38,7 +38,7 @@ CLOCK: [2021-08-27 Fri 23:37]--[2021-08-28 Sat 00:06] =>  0:29
 :END:
 
 リサイズがとても面倒。
-* TODO [#C] whalebrewでdotenvファイルを指定できると良いのではないか
+* DONE [#B] whalebrewでdotenvファイルを指定できると良いのではないか
 SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
 :Effort:   55
