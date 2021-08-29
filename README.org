@@ -290,6 +290,26 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 
 各種データベースへの接続設定をします。
 
+** MySQL
+
+#+begin_src emacs-lisp
+(setq sql-mysql-program "docker")
+(setq sql-mysql-options '("exec" "-ti" "mysqld" "mysql" "mysql"))
+(setq sql-mysql-login-params nil)
+#+end_src
+
+MySQLのコンテナはSIGINTを送信(C-c C-c)したときに停止しないケースがあり
+ます。そのため停止用にDockerで動作させているmysqldに対してSIGTERMを送
+信するためのコマンドを定義しています。
+
+#+begin_src emacs-lisp
+(defun sql-mysqld-stop ()
+  (interactive)
+  (let ((vterm-shell "docker kill -s TERM mysqld")
+	(vterm-buffer-name "SQL: MySQL: Stop"))
+    (vterm)))
+#+end_src
+
 ** PostgreSQL
 
 #+begin_src emacs-lisp
@@ -297,6 +317,7 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 (setq sql-postgres-options '("exec" "-ti" "postgres" "psql" "-U" "postgres"))
 (setq sql-postgres-login-params nil)
 #+end_src
+
 
 ** IBM DB2
 
@@ -316,6 +337,22 @@ DB2は改行でSQLを実行します。その場合複数行にまたがるSQL�
 接続する前には必ずDB2サーバコンテナを起動しておく必要があります。
 起動するためのスクリプトはwhalebrewディレクトリにあります。
 [[https://github.com/TakesxiSximada/emacs.d/blob/main/whalebrew/db2-server]]
+
+** Microsonft SQL Server
+
+MSSQL Serverについてはsql-modeでの扱いが難しいです。
+[[https://www.emacswiki.org/emacs/SqlMode#h5o-8]]
+
+そこでDocker経由で接続するためのコマンドを別途用意します。
+
+#+begin_src emacs-lisp
+(defun sql-docker-ms ()
+  (interactive)
+  (let ((vterm-shell "docker exec -ti mssql bash -c '/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P ${SA_PASSWORD}'")
+	(vterm-buffer-name "SQL: Docker: Microsoft MSSQL Server")
+	(vterm-kill-buffer-on-exit nil))
+  (vterm)))
+#+end_src
 
 
 * 環境固有の設定

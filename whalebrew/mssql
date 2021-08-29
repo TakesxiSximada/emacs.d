@@ -9,6 +9,7 @@ exec docker run -it --rm \
      --expose="1443" \
      --workdir="/workdir" \
      --volume="$(pwd):/workdir" \
+     --name="mssql" \
      --env-file="${SCRIPT_DIR}/.env.mssql" \
      mcr.microsoft.com/mssql/server:2017-latest \
      "$@"
