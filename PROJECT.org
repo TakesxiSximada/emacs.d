@@ -2,10 +2,23 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
-* TODO [#B] Dittaを日本語対応する
+* Diita日本語対応                                                   :ORDERED:
+:PROPERTIES:
+:ORDERED:  t
+:END:
+:PROPERTIES:
+:END:
+
+** TODO [#E] タスクの整理
 SCHEDULED: <2021-09-08 Wed>
 :PROPERTIES:
 :Effort:   144
+:END:
+
+* DONE [#A] org-todoの論理構造の強制を有効にする
+SCHEDULED: <2021-09-08 Wed>
+:PROPERTIES:
+:Effort:   21
 :END:
 
 * DONE fontの微調整
