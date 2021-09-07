@@ -285,6 +285,29 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
         (search . " %i %-12:c")))
 #+end_src
 
+* org-todo
+
+org-todoの論理構造を強制します。
+依存しているタスクが存在する場合、それらを完了していないと次のタスクに進めません。
+
+#+begin_src emacs-lisp
+(setq org-enforce-todo-dependencies t)
+#+end_src
+
+ただしチェックボックスは現在進行中のタスクを阻害してしまうので無効にします。
+有効にするには =org-enforce-todo-checkbox-dependencies= を用います。
+
+#+begin_src emacs-lisp
+(setq org-enforce-todo-checkbox-dependencies nil)
+#+end_src
+
+org-todoの論理構造を視覚的に表示します。
+まだ実行の条件を満たさないorg-todoはorg-agendaでグレーアウト表示になります。
+
+#+begin_src emacs-lisp
+(setq org-track-ordered-property-with-tag t)
+#+end_src
+
 * org-priority
 
 org-modeのタスクの優先度を設定します。
