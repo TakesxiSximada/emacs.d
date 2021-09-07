@@ -285,6 +285,25 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
         (search . " %i %-12:c")))
 #+end_src
 
+* org-priority
+
+org-modeのタスクの優先度を設定します。
+
+優先度としてA=Zの文字を使います。
+
+#+begin_src emacs-lisp
+(setq org-priority-lowest ?Z)
+#+end_src
+
+org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先度を変更します。
+
+#+begin_src emacs-lisp
+(define-key org-mode-map (kbd "M-p") 'org-priority-up)
+(define-key org-mode-map (kbd "M-n") 'org-priority-down)
+(define-key org-agenda-mode-map (kbd "M-p") 'org-agenda-priority-up)
+(define-key org-agenda-mode-map (kbd "M-n") 'org-agenda-priority-down)
+#+end_src
+
 
 * Databases
 
