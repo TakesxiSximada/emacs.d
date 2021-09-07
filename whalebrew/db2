@@ -1,17 +1,24 @@
 #! /usr/bin/env bash
 set -e -x
 
-DOCKER_IMAGE=ibmcom/db2:11.5.5.0
-docker run -it -v "$(pwd)":/workdir -w /workdir \
-       --name='db2-server' \
-       --rm \
-       --privileged=true \
-       --publish="50000:50000" \
-       --env="LICENSE=accept" \
-       --env="DB2INST1_PASSWORD=Testing1234!" \
-       --env="SAMPLEDB=true" \
-       --volume="db2-data:/database" \
-       'ibmcom/db2:11.5.5.0' "$@"
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="50000:50000" \
+     --env-file="${SCRIPT_DIR}/.env.db2" \
+     --volume="db2-data:/database" \
+     --name='db2-server' \
+     'ibmcom/db2:11.5.5.0' \
+     "$@"
+
+
+# exec docker run -it -v "$(pwd)":/workdir -w /workdir \
+#        --rm \
+#        --env="LICENSE=accept" \
+#        --env="DB2INST1_PASSWORD=Testing1234!" \
+#        --env="SAMPLEDB=true" \
+#        'ibmcom/db2:11.5.5.0' "$@"
 
 #!/usr/bin/env whalebrew
 #V image: ibmcom/db2:11.5.5.0
