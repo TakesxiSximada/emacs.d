@@ -2,6 +2,12 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO [#B] Dittaを日本語対応する
+SCHEDULED: <2021-09-08 Wed>
+:PROPERTIES:
+:Effort:   144
+:END:
+
 * DONE fontの微調整
 SCHEDULED: <2021-08-28 Sat>
 :PROPERTIES:
@@ -17,20 +23,27 @@ SCHEDULED: <2021-08-28 Sat>
 :Effort:   21
 :END:
 
-* TODO [#C] org-todoのプライオリティを三段階ではなく任意の数値を設定できるようにして実施順序を決められるようにできないか？
-SCHEDULED: <2021-08-29 Sun>
+* DONE [#A] org-todoのプライオリティを三段階ではなく任意の数値を設定できるようにして実施順序を決められるようにできないか？
+SCHEDULED: <2021-09-08 Wed>
 :PROPERTIES:
 :Effort:   21
 :END:
 
-org-agendaを用いてタスクの調整を行っている。
-その中でタスクの優先順位付けを行い実施の順番を組みたい。
-しかしorg-todoのpriorityはA, B Cの3段階でしかプライオリティを設定できない。
-それでは順序を固定することができない。
+org-agendaを用いてタスクの調整を行っている。その中でタスクの優先順位付
+けを行い実施の順番を組みたい。しかしorg-todoのpriorityはA, B Cの3段階
+でしかプライオリティを設定できない。それでは順序を固定することができな
+い。
 
-任意の自然数を設定し、小さい数値ほど実施タイミングを早く行うようにすればこの問題を解決できる。
-* TODO [#C] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
-SCHEDULED: <2021-08-29 Sun>
+任意の自然数を設定し、小さい数値ほど実施タイミングを早く行うようにすれ
+ばこの問題を解決できる。
+
+
+
+* DONE [#A] orgのpriorityの設定をするときにFnキーを押さないといけないのが面倒
+SCHEDULED: <2021-09-08 Wed>
+:PROPERTIES:
+:Effort:   34
+:END:
 * DONE [#C] ウィンドウサイズの変更がキーボード上からできない
 SCHEDULED: <2021-08-27 Fri>
 :LOGBOOK:
