@@ -126,6 +126,7 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (setenv "PATH" (string-join exec-path ":"))
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
+(setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1l/lib")))
 #+end_src
 
 * CSS
