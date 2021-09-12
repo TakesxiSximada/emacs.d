@@ -1,4 +1,16 @@
-#!/usr/bin/env whalebrew
-image: redis:alpine3.13
-ports:
-  - "6379:6379"
+#!/usr/bin/env bash
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+cd ${SCRIPT_DIR}
+
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="6379:6379" \
+     --expose="6379" \
+     --workdir="/workdir" \
+     --volume "$(pwd):/workdir" \
+     --name="redis" \
+     redis:alpine3.13 \
+     "$@"

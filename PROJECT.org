@@ -10,7 +10,7 @@
 :END:
 
 ** TODO [#E] タスクの整理
-SCHEDULED: <2021-09-08 Wed>
+SCHEDULED: <2021-09-11 Sat>
 :PROPERTIES:
 :Effort:   144
 :END:

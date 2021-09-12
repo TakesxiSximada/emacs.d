@@ -3,13 +3,15 @@ set -e -x
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
+cd ${SCRIPT_DIR}
+
 exec docker run -it --rm \
      --privileged=true \
      --publish="3306:3306" \
      --expose="3306" \
      --workdir="/workdir" \
      --volume "$(pwd):/workdir" \
-     --volume "mysqld5-data:/var/lib/mysql" \
+     --volume "mysqld5-data-2:/var/lib/mysql" \
      --name="mysqld" \
      --env-file="${SCRIPT_DIR}/.env.mysqld" \
      mysql:5.7 \
