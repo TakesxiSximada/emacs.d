@@ -1,0 +1,2 @@
+api: uvicorn main:app
+ 
