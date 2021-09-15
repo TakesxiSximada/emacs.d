@@ -54,20 +54,23 @@ libvtermのインストールログ
 [[/opt/ng/symdon/pages/posts/1616585636.org]]
 
 
-** TODO [#M] 本体インストール
+** DONE [#M] 本体インストール
 SCHEDULED: <2021-09-15 Wed>
 :PROPERTIES:
 :Effort:   55
 :END:
 :LOGBOOK:
+CLOCK: [2021-09-15 Wed 23:43]--[2021-09-15 Wed 23:43] =>  0:00
+CLOCK: [2021-09-15 Wed 22:43]--[2021-09-15 Wed 22:59] =>  0:16
+CLOCK: [2021-09-15 Wed 22:43]--[2021-09-15 Wed 22:43] =>  0:00
 CLOCK: [2021-09-13 Mon 09:03]--[2021-09-13 Mon 09:12] =>  0:09
 :END:
 
-- [ ] Emacsのインストール
+- [X] Emacsのインストール
 
   参考 [[/opt/ng/symdon/pages/posts/1604761350.org]]
 
-- [ ] libvtermのインストールログ
+- [X] libvtermのインストールログ
 
   参考 [[/opt/ng/symdon/pages/posts/1616585636.org]]
 
