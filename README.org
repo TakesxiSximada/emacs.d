@@ -513,3 +513,45 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 
 (define-key edit-indirect-mode-map (kbd "C-c C-c") nil)
 #+end_src
+
+* タスク
+
+タスク実行時の集中力の阻害を最小限にするために、関連する情報以外を見え
+ないようにするコマンドを定義します。開始時に =task-join= 、終了時に
+=task-leave= を呼び出します。
+
+
+#+begin_src emacs-lisp
+(require 'edit-indirect)
+(require 'org-clock)
+
+
+(defun task-join ()
+  "Join the task."
+  (interactive)
+  (org-narrow-to-subtree)
+  (mark-whole-buffer)
+  (switch-to-buffer
+   (edit-indirect-region
+    (region-beginning)
+    (region-end)))
+  (org-clock-in)
+  )
+
+
+(defun task-leave ()
+  "Leave the task."
+  (interactive)
+  (org-clock-out)
+  (edit-indirect-commit)
+  (widen)
+  (org-narrow-to-subtree)
+  (mark-whole-buffer)
+  (switch-to-buffer
+   (edit-indirect-region
+    (region-beginning)
+    (region-end)))
+  (org-clock-in)
+  )
+
+#+end_src
