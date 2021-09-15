@@ -166,7 +166,6 @@
 (use-package s :ensure t :defer t)
 (use-package slime :ensure t :defer t)
 (use-package smex :ensure t :defer t)
-(use-package sudden-death :ensure t :defer t)
 (use-package terraform-mode :ensure t :defer t)
 (use-package transient :ensure t)
 (use-package unicode-escape :ensure t :defer t)
@@ -364,7 +363,8 @@ Returns symbol of major-mode.
 (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
 (el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
 
-(el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mod.el.git" :type "git")
+(el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
+(el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git")
 (el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
 (el-get-bundle gist:05de904cd0c320733cae:org-file-table :type "git")
