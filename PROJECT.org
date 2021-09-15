@@ -2,6 +2,81 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO [#B] whalebrewディレクトリ配下のbindアドレスをローカルのループバックアドレスに限定する
+SCHEDULED: <2021-09-15 Wed>
+:PROPERTIES:
+:Effort:   21
+:END:
+
+* DONE [#A] org-narrow-to-subtree-editを実装する
+SCHEDULED: <2021-09-13 Mon>
+:PROPERTIES:
+:Effort:   21
+:END:
+:LOGBOOK:
+CLOCK: [2021-09-13 Mon 08:23]--[2021-09-13 Mon 08:23] =>  0:00
+CLOCK: [2021-09-13 Mon 08:21]--[2021-09-13 Mon 08:21] =>  0:00
+CLOCK: [2021-09-13 Mon 08:09]--[2021-09-13 Mon 08:09] =>  0:00
+CLOCK: [2021-09-13 Mon 08:07]--[2021-09-13 Mon 08:07] =>  0:00
+CLOCK: [2021-09-13 Mon 08:04]--[2021-09-13 Mon 08:06] =>  0:02
+:END:
+
+他の情報をマスクするために以下のコマンドを統合する。
+
+
+- task-join
+  - org-narrow-to-subtree
+  - edit-indirect-region
+  - mark-whole-buffer
+  - org-clock-in
+
+- task-leave
+  - edit-clock-out
+  - edit-indirect-save
+
+test
+OK
+
+* 新しい端末へEmacsをインストールする                               :ORDERED:
+:PROPERTIES:
+:ORDERED:  t
+:END:
+** DONE [#A] 過去ログを探す
+SCHEDULED: <2021-09-13 Mon>
+:PROPERTIES:
+:Effort:   21
+:END:
+
+Emacsのインストールログ
+[[/opt/ng/symdon/pages/posts/1604761350.org]]
+
+libvtermのインストールログ
+[[/opt/ng/symdon/pages/posts/1616585636.org]]
+
+
+** TODO [#M] 本体インストール
+SCHEDULED: <2021-09-15 Wed>
+:PROPERTIES:
+:Effort:   55
+:END:
+:LOGBOOK:
+CLOCK: [2021-09-13 Mon 09:03]--[2021-09-13 Mon 09:12] =>  0:09
+:END:
+
+- [ ] Emacsのインストール
+
+  参考 [[/opt/ng/symdon/pages/posts/1604761350.org]]
+
+- [ ] libvtermのインストールログ
+
+  参考 [[/opt/ng/symdon/pages/posts/1616585636.org]]
+
+** TODO libvertをインストール
+SCHEDULED: <2021-09-16 Thu>
+:PROPERTIES:
+:Effort:   55
+:END:
+
 * Diita日本語対応                                                   :ORDERED:
 :PROPERTIES:
 :ORDERED:  t
@@ -10,7 +85,7 @@
 :END:
 
 ** TODO [#E] タスクの整理
-SCHEDULED: <2021-09-11 Sat>
+SCHEDULED: <2021-09-16 Thu>
 :PROPERTIES:
 :Effort:   144
 :END:
