@@ -7,7 +7,7 @@ cd ${SCRIPT_DIR}
 
 exec docker run -it --rm \
      --privileged=true \
-     --publish="3306:3306" \
+     --publish="127.0.0.1:3306:3306" \
      --expose="3306" \
      --workdir="/workdir" \
      --volume "$(pwd):/workdir" \

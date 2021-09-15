@@ -5,7 +5,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 exec docker run -it --rm \
      --privileged=true \
-     --publish="5432:5432" \
+     --publish="127.0.0.1:5432:5432" \
      --expose="5432" \
      --workdir="/workdir" \
      --volume "$(pwd):/workdir" \

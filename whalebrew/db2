@@ -5,7 +5,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 exec docker run -it --rm \
      --privileged=true \
-     --publish="50000:50000" \
+     --publish="127.0.0.1:50000:50000" \
      --env-file="${SCRIPT_DIR}/.env.db2" \
      --volume="db2-data:/database" \
      --name='db2-server' \
