@@ -2,8 +2,21 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* DONE [#B] task-leaveのエラーハンドリングを追加する
+SCHEDULED: <2021-09-18 Sat>
+:PROPERTIES:
+:Effort:   21
+:GOAL:     task-leaveが失敗しないようにする
+:END:
+:LOGBOOK:
+CLOCK: [2021-09-18 Sat 16:38]--[2021-09-18 Sat 16:46] =>  0:08
+CLOCK: [2021-09-18 Sat 16:38]
+:END:
+
+
+
 * TODO [#B] whalebrewディレクトリ配下のbindアドレスをローカルのループバックアドレスに限定する
-SCHEDULED: <2021-09-15 Wed>
+SCHEDULED: <2021-09-18 Sat>
 :PROPERTIES:
 :Effort:   21
 :END:
@@ -74,8 +87,8 @@ CLOCK: [2021-09-13 Mon 09:03]--[2021-09-13 Mon 09:12] =>  0:09
 
   参考 [[/opt/ng/symdon/pages/posts/1616585636.org]]
 
-** TODO libvertをインストール
-SCHEDULED: <2021-09-16 Thu>
+** DONE libvertをインストール
+SCHEDULED: <2021-09-17 Fri>
 :PROPERTIES:
 :Effort:   55
 :END:
@@ -87,8 +100,8 @@ SCHEDULED: <2021-09-16 Thu>
 :PROPERTIES:
 :END:
 
-** TODO [#E] タスクの整理
-SCHEDULED: <2021-09-16 Thu>
+** TODO [#D] タスクの整理
+SCHEDULED: <2021-09-18 Sat>
 :PROPERTIES:
 :Effort:   144
 :END:
