@@ -10,15 +10,19 @@ SCHEDULED: <2021-09-18 Sat>
 :END:
 :LOGBOOK:
 CLOCK: [2021-09-18 Sat 16:38]--[2021-09-18 Sat 16:46] =>  0:08
-CLOCK: [2021-09-18 Sat 16:38]
+CLOCK: [2021-09-18 Sat 16:38]--[2021-09-18 Sat 16:48] =>  0:10
 :END:
 
 
 
-* TODO [#B] whalebrewディレクトリ配下のbindアドレスをローカルのループバックアドレスに限定する
+* DONE [#B] whalebrewディレクトリ配下のbindアドレスをローカルのループバックアドレスに限定する
 SCHEDULED: <2021-09-18 Sat>
 :PROPERTIES:
 :Effort:   21
+:END:
+:LOGBOOK:
+CLOCK: [2021-09-18 Sat 16:48]--[2021-09-18 Sat 16:49] =>  0:01
+CLOCK: [2021-09-18 Sat 16:48]--[2021-09-18 Sat 16:48] =>  0:00
 :END:
 
 * DONE [#A] org-narrow-to-subtree-editを実装する
