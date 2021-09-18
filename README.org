@@ -520,7 +520,6 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 ないようにするコマンドを定義します。開始時に =task-join= 、終了時に
 =task-leave= を呼び出します。
 
-
 #+begin_src emacs-lisp
 (require 'edit-indirect)
 (require 'org-clock)
@@ -538,20 +537,13 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
   (org-clock-in)
   )
 
-
 (defun task-leave ()
-  "Leave the task."
+  "Leave the clock-in task."
   (interactive)
-  (org-clock-out)
+  (if-let ((clock-buf (org-clock-is-active)))
+      (with-current-buffer clock-buf
+	(org-clock-out)))
   (edit-indirect-commit)
-  (widen)
-  (org-narrow-to-subtree)
-  (mark-whole-buffer)
-  (switch-to-buffer
-   (edit-indirect-region
-    (region-beginning)
-    (region-end)))
-  (org-clock-in)
-  )
+  (widen))
 
 #+end_src
