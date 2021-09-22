@@ -2,6 +2,30 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
+* TODO [#Z] 優先度指定のないものは最下層表示するようにする
+SCHEDULED: <2021-09-23 Thu>
+:PROPERTIES:
+:Effort:   34
+:END:
+* TODO [#Z] 時刻指定されたタスクの開始時間を表示する
+SCHEDULED: <2021-09-23 Thu>
+:PROPERTIES:
+:Effort:   13
+:END:
+
+* Diita日本語対応                                                   :ORDERED:
+:PROPERTIES:
+:ORDERED:  t
+:END:
+:PROPERTIES:
+:END:
+
+** TODO [#D] タスクの整理
+SCHEDULED: <2021-09-24 Fri>
+:PROPERTIES:
+:Effort:   144
+:END:
+
 * DONE [#B] task-leaveのエラーハンドリングを追加する
 SCHEDULED: <2021-09-18 Sat>
 :PROPERTIES:
@@ -70,7 +94,6 @@ Emacsのインストールログ
 libvtermのインストールログ
 [[/opt/ng/symdon/pages/posts/1616585636.org]]
 
-
 ** DONE [#M] 本体インストール
 SCHEDULED: <2021-09-15 Wed>
 :PROPERTIES:
@@ -95,19 +118,6 @@ CLOCK: [2021-09-13 Mon 09:03]--[2021-09-13 Mon 09:12] =>  0:09
 SCHEDULED: <2021-09-17 Fri>
 :PROPERTIES:
 :Effort:   55
-:END:
-
-* Diita日本語対応                                                   :ORDERED:
-:PROPERTIES:
-:ORDERED:  t
-:END:
-:PROPERTIES:
-:END:
-
-** TODO [#D] タスクの整理
-SCHEDULED: <2021-09-18 Sat>
-:PROPERTIES:
-:Effort:   144
 :END:
 
 * DONE [#A] org-todoの論理構造の強制を有効にする
