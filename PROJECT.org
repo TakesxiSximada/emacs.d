@@ -2,13 +2,13 @@
 #+CATEGORY: Emacs
 #+PROPERTY: Effort_ALL 5 13 21 34 55 89 144 233 377 610 987
 
-* TODO [#Z] 優先度指定のないものは最下層表示するようにする
-SCHEDULED: <2021-09-23 Thu>
+* TODO 優先度指定のないものは最下層表示するようにする
+SCHEDULED: <2021-10-10 Sun>
 :PROPERTIES:
 :Effort:   34
 :END:
-* TODO [#Z] 時刻指定されたタスクの開始時間を表示する
-SCHEDULED: <2021-09-23 Thu>
+* TODO 時刻指定されたタスクの開始時間を表示する
+SCHEDULED: <2021-10-10 Sun>
 :PROPERTIES:
 :Effort:   13
 :END:
@@ -20,8 +20,8 @@ SCHEDULED: <2021-09-23 Thu>
 :PROPERTIES:
 :END:
 
-** TODO [#D] タスクの整理
-SCHEDULED: <2021-09-24 Fri>
+** TODO タスクの整理
+SCHEDULED: <2021-10-10 Sun>
 :PROPERTIES:
 :Effort:   144
 :END:
