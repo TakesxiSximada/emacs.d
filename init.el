@@ -133,8 +133,9 @@
 		(read-directory-name "Directory: " default-directory nil default-directory)))
   (let ((default-directory cwd)
 	(vterm-shell line)
-	(vterm-buffer-name (format "%s: In %s"
+	(vterm-buffer-name (format "%s %s: In %s"
 				   (car (split-string line))
+				   (or (car (cdr (split-string line))) "")
 				   (expand-file-name cwd)))
 	(vterm-kill-buffer-on-exit nil))
     (vterm)))
