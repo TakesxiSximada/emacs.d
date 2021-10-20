@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+cd ${SCRIPT_DIR}
+
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="127.0.0.1:1521:1521" \
+     --publish="127.0.0.1:5500:5500" \
+     --expose="1521" \
+     --expose="5500" \
+     --workdir="/workdir" \
+     --volume "$(pwd):/workdir" \
+     --volume "oracle-db-data:/opt/oracle/oradata" \
+     --name="oracle" \
+     --env-file="${SCRIPT_DIR}/.env.oracle" \
+     oracle/database:19.3.0-ee \
+     "$@"

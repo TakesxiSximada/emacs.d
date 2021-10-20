@@ -408,6 +408,13 @@ MSSQL Serverについてはsql-modeでの扱いが難しいです。
   (vterm)))
 #+end_src
 
+** Oracle
+
+#+begin_src emacs-lisp
+(setq sql-oracle-program "docker")
+(setq sql-oracle-options '("exec" "-ti" "oracle" "bash" "-c" "sqlplus sys/testing1234@localhost:1521/ORCLCDB as sysdba"))
+(setq sql-oracle-login-params nil)
+#+end_src
 
 * 環境固有の設定
 
