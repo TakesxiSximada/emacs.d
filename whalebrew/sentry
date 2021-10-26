@@ -1,43 +1,68 @@
-#!/usr/bin/env whalebrew
-# Dependencies
-# - postgres
-# - redis
-# - mailhog
-#
-# Initial configuration
-#   In postgres::
-#     CREATE DATABASE sentry_local ENCODING='UTF-8';
-#   In local::
-#     sentry upgrade
-#
-# Generate secret key
-#   sentry config generate-secret-key
-#
-# Processes
-#   - Web :: sentry
-#   - Cron :: sentry run cron
-#   - Worker :: sentry run worker
+#! /usr/bin/env bash
 
-image: sentry:9.1.2
-ports:
-  - "9000:9000"
-environment:
-  - SENTRY_SECRET_KEY=&ea^u=_%@2!cs3s0)6-o)6)dq_6lp7)^!62h&8ay6ns#wkc0jy
-  - SENTRY_POSTGRES_HOST=host.docker.internal
-  - SENTRY_POSTGRES_PORT=5432
-  - SENTRY_DB_NAME=sentry_local
-  - SENTRY_DB_USER=postgres
-  - SENTRY_DB_PASSWORD=postgres
-  - SENTRY_REDIS_HOST=host.docker.internal
-  - SENTRY_REDIS_PORT=6379
-  - SENTRY_REDIS_DB=0
-  - SENTRY_FILESTORE_DIR=/var/lib/sentry/files
-  - SENTRY_SERVER_EMAIL=sentry@local
-  - SENTRY_EMAIL_HOST=host.docker.internal
-  - SENTRY_EMAIL_PORT=1025
-  # - SENTRY_EMAIL_USER=
-  # - SENTRY_EMAIL_PASSWORD=
-  # - SENTRY_EMAIL_USE_TLS=
-volumes:
-  - "sentry-data:/var/lib/sentry/files"
-keep_container_user: true
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+case "$1" in
+    "")
+	exec docker run -it --rm \
+             --privileged=true \
+             --publish="127.0.0.1:9000:9000" \
+             --expose="9000" \
+             --workdir="/workdir" \
+             --volume "$(pwd):/workdir" \
+             --volume "sentry-data:/var/lib/sentry/files" \
+             --name="sentry" \
+             --env-file="${SCRIPT_DIR}/.env.sentry" \
+             sentry:9.1.2
+	;;
+    "cron")
+	exec docker run -it --rm \
+             --privileged=true \
+             --workdir="/workdir" \
+             --volume "$(pwd):/workdir" \
+             --volume "sentry-data:/var/lib/sentry/files" \
+             --name="sentry-cron" \
+             --env-file="${SCRIPT_DIR}/.env.sentry" \
+             sentry:9.1.2 \
+             sentry run cron
+	;;
+    "worker")
+	exec docker run -it --rm \
+             --privileged=true \
+             --workdir="/workdir" \
+             --volume "$(pwd):/workdir" \
+             --volume "sentry-data:/var/lib/sentry/files" \
+             --name="sentry-worker" \
+             --env-file="${SCRIPT_DIR}/.env.sentry" \
+             sentry:9.1.2 \
+             sentry run worker
+	;;
+
+    "upgrade")
+	exec docker run -it --rm \
+             --privileged=true \
+             --publish="127.0.0.1:9000:9000" \
+             --expose="9000" \
+             --workdir="/workdir" \
+             --volume "$(pwd):/workdir" \
+             --volume "sentry-data:/var/lib/sentry/files" \
+             --name="sentry-upgrade" \
+             --env-file="${SCRIPT_DIR}/.env.sentry" \
+             sentry:9.1.2 \
+	     sentry upgrade
+	;;
+    *)
+	shift
+	exec docker run -it --rm \
+             --privileged=true \
+             --publish="127.0.0.1:9000:9000" \
+             --expose="9000" \
+             --workdir="/workdir" \
+             --volume "$(pwd):/workdir" \
+             --volume "sentry-data:/var/lib/sentry/files" \
+             --name="sentry-cli" \
+             --env-file="${SCRIPT_DIR}/.env.sentry" \
+             sentry:9.1.2 \
+	     sentry $@
+	;;
+esac
