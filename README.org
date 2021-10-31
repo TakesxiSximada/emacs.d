@@ -178,7 +178,7 @@ CSS編集のためのタブ幅などを設定します。
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
 #+end_src
-v
+
 ** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/wakatime-record.el][wakatime-record.el]]
 
 wakatime-record.elは計測した結果をローカルのファイルにキャッシュします。
