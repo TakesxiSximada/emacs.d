@@ -178,7 +178,7 @@ CSS編集のためのタブ幅などを設定します。
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
 #+end_src
-
+v
 ** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/wakatime-record.el][wakatime-record.el]]
 
 wakatime-record.elは計測した結果をローカルのファイルにキャッシュします。
@@ -231,11 +231,8 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 
 * org-agenda
 
-タスクの管理に =org-agenda= を使用しています。agendaファイルを追加します。
-
-#+begin_src emacs-lisp
-(add-to-list 'org-agenda-files (expand-file-name "~/.emacs.d/PROJECT.org"))
-#+end_src
+タスクの管理に =org-agenda= を使用しています。
+agendaファイルを追加するには =org-agenda-files= にファイルパスを追加します。
 
 今すべきタスクに集中するため概要では今日のタスクのみを表示します。
 
@@ -291,7 +288,7 @@ org-modeのプロパティにwakatimeのカテゴリーを登録するための�
 
 #+begin_src emacs-lisp
 (setq org-agenda-sorting-strategy
-    '((agenda category-keep)
+    '((agenda priority-down category-keep)
       (todo   priority-down category-keep)
       (tags   priority-down category-keep)
       (search category-keep)))
@@ -372,7 +369,6 @@ MySQLのコンテナはSIGINTを送信(C-c C-c)したときに停止しないケ
 (setq sql-postgres-login-params nil)
 #+end_src
 
-
 ** IBM DB2
 
 私はlocalで使うDB2の環境をDockerを用いて構築しています。
@@ -407,6 +403,19 @@ MSSQL Serverについてはsql-modeでの扱いが難しいです。
 	(vterm-kill-buffer-on-exit nil))
   (vterm)))
 #+end_src
+
+** Microsoft SQL Server
+
+#+begin_src emacs-lisp
+(setq sql-ms-program "docker")
+(setq sql-ms-options '("exec" "-ti" "mssql" "/opt/mssql-tools/bin/sqlcmd"))
+(setq sql-ms-login-params '(user server))
+#+end_src
+" "-S" "localhost" "-U" "SA" "-P" "Testing1234!
+(setq sql-server "localhost")
+(setq sql-user "SA")
+(setq sql-password "Testing1234!")
+
 
 ** Oracle
 
