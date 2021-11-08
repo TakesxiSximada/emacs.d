@@ -573,5 +573,11 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 	(org-clock-out)))
   (edit-indirect-commit)
   (widen))
-
 #+end_src
+
+* N
+
+#+begin_src emacs-lisp
+(setenv "N_PREFIX" (expand-file-name "~/.local"))
+#+end_src
+
