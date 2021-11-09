@@ -336,6 +336,22 @@ org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先�
 (define-key org-agenda-mode-map (kbd "M-n") 'org-agenda-priority-down)
 #+end_src
 
+* org-babel
+
+org-babelはorg-modeのコードブロックを実行するためのライブラリです。
+
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (scheme . t)
+   (emacs-lisp . t)
+   (python . t)
+   (restclient . t)
+   (shell . t)
+   (sql . t)))
+#+end_src
+
 
 * Databases
 
