@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+exec docker run -it --rm \
+     --workdir="/workdir" \
+     --volume "$(pwd):/workdir" \
+     --name="oauth2-proxy" \
+     --env-file="${SCRIPT_DIR}/.env.oauth2-proxy" \
+     quay.io/oauth2-proxy/oauth2-proxy:v7.2.0 \
+     "$@"
