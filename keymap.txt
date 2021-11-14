@@ -10,7 +10,6 @@ Composition	Ctrl b	MoveCursorLeft
 Composition	Ctrl d	Delete
 Composition	Ctrl e	MoveCursorToEnd
 Composition	Ctrl f	MoveCursorRight
-Composition	Ctrl g	Cancel
 Composition	Ctrl g	CancelAndIMEOff
 Composition	Ctrl h	Backspace
 Composition	Ctrl j	DisplayAsHiragana
@@ -50,6 +49,7 @@ Composition	Option x	CancelAndIMEOff
 Composition	Option z	DisplayAsHiragana
 Composition	Right	MoveCursorRight
 Composition	Shift Enter	ConvertToHalfAlphanumeric
+Composition	Shift Space	ConvertToHalfAlphanumeric
 Composition	Space	Convert
 Composition	Tab	Convert
 Conversion	Backspace	Cancel
@@ -63,9 +63,9 @@ Conversion	Ctrl b	SegmentFocusLeft
 Conversion	Ctrl d	SegmentFocusRight
 Conversion	Ctrl e	ConvertPrev
 Conversion	Ctrl f	SegmentFocusRight
-Conversion	Ctrl g	Cancel
 Conversion	Ctrl g	CancelAndIMEOff
-Conversion	Ctrl h	Cancel
+Conversion	Ctrl g	CancelAndIMEOff
+Conversion	Ctrl h	CancelAndIMEOff
 Conversion	Ctrl i	SegmentWidthShrink
 Conversion	Ctrl j	DisplayAsHiragana
 Conversion	Ctrl k	DisplayAsFullKatakana
@@ -111,7 +111,7 @@ Conversion	Shift Down	ConvertNextPage
 Conversion	Shift Enter	ConvertToHalfAlphanumeric
 Conversion	Shift Left	SegmentWidthShrink
 Conversion	Shift Right	SegmentWidthExpand
-Conversion	Shift Space	ConvertPrev
+Conversion	Shift Space	ConvertToHalfAlphanumeric
 Conversion	Shift Tab	ConvertPrev
 Conversion	Shift Up	ConvertPrevPage
 Conversion	Space	ConvertNext
@@ -129,7 +129,7 @@ Precomposition	Ctrl Backspace	Undo
 Precomposition	Ctrl Escape	CancelAndIMEOff
 Precomposition	Ctrl Escape	CancelAndIMEOff
 Precomposition	Ctrl Shift r	Reconvert
-Precomposition	Ctrl g	Cancel
+Precomposition	Ctrl g	CancelAndIMEOff
 Precomposition	Eisu	ToggleAlphanumericMode
 Precomposition	Hankaku/Zenkaku	IMEOff
 Precomposition	Kanji	IMEOff
@@ -141,9 +141,10 @@ Precomposition	Space	InsertSpace
 Prediction	Ctrl Delete	DeleteSelectedCandidate
 Prediction	Ctrl g	CancelAndIMEOff
 Prediction	Shift Enter	ConvertToHalfAlphanumeric
-Suggestion	Ctrl g	CancelAndIMEOff
+Prediction	Shift Space	ConvertToHalfAlphanumeric
 Suggestion	Ctrl n	PredictAndConvert
 Suggestion	Down	PredictAndConvert
 Suggestion	Option x	CancelAndIMEOff
 Suggestion	Shift Enter	CommitFirstSuggestion
 Suggestion	Shift Enter	ConvertToHalfAlphanumeric
+Suggestion	Shift Space	ConvertToHalfAlphanumeric
