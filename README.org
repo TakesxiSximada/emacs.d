@@ -595,5 +595,7 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 
 #+begin_src emacs-lisp
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+(setenv "PATH" (string-join exec-path ":"))
 #+end_src
 
