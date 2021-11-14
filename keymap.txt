@@ -5,6 +5,7 @@ Composition	Ctrl :	DisplayAsHalfAlphanumeric
 Composition	Ctrl ;	DisplayAsHalfWidth
 Composition	Ctrl Left	MoveCursorToBeginning
 Composition	Ctrl Right	MoveCursorToEnd
+Composition	Ctrl Space	ConvertToFullAlphanumeric
 Composition	Ctrl a	MoveCursorToBeginning
 Composition	Ctrl b	MoveCursorLeft
 Composition	Ctrl d	Delete
@@ -58,6 +59,7 @@ Conversion	Ctrl :	DisplayAsHalfAlphanumeric
 Conversion	Ctrl ;	DisplayAsHalfWidth
 Conversion	Ctrl Left	SegmentFocusFirst
 Conversion	Ctrl Right	SegmentFocusLast
+Conversion	Ctrl Space	ConvertToFullAlphanumeric
 Conversion	Ctrl a	SegmentFocusFirst
 Conversion	Ctrl b	SegmentFocusLeft
 Conversion	Ctrl d	SegmentFocusRight
@@ -139,9 +141,11 @@ Precomposition	Option x	CancelAndIMEOff
 Precomposition	Shift Space	InsertAlternateSpace
 Precomposition	Space	InsertSpace
 Prediction	Ctrl Delete	DeleteSelectedCandidate
+Prediction	Ctrl Space	ConvertToFullAlphanumeric
 Prediction	Ctrl g	CancelAndIMEOff
 Prediction	Shift Enter	ConvertToHalfAlphanumeric
 Prediction	Shift Space	ConvertToHalfAlphanumeric
+Suggestion	Ctrl Space	ConvertToHalfAlphanumeric
 Suggestion	Ctrl n	PredictAndConvert
 Suggestion	Down	PredictAndConvert
 Suggestion	Option x	CancelAndIMEOff
