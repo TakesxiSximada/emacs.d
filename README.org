@@ -70,6 +70,18 @@ EmacsにおいてウィンドウはEmacsの画面(フレーム)内に表示さ�
 (bind-key* "s-<left>" (lambda () (interactive) (window-resize nil -1 t)))
 #+end_src
 
+* Emacsの設定ファイルを素早く開く
+
+Emacsの設定ファイルは開く回数が多いため素早く開けるように独自に関数を定義してキーを割り当てます。
+
+#+begin_src emacs-lisp
+(defun open-emacs-init-file ()
+  (interactive)
+  (expand-file-name "~/.emacs.d/README.org"))
+
+(bind-key* "s-2" #'open-emacs-init-file)
+#+end_src
+
 * 追加のキーバインドの設定
 
 #+begin_src emacs-lisp
