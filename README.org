@@ -300,7 +300,7 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 
 #+begin_src emacs-lisp
 (setq org-agenda-sorting-strategy
-    '((agenda habit-down time-up category-keep effort-up priority-down)
+    '((agenda habit-down time-up priority-down category-keep effort-up)
       (todo   priority-down category-keep)
       (tags   priority-down category-keep)
       (search category-keep)))
