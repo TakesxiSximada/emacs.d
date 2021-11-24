@@ -297,51 +297,52 @@ Returns symbol of major-mode.
 (use-package docker :ensure t :defer t)
 (use-package docker-compose-mode :ensure t :defer t)
 (use-package docker-tramp :ensure t :defer t)
-(use-package dockerfile-mode :ensure t :defer t
-  :init
-  ;; For Docker
-  (defun dockerfile-get-docker-image-from-inbuffer ()
-    "# iamge: DockerImageName"
-    (interactive)
-    (let ((image-name-line (save-excursion
-  		      (goto-char (point-min))
-  		      (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
-      (s-trim (car (cdr (s-split ":" image-name-line))))))
+(use-package dockerfile-mode :ensure t :defer t)
+
+(require 'dockerfile-mode)
+
+(defun dockerfile-get-docker-image-from-inbuffer ()
+  "# iamge: DockerImageName"
+  (interactive)
+  (let ((image-name-line (save-excursion
+		      (goto-char (point-min))
+		      (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
+    (s-trim (car (cdr (s-split ":" image-name-line))))))
 
 
-  (defun dockerfile-read-image-name ()
-    "Read a docker image name."
-    (ido-completing-read "Image name: "
-  		       dockerfile-image-name-history
-  		       nil nil nil nil
-  		       (dockerfile-get-docker-image-from-inbuffer)))
+(defun dockerfile-read-image-name ()
+  "Read a docker image name."
+  (ido-completing-read "Image name: "
+		       dockerfile-image-name-history
+		       nil nil nil nil
+		       (dockerfile-get-docker-image-from-inbuffer)))
 
 
-  (defun dockerfile-build-buffer (image-name &optional no-cache)
-    "Build an image called IMAGE-NAME based upon the buffer.
+(defun dockerfile-build-buffer (image-name &optional no-cache)
+  "Build an image called IMAGE-NAME based upon the buffer.
 
-  If prefix arg NO-CACHE is set, don't cache the image.
-  The build string will be of the format:
-  `sudo docker build --no-cache --tag IMAGE-NAME --build-args arg1.. -f filename directory`"
+If prefix arg NO-CACHE is set, don't cache the image.
+The build string will be of the format:
+`sudo docker build --no-cache --tag IMAGE-NAME --build-args arg1.. -f filename directory`"
+  (interactive (list (dockerfile-read-image-name)
+		     (not (y-or-n-p "Using cache?"))))
+  (save-buffer)
+  (vterm-command 
+   (format
+    "%s%s build --ssh=default %s %s %s -f %s %s"  ;; FIX
+    (if dockerfile-use-sudo "sudo " "")
+    dockerfile-mode-command
+    (if no-cache "--no-cache" "")
+    (dockerfile-tag-string image-name)
+    (dockerfile-build-arg-string)
+    (shell-quote-argument (dockerfile-standard-filename (buffer-file-name)))
+    (shell-quote-argument (dockerfile-standard-filename default-directory)))
+   default-directory))
+;; nil
+   ;; (lambda (_) (format "*docker-build-output: %s *" image-name))))
 
 
-    (interactive (list (dockerfile-read-image-name) prefix-arg))
-    (save-buffer)
-      (compilation-start
-          (format
-              "%s%s build --progress plain --ssh=default %s %s %s -f %s %s"  ;; FIX
-              (if dockerfile-use-sudo "sudo " "")
-              dockerfile-mode-command
-              (if no-cache "--no-cache" "")
-              (dockerfile-tag-string image-name)
-              (dockerfile-build-arg-string)
-              (shell-quote-argument (dockerfile-standard-filename (buffer-file-name)))
-              (shell-quote-argument (dockerfile-standard-filename default-directory)))
-      nil
-      (lambda (_) (format "*docker-build-output: %s *" image-name))))
-
-  :config
-  (define-key dockerfile-mode-map (kbd "C-c C-c") #'dockerfile-build-buffer))
+(define-key dockerfile-mode-map (kbd "C-c C-c") #'dockerfile-build-buffer)
 
 
 ;; -----------------------------
