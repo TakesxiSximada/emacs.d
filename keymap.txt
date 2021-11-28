@@ -1,10 +1,10 @@
 status	key	command
-#DirectInput	Enter	Commit
-#Precomposition	Enter	Commit
-#Composition	Enter	Commit
-#Conversion	Enter	Commit
-#Suggestion	Enter	Commit
-#Prediction	Enter	Commit
+DirectInput	Enter	Commit
+Precomposition	Enter	Commit
+Composition	Enter	Commit
+Conversion	Enter	Commit
+Suggestion	Enter	Commit
+Prediction	Enter	Commit
 
 DirectInput	Space	InsertSpace
 Precomposition	Space	InsertSpace
