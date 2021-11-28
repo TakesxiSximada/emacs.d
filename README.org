@@ -611,3 +611,21 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 (setenv "PATH" (string-join exec-path ":"))
 #+end_src
 
+* grip-mode
+
+Org-modeやMarkdownの編集時にはリアルタイムプレビューがあると非常に捗る。
+Emacsではgrip-modeを使うことで実現できる。
+
+#+begin_src  emacs-lisp
+(use-package grip-mode :ensure t :defer t)
+#+end_src
+
+grip-modeは内部でGripというツールを使用している。このGripがリアルタイ
+ムレンダリングの機能を提供している。GripはPythonで実装されているので、
+pipを用いてインストールする。
+
+#+begin_src bash
+pip install grip
+#+end_src
+
+参考 :: https://blog.symdon.info/posts/1638063555/
