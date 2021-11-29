@@ -290,7 +290,7 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 
 #+begin_src emacs-lisp
 (setq org-agenda-prefix-format
-      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %t %.8s %-4.4c %-25.50b ")
+      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %t %.8s %-5.5c %-25.50b ")
         (todo . " %i %-12:c %-6e")
         (tags . " %i %-12:c")
         (search . " %i %-12:c")))
@@ -628,4 +628,18 @@ pipを用いてインストールする。
 pip install grip
 #+end_src
 
-参考 :: https://blog.symdon.info/posts/1638063555/
+参考 :: [[https://blog.symdon.info/posts/1638063555/]]
+
+* org-export
+
+org-exportはorg-mdoeで記述されたファイルを別の形式に変換する。
+
+上付き文字(^で挟む)と下付き文字の記法(_で挟む)は通常の記述で使用するた
+め、更に{}の指定が必要になるように設定する。
+
+#+begin_src emacs-lisp
+(setq org-export-with-sub-superscripts '{})
+#+end_src
+
+参考 :: [[https://blog.symdon.info/posts/1605311844/]]
+
