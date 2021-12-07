@@ -517,17 +517,19 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 フォントを調節して文字幅が合うようにします。
 
 #+begin_src emacs-lisp
-;; (progn
-;;   (set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 12))
-;;   (set-fontset-font nil 'ascii (font-spec :family "FreeMono" :size 13))
-;;   (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "しっぽり明朝" :size 16))
-;;   (set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "しっぽり明朝" :size 16))
-;;   (set-fontset-font nil 'japanese-jisx0212 (font-spec :family "しっぽり明朝" :size 16))
-;;   (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "しっぽり明朝" :size 16))
-;;   (set-fontset-font nil 'jisx0201 (font-spec :family "IPA明朝" :size 16))
-;;   )
+(progn
+  (set-face-attribute 'default nil :family "源ノ等幅" :height 120)
+  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "源ノ等幅" :size 16))
+  (set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "源ノ等幅" :size 16))
+  (set-fontset-font nil 'japanese-jisx0212 (font-spec :family "源ノ等幅" :size 16))
+  (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "源ノ等幅" :size 16))
+  (set-fontset-font nil 'jisx0201 (font-spec :family "源ノ等幅" :size 12))
+  (set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 12))
+  (set-fontset-font nil '(?☺ . ?☺) (font-spec :family "Apple Color Emoji" :size 6))
+  (set-fontset-font nil '(?🀄 . ?🀈) (font-spec :family "Apple Color Emoji" :size 9))
+  (set-fontset-font nil '(?一 . ?一) (font-spec :family "源ノ等幅" :size 12))
+  )
 #+end_src
-
 
 | 類似文字 |
 |----------|
@@ -539,11 +541,9 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 | z Z 2    |
 | 一 ―     |
 
+
 | ずれ確認用 半角40字、全角20字            |                    |
 |------------------------------------------+--------------------|
-| 😃😇😍😜😸🙈🐺🐰👽🐉💰🏡🎅🍪🍕🚀🚻💩📷📦 | 絵文字             |
-| 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈                 | 絵文字             |
-| ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺                       | 絵文字             |
 | AIfUEaiueoAIUEOaiueoAIUEOaiueoAIUEOaiueo | ASCII英字          |
 | 0123456789012345678901234567890123456789 | ASCII数字          |
 | ｱｲｳｴｵｱｲｳｴｵｱｲｳｴｵｱｲｳｴｵｱｲｳｴｵｱｲｳｴｵｱｲｳｴｵｱｲｳｴｵ | JIS X 0201ｶﾅ       |
@@ -552,6 +552,9 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 | ＡＢＣＤＥＡＢＣＤＥＡＢＣＤＥＡＢＣＤＥ | 同英字             |
 | 亜唖娃阿哀亜唖娃阿哀亜唖娃阿哀亜唖娃阿哀 | 同漢字             |
 | 𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽 | JIS X 0213漢字     |
+| 😃😇😍😜😸🙈🐺🐰👽🐉💰🏡🎅🍪🍕🚀🚻💩📷📦 | 絵文字             |
+| ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺                       | 絵文字             |
+| 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈                 | 絵文字             |
 
 
 (この文字列は https://qiita.com/query1000/items/4b0b8db872adc1a5e2e9V から抜粋)
@@ -642,4 +645,3 @@ org-exportはorg-mdoeで記述されたファイルを別の形式に変換す�
 #+end_src
 
 参考 :: [[https://blog.symdon.info/posts/1605311844/]]
-
