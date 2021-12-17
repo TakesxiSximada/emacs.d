@@ -649,9 +649,8 @@ org-exportはorg-mdoeで記述されたファイルを別の形式に変換す�
 
 ** OrgファイルをPDFにエクスポート
 
-LaTeXを使ってOrgファイルをPDFにエクスポートします。
-org-latex-export-to-pdfが定義されているが、文字コード関連で動作しなかったため
-コマンドを直接起動する形で独自に実装した。
+LaTeXを使ってOrgファイルをPDFにエクスポートする。
+org-latex-export-to-pdfが定義されているが、文字コード関連で動作しなかったためコマンドを直接起動する形で独自に実装した。
 
 #+begin_src emacs-lisp
 (defun org-pdf-export-to-pdf-via-latex ()
