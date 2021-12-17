@@ -122,6 +122,7 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path "/usr/local/opt/openjdk/bin")
 (add-to-list 'exec-path "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin")
+(add-to-list 'exec-path "/usr/local/texlive/2021/bin/universal-darwin")  ;; TexLive
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 (add-to-list 'exec-path (expand-file-name "~/.emacs.d/whalebrew"))
 (add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
@@ -645,3 +646,26 @@ org-exportはorg-mdoeで記述されたファイルを別の形式に変換す�
 #+end_src
 
 参考 :: [[https://blog.symdon.info/posts/1605311844/]]
+
+** OrgファイルをPDFにエクスポート
+
+LaTeXを使ってOrgファイルをPDFにエクスポートします。
+org-latex-export-to-pdfが定義されているが、文字コード関連で動作しなかったため
+コマンドを直接起動する形で独自に実装した。
+
+#+begin_src emacs-lisp
+(defun org-pdf-export-to-pdf-via-latex ()
+  "Export PDF file from org file via latex"
+  (interactive)
+  (let* ((tex-file-name (org-latex-export-to-latex))
+	 (base-file-name (file-name-base tex-file-name))
+	 (dvi-file-name (format "%s.dvi" base-file-name))
+	 (pdf-file-name (format "%s.pdf" base-file-name))
+	 (vterm-shell (format "platex %s && dvipdfmx %s"
+			      tex-file-name
+			      dvi-file-name))
+	 (vterm-buffer-name (format "*Org PDF Exporting: %s" pdf-file-name))
+	 (vterm-kill-buffer-on-exit nil))
+    (vterm)
+    pdf-file-name))
+#+end_src
