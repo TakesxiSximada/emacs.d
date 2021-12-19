@@ -668,3 +668,18 @@ org-latex-export-to-pdfが定義されているが、文字コード関連で動
     (vterm)
     pdf-file-name))
 #+end_src
+
+* aspell
+
+スペルチェッカー。
+
+http://aspell.net/
+
+#+begin_src emacs-lisp
+(setq-default ispell-program-name "aspell")
+(with-eval-after-load "ispell"
+  (setq ispell-local-dictionary "en_US")
+  (add-to-list 'ispell-skip-region-alist '("[^\000-\377]+")))
+#+end_src
+
+aspell自体のインストールは Homebrewの場合 =brew install aspell= を実行する。
