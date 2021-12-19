@@ -660,7 +660,7 @@ org-latex-export-to-pdfが定義されているが、文字コード関連で動
 	 (base-file-name (file-name-base tex-file-name))
 	 (dvi-file-name (format "%s.dvi" base-file-name))
 	 (pdf-file-name (format "%s.pdf" base-file-name))
-	 (vterm-shell (format "platex %s && dvipdfmx %s"
+	 (vterm-shell (format "bash -c 'platex %s && dvipdfmx %s'"
 			      tex-file-name
 			      dvi-file-name))
 	 (vterm-buffer-name (format "*Org PDF Exporting: %s" pdf-file-name))
