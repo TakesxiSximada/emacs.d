@@ -515,7 +515,11 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 
 * Font
 
-フォントを調節して文字幅が合うようにします。
+フォントはSource Han Mono[fn:source-han-mono-repo]をインストールする。
+
+[fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
+
+フォントを調節して文字幅が合うようにする。
 
 #+begin_src emacs-lisp
 (progn
@@ -683,3 +687,7 @@ http://aspell.net/
 #+end_src
 
 aspell自体のインストールは Homebrewの場合 =brew install aspell= を実行する。
+
+* AquaSKK
+
+IMEにはAquaSKKを使用している。aquaskk/keymap.conf を =~/Library/Application Support/AquaSKK/= 配下にコピーする。
