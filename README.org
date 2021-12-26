@@ -691,3 +691,57 @@ aspell自体のインストールは Homebrewの場合 =brew install aspell= を
 * AquaSKK
 
 IMEにはAquaSKKを使用している。aquaskk/keymap.conf を =~/Library/Application Support/AquaSKK/= 配下にコピーする。
+
+* mmm-mode
+
+mmm-modeは1つのバッファ内で複数のメジャーモードを利用できるようにする。
+ただしバージョン0.5.8にはvue-modeでファイルを開く時にエラーが発生する既知のバグ[fn:mmm-mode-issue-112]がある。
+この問題を回避するにはいくつか方法が示されているが確認したところ以下の関数を評価することで回避できた[fn:mmm-mode-issue-112-wa]。
+
+#+begin_src emacs-lisp
+(require 'mmm-region)
+
+
+(defun mmm-syntax-propertize-function (start stop)
+  "Composite function that applies `syntax-table' text properties.
+It iterates over all submode regions between START and STOP and
+calls each respective submode's `syntax-propertize-function'."
+  (let ((saved-mode mmm-current-submode)
+        (saved-ovl  mmm-current-overlay))
+    (mmm-save-changed-local-variables
+     mmm-current-submode mmm-current-overlay)
+    (unwind-protect
+        (mapc (lambda (elt)
+                (let* ((mode (car elt))
+                       (func (get mode 'mmm-syntax-propertize-function))
+                       (beg (cadr elt)) (end (nth 2 elt))
+                       (ovl (nth 3 elt))
+                       ;; FIXME: Messing with syntax-ppss-* vars should not
+                       ;; be needed any more in Emacs≥26.
+                       syntax-ppss-cache
+                       syntax-ppss-last)
+                  (goto-char beg)
+                  (mmm-set-current-pair mode ovl)
+                  (mmm-set-local-variables mode mmm-current-overlay)
+                  (save-restriction
+                    (when mmm-current-overlay
+                      (narrow-to-region (overlay-start mmm-current-overlay)
+                                        (overlay-end mmm-current-overlay))
+                      (put-text-property
+                       (point-min) (point-max)
+                       'syntax-table (syntax-table)))
+                    (cond
+                     (func
+                      (funcall func beg end))
+                     (font-lock-syntactic-keywords
+                      (let ((syntax-propertize-function nil))
+                        (font-lock-fontify-syntactic-keywords-region beg end))))
+                    (run-hook-with-args 'mmm-after-syntax-propertize-functions
+                                        mmm-current-overlay mode beg end))))
+              (mmm-regions-in start stop))
+      (mmm-set-current-pair saved-mode saved-ovl)
+      (mmm-set-local-variables (or saved-mode mmm-primary-mode) saved-ovl))))
+#+end_src
+
+[fn:mmm-mode-issue-112] [[https://github.com/purcell/mmm-mode/issues/112]]
+[fn:mmm-mode-issue-112-wa] [[https://github.com/purcell/mmm-mode/issues/112#issuecomment-751926650]]
