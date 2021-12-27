@@ -301,7 +301,7 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 
 #+begin_src emacs-lisp
 (setq org-agenda-sorting-strategy
-    '((agenda habit-down time-up effort-up category-keep priority-down)
+    '((agenda habit-down time-up category-keep effort-up category-keep priority-down)
       (todo   priority-down category-keep)
       (tags   priority-down category-keep)
       (search category-keep)))
@@ -328,6 +328,15 @@ org-todoの論理構造を視覚的に表示します。
 
 #+begin_src emacs-lisp
 (setq org-track-ordered-property-with-tag t)
+#+end_src
+
+org-todoにはTODOとDONEのステータスがデフォルトで用意されている。
+これでは状態の保持には少し足りないが、多すぎるのも操作性を落すことになる。
+設定したけれどやらなかったというステータスとしてCANCELを追加する。
+
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+  '((sequence "TODO"  "|" "DONE" "CANCEL")))
 #+end_src
 
 * org-priority
