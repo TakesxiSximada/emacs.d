@@ -526,8 +526,6 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 
 フォントはSource Han Mono[fn:source-han-mono-repo]をインストールする。
 
-[fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
-
 フォントを調節して文字幅が合うようにする。
 
 #+begin_src emacs-lisp
@@ -752,5 +750,34 @@ calls each respective submode's `syntax-propertize-function'."
       (mmm-set-local-variables (or saved-mode mmm-primary-mode) saved-ovl))))
 #+end_src
 
+* リージョンの文字列を置き換えるユーティリティ
+
+=replace-region-contents= をコマンドとして呼び出せるようにし、適応する文字列処理を任意に指定できるようにした。
+
+#+begin_src emacs-lisp
+(defun apply-and-replace-region-string (func beg end)
+  "Replace after appling function the region string"
+  (interactive "a\nr")
+  (replace-region-contents
+   beg end (lambda ()
+	     (let ((txt (buffer-substring-no-properties beg end)))
+	       (funcall func txt)))))
+#+end_src
+
+リージョンの浮動小数点形式のUNIXエポックタイムを時刻形式に変換する関数を実装した。
+
+#+begin_src emacs-lisp
+(defun float-time-to-datetime-string (float-style-string)
+  "Convert unix epoc time (floating point style) string to date time formated string."
+  (format-time-string
+   "%Y-%m-%dT%H:%M:%S.%6N"
+   (encode-time (decode-time
+		 (string-to-number float-style-string)))))
+#+end_src
+
+
+* 脚注
+
+[fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
 [fn:mmm-mode-issue-112] [[https://github.com/purcell/mmm-mode/issues/112]]
 [fn:mmm-mode-issue-112-wa] [[https://github.com/purcell/mmm-mode/issues/112#issuecomment-751926650]]
