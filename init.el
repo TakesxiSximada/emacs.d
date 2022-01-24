@@ -642,5 +642,8 @@ The build string will be of the format:
 
 (define-key dockerfile-mode-map (kbd "C-c C-c") #'dockerfile-build-buffer)
 
+(put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+
 ;; load custom file.
 (load-file custom-file)

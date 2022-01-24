@@ -366,6 +366,7 @@ org-babelはorg-modeのコードブロックを実行するためのライブラ
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
+   (ditaa . t)
    (scheme . t)
    (emacs-lisp . t)
    (python . t)
@@ -773,6 +774,18 @@ calls each respective submode's `syntax-propertize-function'."
    "%Y-%m-%dT%H:%M:%S.%6N"
    (encode-time (decode-time
 		 (string-to-number float-style-string)))))
+#+end_src
+
+* EditorConfig
+
+EditorConfigはプロジェクト毎のエディタの設定を統一する。
+
+
+#+begin_src emacs-lisp
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 #+end_src
 
 
