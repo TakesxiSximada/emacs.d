@@ -647,3 +647,6 @@ The build string will be of the format:
 
 ;; load custom file.
 (load-file custom-file)
+
+;; Setup PATH environment variable
+(setenv "PATH" (string-join exec-path ":"))

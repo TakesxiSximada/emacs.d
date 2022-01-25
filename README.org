@@ -137,7 +137,6 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
 (add-to-list 'exec-path "/opt/ng/symdon/whalebrew")
-(setenv "PATH" (string-join exec-path ":"))
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
 (setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1l/lib")))
@@ -624,7 +623,6 @@ C-c= を既に使っているメジャーモードの場合その設定が邪魔
 #+begin_src emacs-lisp
 (setenv "N_PREFIX" (expand-file-name "~/.local"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
-(setenv "PATH" (string-join exec-path ":"))
 #+end_src
 
 * grip-mode
