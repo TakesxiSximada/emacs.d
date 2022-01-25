@@ -306,6 +306,14 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
       (search category-keep)))
 #+end_src
 
+** プロパティを表示する
+
+#+begin_src emacs-lisp
+(use-package org-agenda-property :ensure t :defer t)
+#+end_src
+
+参考: [[https://blog.symdon.info/posts/1617669052/][org-agendaのday viewでlocationの表示を行う]]
+
 * org-todo
 
 org-todoの論理構造を強制します。
