@@ -83,8 +83,10 @@
 (use-package ido-vertical-mode :ensure t :defer
   :init
   (ido-vertical-mode)
-  (add-hook 'ido-setup-hook #'ido-vertical-define-keys-custom))
-
+  (add-hook 'ido-setup-hook #'ido-vertical-define-keys-custom)
+  :custom
+  (ido-default-file-method 'selected-window)
+  (ido-default-buffer-method 'selected-window))
 
 (defun ido-vertical-define-keys-custom ()
   (define-key ido-completion-map (kbd "M-n") 'ido-next-match)
