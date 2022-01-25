@@ -786,7 +786,6 @@ calls each respective submode's `syntax-propertize-function'."
 
 EditorConfigはプロジェクト毎のエディタの設定を統一する。
 
-
 #+begin_src emacs-lisp
 (use-package editorconfig
   :ensure t
@@ -794,6 +793,17 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
   (editorconfig-mode 1))
 #+end_src
 
+* Frame毎に色調を切り替える
+
+#+begin_src emacs-lisp
+(setq account-alist '((sym . "ffffff")))
+
+(defun switch-to-project (label)
+  (interactive (list (completing-read "Label: "
+				      (mapcar 'car account-alist))))
+  (if-let ((color-fg (cdr (assoc (intern label) account-alist))))
+      (set-foreground-color color-fg)))
+#+end_src
 
 * 脚注
 
