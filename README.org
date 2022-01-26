@@ -798,7 +798,7 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
 #+begin_src emacs-lisp
 (setq account-alist '((sym . "ffffff")))
 
-(defun switch-to-project (label)
+(defun switch-to-color (label)
   (interactive (list (completing-read "Label: "
 				      (mapcar 'car account-alist))))
   (if-let ((color-fg (cdr (assoc (intern label) account-alist))))
