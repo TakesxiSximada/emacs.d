@@ -476,7 +476,7 @@ MSSQL Serverについてはsql-modeでの扱いが難しいです。
 環境固有の設定ファイルを読み込みます。
 
 #+begin_src emacs-lisp
-(load-file "/opt/ng/symdon/emacs.d/after.el")
+;; (load-file "/opt/ng/symdon/emacs.d/after.el")
 #+end_src
 
 * ユーティリティ
