@@ -136,7 +136,6 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 (add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
 (add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
-(add-to-list 'exec-path "/opt/ng/symdon/whalebrew")
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
 (setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1l/lib")))
@@ -469,14 +468,6 @@ MSSQL Serverについてはsql-modeでの扱いが難しいです。
 (setq sql-oracle-program "docker")
 (setq sql-oracle-options '("exec" "-ti" "oracle" "bash" "-c" "sqlplus sys/testing1234@localhost:1521/ORCLCDB as sysdba"))
 (setq sql-oracle-login-params nil)
-#+end_src
-
-* 環境固有の設定
-
-環境固有の設定ファイルを読み込みます。
-
-#+begin_src emacs-lisp
-(load-file "/opt/ng/symdon/emacs.d/after.el")
 #+end_src
 
 * ユーティリティ
