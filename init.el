@@ -67,13 +67,6 @@
       custom-file (locate-user-emacs-file "custom.el")
       )
 
-;; ------------------------------
-;; environment variable utilities
-;; ------------------------------
-(defun getenv+ (name)
-  "環境変数から値を取得し、さもなければシンボルから値を取得する"
-  (or (getenv name)
-      (symbol-value (intern-soft name))))
 ;; -----------------------------
 ;; wakatime
 ;; -----------------------------
@@ -174,58 +167,7 @@
 		       "emacs-lisp\\|elisp")))
     (load-file (car tangled-file))))
 
-;; -------------------------
-;; Load README configuration
-;; -------------------------
-(use-package dockerfile-mode :ensure t :defer t)
 
-(require 'dockerfile-mode)
-
-(defun dockerfile-get-docker-image-from-inbuffer ()
-  "# iamge: DockerImageName"
-  (interactive)
-  (let ((image-name-line (save-excursion
-		      (goto-char (point-min))
-		      (buffer-substring-no-properties (point-at-bol) (point-at-eol)))))
-    (s-trim (car (cdr (s-split ":" image-name-line))))))
-
-
-(defun dockerfile-read-image-name ()
-  "Read a docker image name."
-  (ido-completing-read "Image name: "
-		       dockerfile-image-name-history
-		       nil nil nil nil
-		       (dockerfile-get-docker-image-from-inbuffer)))
-
-
-(defun dockerfile-build-buffer (image-name &optional no-cache)
-  "Build an image called IMAGE-NAME based upon the buffer.
-
-If prefix arg NO-CACHE is set, don't cache the image.
-The build string will be of the format:
-`sudo docker build --no-cache --tag IMAGE-NAME --build-args arg1.. -f filename directory`"
-  (interactive (list (dockerfile-read-image-name)
-		     (not (y-or-n-p "Using cache?"))))
-  (save-buffer)
-  (vterm-command
-   (format
-    "%s%s build --ssh=default %s %s %s -f %s %s"  ;; FIX
-    (if dockerfile-use-sudo "sudo " "")
-    dockerfile-mode-command
-    (if no-cache "--no-cache" "")
-    (dockerfile-tag-string image-name)
-    (dockerfile-build-arg-string)
-    (shell-quote-argument (dockerfile-standard-filename (buffer-file-name)))
-    (shell-quote-argument (dockerfile-standard-filename default-directory)))
-   default-directory))
-;; nil
-   ;; (lambda (_) (format "*docker-build-output: %s *" image-name))))
-
-
-(define-key dockerfile-mode-map (kbd "C-c C-c") #'dockerfile-build-buffer)
-
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
 
 ;; load custom file.
 (load-file custom-file)
