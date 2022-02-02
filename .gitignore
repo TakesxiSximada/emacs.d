@@ -38,3 +38,6 @@ transient/
 tutorial
 url/
 var/
+games/
+image-dired/
+dump.rdb
