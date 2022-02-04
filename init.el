@@ -61,18 +61,6 @@
 ;; -----------------------------
 ;; Color Theme
 ;; -----------------------------
-(setq solarized-distinct-fringe-background t
-      solarized-high-contrast-mode-line nil
-      solarized-use-less-bold nil
-      solarized-use-more-italic t
-      solarized-emphasize-indicators nil
-      solarized-scale-org-headlines nil
-      solarized-height-minus-1 1
-      solarized-height-plus-1 1
-      solarized-height-plus-2 1
-      solarized-height-plus-3 1
-      solarized-height-plus-4 1
-      )  ;; end
 (load-theme 'simple-darkness t)
 
 ;; -------------------------
