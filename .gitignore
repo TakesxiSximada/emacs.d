@@ -8,7 +8,6 @@ README.el
 abbrev_defs
 auto-save-list/
 bookmarks
-custom.el
 el-get
 elpa
 emojis/
@@ -41,3 +40,4 @@ var/
 games/
 image-dired/
 dump.rdb
+.env

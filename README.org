@@ -34,6 +34,20 @@ npm install -g prettier
 
 #+end_src
 
+* パッケージング関連パッケージ
+
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+
+(use-package quelpa :ensure t :defer t)
+(use-package quelpa-use-package :ensure t :defer t)
+(use-package el-get :ensure t :defer t
+  :init
+  (setq el-get-dir (expand-file-name "/opt/ng")))
+
+#+end_src
 * 各種パッケージ
 
 #+begin_src emacs-lisp
@@ -357,11 +371,10 @@ The build string will be of the format:
 
 * 表示
 
-可視性の向上のためカーソル位置の行にアンダーラインを表示し背景色を変更します。
+可視性の向上のためカーソル位置の行にアンダーラインを表示する。
 
 #+begin_src emacs-lisp
-(global-hl-line-mode 1)
-(set-face-attribute hl-line-face nil :underline nil :background "#3f3f4f")
+(global-hl-line-mode t)
 #+end_src
 
 * ウィンドウの分割表示
@@ -1268,8 +1281,6 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
       (set-foreground-color color-fg)))
 #+end_src
 
-
-
 * URL関連
 
 #+begin_src emacs-lisp
@@ -1311,6 +1322,41 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 #+end_src
+
+* 追加の設定の読み込み
+
+各環境毎に読み込みするかどうかを切り替えたい設定もある。
+それらを切り替えるために追加で読み込むファイルを環境変数から取得する。
+
+#+begin_src emacs-lisp
+(save-window-excursion
+  (when (file-exists-p custom-env-file)
+    (with-current-buffer (find-file-read-only custom-env-file)
+      (dotenv-mode-apply-all))))
+
+(mapc (lambda (path) (add-to-list 'custom-additional-load-file-list path))
+      (split-string (getenv "EMACS_ADDITINONAL_LOAD_FILE_PATH") ":"))
+
+(mapc (lambda (path) (load-file path))
+      custom-additional-load-file-list)
+#+end_src
+
+* Color Themeのカスタマイズ
+
+#+begin_example emacs-lisp
+(solarized-create-theme-file-with-palette 'dark 'simple-darkness
+ '("#000000"  ;; darkest-base
+   "#ffffff"  ;; brightest-base
+   "#dbb32d"  ;; yellow
+   "#e67f43"  ;; orange
+   "#ed4a46"  ;; red
+   "#eb6eb7"  ;; magenta
+   "#a580e2"  ;; violet
+   "#368aeb"  ;; blue
+   "#3fc5b7"  ;; cyan
+   "#70b433"  ;; green
+   ))
+#+end_example
 
 * 脚注
 
