@@ -1,7 +1,21 @@
-#!/usr/bin/env whalebrew
-image: localstack/localstack:0.12.6
-keep_container_user: true
-ports:
-  - "4566:4566"
-  - "4571:4571"
-  - "8080:8080"
+#! /usr/bin/env bash
+setb -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+cd ${SCRIPT_DIR}
+
+exec docker run -it --rm \
+     --publish="127.0.0.1:4566:4566" \
+     --publish="127.0.0.1:4571:4571" \
+     --publish="127.0.0.1:8080:8080" \
+     --expose="4566" \
+     --expose="4571" \
+     --expose="8080" \
+     --workdir="/workdir" \
+     --volume "$(pwd):/workdir" \
+     --volume "localstack-data:/tmp/localstack" \
+     --name="localstack" \
+     --env-file="${SCRIPT_DIR}/.env.localstack" \
+     localstack/localstack:0.12.6 \
+     "$@"
