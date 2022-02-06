@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-setb -e -x
+set -e -x
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
