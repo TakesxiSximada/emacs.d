@@ -1,12 +1,12 @@
 ;;; trans.el --- Translation functions -*- lexical-binding: t; -*-
 
 ;; Carstens outline-mode for keeping track of everything.
-;; Copyright (C) 2021-2021 Symdon GA
+;; Copyright (C) 2021 symdo
 ;;
 ;; Author: TakesxiSximada <8707279+TakesxiSximada@users.noreply.github.com>
 ;; Maintainer: TakesxiSximada <8707279+TakesxiSximada@users.noreply.github.com>
 ;; Keywords: Translation
-;; Homepage: https://symdon.ga/
+;; Homepage: https://www.symdon.info/
 
 ;; Version: 1
 
