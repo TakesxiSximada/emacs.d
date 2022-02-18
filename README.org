@@ -1,5 +1,6 @@
 #+TITLE: My Emacs configuration files.
 
+[[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
 
 This repository is settings for my Emacs.
 
