@@ -35,6 +35,33 @@ npm install -g prettier
 
 #+end_src
 
+* 実行ファイルへのパスやその他環境変数の設定
+
+#+begin_src emacs-lisp
+(add-to-list 'exec-path "/usr/local/bin")
+(add-to-list 'exec-path "/usr/local/opt/openjdk/bin")
+(add-to-list 'exec-path "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin")
+(add-to-list 'exec-path "/usr/local/texlive/2021/bin/universal-darwin")  ;; TexLive
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.emacs.d/whalebrew"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.goenv/shims"))
+(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v8.15.0/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.poetry/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
+(add-to-list 'exec-path (expand-file-name "~/Library/Android/sdk/platform-tools"))
+(add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
+(add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
+(add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
+
+(setenv "PATH" (string-join exec-path ":"))
+(setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
+(setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1l/lib")))
+#+end_src
+
+
 * パッケージング関連パッケージ
 
 #+begin_src emacs-lisp
@@ -591,30 +618,6 @@ Emacsには標準でいくつかのデバッガーが付属していますが、
 ;; sdb
 #+end_src
 
-* 実行ファイルへのパスやその他環境変数の設定
-
-#+begin_src emacs-lisp
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path "/usr/local/opt/openjdk/bin")
-(add-to-list 'exec-path "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin")
-(add-to-list 'exec-path "/usr/local/texlive/2021/bin/universal-darwin")  ;; TexLive
-(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.emacs.d/whalebrew"))
-(add-to-list 'exec-path (expand-file-name "~/.goenv/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.goenv/shims"))
-(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.nvm/versions/node/v8.15.0/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.poetry/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.whalebrew-bin/bin"))
-(add-to-list 'exec-path (expand-file-name "~/Library/Android/sdk/platform-tools"))
-(add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
-(add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
-(add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
-
-(setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
-(setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1l/lib")))
-#+end_src
 
 * CSS
 
