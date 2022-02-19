@@ -4,12 +4,14 @@
 
 This repository is settings for my Emacs.
 
-|--------------------------------+-----------------------------------------------|
-| File                           |                                               |
-|--------------------------------+-----------------------------------------------|
-| ./init.el                      | Remember, the Force will be with you, always. |
-| ./themes/sximada-dark-theme.el | That leads to the dark side.                  |
-|--------------------------------+-----------------------------------------------|
+|-----------------------------------+-----------------------------------------------|
+| File                              |                                               |
+|-----------------------------------+-----------------------------------------------|
+| ./init.el                         | Remember, the Force will be with you, always. |
+| ./themes/simple-darkness-theme.el | That leads to the dark side.                  |
+| ./distributions/                  | Put submodules of Emacs distributions.        |
+| ./spacemacs/                      | Settings for spacemacs.                       |
+|-----------------------------------+-----------------------------------------------|
 
 * Setup
 
