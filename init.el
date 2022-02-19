@@ -86,3 +86,23 @@
 
 ;; Setup PATH environment variable
 (setenv "PATH" (string-join exec-path ":"))
+
+
+
+;; -----------------------------
+;; Spacemacs
+;; -----------------------------
+(defun start-spacemacs ()
+  (interactive)
+  (setq package-user-dir (expand-file-name "~/.elpa.spacemacs")
+	spacemacs-start-directory (expand-file-name "~/.emacs.d/distributions/spacemacs/")
+	spacemacs-bootstrap-file (file-name-concat spacemacs-start-directory "init.el")
+	custom-file (locate-user-emacs-file "custom-spacemacs.el")
+	)
+  (setenv "SPACEMACSDIR" (expand-file-name "~/.emacs.d/spacemacs/"))
+  (package-initialize t)
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (load spacemacs-bootstrap-file nil nil))
+

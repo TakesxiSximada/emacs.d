@@ -1382,6 +1382,35 @@ The given CMD string will be appended."
     (format "awsl%s s3 %s" profile-arg cmd)))
 #+end_src
 
+* Spacemacs
+
+Spacemacsは非常に人気のあるEmacsのディストリビューションのひとつだ。
+通常は~/.emacs.dにSpacemacsのリポジトリをcloneして用いる。
+
+私の場合、Spacemacsをメインでは使用しないが、しばしばSpacemacsの設定方法などを確認するためにSpacemacsとして起動したいことがある。
+そのためEmacsが完全に起動した後で、任意のタイミングでSpacemacsに切り替えられるようにする。
+
+#+begin_src emacs-lisp
+(defun start-spacemacs ()
+  (interactive)
+  (setq package-user-dir (expand-file-name "~/.elpa.spacemacs")
+	spacemacs-start-directory (expand-file-name "~/.emacs.d/distributions/spacemacs/")
+	spacemacs-bootstrap-file (file-name-concat spacemacs-start-directory "init.el")
+	custom-file (locate-user-emacs-file "custom-spacemacs.el")
+	)
+  (setenv "SPACEMACSDIR" (expand-file-name "~/.emacs.d/spacemacs/"))
+  (package-initialize t)
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (load spacemacs-bootstrap-file nil nil))
+#+end_src
+
+=M-x start-spacemacs= を実行するとパッケージ関連のパスを書き換え、Spacemacsのbootstrap用のファイルをロードする。
+EmacsがSpacemacsに変身した後はで、元の環境に戻すにはEmacsを再起動するしかない。
+Spacemacsの初期化処理によって更新された変数や関数などの情報を、それ以前に元に戻すのが困難だからだ。
+過ぎ去った時間を取り戻すことはできない。
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
