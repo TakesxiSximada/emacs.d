@@ -68,7 +68,6 @@
 ;; -------------------------
 (when (package-installed-p 'org)
   (require 'org)
-
   (save-window-excursion
     ;; Almost the same as org-babel-load-file, But the tangled filenames
     ;; are added dot to prefix for make it easier to choose in dired.
@@ -87,10 +86,8 @@
 ;; Setup PATH environment variable
 (setenv "PATH" (string-join exec-path ":"))
 
-
-
 ;; -----------------------------
-;; Spacemacs
+;; Distributions
 ;; -----------------------------
 (defun start-spacemacs ()
   (interactive)
@@ -99,10 +96,25 @@
 	spacemacs-bootstrap-file (file-name-concat spacemacs-start-directory "init.el")
 	custom-file (locate-user-emacs-file "custom-spacemacs.el")
 	)
-  (setenv "SPACEMACSDIR" (expand-file-name "~/.emacs.d/spacemacs/"))
+  (setenv "SPACEMACSDIR" (expand-file-name "~/.emacs.d/spacemacs.d/"))
   (package-initialize t)
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
   (require 'use-package)
   (load spacemacs-bootstrap-file nil nil))
 
+
+(defun start-doom-emacs ()
+  (interactive)
+  (setenv "EMACSDIR" (expand-file-name "~/.emacs.d/distributions/doom-emacs/"))
+  (setenv "DOOMLOCALDIR" (expand-file-name "~/.emacs.d/doom.d/"))
+  (setenv "DOOMDIR" (expand-file-name "~/.emacs.d/doom.d/"))
+
+  (setq package-user-dir (expand-file-name "~/.elpa.doom-emacs")
+	custom-file (locate-user-emacs-file "custom-doom-emacs.el")
+	)
+
+  (setq user-emacs-directory "/Users/sximada/.emacs.d/distributions/doom-emacs/")
+  (load (concat user-emacs-directory "core/core") nil 'nomessage)
+  (load (expand-file-name "~/.emacs.d/distributions/doom-emacs/init.el") nil 'nomessage)
+  (switch-to-buffer (get-buffer "*doom*")))
