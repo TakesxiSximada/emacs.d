@@ -463,7 +463,15 @@ macOSのアプリケーションをEmacsから起動する。
 
 #+end_src
 
-* Editor-Mode
+* essay.el
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/essay"))
+
+(require 'essay)
+#+end_src
+
+* Editor Mode
 
 #+begin_src emacs-lisp
 (defvar editor-buffer-name "*EDITOR*")
@@ -598,7 +606,7 @@ Emacsの設定ファイルは開く回数が多いため素早く開けるよう
 (bind-key* "C-t C-c" #'vterm-command)
 (bind-key* "C-t C-o" #'macos-app)
 (bind-key* "C-t C-t" #'other-frame)
-(bind-key* "C-t C-w" #'editor-create-buffer)
+(bind-key* "C-t C-w" #'essay)
 (bind-key* "C-x C-v" #'magit-status)
 (bind-key* "M-X" #'smex-major-mode-commands)
 (bind-key* "M-i" #'edit-indirect-region)
