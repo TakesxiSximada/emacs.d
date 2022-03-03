@@ -114,7 +114,7 @@
 	custom-file (locate-user-emacs-file "custom-doom-emacs.el")
 	)
 
-  (setq user-emacs-directory "/Users/sximada/.emacs.d/distributions/doom-emacs/")
+  (setq user-emacs-directory (expand-file-name "~/.emacs.d/distributions/doom-emacs/"))
   (load (concat user-emacs-directory "core/core") nil 'nomessage)
   (load (expand-file-name "~/.emacs.d/distributions/doom-emacs/init.el") nil 'nomessage)
   (switch-to-buffer (get-buffer "*doom*")))
