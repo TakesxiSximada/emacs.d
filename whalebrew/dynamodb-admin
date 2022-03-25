@@ -1,9 +1,14 @@
-#!/usr/bin/env whalebrew
-image: aaronshaf/dynamodb-admin
-entrypoint:
-  - "/bin/dynamodb-admin.js"
-ports:
-  - "8001:8001"
-environment:
-  - "DYNAMO_ENDPOINT=http://host.docker.internal:4566"
-  - "AWS_REGION=ap-northeast-1"
+#!/usr/bin/env bash
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+cd ${SCRIPT_DIR}
+
+export DYNAMO_ENDPOINT
+export AWS_REGION
+
+exec docker run -it --rm \
+     --publish="8001:8001" \
+     --expose="8001" \
+     --name="dynamodb-admin" \
+     --env-file="${SCRIPT_DIR}/.env.dynamodb-admin" \
+     aaronshaf/dynamodb-admin \
+     "$@"
