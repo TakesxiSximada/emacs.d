@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+exec aws --endpoint http://localhost:4566 $@
