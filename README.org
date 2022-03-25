@@ -86,14 +86,12 @@ npm install -g prettier
 (el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
 (el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
 (el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
-(el-get-bundle dockerfile-mode :url "git@github.com:TakesxiSximada/dockerfile-mode.git" :type "git")
 (el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git")
 (el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
 (el-get-bundle gist:05de904cd0c320733cae:org-file-table :type "git")
 (el-get-bundle gist:10985431:go-template-mode :type "git")
 (el-get-bundle gist:6961ff8bfb228a7601ed470598fad513:django.el :type "git")
-(el-get-bundle gist:73383aaf81656737fa533dd39dcb27a8:docker-compose-up-services :type "git")
 (el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
 (el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
@@ -337,6 +335,11 @@ Returns symbol of major-mode.
 (use-package docker-compose-mode :ensure t :defer t)
 (use-package docker-tramp :ensure t :defer t)
 ;; (use-package dockerfile-mode :ensure t :defer t)
+#+end_src
+
+#+begin_src emacs-lisp
+(el-get-bundle dockerfile-mode :url "git@github.com:TakesxiSximada/dockerfile-mode.git" :type "git")
+(el-get-bundle gist:73383aaf81656737fa533dd39dcb27a8:docker-compose-up-services :type "git")
 #+end_src
 
 dockerfile-modeでvternを使用するため関数を上書きする。
@@ -832,7 +835,7 @@ org-todoにはTODOとDONEのステータスがデフォルトで用意されて�
 
 #+begin_src emacs-lisp
 (setq org-todo-keywords
-  '((sequence "TODO"  "|" "DONE" "CANCEL")))
+  '((sequence "TODO" "EPIC" "|" "DONE" "CANCEL")))
 #+end_src
 
 * org-priority
@@ -849,9 +852,9 @@ org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先�
 
 #+begin_src emacs-lisp
 (define-key org-mode-map (kbd "M-p") 'org-priority-up)
-(define-key org-mode-map (kbd "M-n") 'org-priority-down)
+(define-key org-mode-map (kbd "M-n") 'org-todo)
 (define-key org-agenda-mode-map (kbd "M-p") 'org-agenda-priority-up)
-(define-key org-agenda-mode-map (kbd "M-n") 'org-agenda-priority-down)
+(define-key org-agenda-mode-map (kbd "M-n") 'org-agenda-todo)
 #+end_src
 
 * org-babel
@@ -877,6 +880,10 @@ org-babelはorg-modeのコードブロックを実行するためのライブラ
 各種データベースへの接続設定をします。
 
 ** MySQL
+
+(setq sql-mysql-program "docker")
+(setq sql-mysql-options '("exec" "-ti" "mysqld" "mysql" "mysql"))
+
 
 #+begin_src emacs-lisp
 (setq sql-mysql-program "docker")
