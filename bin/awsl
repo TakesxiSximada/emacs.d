@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec aws --endpoint-url ${AWSL_ORIGIN:=http://localhost:4566} $@

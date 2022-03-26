@@ -86,6 +86,20 @@
 ;; Setup PATH environment variable
 (setenv "PATH" (string-join exec-path ":"))
 
+;; AWS CLI for local
+(defun awsl-switch-origin (origin)
+  (interactive "s:AWSL_ORIGIN: ")
+  (setenv "AWSL_ORIGIN" origin)
+  (message (format "Change `AWSL_ORIGIN` environment variable: %s"
+		   origin)))
+
+;; AWS CLI for local
+(defun aws-switch-profile (profile-name)
+  (interactive "s:AWS_PROFILE: ")
+  (setenv "AWS_PROFILE" profile-name)
+  (message (format "Change `AWS_PROFILE` environment variable: %s"
+		   profile-name)))
+
 ;; -----------------------------
 ;; Distributions
 ;; -----------------------------
