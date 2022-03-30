@@ -1,6 +1,8 @@
 *.log
 *~
 .README.el
+.cache/
+.env
 .lsp-session-v1
 .org-id-locations
 README.el
@@ -8,13 +10,16 @@ README.el
 abbrev_defs
 auto-save-list/
 bookmarks
+dump.rdb
 el-get
 elpa
 emojis/
 eshell/
 eww-bookmarks
+games/
 ido*.last
 ido.last
+image-dired/
 init.el~
 lib/our-circleci.el
 network-security.data
@@ -37,7 +42,3 @@ transient/
 tutorial
 url/
 var/
-games/
-image-dired/
-dump.rdb
-.env
