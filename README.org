@@ -107,6 +107,7 @@ npm install -g prettier
 (use-package add-node-modules-path :ensure t :defer t)
 (use-package ag :ensure t :defer t :no-require t)
 (use-package avy-menu :ensure t :defer t)
+(use-package csv-mode :ensure t :defer t)
 (use-package db :ensure t :defer t)
 (use-package dired-filter :ensure t :defer t)
 (use-package fakir :ensure t :defer t)
