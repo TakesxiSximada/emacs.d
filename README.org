@@ -1435,6 +1435,64 @@ EmacsがSpacemacsに変身した後はで、元の環境に戻すにはEmacsを�
 Spacemacsの初期化処理によって更新された変数や関数などの情報を、それ以前に元に戻すのが困難だからだ。
 過ぎ去った時間を取り戻すことはできない。
 
+* Magit
+
+MagitはEmacs用のGitユーティリティで、Gitコマンドのラッパーとして
+transientを用いて実装されている。仕様をカスタマイズするため、関数の上
+書きをする。
+
+magit-commit、magit-push、magit-rebaseの3つのEmacsのコマンドについて
+=--no-verify= オプションが用意されているが、オプション文字列が統一され
+ていない。magit-commitのみ =-n= で指定するようになっているため他の2つ
+のコマンドにならい =-h= で指定できるように修正する。
+
+| 関数         | =--no-verify= のデフォルトの指定 | =--no-verify= の変更後の指定 |
+|--------------+----------------------------------+------------------------------|
+| magit-commit | =-n=                             | =-h=                         |
+| magit-push   | =-h=                             | =-h=                         |
+| magit-rebase | =-h=                             | =-h=                         |
+
+#+begin_src emacs-lisp
+(require 'magit)
+(require 'transient)
+
+(transient-define-prefix magit-commit ()
+  "Create a new commit or replace an existing commit."
+  :info-manual "(magit)Initiating a Commit"
+  :man-page "git-commit"
+  ["Arguments"
+   ("-a" "Stage all modified and deleted files"   ("-a" "--all"))
+   ("-e" "Allow empty commit"                     "--allow-empty")
+   ("-v" "Show diff of changes to be committed"   ("-v" "--verbose"))
+   ("-h" "Disable hooks"                          ("-n" "--no-verify"))
+   ("-R" "Claim authorship and reset author date" "--reset-author")
+   (magit:--author :description "Override the author")
+   (7 "-D" "Override the author date" "--date=" transient-read-date)
+   ("-s" "Add Signed-off-by line"                 ("-s" "--signoff"))
+   (5 magit:--gpg-sign)
+   (magit-commit:--reuse-message)]
+  [["Create"
+    ("c" "Commit"         magit-commit-create)]
+   ["Edit HEAD"
+    ("e" "Extend"         magit-commit-extend)
+    ("w" "Reword"         magit-commit-reword)
+    ("a" "Amend"          magit-commit-amend)
+    (6 "n" "Reshelve"     magit-commit-reshelve)]
+   ["Edit"
+    ("f" "Fixup"          magit-commit-fixup)
+    ("s" "Squash"         magit-commit-squash)
+    ("A" "Augment"        magit-commit-augment)
+    (6 "x" "Absorb changes" magit-commit-autofixup)
+    (6 "X" "Absorb modules" magit-commit-absorb-modules)]
+   [""
+    ("F" "Instant fixup"  magit-commit-instant-fixup)
+    ("S" "Instant squash" magit-commit-instant-squash)]]
+  (interactive)
+  (if-let ((buffer (magit-commit-message-buffer)))
+      (switch-to-buffer buffer)
+    (transient-setup 'magit-commit)))
+#+end_src
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
