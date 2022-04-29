@@ -98,6 +98,15 @@ npm install -g prettier
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
 #+end_src
 
+Magitは自分のリポジトリに固有の修正が入っている。
+暫く操作して問題がなければ本家にPRを作成する。
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "/opt/ng/magit/lisp"))
+(el-get-bundle magit :type "git" :url "git@github.com:TakesxiSximada/magit.git")
+#+end_src
+
+
 * 各種パッケージ
 
 #+begin_src emacs-lisp
@@ -114,7 +123,6 @@ npm install -g prettier
 (use-package flycheck :ensure t :defer t)
 (use-package github-review  :ensure t :defer t)
 (use-package google-translate :ensure t :defer t)
-(use-package magit :ensure t :defer t)
 (use-package mew :ensure t :defer t)
 (use-package monky :ensure t :defer t)
 (use-package nginx-mode :ensure t :defer t)
@@ -794,13 +802,19 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 
 #+begin_src emacs-lisp
 (setq org-agenda-sorting-strategy
-    '((agenda time-up priority-down effort-up category-keep)
+    '((agenda time-up category-keep)
       (todo   priority-down category-keep)
       (tags   priority-down category-keep)
       (search category-keep)))
 #+end_src
 
-** プロパティを表示する
+*(setq org-agenda-sorting-strategy
+    '((agenda time-up category-keep priority-down effort-up category-keep)
+      (todo   priority-down category-keep)
+      (tags   priority-down category-keep)
+      (search category-keep)))
+
+* プロパティを表示する
 
 #+begin_src emacs-lisp
 (use-package org-agenda-property :ensure t :defer t)
@@ -814,14 +828,14 @@ org-todoの論理構造を強制します。
 依存しているタスクが存在する場合、それらを完了していないと次のタスクに進めません。
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-dependencies nil)
 #+end_src
 
 ただしチェックボックスは現在進行中のタスクを阻害してしまうので無効にします。
 有効にするには =org-enforce-todo-checkbox-dependencies= を用います。
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-checkbox-dependencies nil)
+(setq org-enforce-todo-checkbox-dependencies t)
 #+end_src
 
 org-todoの論理構造を視覚的に表示します。
