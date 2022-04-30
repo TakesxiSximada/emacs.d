@@ -1507,6 +1507,138 @@ magit-commit、magit-push、magit-rebaseの3つのEmacsのコマンドについ�
     (transient-setup 'magit-commit)))
 #+end_src
 
+* org-super-agenda
+
+org-agendaのレポート機能を強化したライブラリとして =org-super-agenda= がある。
+org-super-agendaを使用しているがカテゴリ別に見積の値をラベルに集計するようにカスタマイズする。
+
+#+begin_src emacs-lisp
+(require 'org-super-agenda)
+
+
+(org-super-agenda-mode)
+
+(defun org-super-agenda-get-effort (item)
+  (if-let ((item-todo-state (get-text-property 0 'todo-state item)))
+      (get-text-property 0 'effort-minutes item-todo-state)))
+
+(defun org-super-agenda-summary-effort (items)
+  (apply #'+
+	 (seq-filter
+	  (lambda (it) it)
+	  (mapcar #'org-super-agenda-get-effort items))))
+
+
+
+(defun org-super-agenda--make-agenda-header (name &optional items)
+  "Return agenda header named NAME.
+If NAME is nil or `none', return empty string.  Otherwise, return
+string NAME prepended with `org-super-agenda-header-separator',
+which see.  NAME has the face `org-super-agenda-header' appended,
+and the text properties `keymap' and `local-map' set to the value
+of `org-super-agenda-header-map', which see."
+  (pcase name
+    ((or `nil 'none) "")
+    (_ (let* ((properties (text-properties-at 0 name))
+              (header (concat org-super-agenda-header-prefix name))
+              (separator
+               (cl-etypecase org-super-agenda-header-separator
+                 (character (concat (make-string (window-width) org-super-agenda-header-separator)
+                                    "\n"))
+                 (string org-super-agenda-header-separator))))
+         (set-text-properties 0 (length header) properties header)
+         (add-face-text-property 0 (length header) 'org-super-agenda-header t header)
+         (org-add-props header org-super-agenda-header-properties
+           'keymap org-super-agenda-header-map
+           ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
+           ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
+           ;; we'll use both.
+           'local-map org-super-agenda-header-map)
+         ;; Don't apply faces and properties to the separator part of the string.
+         (concat separator header
+		 (format " (Effort => %d)"
+			 (org-super-agenda-summary-effort items)))))))
+
+
+(defun org-super-agenda--group-items (all-items)
+  "Divide ALL-ITEMS into groups based on `org-super-agenda-groups'."
+  (if (bound-and-true-p org-super-agenda-groups)
+      ;; Transform groups
+      (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
+        ;; Collect and insert groups
+        (cl-loop with section-name
+                 for filter in org-super-agenda-groups
+                 for custom-section-name = (plist-get filter :name)
+                 for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
+                 for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
+
+                 do (when org-super-agenda-keep-order
+                      (setf matching (sort matching #'org-entries-lessp)))
+
+                 ;; Transformer
+                 for transformer = (plist-get filter :transformer)
+                 when transformer
+                 do (setq matching (-map (pcase transformer
+                                           (`(function ,transformer) transformer)
+                                           ((pred symbolp) transformer)
+                                           (_ `(lambda (it) ,transformer)))
+                                         matching))
+
+                 ;; Face
+                 for face = (plist-get filter :face)
+                 when face
+                 do (let ((append (plist-get face :append)))
+                      (when append (cl-remf face :append))
+                      (--each matching
+                        (add-face-text-property 0 (length it) face append it)))
+
+                 ;; Auto category/group
+                 if (cl-member auto-section-name org-super-agenda-auto-selector-keywords)
+                 do (setq section-name (or custom-section-name "Auto category/group"))
+                 and append (cl-loop for group in matching
+                                     collect (list :name (plist-get group :name)
+                                                   :items (plist-get group :items)
+                                                   :order order))
+                 into sections
+                 and do (setq all-items non-matching)
+
+                 ;; Manual groups
+                 else
+                 do (setq section-name (or custom-section-name auto-section-name))
+                 and collect (list :name section-name :items matching :order order) into sections
+                 and do (setq all-items non-matching)
+
+                 ;; Sort sections by :order then :name
+                 finally do (setq non-matching (list :name org-super-agenda-unmatched-name
+                                                     :items non-matching
+                                                     :order org-super-agenda-unmatched-order))
+                 finally do (setq sections (--sort (let ((o-it (plist-get it :order))
+                                                         (o-other (plist-get other :order)))
+                                                     (cond ((and
+                                                             ;; FIXME: This is now quite ugly.  I'm not sure that all of these tests
+                                                             ;; are necessary, but at the moment it works, so I'm leaving it alone.
+                                                             (equal o-it o-other)
+                                                             (not (equal o-it 0))
+                                                             (stringp (plist-get it :name))
+                                                             (stringp (plist-get other :name)))
+                                                            ;; Sort by string only for items with a set order
+                                                            (string< (plist-get it :name)
+                                                                     (plist-get other :name)))
+                                                           ((and (numberp o-it)
+                                                                 (numberp o-other))
+                                                            (< o-it o-other))
+                                                           (t nil)))
+                                                   (push non-matching sections)))
+                 ;; Insert sections
+                 finally return (cl-loop for (_ name _ items) in sections
+                                         when items
+                                         collect (org-super-agenda--make-agenda-header name items)
+                                         and append items)))
+    ;; No super-filters; return list unmodified
+    all-items))
+#+end_src
+
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
