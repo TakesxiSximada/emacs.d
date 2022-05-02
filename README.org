@@ -103,6 +103,7 @@ Magitは自分のリポジトリに固有の修正が入っている。
 
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "/opt/ng/magit/lisp"))
+(use-package compat :ensure t :defer t)
 (el-get-bundle magit :type "git" :url "git@github.com:TakesxiSximada/magit.git")
 #+end_src
 
@@ -1513,8 +1514,7 @@ org-agendaのレポート機能を強化したライブラリとして =org-supe
 org-super-agendaを使用しているがカテゴリ別に見積の値をラベルに集計するようにカスタマイズする。
 
 #+begin_src emacs-lisp
-(require 'org-super-agenda)
-
+(use-package org-super-agenda :ensure t :defer t)
 
 (org-super-agenda-mode)
 
