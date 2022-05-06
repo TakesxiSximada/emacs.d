@@ -5,7 +5,64 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(csv-mode http s3ed modus-themes solarized-theme org-agenda-property flycheck-pos-tip editorconfig wgrep-ag web vue-mode vterm vagrant-tramp unicode-escape typescript-mode twilight-bright-theme terraform-mode smex slime request quelpa-use-package pyvenv py-isort pcre2el ox-gfm org-re-reveal ob-restclient ob-async nginx-mode monky mew markdown-mode magit js2-mode ido-vertical-mode ido-completing-read+ haskell-mode grip-mode google-translate go-mode github-review flycheck fakir el-get eglot dockerfile-mode docker-compose-mode docker dired-filter db company blacken avy-menu ag adoc-mode add-node-modules-path))
+   '(
+     add-node-modules-path
+     adoc-mode
+     ag
+     avy-menu
+     blacken
+     company
+     csv-mode
+     db
+     ddskk
+     dired-filter
+     docker
+     docker-compose-mode
+     dockerfile-mode
+     editorconfig
+     eglot
+     el-get
+     fakir
+     flycheck
+     flycheck-pos-tip
+     github-review
+     go-mode
+     google-translate
+     grip-mode
+     haskell-mode
+     http
+     ido-completing-read+
+     ido-vertical-mode
+     js2-mode
+     markdown-mode
+     mew
+     monky
+     nginx-mode
+     ob-async
+     ob-restclient
+     org-agenda-property
+     org-re-reveal
+     org-super-agenda
+     ox-gfm
+     pcre2el
+     py-isort
+     pyvenv
+     quelpa-use-package
+     request
+     s3ed
+     slime
+     smex
+     solarized-theme
+     terraform-mode
+     twilight-bright-theme
+     typescript-mode
+     unicode-escape
+     vagrant-tramp
+     vterm
+     vue-mode
+     web
+     wgrep-ag
+     ))
  '(warning-suppress-log-types '((use-package) (use-package)))
  '(warning-suppress-types '((use-package))))
 (custom-set-faces
