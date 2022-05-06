@@ -80,6 +80,19 @@ npm install -g prettier
 
 #+end_src
 
+package-selected-packagesで管理されているパッケージを全てインストールする。
+
+#+begin_src emacs-lisp
+(defun refresh-installed-all-packaes ()
+  (interactive)
+  (mapcar (lambda (pkg-symbol)
+	    (if (not (package-installed-p pkg-symbol))
+		(progn
+		  (message (format "Installing.... %s" pkg-symbol))
+		  (package-install pkg-symbol))
+	      (message (format "Already installed: %s" pkg-symbol))))
+	  package-selected-packages))
+#+end_src
 
 ** 個人用パッケージ
 
