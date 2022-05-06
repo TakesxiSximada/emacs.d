@@ -848,7 +848,7 @@ org-todoの論理構造を強制します。
 有効にするには =org-enforce-todo-checkbox-dependencies= を用います。
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies nil)
 #+end_src
 
 org-todoの論理構造を視覚的に表示します。
