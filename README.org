@@ -116,6 +116,7 @@ Magitは自分のリポジトリに固有の修正が入っている。
 
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "/opt/ng/magit/lisp"))
+(use-package compat :ensure t :defer t)
 (el-get-bundle magit :type "git" :url "git@github.com:TakesxiSximada/magit.git")
 #+end_src
 
@@ -454,10 +455,15 @@ EmacsにおいてウィンドウはEmacsの画面(フレーム)内に表示さ�
 
 * mode-line
 
-モードラインは本当に必要でしょうか？画面上に必要のない情報が表示されて
-いることで着が散ってしまいます。最初は無効にし、それぞれの必要性に応じ
-て成長させていくこで自分のニーズにあったモードラインに成長していきます。
-そのためここでは無効にします。
+モードラインは本当に必要だろうか？モードラインには文字コードや改行コー
+ド、バックグラウンドで実行しているジョブの状態など、さまざまな情報を表
+示できる。それらは一見便利なようにも思えるが、何かを記述したり作業する
+時に本当に必要な集中力を阻害してしまう。どのような情報が必要かというこ
+とについては、個人のもしくは作業のニーズによって異なる。そのためこの情
+報が常に表示されているべきということは言えない。必ず必要な情報が何かが
+決められない以上、最初は全ての表示を無効にし、それぞれの必要性に応じて
+表示を追加していくことで、個人のニーズにあったモードラインに成長してい
+く。
 
 #+begin_src emacs-lisp
 (setq-default mode-line-format nil)
@@ -1526,8 +1532,7 @@ org-agendaのレポート機能を強化したライブラリとして =org-supe
 org-super-agendaを使用しているがカテゴリ別に見積の値をラベルに集計するようにカスタマイズする。
 
 #+begin_src emacs-lisp
-(require 'org-super-agenda)
-
+(use-package org-super-agenda :ensure t :defer t)
 
 (org-super-agenda-mode)
 
