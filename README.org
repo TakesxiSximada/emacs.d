@@ -140,7 +140,7 @@ Magitは自分のリポジトリに固有の修正が入っている。
 (use-package mew :ensure t :defer t)
 (use-package monky :ensure t :defer t)
 (use-package nginx-mode :ensure t :defer t)
-(use-package ob-async :ensure t :defer t )
+(use-package ob-async :ensure t)
 (use-package ob-restclient :ensure t :defer t)
 (use-package pcre2el :ensure t :defer t)
 (use-package request :ensure t :defer t)
