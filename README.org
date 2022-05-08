@@ -120,6 +120,10 @@ Magitは自分のリポジトリに固有の修正が入っている。
 (el-get-bundle magit :type "git" :url "git@github.com:TakesxiSximada/magit.git")
 #+end_src
 
+#+begin_src
+(el-get-bundle swift-mode :type "git" :url "git@github.com:swift-emacs/swift-mode.git")
+#+end_src
+
 
 * 各種パッケージ
 
