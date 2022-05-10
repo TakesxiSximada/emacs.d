@@ -1667,6 +1667,27 @@ of `org-super-agenda-header-map', which see."
     all-items))
 #+end_src
 
+* Frame Title
+
+集中力を維持するためにframe-titleにorg-clock-inしたタスクの名称を表示する。
+
+=org-clock-in= 及び =org-clock-out= された時に実行されるフックに、自作のフレームタイトルを変更する関数を設定した。
+org-clock-inしていない時はフレームタイトルにはバッファ名を表示するようにした。
+
+#+begin_src emacs-lisp
+(defun change-frame-title-to-org-clock-current-task-name ()
+  "Change frame title to org- clock current task name.
+
+Display current buffer name if not clock in now."
+  (interactive)
+  (setq frame-title-format (or org-clock-current-task "%b")))
+
+(add-hook 'org-clock-in-hook #'change-frame-title-to-org-clock-current-task-name)
+(add-hook 'org-clock-out-hook #'change-frame-title-to-org-clock-current-task-name)
+#+end_src
+
+
+[[https://blog.symdon.info/posts/1652142295]]
 
 * 脚注
 
