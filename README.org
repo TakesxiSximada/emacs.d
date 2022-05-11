@@ -1667,7 +1667,11 @@ of `org-super-agenda-header-map', which see."
     all-items))
 #+end_src
 
-* Frame Title
+* 集中力を維持するための工夫
+
+[[https://blog.symdon.info/posts/1652142295]]
+
+** Frame Title
 
 集中力を維持するためにframe-titleにorg-clock-inしたタスクの名称を表示する。
 
@@ -1686,8 +1690,21 @@ Display current buffer name if not clock in now."
 (add-hook 'org-clock-out-hook #'change-frame-title-to-org-clock-current-task-name)
 #+end_src
 
+** Mini Buffer
 
-[[https://blog.symdon.info/posts/1652142295]]
+アイドル状態になったら作業中のタスク名をミニバッファに表示する。
+
+#+begin_src emacs-lisp
+(defun display-current-task-name-in-to-mini-buffer ()
+  "Display current task name in to mini buffer"
+  (interactive)
+  (when org-clock-current-task
+    (let ((minibuffer-message-timeout nil))
+      (minibuffer-message org-clock-current-task))))
+
+(setq display-current-task-name-in-to-mini-buffer-timer
+      (run-with-idle-timer 3 t #'display-current-task-name-in-to-mini-buffer))
+#+end_src
 
 * 脚注
 
