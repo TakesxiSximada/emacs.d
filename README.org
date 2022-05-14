@@ -1706,6 +1706,17 @@ Display current buffer name if not clock in now."
       (run-with-idle-timer 3 t #'display-current-task-name-in-to-mini-buffer))
 #+end_src
 
+* DDSKK
+
+#+begin_src emacs-lisp
+(use-package ddskk :ensure t :defer t)
+
+(require 'skk)
+
+(global-set-key "\C-x\C-j" 'skk-mode)
+(global-set-key "\C-xj" 'skk-auto-fill-mode)
+#+end_src
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
