@@ -1713,8 +1713,10 @@ Display current buffer name if not clock in now."
 
 (require 'skk)
 
+(setq skk-modeline-input-mode nil)
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-auto-fill-mode)
+
 #+end_src
 
 * 脚注
