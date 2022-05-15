@@ -1719,6 +1719,24 @@ Display current buffer name if not clock in now."
 
 #+end_src
 
+* Sleep
+
+Emacs上からマシンをスリープするコマンドを実装する。
+
+#+begin_src emacs-lisp
+(defun sleep-machine-system-command ()
+  (pcase system-type
+    ('darwin '("pmset" "sleepnow"))
+    (t nil)))
+
+(defun sleep-machine ()
+  (interactive)
+  (if-let ((cmds (sleep-machine-system-command)))
+      (apply #'call-process (car cmds) nil nil nil (cdr cmds))
+    (error "Failed to sleep machine: Not support sysmte type")))
+#+end_src
+
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
