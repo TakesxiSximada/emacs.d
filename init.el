@@ -48,7 +48,7 @@
 ;; -----------------------------
 ;; package.el
 ;; -----------------------------
-(setq package-user-dir (expand-file-name "~/.elpa")
+(setq package-user-dir (expand-file-name (format "~/.elpa.%d" emacs-major-version))
       package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
   			 ("melpa" . "https://melpa.org/packages/")
   			 ("org" . "https://orgmode.org/elpa/")
@@ -105,7 +105,7 @@
 ;; -----------------------------
 (defun start-spacemacs ()
   (interactive)
-  (setq package-user-dir (expand-file-name "~/.elpa.spacemacs")
+  (setq package-user-dir (format "%s.spacemacs" package-user-dir)
 	spacemacs-start-directory (expand-file-name "~/.emacs.d/distributions/spacemacs/")
 	spacemacs-bootstrap-file (file-name-concat spacemacs-start-directory "init.el")
 	custom-file (locate-user-emacs-file "custom-spacemacs.el")
@@ -124,7 +124,7 @@
   (setenv "DOOMLOCALDIR" (expand-file-name "~/.emacs.d/doom.d/"))
   (setenv "DOOMDIR" (expand-file-name "~/.emacs.d/doom.d/"))
 
-  (setq package-user-dir (expand-file-name "~/.elpa.doom-emacs")
+  (setq package-user-dir (format "%s.doom-emacs" package-user-dir)
 	custom-file (locate-user-emacs-file "custom-doom-emacs.el")
 	)
 
