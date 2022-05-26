@@ -35,9 +35,6 @@
 ;; -----------------------------
 ;; Basic U/I
 ;; ----------------------------
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; -----------------------------
@@ -79,10 +76,6 @@
 ;; -----------------------------
 ;; Misc settings
 ;; -----------------------------
-
-;; Switch Full screen
-(toggle-frame-fullscreen)
-
 ;; Setup PATH environment variable
 (setenv "PATH" (string-join exec-path ":"))
 
