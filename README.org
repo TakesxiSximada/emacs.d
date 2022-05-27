@@ -1707,15 +1707,56 @@ Display current buffer name if not clock in now."
 
 * DDSKK
 
+Daredevil SKKはEmacs用のSKKクライアントである。
+辞書は~/.emacs.d/dictionary/skk配下に配置しており、それを読み込んでいる。
+
+https://github.com/skk-dev/ddskk
+
 #+begin_src emacs-lisp
-(use-package ddskk :ensure t :defer t)
-
-(require 'skk)
-
-(setq skk-modeline-input-mode nil)
 (global-set-key "\C-x\C-j" 'skk-mode)
-(global-set-key "\C-xj" 'skk-auto-fill-mode)
+(global-set-key "\C-xj" 'skk-mode)
 
+(defun disable-mode-line
+  (setq-local mode-line-format nil))
+
+(autoload 'skk-mode "skk")
+(with-eval-after-load 'skk
+  (setq skk-user-directory (expand-file-name "~/.emacs.d/ddskk"))
+  ;; SKKモードに切り替わってもモードラインを表示しない
+  (add-hook 'skk-mode-hook 'disable-mode-line)
+
+  ;; カーソルの色を変更する
+  (setq-default skk-cursor-hiragana-color "orange")
+  (setq-default skk-cursor-katakana-color "systemGreenColor")
+
+  (setq skk-show-mode-show t)
+  (setq skk-show-mode-style "tooltip")
+
+  ;; 辞書の設定
+  (setq skk-extra-jisyo-file-list
+      `(
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.JIS2")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.JIS2004")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.JIS3_4")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.L")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.assoc")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.china_taiwan")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.edict")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.fullname")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.geo")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.itaiji")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.itaiji.JIS3_4")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.jinmei")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.law")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.mazegaki")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.office.zipcode")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.okinawa")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.propernoun")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.station")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.zipcode")
+        ,(expand-file-name "~/.emacs.d/dictionary/skk/skk-jisyo.utf8")
+        ))
+  )
 #+end_src
 
 * Sleep
