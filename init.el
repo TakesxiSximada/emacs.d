@@ -40,6 +40,7 @@
 ;; -----------------------------
 ;; Load emacs customize file
 ;; ----------------------------
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (load-file custom-file)
 
 ;; -----------------------------
