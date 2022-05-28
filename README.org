@@ -1453,37 +1453,49 @@ The given CMD string will be appended."
     (format "awsl%s s3 %s" profile-arg cmd)))
 #+end_src
 
-* Spacemacs
+* [[https://github.com/TakesxiSximada/emacs.d/blob/main/lisp/make-possess-preset.el][make-possess-preset]]
 
-Spacemacsは非常に人気のあるEmacsのディストリビューションのひとつだ。
-通常は~/.emacs.dにSpacemacsのリポジトリをcloneして用いる。
+Emacsには良く設定された設定群に固有の名前を付けて配布するということがある。
+通常それらはディストリビューションやスターターキットと呼ばれるらしい。
+ここではそれらをプリセットと呼ぶことにする。
 
-私の場合、Spacemacsをメインでは使用しないが、しばしばSpacemacsの設定方法などを確認するためにSpacemacsとして起動したいことがある。
-そのためEmacsが完全に起動した後で、任意のタイミングでSpacemacsに切り替えられるようにする。
+例えばSpacemacsやDoom Emacsが該当する。他にも実はいくつかある。
+他にどのようなものがあるかについては[[https://github.com/emacs-tw/awesome-emacs#starter-kit][awesome-emacsのStarter Kitの項目]]を参照すると、
+いろいろと紹介されている。もちろん紹介されていないものも世の中にはいっぱいあるだろう。
 
-#+begin_src emacs-lisp
-(defun start-spacemacs ()
-  (interactive)
-  (setq package-user-dir (expand-file-name "~/.elpa.spacemacs")
-	spacemacs-start-directory (expand-file-name "~/.emacs.d/distributions/spacemacs/")
-	spacemacs-bootstrap-file (file-name-concat spacemacs-start-directory "init.el")
-	custom-file (locate-user-emacs-file "custom-spacemacs.el")
-	)
-  (setenv "SPACEMACSDIR" (expand-file-name "~/.emacs.d/spacemacs/"))
-  (package-initialize t)
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  (require 'use-package)
-  (load spacemacs-bootstrap-file nil nil))
-#+end_src
+私自身はそれらをあまり使用しないが、設定の方法などを確認するためにしばしば使いたくなる。
 
-=M-x start-spacemacs= を実行するとパッケージ関連のパスを書き換え、Spacemacsのbootstrap用のファイルをロードする。
+それらプリセットはEmacsの初期化時に設定が読み込まれる。
+しかし常にそれらを使用しない場合、任意のタイミングで環境を切り替えたい。
+そのためEmacsが完全に起動した後で、任意のタイミングでに切り替えられるようにした。
 
-[[https://res.cloudinary.com/symdon/image/upload/v1645310753/demo_zjydcv.gif]]
+切り替えを実行するとパッケージ関連のパスを書き換え、
+bootstrap用のファイルをロードする。
 
-EmacsがSpacemacsに変身した後はで、元の環境に戻すにはEmacsを再起動するしかない。
-Spacemacsの初期化処理によって更新された変数や関数などの情報を、それ以前に元に戻すのが困難だからだ。
-過ぎ去った時間を取り戻すことはできない。
+Emacsがプリセットを読み込んだ後に元の環境に戻すためにはEmacsを再起動するしかない。
+プリセットの読み込み処理によって更新された変数や関数などの情報をそれ以前に元に戻すのが困難だからだ。
+過ぎ去った時間を取り戻すことはできないのだ。
+
+** Spacemacs
+
+以下のコマンドを実行するとEmacsはSpacemacs化する。
+
+#+begin_example
+M-x make-possess-preset-of-spacemacs RET
+#+end_example
+
+[[https://res.cloudinary.com/symdon/image/upload/v1645310753/blog.symdon.info/1645313344/spacemacs.gif]]
+
+** Doom Emacs
+
+以下のコマンドを実行するとEmacsはDoom Emacs化する。
+
+#+begin_example
+M-x make-possess-preset-of-spacemacs RET
+#+end_example
+
+[[https://res.cloudinary.com/symdon/image/upload/v1645341352/blog.symdon.info/1645313344/doom-emacs.gif]]
+
 
 * Magit
 

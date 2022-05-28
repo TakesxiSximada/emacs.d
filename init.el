@@ -93,36 +93,3 @@
   (setenv "AWS_PROFILE" profile-name)
   (message (format "Change `AWS_PROFILE` environment variable: %s"
 		   profile-name)))
-
-;; -----------------------------
-;; Distributions
-;; -----------------------------
-(defun start-spacemacs ()
-  (interactive)
-  (setq package-user-dir (format "%s.spacemacs" package-user-dir)
-	spacemacs-start-directory (expand-file-name "~/.emacs.d/distributions/spacemacs/")
-	spacemacs-bootstrap-file (file-name-concat spacemacs-start-directory "init.el")
-	custom-file (locate-user-emacs-file "custom-spacemacs.el")
-	)
-  (setenv "SPACEMACSDIR" (expand-file-name "~/.emacs.d/spacemacs.d/"))
-  (package-initialize t)
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  (require 'use-package)
-  (load spacemacs-bootstrap-file nil nil))
-
-
-(defun start-doom-emacs ()
-  (interactive)
-  (setenv "EMACSDIR" (expand-file-name "~/.emacs.d/distributions/doom-emacs/"))
-  (setenv "DOOMLOCALDIR" (expand-file-name "~/.emacs.d/doom.d/"))
-  (setenv "DOOMDIR" (expand-file-name "~/.emacs.d/doom.d/"))
-
-  (setq package-user-dir (format "%s.doom-emacs" package-user-dir)
-	custom-file (locate-user-emacs-file "custom-doom-emacs.el")
-	)
-
-  (setq user-emacs-directory (expand-file-name "~/.emacs.d/distributions/doom-emacs/"))
-  (load (concat user-emacs-directory "core/core") nil 'nomessage)
-  (load (expand-file-name "~/.emacs.d/distributions/doom-emacs/init.el") nil 'nomessage)
-  (switch-to-buffer (get-buffer "*doom*")))
