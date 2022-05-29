@@ -1478,6 +1478,10 @@ Emacsがプリセットを読み込んだ後に元の環境に戻すためには
 
 ** Spacemacs
 
+#+begin_src emacs-lisp
+(autoload 'make-possess-preset-of-spacemacs "make-possess-preset" :interactive t)
+#+end_src
+
 以下のコマンドを実行するとEmacsはSpacemacs化する。
 
 #+begin_example
@@ -1488,10 +1492,14 @@ M-x make-possess-preset-of-spacemacs RET
 
 ** Doom Emacs
 
+#+begin_src emacs-lisp
+(autoload 'make-possess-preset-of-doom-emacs "make-possess-preset" :interactive t)
+#+end_src
+
 以下のコマンドを実行するとEmacsはDoom Emacs化する。
 
 #+begin_example
-M-x make-possess-preset-of-spacemacs RET
+M-x make-possess-preset-of-doom-emacs RET
 #+end_example
 
 [[https://res.cloudinary.com/symdon/image/upload/v1645341352/blog.symdon.info/1645313344/doom-emacs.gif]]
