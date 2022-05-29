@@ -1734,8 +1734,8 @@ Display current buffer name if not clock in now."
 
 * DDSKK
 
-Daredevil SKKはEmacs用のSKKクライアントである。
-辞書は~/.emacs.d/dictionary/skk配下に配置しており、それを読み込んでいる。
+Input MethodにはDaredevil SKKを使用している。
+辞書は =~/.emacs.d/dictionary/skk= 配下に配置している。
 
 https://github.com/skk-dev/ddskk
 
@@ -1743,14 +1743,29 @@ https://github.com/skk-dev/ddskk
 (global-set-key "\C-x\C-j" 'skk-mode)
 (global-set-key "\C-xj" 'skk-mode)
 
-(defun disable-mode-line
+(defun disable-mode-line ()
   (setq-local mode-line-format nil))
 
 (autoload 'skk-mode "skk")
 (with-eval-after-load 'skk
   (setq skk-user-directory (expand-file-name "~/.emacs.d/ddskk"))
+
   ;; SKKモードに切り替わってもモードラインを表示しない
   (add-hook 'skk-mode-hook 'disable-mode-line)
+  (setq-default mode-line-format nil)
+  (setq-default skk-modeline-input-mode nil)
+
+  ;; 絶対にモードラインを表示させたくないため
+  ;; モードラインの設定関数を上書きする。
+  (defun skk-setup-modeline () nil)
+
+  ;; SKKの候補の表示方法
+  (setq skk-show-tooltip nil)
+  (setq skk-show-inline 'vertical)
+  (setq skk-egg-like-newline nil)
+  (setq skk-dcomp-activate t)
+  (setq skk-dcomp-multiple-activate t)
+  (setq skk-henkan-strict-okuri-precedence t)
 
   ;; カーソルの色を変更する
   (setq-default skk-cursor-hiragana-color "orange")
@@ -1784,6 +1799,9 @@ https://github.com/skk-dev/ddskk
         ,(expand-file-name "~/.emacs.d/dictionary/skk/skk-jisyo.utf8")
         ))
   )
+
+  ;; 学習
+  (require 'skk-study)
 #+end_src
 
 * Sleep
