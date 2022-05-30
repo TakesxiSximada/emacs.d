@@ -1833,6 +1833,16 @@ CLIコマンドへのパスを取得したい時、whichコマンドを使用す
 
 =M-x which-command RET ls RET= のように実行するとlsコマンドへのパスが、クリップボードにコピーされる。
 
+* safe-local-variable-valuesをcustom-fileに保存しないために
+
+safe-local-variable-valuesを保存してしまうと、custom-fileファイルをGit
+に登録できなくなってしまうため、safe-local-variable-valuesは
+custom-fileに反映しないように設定する。
+
+#+begin_src emacs-lisp
+(setq-default enable-local-variables :all)
+#+end_src
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
