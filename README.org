@@ -437,13 +437,34 @@ The build string will be of the format:
   :config
   (add-hook 'python-mode-hook 'eglot-ensure)
   )
-(use-package py-isort :ensure t :defer t)
 (use-package blacken :ensure t :defer t)
 (use-package pyvenv :ensure t :defer t
   :config
   (setenv "WORKON_HOME" (expand-file-name "~/.venv")))
 #+end_src
 
+*** py-isort
+
+isortはPythonのimport順序を整列する。
+isortコマンドを外部から指定できるようにモンキーパッチを当てる。
+
+#+begin_src emacs-lisp
+(autoload 'py-isort-buffer "py-isort")
+(autoload 'py-isort-region "py-isort")
+(autoload 'py-isort-before-save "py-isort")
+
+(with-eval-after-load 'py-isort
+  (defcustom py-isort-executable "isort"
+    "Name of the executable to run."
+    :type 'string)
+
+  (defun py-isort--call-executable (errbuf file)
+    (let ((default-directory (py-isort--find-settings-path)))
+      (zerop (apply 'call-process py-isort-executable nil errbuf nil
+                    (append `(" " , file, " ",
+                              (concat "--settings-path=" default-directory))
+                            py-isort-options))))))
+#+end_src
 
 * 表示
 
