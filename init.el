@@ -50,7 +50,7 @@
       package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
   			 ("melpa" . "https://melpa.org/packages/")
   			 ("org" . "https://orgmode.org/elpa/")
-  			 ("melpa-stable" . "http://stable.melpa.org/packages/")
+  			 ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
   			 ;; marmalade is already not mainted
   			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
   			 ))
