@@ -922,6 +922,7 @@ org-babelはorg-modeのコードブロックを実行するためのライブラ
    (emacs-lisp . t)
    (python . t)
    (restclient . t)
+   (http . t)
    (shell . t)
    (sql . t)))
 #+end_src
