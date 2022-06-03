@@ -69,6 +69,7 @@
 ;;;###autoload
 (defun make-possess-preset-of-doom-emacs ()
   (interactive)
+  (setenv "EMACS" "/Applications/Emacs28.0.50.app/Contents/MacOS/Emacs")
   (setenv "EMACSDIR" (expand-file-name "~/.emacs.d/distributions/doom-emacs/"))
   (setenv "DOOMLOCALDIR" (expand-file-name "~/.emacs.d/doom.d/"))
   (setenv "DOOMDIR" (expand-file-name "~/.emacs.d/doom.d/"))
