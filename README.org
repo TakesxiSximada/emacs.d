@@ -103,18 +103,19 @@ package-selected-packagesで管理されているパッケージを全てイン�
 ** 個人用パッケージ
 
 #+begin_src emacs-lisp
-(el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
-(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
-(el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
 (el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git")
+(el-get-bundle eglot :type "git" :url "git@github.com:joaotavora/eglot.git")
 (el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
 (el-get-bundle gist:05de904cd0c320733cae:org-file-table :type "git")
+(el-get-bundle gist:0a849059d1fb61de397f57477ed38c92:trans :type "git")
 (el-get-bundle gist:10985431:go-template-mode :type "git")
 (el-get-bundle gist:6961ff8bfb228a7601ed470598fad513:django.el :type "git")
 (el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
 (el-get-bundle gist:c4c6ee198a1c576220a144ab825fa2f0:mastodon :type "git")
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
+(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
+(el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
 #+end_src
 
 Magitは自分のリポジトリに固有の修正が入っている。
