@@ -82,7 +82,8 @@
   (with-current-buffer weasyprint-output-buffer-name
     (setq-local buffer-file-coding-system 'binary)
     (doc-view-mode)
-    (display-buffer-at-bottom (current-buffer) t)))
+    (display-buffer-in-side-window (current-buffer) nil)))
+
 
 ;;;###autoload
 (defun weasyprint ()
