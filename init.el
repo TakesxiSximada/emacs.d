@@ -48,8 +48,9 @@
 ;; -----------------------------
 (setq package-user-dir (expand-file-name (format "~/.elpa.%d" emacs-major-version))
       package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-  			 ("melpa" . "https://melpa.org/packages/")
   			 ("org" . "https://orgmode.org/elpa/")
+  			 ("melpa" . "https://melpa.org/packages/")
+			 ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/")
   			 ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
   			 ;; marmalade is already not mainted
   			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
