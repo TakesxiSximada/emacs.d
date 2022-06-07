@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+"""Send mail via Gmail API.
+
+gsendmail be able to send mail via Gmail API.  It receive mail data
+from stdin, like sendmail interface. The user id and access token is
+generate/configure by your self.
+
+Copyright (C) 2022 TakesxiSximada
+
+This file is part of gsendmail.
+
+gsendmail is free software: you can redistribute it and/or
+modify it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+gsendmail is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with this program.  If not, see
+<https://www.gnu.org/licenses/>.
+"""
+import json
+import os
+import subprocess
+import sys
+from argparse import ArgumentParser
+from base64 import b64encode
+from typing import Optional
+from urllib.request import Request, urlopen
+
+USER_ID = "me"
+access_token: Optional[str] = None
+
+service = os.environ["GMAIL_SERVICE"]
+account = os.environ["GMAIL_ACCOUNT"]
+
+cmd = (
+    "security",
+    "find-generic-password",
+    "-s",
+    service,
+    "-a",
+    account,
+    "-w",
+)
+proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+if proc.returncode != 0:
+    print("Failed to get access token.")
+    sys.exit(1)
+
+if proc.stdout:
+    access_token = proc.stdout.strip()
+
+mime_data: str = sys.stdin.read()
+mime_data_encoded = b64encode(mime_data.encode())
+req_body = json.dumps(
+    {
+        "raw": mime_data_encoded.decode(),
+    }
+)
+req_data = req_body.encode()
+req = Request(
+    f"https://gmail.googleapis.com/gmail/v1/users/{USER_ID}/messages/send",
+    data=req_data,
+    headers={
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {access_token}",
+    },
+    method="POST",
+)
+
+with urlopen(req) as res:
+    if res.status != 200:
+        print(res.read().decode())
+        sys.exit(1)
