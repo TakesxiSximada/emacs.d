@@ -670,8 +670,6 @@ Emacsの設定ファイルは開く回数が多いため素早く開けるよう
 * 追加のキーバインドの設定
 
 #+begin_src emacs-lisp
-(require 'org-agenda)
-
 (bind-key* "C-M-i" #'company-complete)
 ;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
 (bind-key* "C-t C-c" #'vterm-command)
@@ -680,10 +678,15 @@ Emacsの設定ファイルは開く回数が多いため素早く開けるよう
 (bind-key* "C-t C-w" #'essay)
 (bind-key* "C-x C-v" #'magit-status)
 (bind-key* "M-X" #'smex-major-mode-commands)
-(bind-key* "M-i" #'edit-indirect-region)
 (bind-key* "M-x" #'smex)
 (bind-key* "s-1" #'org-agenda-list)
 (bind-key* "s-t" #'make-frame)
+
+#+end_src
+
+#+begin_src emacs-lisp
+(define-key override-global-map (kbd "s-1") #'org-agenda-list)
+(define-key override-global-map (kbd "C-t C-i") #'org-clock-goto)
 #+end_src
 
 * デバッガーの起動コマンドへのエイリアス
@@ -924,11 +927,17 @@ org-modeのタスクの優先度を設定します。
 
 org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先度を変更します。
 
+
 #+begin_src emacs-lisp
-(define-key org-mode-map (kbd "M-p") 'org-priority-up)
-(define-key org-mode-map (kbd "M-n") 'org-todo)
-(define-key org-agenda-mode-map (kbd "M-p") 'org-agenda-priority-up)
-(define-key org-agenda-mode-map (kbd "M-n") 'org-agenda-todo)
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "M-p") 'org-priority-up)
+  (define-key org-mode-map (kbd "M-n") 'org-todo)
+  )
+
+(with-eval-after-load 'org-agenda
+  (define-key org-agenda-mode-map (kbd "M-p") #'org-agenda-priority-up)
+  (define-key org-agenda-mode-map (kbd "M-n") #'org-agenda-todo)
+  )
 #+end_src
 
 * org-babel
@@ -1156,15 +1165,35 @@ ewwを用いてAsciiDocを表示する。
 * [[https://github.com/Fanael/edit-indirect][edit-indirect]]
 
 バッファの一部の領域を別のバッファに移して編集する機能をedit-indirect
-を用いて実現しています。edit-indirectでは =C-c C-c= に
-=edit-indirect-commit= がバインドされていますが、Org-modeなどの =C-c
-C-c= を既に使っているメジャーモードの場合その設定が邪魔になるので無効
-化します。
+を用いて実現しています。edit-indirectでは =C-c C-c= には
+=edit-indirect-commit= が割り当てられているが、Org-modeなど =C-c C-c=
+を既に使っているメジャーモードの場合、その設定が邪魔になるので無効化す
+る。またedit-indirectに入った時のメジャーモードの判定処理をカスタマイ
+ズする。
 
 #+begin_src emacs-lisp
-(require 'edit-indirect)
+(with-eval-after-load 'edit-indirect
+  (define-key edit-indirect-mode-map (kbd "C-c C-c") nil)
 
-(define-key edit-indirect-mode-map (kbd "C-c C-c") nil)
+
+  (defun edit-indirect-custom-guess-major-mode (_parent-buffer _beg _end)
+  "Guess major-mode to parent-buffer major-mode.
+
+Returns symbol of major-mode.
+"
+  (with-current-buffer _parent-buffer
+    (goto-char _beg)
+
+    (if (eq major-mode 'org-mode)
+	(if-let ((lang (nth 0 (org-babel-get-src-block-info))))
+	    (intern (format "%s-mode" lang))
+	  'org-mode)
+      major-mode)))
+
+  (defun edit-indirect-custom-apply-major-mode  (_parent-buffer _beg _end)
+    "Apply major-mode to parent-buffer major-mode."
+    (funcall (edit-indirect-custom-guess-major-mode _parent-buffer _beg _end)))
+  )
 #+end_src
 
 * タスク
@@ -1527,7 +1556,6 @@ M-x make-possess-preset-of-doom-emacs RET
 
 [[https://res.cloudinary.com/symdon/image/upload/v1645341352/blog.symdon.info/1645313344/doom-emacs.gif]]
 
-
 * Magit
 
 MagitはEmacs用のGitユーティリティで、Gitコマンドのラッパーとして
@@ -1584,136 +1612,6 @@ magit-commit、magit-push、magit-rebaseの3つのEmacsのコマンドについ�
   (if-let ((buffer (magit-commit-message-buffer)))
       (switch-to-buffer buffer)
     (transient-setup 'magit-commit)))
-#+end_src
-
-* org-super-agenda
-
-org-agendaのレポート機能を強化したライブラリとして =org-super-agenda= がある。
-org-super-agendaを使用しているがカテゴリ別に見積の値をラベルに集計するようにカスタマイズする。
-
-#+begin_src emacs-lisp
-(use-package org-super-agenda :ensure t :defer t)
-
-(org-super-agenda-mode)
-
-(defun org-super-agenda-get-effort (item)
-  (if-let ((item-todo-state (get-text-property 0 'todo-state item)))
-      (get-text-property 0 'effort-minutes item-todo-state)))
-
-(defun org-super-agenda-summary-effort (items)
-  (apply #'+
-	 (seq-filter
-	  (lambda (it) it)
-	  (mapcar #'org-super-agenda-get-effort items))))
-
-
-
-(defun org-super-agenda--make-agenda-header (name &optional items)
-  "Return agenda header named NAME.
-If NAME is nil or `none', return empty string.  Otherwise, return
-string NAME prepended with `org-super-agenda-header-separator',
-which see.  NAME has the face `org-super-agenda-header' appended,
-and the text properties `keymap' and `local-map' set to the value
-of `org-super-agenda-header-map', which see."
-  (pcase name
-    ((or `nil 'none) "")
-    (_ (let* ((properties (text-properties-at 0 name))
-              (header (concat org-super-agenda-header-prefix name))
-              (separator
-               (cl-etypecase org-super-agenda-header-separator
-                 (character (concat (make-string (window-width) org-super-agenda-header-separator)
-                                    "\n"))
-                 (string org-super-agenda-header-separator))))
-         (set-text-properties 0 (length header) properties header)
-         (add-face-text-property 0 (length header) 'org-super-agenda-header t header)
-         (org-add-props header org-super-agenda-header-properties
-           'keymap org-super-agenda-header-map
-           ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
-           ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
-           ;; we'll use both.
-           'local-map org-super-agenda-header-map)
-         ;; Don't apply faces and properties to the separator part of the string.
-         (concat separator header
-		 (format " (Effort => %d)"
-			 (org-super-agenda-summary-effort items)))))))
-
-
-(defun org-super-agenda--group-items (all-items)
-  "Divide ALL-ITEMS into groups based on `org-super-agenda-groups'."
-  (if (bound-and-true-p org-super-agenda-groups)
-      ;; Transform groups
-      (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
-        ;; Collect and insert groups
-        (cl-loop with section-name
-                 for filter in org-super-agenda-groups
-                 for custom-section-name = (plist-get filter :name)
-                 for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
-                 for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
-
-                 do (when org-super-agenda-keep-order
-                      (setf matching (sort matching #'org-entries-lessp)))
-
-                 ;; Transformer
-                 for transformer = (plist-get filter :transformer)
-                 when transformer
-                 do (setq matching (-map (pcase transformer
-                                           (`(function ,transformer) transformer)
-                                           ((pred symbolp) transformer)
-                                           (_ `(lambda (it) ,transformer)))
-                                         matching))
-
-                 ;; Face
-                 for face = (plist-get filter :face)
-                 when face
-                 do (let ((append (plist-get face :append)))
-                      (when append (cl-remf face :append))
-                      (--each matching
-                        (add-face-text-property 0 (length it) face append it)))
-
-                 ;; Auto category/group
-                 if (cl-member auto-section-name org-super-agenda-auto-selector-keywords)
-                 do (setq section-name (or custom-section-name "Auto category/group"))
-                 and append (cl-loop for group in matching
-                                     collect (list :name (plist-get group :name)
-                                                   :items (plist-get group :items)
-                                                   :order order))
-                 into sections
-                 and do (setq all-items non-matching)
-
-                 ;; Manual groups
-                 else
-                 do (setq section-name (or custom-section-name auto-section-name))
-                 and collect (list :name section-name :items matching :order order) into sections
-                 and do (setq all-items non-matching)
-
-                 ;; Sort sections by :order then :name
-                 finally do (setq non-matching (list :name org-super-agenda-unmatched-name
-                                                     :items non-matching
-                                                     :order org-super-agenda-unmatched-order))
-                 finally do (setq sections (--sort (let ((o-it (plist-get it :order))
-                                                         (o-other (plist-get other :order)))
-                                                     (cond ((and
-                                                             ;; FIXME: This is now quite ugly.  I'm not sure that all of these tests
-                                                             ;; are necessary, but at the moment it works, so I'm leaving it alone.
-                                                             (equal o-it o-other)
-                                                             (not (equal o-it 0))
-                                                             (stringp (plist-get it :name))
-                                                             (stringp (plist-get other :name)))
-                                                            ;; Sort by string only for items with a set order
-                                                            (string< (plist-get it :name)
-                                                                     (plist-get other :name)))
-                                                           ((and (numberp o-it)
-                                                                 (numberp o-other))
-                                                            (< o-it o-other))
-                                                           (t nil)))
-                                                   (push non-matching sections)))
-                 ;; Insert sections
-                 finally return (cl-loop for (_ name _ items) in sections
-                                         when items
-                                         collect (org-super-agenda--make-agenda-header name items)
-                                         and append items)))
-    ;; No super-filters; return list unmodified
-    all-items))
 #+end_src
 
 * 集中力を維持するための工夫
@@ -1864,6 +1762,161 @@ custom-fileに反映しないように設定する。
 
 #+begin_src emacs-lisp
 (setq-default enable-local-variables :all)
+#+end_src
+
+* Org Mode
+
+Org Modeは巨大なドキュメントシステムであり、プロジェクト管理や表計算など様々な機能を提供している。
+
+** org-clock
+
+org-clockはタスク(org-todo)の作業時間の計測を行う。作業時間の計測を簡
+略化するためにキーバインドを変更する。
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'org-clock
+  (define-key org-mode-map (kbd "M-i") #'org-clock-in)
+  (define-key org-mode-map (kbd "M-o") #'org-clock-out)
+  )
+#+end_src
+
+** org-agenda
+
+org-agendaはタスクの状況を一覧で表示する。org-agendaの一覧表示からでも
+作業を開始できるようにキーバインドを変更する。
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'org-agenda
+  (define-key org-agenda-mode-map (kbd "M-i") #'org-agenda-clock-in)
+  (define-key org-agenda-mode-map (kbd "M-o") #'org-aganda-clock-out)
+  )
+#+end_src
+
+* org-super-agenda
+
+org-agendaのレポート機能を強化したライブラリとして =org-super-agenda=
+がある。org-super-agendaを使用しているがカテゴリ別に見積の値をラベルに
+集計するようにカスタマイズする。
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'org-super-agenda
+
+  (defun org-super-agenda-get-effort (item)
+    (if-let ((item-todo-state (get-text-property 0 'todo-state item)))
+        (get-text-property 0 'effort-minutes item-todo-state)))
+
+  (defun org-super-agenda-summary-effort (items)
+    (apply #'+
+  	 (seq-filter
+  	  (lambda (it) it)
+  	  (mapcar #'org-super-agenda-get-effort items))))
+
+  (defun org-super-agenda--make-agenda-header (name &optional items)
+    "Return agenda header named NAME.
+  If NAME is nil or `none', return empty string.  Otherwise, return
+  string NAME prepended with `org-super-agenda-header-separator',
+  which see.  NAME has the face `org-super-agenda-header' appended,
+  and the text properties `keymap' and `local-map' set to the value
+  of `org-super-agenda-header-map', which see."
+    (pcase name
+      ((or `nil 'none) "")
+      (_ (let* ((properties (text-properties-at 0 name))
+                (header (concat org-super-agenda-header-prefix name))
+                (separator
+                 (cl-etypecase org-super-agenda-header-separator
+                   (character (concat (make-string (window-width) org-super-agenda-header-separator)
+                                      "\n"))
+                   (string org-super-agenda-header-separator))))
+           (set-text-properties 0 (length header) properties header)
+           (add-face-text-property 0 (length header) 'org-super-agenda-header t header)
+           (org-add-props header org-super-agenda-header-properties
+             'keymap org-super-agenda-header-map
+             ;; NOTE: According to the manual, only `keymap' should be necessary, but in my
+             ;; testing, it only takes effect in Agenda buffers when `local-map' is set, so
+             ;; we'll use both.
+             'local-map org-super-agenda-header-map)
+           ;; Don't apply faces and properties to the separator part of the string.
+           (concat separator header
+  		 (format " (Effort => %d)"
+  			 (org-super-agenda-summary-effort items)))))))
+
+  (defun org-super-agenda--group-items (all-items)
+    "Divide ALL-ITEMS into groups based on `org-super-agenda-groups'."
+    (if (bound-and-true-p org-super-agenda-groups)
+        ;; Transform groups
+        (let ((org-super-agenda-groups (org-super-agenda--transform-groups org-super-agenda-groups)))
+          ;; Collect and insert groups
+          (cl-loop with section-name
+                   for filter in org-super-agenda-groups
+                   for custom-section-name = (plist-get filter :name)
+                   for order = (or (plist-get filter :order) 0)  ; Lowest number first, 0 by default
+                   for (auto-section-name non-matching matching) = (org-super-agenda--group-dispatch all-items filter)
+
+                   do (when org-super-agenda-keep-order
+                        (setf matching (sort matching #'org-entries-lessp)))
+
+                   ;; Transformer
+                   for transformer = (plist-get filter :transformer)
+                   when transformer
+                   do (setq matching (-map (pcase transformer
+                                             (`(function ,transformer) transformer)
+                                             ((pred symbolp) transformer)
+                                             (_ `(lambda (it) ,transformer)))
+                                           matching))
+
+                   ;; Face
+                   for face = (plist-get filter :face)
+                   when face
+                   do (let ((append (plist-get face :append)))
+                        (when append (cl-remf face :append))
+                        (--each matching
+                          (add-face-text-property 0 (length it) face append it)))
+
+                   ;; Auto category/group
+                   if (cl-member auto-section-name org-super-agenda-auto-selector-keywords)
+                   do (setq section-name (or custom-section-name "Auto category/group"))
+                   and append (cl-loop for group in matching
+                                       collect (list :name (plist-get group :name)
+                                                     :items (plist-get group :items)
+                                                     :order order))
+                   into sections
+                   and do (setq all-items non-matching)
+
+                   ;; Manual groups
+                   else
+                   do (setq section-name (or custom-section-name auto-section-name))
+                   and collect (list :name section-name :items matching :order order) into sections
+                   and do (setq all-items non-matching)
+
+                   ;; Sort sections by :order then :name
+                   finally do (setq non-matching (list :name org-super-agenda-unmatched-name
+                                                       :items non-matching
+                                                       :order org-super-agenda-unmatched-order))
+                   finally do (setq sections (--sort (let ((o-it (plist-get it :order))
+                                                           (o-other (plist-get other :order)))
+                                                       (cond ((and
+                                                               ;; FIXME: This is now quite ugly.  I'm not sure that all of these tests
+                                                               ;; are necessary, but at the moment it works, so I'm leaving it alone.
+                                                               (equal o-it o-other)
+                                                               (not (equal o-it 0))
+                                                               (stringp (plist-get it :name))
+                                                               (stringp (plist-get other :name)))
+                                                              ;; Sort by string only for items with a set order
+                                                              (string< (plist-get it :name)
+                                                                       (plist-get other :name)))
+                                                             ((and (numberp o-it)
+                                                                   (numberp o-other))
+                                                              (< o-it o-other))
+                                                             (t nil)))
+                                                     (push non-matching sections)))
+                   ;; Insert sections
+                   finally return (cl-loop for (_ name _ items) in sections
+                                           when items
+                                           collect (org-super-agenda--make-agenda-header name items)
+                                           and append items)))
+      ;; No super-filters; return list unmodified
+      all-items))
+      )
 #+end_src
 
 * 脚注
