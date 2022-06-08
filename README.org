@@ -1788,7 +1788,7 @@ org-agendaはタスクの状況を一覧で表示する。org-agendaの一覧表
 #+begin_src emacs-lisp
 (with-eval-after-load 'org-agenda
   (define-key org-agenda-mode-map (kbd "M-i") #'org-agenda-clock-in)
-  (define-key org-agenda-mode-map (kbd "M-o") #'org-aganda-clock-out)
+  (define-key org-agenda-mode-map (kbd "M-o") #'org-agenda-clock-out)
   )
 #+end_src
 
