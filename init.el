@@ -2,7 +2,8 @@
 ;; Basic Behavior
 ;; ----------------------------
 (setq-default find-function-C-source-directory "/opt/ng/emacs/src"
-	      debug-on-error t
+	      debug-on-error nil
+	      eval-expression-debug-on-error nil
 	      make-backup-files nil
 	      auto-save-default nil
 	      custom-file (locate-user-emacs-file "custom.el")
