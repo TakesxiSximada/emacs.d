@@ -1926,6 +1926,13 @@ org-agendaのレポート機能を強化したライブラリとして =org-supe
       )
 #+end_src
 
+* OSX Keychain
+
+#+begin_src emacs-lisp
+(autoload #'gnus "mail-source")
+(require 'osx-keychain-autoloads)
+#+end_src
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
