@@ -1621,6 +1621,10 @@ Gitフックなどでテストや整形を実行していると、その結果�
 
 https://blog.symdon.info/posts/1654845224/
 
+#+begin_src emacs-lisp
+(add-hook 'magit-credential-hook #'magit-process-buffer)
+#+end_src
+
 * 集中力を維持するための工夫
 
 [[https://blog.symdon.info/posts/1652142295]]
