@@ -1933,6 +1933,21 @@ org-agendaのレポート機能を強化したライブラリとして =org-supe
 (require 'osx-keychain-autoloads)
 #+end_src
 
+* Gnus
+
+GnusはEmacs用のニュースリーダである。メールなどもGnusで処理している。
+
+#+begin_src emacs-lisp
+(setq nnfolder-directory "~/Mail/archive")
+
+(add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
+(setq gnus-summary-line-format "%U%R%z %&user-date; %I%(%[%-15,15f%]%) %s\n"
+      gnus-user-date-format-alist '((t . "%y-%m-%dT%H%M")))
+#+end_src
+
+認証情報はcustom.el内で設定している。
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
