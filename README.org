@@ -1673,7 +1673,6 @@ https://github.com/skk-dev/ddskk
 
 #+begin_src emacs-lisp
 (global-set-key "\C-x\C-j" 'skk-mode)
-(global-set-key "\C-xj" 'skk-mode)
 
 (defun disable-mode-line ()
   (setq-local mode-line-format nil))
