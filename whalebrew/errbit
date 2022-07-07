@@ -1,16 +1,34 @@
-#!/usr/bin/env whalebrew
-image: errbit/errbit:v0.9.0
-ports:
-  - "8088:8080"
-entrypoint:
-  - "/bin/sh"
-  - "-c"
-  - "cd /app && bundle exec puma -C config/puma.default.rb"
-environment:
-  - "ERRBIT_ADMIN_EMAIL=admin@example.com"
-  - "ERRBIT_ADMIN_PASSWORD=testing1234"
-  - "ERRBIT_ADMIN_USER=admin"
-  - "MONGO_URL=mongodb://host.docker.internal:27017/errbit"
-  - "RACK_ENV=production"
-keep_container_user: true
-# working_dir: "/app"
+#! /usr/bin/env bash
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+function docker_run_errbit_rails_server () {
+    exec docker run -it --rm \
+         --privileged=true \
+         --publish="127.0.0.1:8088:3000" \
+         --expose="3000" \
+         --name="errbit" \
+         --volume "$(pwd):/workdir" \
+         --env-file="${SCRIPT_DIR}/.env.errbit" \
+         errbit/errbit:v0.9.0 \
+         bundle exec rails server
+}
+
+function docker_exec_errbit_bundle () {
+    exec docker exec -it errbit bundle "$@"
+}
+
+case "$1" in
+    "")
+        echo "Listen: http://localhostt:8088 | ${ERRBIT_ADMIN_EMAIL} / ${ERRBIT_ADMIN_PASSWORD}"
+	docker_run_errbit_rails_server
+        ;;
+    "install")
+	docker_exec_errbit_bundle install
+        ;;
+    "bootstrap")
+	docker_exec_errbit_bundle exec rake errbit:bootstrap
+        ;;
+    *)
+        exit 1
+esac
