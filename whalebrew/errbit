@@ -1,5 +1,4 @@
 #! /usr/bin/env bash
-
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 function docker_run_errbit_rails_server () {
@@ -28,6 +27,14 @@ case "$1" in
         ;;
     "bootstrap")
 	docker_exec_errbit_bundle exec rake errbit:bootstrap
+        ;;
+    "--help")
+        cat <<_WARNING_
+Note: Errbit needs executing next commands initial starting.
+
+- errbit install
+- errbit bootstrap
+_WARNING_
         ;;
     *)
         exit 1
