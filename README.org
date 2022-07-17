@@ -161,7 +161,7 @@ Magitは自分のリポジトリに固有の修正が入っている。
 (use-package smex :ensure t :defer t)
 (use-package terraform-mode :ensure t :defer t)
 (use-package transient :ensure t)
-(use-package unicode-escape :ensure t :defer t)
+;; (use-package unicode-escape :ensure t :defer t)
 (use-package vagrant-tramp :ensure t :defer t)
 (use-package web :ensure t :defer t)
 (use-package wgrep :ensure t :defer t)
