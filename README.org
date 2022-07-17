@@ -1950,6 +1950,13 @@ GnusはEmacs用のニュースリーダである。メールなどもGnusで処�
       gnus-user-date-format-alist '((t . "%y-%m-%dT%H%M")))
 #+end_src
 
+* indent-guide
+
+[[https://github.com/zk-phi/indent-guide]]
+
+インデントの崩れを確認しやすくする。
+ただし常に表示されて見た目を損ないたくないため、必要な時に有効にする。
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
