@@ -1,0 +1,84 @@
+var m = require('mithril');
+
+/**
+ * ヘッダー
+ */
+module.exports.header = function (ctrl){ return (
+<header>
+  <h1>Dropsaws</h1>
+</header>
+)}
+
+/**
+ * フッター
+ */
+module.exports.footer = function (){ return (
+<footer id="footer">
+  <ul class="icons">
+	<li><a href="https://twitter.com/TakesxiSximada" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+	<li><a href="https://www.facebook.com/takesxi.sximada" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+	<li><a href="https://instagram.com/takesxisximada/" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+	<li><a href="https://github.com/TakesxiSximada" class="icon fa-github"><span class="label">GitHub</span></a></li>
+  </ul>
+  <ul class="copyright">
+	<li>&copy; Untitled.</li><li>Credits: <a href="https://about.me/TakesxiSximada">TakesxiSximada</a></li>
+  </ul>
+</footer>
+)}
+
+/**
+ * Dropsawsコンテンツ
+ */
+module.exports.section = function (ctrl){ return (
+<section>
+  {control_panel(ctrl)}
+  {result_panel_all(ctrl)}
+</section>
+)};
+
+/**
+ * 入力パネル
+ */
+function control_panel(ctrl){ return (
+<div>
+  <input id="url" type="text" name="url" placeholder="URL"
+         onchange={m.withAttr('value', ctrl.update_url)}
+         value={ctrl.controlPanel.url()} />
+  <input id="email" type="text" name="email" placeholder="EMAIL"
+         onchange={m.withAttr('value', ctrl.controlPanel.email)}
+         value={ctrl.controlPanel.email()} />
+  <input id="password" type="password" name="password" placeholder="PASSWORD"
+         onchange={m.withAttr('value', ctrl.controlPanel.password)}
+         value={ctrl.controlPanel.password()} />
+</div>
+)}
+
+/**
+ * Domain毎の結果計算用パネル
+ */
+function result_panel_all(ctrl){ return (
+<div>
+  {Array.from(ctrl.controlPanel.domains).map((domain, ii) => result_panel(ctrl, domain))}
+</div>
+)}
+
+/**
+ * 結果計算用パネル
+ */
+function result_panel(ctrl, domain){ return (
+<div>
+  <h2>{domain}</h2>
+  <div>
+    {Array(12).fill().map((currentValue, ii) => calc_and_copy_button(ctrl, domain, ii + 4))}
+  </div>
+</div>
+)}
+
+/**
+ * パスワードの生成とクリップボードへのコピー用ボタン
+ */
+function calc_and_copy_button(ctrl, domain, num){ return (
+<input type="button" name={num} value={num} style="width: 3em; text-align: center;"
+       onclick={ctrl.password.calc_and_copy(num, domain)}
+       />
+)}

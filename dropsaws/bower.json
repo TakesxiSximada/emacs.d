@@ -1,0 +1,24 @@
+{
+  "name": "tornado.tokyo",
+  "version": "0.0.0",
+  "authors": [
+    "TakesxiSximada <takesxi.sximada@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.3.0",
+    "react": "~0.13.3",
+    "md5": "~0.3.0",
+    "vue": "~0.12.8",
+    "sha256": "~0.2.0",
+    "hash.js": "~1.0.3",
+    "jsSHA": "~2.0.1"
+  }
+}

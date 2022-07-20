@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<title>Dropsaws</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+  </head>
+  <body>
+
+	<!-- Header -->
+	<header id="header">
+	  <h1>Dropsaws</h1>
+	  <p>
+        Before you point your fingers, make sure your hands are clean.<br/>
+        by Bob Marley
+      </p>
+	</header>
+
+    <div id="simple">
+	  <!-- Signup Form -->
+	  <form id="signup-form" method="post" action="#">
+        <input type="text" name="url" id="url" placeholder="URL" />
+	    <input type="email" name="email" id="email" placeholder="Email Address" v-model="email" />
+	    <input type="password" name="password" id="password" placeholder="Password" v-model="password"/>
+	  </form>
+
+      <div v-repeat="seeds">
+        <div>
+          {{$value}}
+        </div>
+        <span v-repeat="char_count" v-on="click : copy_word(this)">
+          <input type="button" name="{{count}}" value="{{count}}" style="width: 3em; text-align: center;"/>
+        </span>
+      </div>
+      <span v-text="message" v-on="click: magnify" v-attr="style:font"></span>
+    </div>
+
+	<!-- Footer -->
+	<footer id="footer">
+	  <ul class="icons">
+		<li><a href="https://twitter.com/TakesxiSximada" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+		<li><a href="https://www.facebook.com/takesxi.sximada" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+		<li><a href="https://instagram.com/takesxisximada/" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+		<li><a href="https://github.com/TakesxiSximada" class="icon fa-github"><span class="label">GitHub</span></a></li>
+	  </ul>
+	  <ul class="copyright">
+		<li>&copy; Untitled.</li><li>Credits: <a href="https://about.me/TakesxiSximada">TakesxiSximada</a></li>
+	  </ul>
+	</footer>
+	<!-- Scripts -->
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/js/main.js"></script>
+	<script src="bower_components/vue/dist/vue.min.js"></script>
+	<script src="sha256.js"></script>
+	<script src="main.js"></script>
+    <script>
+      var dsview = new Dropsaws.MainView(window, '#simple');
+      dsview.view();
+      dsview.update_seeds('#url');
+    </script>
+  </body>
+</html>
