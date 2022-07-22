@@ -476,19 +476,27 @@ isortコマンドを外部から指定できるようにモンキーパッチを
 
 * ウィンドウの分割表示
 
-EmacsにおいてウィンドウはEmacsの画面(フレーム)内に表示されている領域で
-す。通常のOSなどでウィンドウと呼ばれている領域はEmacsではフレームと呼
-びます。
-
-できる限り文字を多く表示できるようにウィンドウの幅を小さくし線で分割し
-ます。モードラインを表示しない場合、上下のウィンドウの境界がわからなく
-なってしまうので下側にも分割線を表示するように修正します。
+Emacsでは、通常のOSなどでウィンドウと呼ばれている領域はフレームと呼び、
+ウィンドウはEmacsの画面(フレーム)内に表示されている領域のことを指す。
+できる限り文字を多く表示するためにウィンドウの分割線の幅を小さくする。
+モードラインを表示しない場合、上下のウィンドウの境界がわからなくなって
+しまうのでウィンドウ下部に分割線を表示する。
 
 #+begin_src emacs-lisp
-(setq window-divider-default-right-width 1)
 (setq window-divider-default-bottom-width 1)
-(setq window-divider-default-places t)
+(setq window-divider-default-places 'bottom-only)
+#+end_src
+
+設定を反映する。
+
+#+begin_src emacs-lisp
 (window-divider-mode)
+#+end_src
+
+同様の理由からフリンジも表示しない。
+
+#+begin_src emacs-lisp
+(fringe-mode 0)
 #+end_src
 
 * mode-line
