@@ -432,6 +432,8 @@ The build string will be of the format:
 ** Python
 
 #+begin_src emacs-lisp
+(setenv "WORKON_HOME" (expand-file-name "~/.venv"))
+
 (use-package python :ensure t :defer t
   :requires (eglot)
   :config
