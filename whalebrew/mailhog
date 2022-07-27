@@ -1,5 +1,14 @@
-#!/usr/bin/env whalebrew
-image: mailhog/mailhog:v1.0.1
-ports:
- - "1025:1025"
- - "8025:8025"
+#!/usr/bin/env bash
+set -e -x
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="127.0.0.1:1025:1025" \
+     --publish="127.0.0.1:8025:8025" \
+     --expose="1025" \
+     --expose="8025" \
+     --workdir="/workdir" \
+     --volume "$(pwd):/workdir" \
+     --name="mailhog" \
+     mailhog/mailhog:v1.0.1
