@@ -60,7 +60,7 @@ npm install -g prettier
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
-(setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1l/lib")))
+(setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1q/lib")))
 #+end_src
 
 ** Android Studio
