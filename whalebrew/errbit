@@ -4,7 +4,7 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 function docker_run_errbit_rails_server () {
     exec docker run -it --rm \
          --privileged=true \
-         --publish="127.0.0.1:8088:3000" \
+         --publish="127.0.0.1:9003:3000" \
          --expose="3000" \
          --name="errbit" \
          --volume "$(pwd):/workdir" \
@@ -19,7 +19,7 @@ function docker_exec_errbit_bundle () {
 
 case "$1" in
     "")
-        echo "Listen: http://localhostt:8088 | ${ERRBIT_ADMIN_EMAIL} / ${ERRBIT_ADMIN_PASSWORD}"
+        echo "Listen: http://localhost:9003 | ${ERRBIT_ADMIN_EMAIL} / ${ERRBIT_ADMIN_PASSWORD}"
 	docker_run_errbit_rails_server
         ;;
     "install")
