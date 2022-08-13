@@ -1,9 +1,20 @@
-#!/usr/bin/env whalebrew
-image: mongo:4.1
-volumes:
-  - "mongo-data:/data/db"
-ports:
-  - "27017:27017"  # main
-  - "27018:27018"  # --shardsvr
-  - "27019:27019"  # --configsvr
-keep_container_user: true
+#!/usr/bin/env bash
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+# - 27017 :: main
+# - 27018 :: --shardsvr
+# - 27019 :: --configsvr
+exec docker run -it --rm \
+     --privileged=true \
+     --publish="127.0.0.1:27017:27017" \
+     --expose="27017" \
+     --publish="127.0.0.1:27018:27018" \
+     --expose="27018" \
+     --publish="127.0.0.1:27019:27019" \
+     --expose="27019" \
+     --volume "$(pwd):/workdir" \
+     --volume "mongo-data:/data/db" \
+     mongo:4.1 \
+    "$@"
