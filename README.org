@@ -872,17 +872,11 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 
 #+begin_src emacs-lisp
 (setq org-agenda-sorting-strategy
-    '((agenda time-up effort-up priority-down category-keep)
+    '((agenda time-up category-keep priority-down category-keep)
       (todo   priority-down category-keep)
       (tags   priority-down category-keep)
       (search category-keep)))
 #+end_src
-
-*(setq org-agenda-sorting-strategy
-    '((agenda time-up category-keep priority-down effort-up category-keep)
-      (todo   priority-down category-keep)
-      (tags   priority-down category-keep)
-      (search category-keep)))
 
 * プロパティを表示する
 
@@ -898,14 +892,14 @@ org-todoの論理構造を強制します。
 依存しているタスクが存在する場合、それらを完了していないと次のタスクに進めません。
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-dependencies nil)
 #+end_src
 
 ただしチェックボックスは現在進行中のタスクを阻害してしまうので無効にします。
 有効にするには =org-enforce-todo-checkbox-dependencies= を用います。
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies nil)
 #+end_src
 
 org-todoの論理構造を視覚的に表示します。
