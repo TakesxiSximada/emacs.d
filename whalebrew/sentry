@@ -63,5 +63,4 @@ case "$1" in
     *)
 	docker_run bash $@
 	;;
-	;;
 esac
