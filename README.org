@@ -1708,31 +1708,6 @@ https://github.com/skk-dev/ddskk
 
   (setq skk-show-mode-show t)
   (setq skk-show-mode-style "tooltip")
-
-  ;; 辞書の設定
-  (setq skk-extra-jisyo-file-list
-      `(
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.JIS2")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.JIS2004")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.JIS3_4")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.L")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.assoc")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.china_taiwan")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.edict")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.fullname")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.geo")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.itaiji")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.itaiji.JIS3_4")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.jinmei")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.law")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.mazegaki")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.office.zipcode")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.okinawa")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.propernoun")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.station")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/SKK-JISYO.zipcode")
-        ,(expand-file-name "~/.emacs.d/dictionary/skk/skk-jisyo.utf8")
-        ))
   )
 
   ;; 学習
