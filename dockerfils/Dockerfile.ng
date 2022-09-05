@@ -1,0 +1,9 @@
+# image: ng
+FROM gentoo/stage3
+RUN emerge --sync
+RUN emerge-webrsync
+RUN emerge app-editors/emacs
+
+
+
+
