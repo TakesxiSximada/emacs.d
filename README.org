@@ -1432,7 +1432,8 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
 - https://www.emacswiki.org/emacs/SqlBeautify
 
 #+begin_src emacs-lisp
-(defvar sql-fmt-command "forma --max-width 60")
+
+(defvar sql-fmt-command "sqlfluff fix --dialect mysql --config ~/.emacs.d/.sqlfluff -")
 
 (defun sql-fmt-region (beg end)
   (interactive "r")

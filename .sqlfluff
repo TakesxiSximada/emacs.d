@@ -1,0 +1,2 @@
+[sqlfluff]
+large_file_skip_char_limit = 200000
