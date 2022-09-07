@@ -15,6 +15,7 @@
 	  :stream ssl)))
  '(package-selected-packages
    '(python-isort hmac indent-guide edit-indirect wgrep compat quelpa anaphora eglot magit-popup kubernetes eslint-fix flycheck-mypy ob-http add-node-modules-path adoc-mode ag avy-menu blacken company csv-mode db ddskk dired-filter docker docker-compose-mode dockerfile-mode editorconfig el-get fakir flycheck flycheck-pos-tip github-review go-mode google-translate grip-mode haskell-mode http ido-completing-read+ ido-vertical-mode js2-mode markdown-mode mew monky nginx-mode ob-async ob-restclient org-agenda org-agenda-property org-re-reveal org-super-agenda ox-gfm pcre2el py-isort pyvenv quelpa-use-package request s3ed slime smex solarized-theme terraform-mode twilight-bright-theme typescript-mode unicode-escape vagrant-tramp vterm vue-mode web wgrep-ag))
+ '(skk-jisyo-edit-user-accepts-editing t)
  '(warning-suppress-log-types '((initialization) (initialization) (use-package)))
  '(warning-suppress-types '((initialization) (use-package)))
  '(window-divider-default-bottom-width 1)

@@ -1683,8 +1683,6 @@ https://github.com/skk-dev/ddskk
 
 (autoload 'skk-mode "skk")
 (with-eval-after-load 'skk
-  (setq skk-user-directory (expand-file-name "~/.emacs.d/ddskk"))
-
   ;; SKKモードに切り替わってもモードラインを表示しない
   (add-hook 'skk-mode-hook 'disable-mode-line)
   (setq-default mode-line-format nil)
