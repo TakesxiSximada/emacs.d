@@ -1702,6 +1702,7 @@ https://github.com/skk-dev/ddskk
   (setq skk-henkan-strict-okuri-precedence t)
 
   ;; カーソルの色を変更する
+  (setq-default skk-cursor-latin-color "turquoise")
   (setq-default skk-cursor-hiragana-color "orange")
   (setq-default skk-cursor-katakana-color "systemGreenColor")
 
