@@ -1,0 +1,47 @@
+#! /usr/bin/env bash
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+while getopts "c:d:" opts
+do
+    case $opts in
+	c)  # Configuration file path
+	    CONF_FILE_PATH=$(cd $(dirname ${OPTARG}); pwd)/$(basename ${OPTARG})
+	    ;;
+	d)  # Root directory
+	    WORKING_ABS_DIR=$(cd $(dirname ${OPTARG}); pwd)
+	    ;;
+    esac
+done
+
+if [ "${CONF_FILE_PATH}" == "" ]
+then
+    CONF_FILE_PATH="${PWD}/nginx.conf"
+
+    if [ ! -e "${CONF_FILE_PATH}" ]
+    then
+	CONF_FILE_PATH="${SCRIPT_DIR}/nginx.conf"
+    fi
+fi
+
+if [ "${WORKING_REL_DIR}" == "" ]
+then
+    WORKING_ABS_DIR=$(pwd)
+fi
+
+shift `expr "${OPTIND}" - 1`
+
+echo "-----------------------------"
+echo "Port:          8888"
+echo "Directory:     ${WORKING_ABS_DIR}"
+echo "Configuration: ${CONF_FILE_PATH}"
+echo "-----------------------------"
+
+exec docker run -it --rm \
+     --publish="127.0.0.1:8888:80" \
+     --expose="8888" \
+     --workdir="/workdir" \
+     --volume="${WORKING_ABS_DIR}:/workdir" \
+     --mount="type=bind,source=${CONF_FILE_PATH},target=/etc/nginx/nginx.conf" \
+     --name="nginx" \
+     nginx:latest \
+     "$@"
