@@ -1950,8 +1950,24 @@ GnusはEmacs用のニュースリーダである。メールなどもGnusで処�
 
 [[https://github.com/zk-phi/indent-guide]]
 
-インデントの崩れを確認しやすくする。
-ただし常に表示されて見た目を損ないたくないため、必要な時に有効にする。
+インデントの崩れを確認しやすくする。ただし常に表示されて見た目を損ないたくないため、必要な時に有効にする。
+
+* visual-fill-column
+
+Auto Fillingを長らく使用してきたが、テキストをブログ用にレンダラに渡すと改行が空白に変換され、読みにくくなる、改行のせいで検索が困難になる、差分を判断しにくいなどの不都合があった。しかしエディタで読む場合、適当な行で折り返されていないと、それはそれで読みにくい。toggle-truncate-linesを用いて折り返す方法もあるが、それはウィンドウサイズに従って折り返されてしまうため、ウィンドウサイズを気にしなければならないが、それはそれで面倒だ。そのため =visual-fill-column= を用いて見た目上の折り返しを文字数で指定できるようにする。
+
+https://codeberg.org/joostkremers/visual-fill-column
+
+#+begin_example emacs-lisp
+package-install RET visual-fill-column RET
+#+end_example
+
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'visual-fill-column
+  (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+  (setq-default visual-fill-column-center-text nil))
+#+end_src
 
 * 脚注
 
