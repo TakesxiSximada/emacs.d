@@ -503,15 +503,11 @@ Emacsでは、通常のOSなどでウィンドウと呼ばれている領域は�
 
 * mode-line
 
-モードラインは本当に必要だろうか？モードラインには文字コードや改行コー
-ド、バックグラウンドで実行しているジョブの状態など、さまざまな情報を表
-示できる。それらは一見便利なようにも思えるが、何かを記述したり作業する
-時に本当に必要な集中力を阻害してしまう。どのような情報が必要かというこ
-とについては、個人のもしくは作業のニーズによって異なる。そのためこの情
-報が常に表示されているべきということは言えない。必ず必要な情報が何かが
-決められない以上、最初は全ての表示を無効にし、それぞれの必要性に応じて
-表示を追加していくことで、個人のニーズにあったモードラインに成長してい
-く。
+モードラインは本当に必要だろうか。モードラインには文字コードや改行コード、バックグラウンドで実行しているジョブの状態など、さまざまな情報を表示できる。
+
+それらは一見便利なようにも思えるが、何かを記述したり作業する時に本当に必要な集中力を阻害してしまう。どのような情報が必要かということについては、個人のもしくは作業のニーズによって異なる。そのためこの情報が常に表示されているべきということは言えない。
+
+必ず必要な情報が何かが決められない以上、最初は全ての表示を無効にし、それぞれの必要性に応じて表示を追加していくことで、個人のニーズにあったモードラインとして成長していく。
 
 #+begin_src emacs-lisp
 (setq-default mode-line-format nil)
@@ -666,7 +662,7 @@ macOSのアプリケーションをEmacsから起動する。
 
 * Emacsの設定ファイルを素早く開く
 
-Emacsの設定ファイルは開く回数が多いため素早く開けるように独自に関数を定義してキーを割り当てます。
+Emacsの設定ファイルは開く回数が多いため、素早く開けるように独自の関数を定義してキーを割り当てます。
 
 #+begin_src emacs-lisp
 (defun open-emacs-init-file ()
@@ -700,9 +696,7 @@ Emacsの設定ファイルは開く回数が多いため素早く開けるよう
 
 * デバッガーの起動コマンドへのエイリアス
 
-Emacsには標準でいくつかのデバッガーが付属していますが、それぞれのツー
-ルの名前がそのまま付いています。 =M-x debug-on-XXXX= で全てのデバッガー
-を起動できるようにエイリアスを設定しています。
+Emacsには標準でいくつかのデバッガーが付属していますが、それぞれのツールの名前がそのまま付いています。 =M-x debug-on-XXXX= で全てのデバッガーを起動できるようにエイリアスを設定しています。
 
 #+begin_src emacs-lisp
 (defalias 'debug-on-c 'gdb)
@@ -726,12 +720,9 @@ CSS編集のためのタブ幅などを設定します。
 
 * [[https://github.com/TakesxiSximada/emacs.d/blob/main/prettier/prettier-buffer.el][prettier-buffer.el]]
 
-フロントエンドのコードフォーマッターとして[[https://github.com/prettier/prettier][prettier]]を用いています。公式
-の拡張である[[https://github.com/prettier/prettier-emacs][Prettier-js for Emacs]]もありますが、使用感が合わなかったの
-で必要な機能だけを実装しました。
+フロントエンドのコードフォーマッターとして[[https://github.com/prettier/prettier][prettier]]を用いています。公式の拡張である[[https://github.com/prettier/prettier-emacs][Prettier-js for Emacs]]もありますが、使用感が合わなかったので必要な機能だけを実装しました。
 
-パッケージとして独立させるほどでもなかったため、このリポジトリの =prettier= ディレクトリにファイルを配置しました。
-そのためload-pathを追加し、 =prettier-buffer= をrequireします。
+パッケージとして独立させるほどでもなかったため、このリポジトリの =prettier= ディレクトリにファイルを配置しました。そのためload-pathを追加し、 =prettier-buffer= をrequireします。
 
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/prettier"))
@@ -751,13 +742,9 @@ CSS編集のためのタブ幅などを設定します。
 
 公式のEmacs拡張はPython製のwakatimeコマンドを用いてデータを送信する実装となっていました。
 
-プロジェクトやカテゴリーの値はorg-clock-inしているorg-todoの属性から取
-得し設定したかったため、Python製のwakatimeコマンドと公式wakatime-modeを使っ
-てコマンドを調整しそれらを実現するよりもEmacsから制御したほうが見通し
-がよくなると考え自前で実装することにしました。
+プロジェクトやカテゴリーの値は、org-clock-inしているorg-todoの属性から取得し設定したい。Python製のwakatimeコマンドと公式wakatime-modeを使ってコマンドを調整しそれらを実現するよりもEmacsから制御したほうが、見通しがよくなると考え自前で実装することにしました。
 
-パッケージとして独立させるほどでもなかったため、このリポジトリの =wakatime= ディレクトリにファイルを配置しました。
-そのためload-pathを追加する必要があります。
+パッケージとして独立させるほどでもなかったため、このリポジトリの =wakatime= ディレクトリにファイルを配置しました。そのためload-pathを追加する必要があります。
 
 #+begin_src emacs-lisp
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
@@ -1088,7 +1075,7 @@ MSSQL Serverについてはsql-modeでの扱いが難しいです。
 
 * AsciiDoc
 
-AsciiDocはマークアップのため記法(Nortation)の一つです。
+AsciiDocはマークアップのため記法(Nortation)の1つです。
 AsciiDocをEmacsで表示したり編集する場合様々な方法があります。
 
 ** adoc-mode
@@ -1167,12 +1154,7 @@ ewwを用いてAsciiDocを表示する。
 
 * [[https://github.com/Fanael/edit-indirect][edit-indirect]]
 
-バッファの一部の領域を別のバッファに移して編集する機能をedit-indirect
-を用いて実現しています。edit-indirectでは =C-c C-c= には
-=edit-indirect-commit= が割り当てられているが、Org-modeなど =C-c C-c=
-を既に使っているメジャーモードの場合、その設定が邪魔になるので無効化す
-る。またedit-indirectに入った時のメジャーモードの判定処理をカスタマイ
-ズする。
+バッファの一部の領域を別のバッファに移して編集する機能をedit-indirectを用いて実現している。edit-indirectでは =C-c C-c= には =edit-indirect-commit= が割り当てられている。しかしOrg-modeなど =C-c C-c= を既に使っているメジャーモードの場合、その設定が邪魔になるので無効化する。またedit-indirectに入った時のメジャーモードの判定処理をカスタマイズする。
 
 #+begin_src emacs-lisp
 (with-eval-after-load 'edit-indirect
@@ -1201,9 +1183,7 @@ Returns symbol of major-mode.
 
 * タスク
 
-タスク実行時の集中力の阻害を最小限にするために、関連する情報以外を見え
-ないようにするコマンドを定義します。開始時に =task-join= 、終了時に
-=task-leave= を呼び出します。
+タスク実行時の集中力の阻害を最小限にするため、関連する情報以外を見えないようにするコマンドを定義する。開始時に =task-join= 、終了時に =task-leave= を呼び出す。
 
 #+begin_src emacs-lisp
 (require 'edit-indirect)
@@ -1511,26 +1491,15 @@ The given CMD string will be appended."
 
 * [[https://github.com/TakesxiSximada/emacs.d/blob/main/lisp/make-possess-preset.el][make-possess-preset]]
 
-Emacsには良く設定された設定群に固有の名前を付けて配布するということがある。
-通常それらはディストリビューションやスターターキットと呼ばれるらしい。
-ここではそれらをプリセットと呼ぶことにする。
+Emacsには良く設定された設定群に固有の名前を付けて配布するということがある。通常それらはディストリビューションやスターターキットと呼ばれるらしい。ここではそれらをプリセットと呼ぶことにする。
 
-例えばSpacemacsやDoom Emacsが該当する。他にも実はいくつかある。
-他にどのようなものがあるかについては[[https://github.com/emacs-tw/awesome-emacs#starter-kit][awesome-emacsのStarter Kitの項目]]を参照すると、
-いろいろと紹介されている。もちろん紹介されていないものも世の中にはいっぱいあるだろう。
+例えばSpacemacsやDoom Emacsが該当する。他にも実はいくつかある。他にどのようなものがあるかについては[[https://github.com/emacs-tw/awesome-emacs#starter-kit][awesome-emacsのStarter Kitの項目]]を参照すると、いろいろと紹介されている。もちろん紹介されていないものも世の中にはいっぱいあるだろう。私自身はそれらをあまり使用しないが、設定の方法などを確認するためにしばしば使いたくなる。
 
-私自身はそれらをあまり使用しないが、設定の方法などを確認するためにしばしば使いたくなる。
+それらプリセットはEmacsの初期化時に設定が読み込まれる。しかし常にそれらを使用しない場合、任意のタイミングで環境を切り替えたい。そのためEmacsが完全に起動した後で、任意のタイミングでに切り替えられるようにした。
 
-それらプリセットはEmacsの初期化時に設定が読み込まれる。
-しかし常にそれらを使用しない場合、任意のタイミングで環境を切り替えたい。
-そのためEmacsが完全に起動した後で、任意のタイミングでに切り替えられるようにした。
+切り替えを実行するとパッケージ関連のパスを書き換え、bootstrap用のファイルをロードする。
 
-切り替えを実行するとパッケージ関連のパスを書き換え、
-bootstrap用のファイルをロードする。
-
-Emacsがプリセットを読み込んだ後に元の環境に戻すためにはEmacsを再起動するしかない。
-プリセットの読み込み処理によって更新された変数や関数などの情報をそれ以前に元に戻すのが困難だからだ。
-過ぎ去った時間を取り戻すことはできない。
+Emacsがプリセットを読み込んだ後に元の環境に戻すためにはEmacsを再起動するしかない。プリセットの読み込み処理によって、更新された変数や関数などの情報をそれ以前の状態に戻すのが困難だからだ。過ぎ去った時間を取り戻すことはできない。
 
 ** Spacemacs
 
@@ -1620,8 +1589,7 @@ magit-commit、magit-push、magit-rebaseの3つのEmacsのコマンドについ�
 
 ** push操作後にプロセスバッファをポップアップする
 
-Gitフックなどでテストや整形を実行していると、その結果を即座に確認したい。
-そのため、git push時にはMagitのプロセスバッファを表示する。
+Gitフックなどでテストや整形すると、その結果を即座に確認したい。そのため、git push時にはMagitのプロセスバッファを表示する。
 
 https://blog.symdon.info/posts/1654845224/
 
@@ -1635,10 +1603,9 @@ https://blog.symdon.info/posts/1654845224/
 
 ** Frame Title
 
-集中力を維持するためにframe-titleにorg-clock-inしたタスクの名称を表示する。
+集中力を維持するため、frame-titleにorg-clock-inしたタスクの名称を表示する。
 
-=org-clock-in= 及び =org-clock-out= された時に実行されるフックに、自作のフレームタイトルを変更する関数を設定した。
-org-clock-inしていない時はフレームタイトルにはバッファ名を表示するようにした。
+=org-clock-in= 及び =org-clock-out= された時に実行されるフックとして、自作のフレームタイトルを変更する関数を設定した。org-clock-inしていない時はフレームタイトルにはバッファ名を表示するようにした。
 
 #+begin_src emacs-lisp
 (defun change-frame-title-to-org-clock-current-task-name ()
