@@ -1969,6 +1969,26 @@ package-install RET visual-fill-column RET
   (setq-default visual-fill-column-center-text nil))
 #+end_src
 
+* 文章校正
+
+textlintを用いた文章校正用のflycheckのチェッカーを定義する。 =textlint-check= コマンドはbinディレクトリに格納している。実体はtextlintだ。
+
+#+begin_src emacs-lisp
+(require 'flycheck)
+
+(flycheck-define-checker textlint
+  "A linter for text."
+  :command ("textlint-check" source)
+  :error-patterns
+  ((warning line-start (file-name) ":" line ":" column ": "
+            (id (one-or-more (not (any " "))))
+            (message (one-or-more not-newline)
+                     (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+            line-end))
+  :modes (text-mode markdown-mode gfm-mode org-mode))
+#+end_src
+
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
