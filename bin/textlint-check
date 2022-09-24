@@ -1,0 +1,20 @@
+#! /usr/bin/env bash
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+FILENAME=$1
+
+if grep -q [ぁ-ん] $FILENAME; then
+    TEXTLINTRC="${SCRIPT_DIR}/../textlint/ja.json"
+else
+    TEXTLINTRC="${SCRIPT_DIR}/../textlint/en.json"
+fi
+
+EXTENTION=${FILENAME##*.}
+
+if [ $EXTENTION = "org" ]; then
+    PLUGIN="--plugin org"
+else
+    PLUGIN=""
+fi
+
+exec textlint --format unix --config ${TEXTLINTRC} ${PLUGIN} ${FILENAME}
