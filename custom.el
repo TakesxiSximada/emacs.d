@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("e704d8997ed724206e11721a9297a5b7d909301b238768ad17431b70f19ccc62" "4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "f5b6be56c9de9fd8bdd42e0c05fecb002dedb8f48a5f00e769370e4517dde0e8" default))
- '(fill-column 90)
+ '(fill-column 80)
  '(gnus-select-method '(nnml ""))
  '(mail-sources
    `((pop :server ,(osx-keychain-get "gnus.server" user-login-name)
