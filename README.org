@@ -58,6 +58,7 @@ npm install -g prettier
 (add-to-list 'exec-path (expand-file-name "~/Library/Python/.bin"))
 (add-to-list 'exec-path (expand-file-name "~/development/flutter/bin"))
 (add-to-list 'exec-path (expand-file-name "~/google-cloud-sdk/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.tiup/bin"))  ;; for TiDB
 
 (setenv "CPPFLAGS" (string-join '("-I/usr/local/opt/openjdk/include")))
 (setenv "LDFLAGS" (string-join '("-L/usr/local/Cellar/openssl@1.1/1.1.1q/lib")))
