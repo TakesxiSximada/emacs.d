@@ -850,7 +850,7 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 
 #+begin_src emacs-lisp
 (setq org-agenda-prefix-format
-      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %t %.8s %-5.5c %-25.50b ")
+      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %t %.8s %-6.6c %-25.50b ")
         (todo . " %i %-12:c %-6e")
         (tags . " %i %-12:c")
         (search . " %i %-12:c")))
