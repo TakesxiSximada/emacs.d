@@ -61,7 +61,7 @@
 ;; -----------------------------
 ;; Color Theme
 ;; -----------------------------
-(load-theme 'simple-darkness t)
+(load-theme 'symdon-kids t)
 
 ;; -------------------------
 ;; Load README configuration
