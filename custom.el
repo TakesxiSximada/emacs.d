@@ -30,6 +30,5 @@
  '(flycheck-error ((t (:background "Red" :foreground "alternatingContentBackgroundColor"))))
  '(flycheck-info ((t (:underline (:color "selectedTextBackgroundColor" :style wave)))))
  '(flycheck-warning ((t (:background "systemOrangeColor" :foreground "alternateSelectedControlTextColor"))))
- '(hl-line ((t (:inherit highlight :extend t :background "#000066"))))
  '(vertical-border ((t (:foreground "gray35"))))
  '(window-divider ((t (:foreground "gray35")))))
