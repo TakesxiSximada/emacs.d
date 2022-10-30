@@ -36,7 +36,7 @@
  '(escape-glyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(homoglyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(minibuffer-prompt ((t (:weight bold :box (:line-width (1 . -1) :color "red" :style released-button) :foreground "medium blue" :background "yellow"))))
- '(highlight ((t (:background "sea green"))))
+ '(highlight ((t (:background "#000066"))))
  '(region ((t (:extend t :background "SeaGreen4"))))
  '(shadow ((((class color grayscale) (min-colors 88) (background light)) (:foreground "grey50")) (((class color grayscale) (min-colors 88) (background dark)) (:foreground "grey70")) (((class color) (min-colors 8) (background light)) (:foreground "green")) (((class color) (min-colors 8) (background dark)) (:foreground "yellow"))))
  '(secondary-selection ((t (:extend t :foreground "#f6f3e8" :background "#333366"))))
