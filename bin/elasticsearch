@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+# Imageのビルド方法: https://blog.symdon.info/posts/1669850509/
+set -e -x
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+cd ${SCRIPT_DIR}
+
+exec docker run -it --rm \
+     --publish="127.0.0.1:9200:9200" \
+     --expose="9200" \
+     --env="xpack.security.enabled=false" \
+     --env="discovery.type=single-node" \
+     --env="bootstrap.memory_lock=true" \
+     --env="ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+     --ulimit="memlock=-1:-1" \
+     --workdir="/workdir" \
+     --volume="elasticsearch-data:/usr/share/elasticsearch/data" \
+     --volume="$(pwd):/workdir" \
+     --name="elasticsearch" \
+     elasticsearch \
+     "$@"
