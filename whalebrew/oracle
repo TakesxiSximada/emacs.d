@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Imageのビルド方法: https://blog.symdon.info/posts/1611135394/
 set -e -x
 
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
@@ -15,5 +16,5 @@ exec docker run -it --rm \
      --volume "oracle-db-data:/opt/oracle/oradata" \
      --name="oracle" \
      --env-file="${SCRIPT_DIR}/.env.oracle" \
-     oracle/database:19.3.0-ee \
+     oracle/database:21.3.0-ee \
      "$@"
