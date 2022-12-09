@@ -43,7 +43,7 @@
   (async-shell-command (format "%s %s --generate-cli-skeleton" aws-cli-command subcmd)))
 
 ;;;###autoload
-(defun aws-cli-execute-skelton (subcmd &optional beg end)
+(defun aws-cli-execute-skelton (subcmd)
   (interactive "s[aws] ")
   (async-shell-command
    (format "%s %s --cli-input-json file://%s"
