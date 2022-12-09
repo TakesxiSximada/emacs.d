@@ -27,10 +27,23 @@
 ;; <https://www.gnu.org/licenses/>.
 
 ;;; Code:
+(setq interaction-output nil)
 
-(setq-local interaction-output nil)
-(setq-local interaction-prompt nil)
-(setq-local interaction-overlay-timer nil)
+(setq interaction-prompt nil)
+
+
+(setq interaction-overlay-timer nil)  ;; オーバーレイ表示関数のタイマーを保持する
+
+(defun interaction-cancel-timer ()
+  "Timerとして設定されているオーバーレイ表示をキャンセルする。
+
+設定されていない場合は何もしない。
+"
+  (interactive)
+  (when (and (boundp 'interaction-overlay-timer)
+	     (timerp interaction-overlay-timer))
+    (cancel-timer interaction-overlay-timer)))
+
 
 
 (setq-local interaction-end-character "\n")
@@ -81,6 +94,7 @@
     (process-send-string interaction-process (interaction-substring-no-property))))
 
 
+
 (defun interaction-detect-prompt ()
   (interactive)
   (when interaction-end-character
@@ -117,6 +131,10 @@
    				     (mapcar #'car interaction-alist)
 				     nil nil nil nil
 				     "redis")))
+  (setq-local interaction-output nil)
+  (setq-local interaction-prompt nil)
+  (setq-local interaction-overlay-timer nil)
+  (setq-local interaction-end-character "\n")
   (funcall (cdr (assoc target interaction-alist))))
 
 (provide 'interaction)
