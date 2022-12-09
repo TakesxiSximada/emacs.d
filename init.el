@@ -51,7 +51,7 @@
       package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
   			 ("org" . "https://orgmode.org/elpa/")
   			 ("melpa" . "https://melpa.org/packages/")
-			 ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/")
+			 ;; ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/")
   			 ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
   			 ;; marmalade is already not mainted
   			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
