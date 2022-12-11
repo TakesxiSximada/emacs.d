@@ -967,7 +967,7 @@ Org Babelのコア部分はob-core.elに実装されている。例えばOrg-mod
 
 * Databases
 
-各種データベースへの接続設定をします。
+各種データベースへの接続情報を設定する。
 
 ** MySQL
 
@@ -981,9 +981,7 @@ Org Babelのコア部分はob-core.elに実装されている。例えばOrg-mod
 (setq sql-mysql-login-params nil)
 #+end_src
 
-MySQLのコンテナはSIGINTを送信(C-c C-c)したときに停止しないケースがあり
-ます。そのため停止用にDockerで動作させているmysqldに対してSIGTERMを送
-信するためのコマンドを定義しています。
+MySQLのコンテナはSIGINTを送信(C-c C-c)したときに停止しないケースがある。そのため停止用にDockerで動作させているmysqldに対してSIGTERMを送信するためのコマンドを定義した。
 
 #+begin_src emacs-lisp
 (defun sql-mysqld-stop ()
@@ -1001,31 +999,28 @@ MySQLのコンテナはSIGINTを送信(C-c C-c)したときに停止しないケ
 (setq sql-postgres-login-params nil)
 #+end_src
 
-** IBM DB2
+** IBM Db2
 
-私はlocalで使うDB2の環境をDockerを用いて構築しています。
-そのためDB2サーバへの接続はコンテナに直接入る方法を採用しました。
-
-sql-db2-programとsql-db2-optionsを設定します。
+localで使うDb2の環境をDockerを用いて構築している。そのためDb2サーバへの接続はコンテナに直接入る方法を用いることにした。sql-db2-programとsql-db2-optionsを設定する。
 
 #+begin_src emacs-lisp
 (setq sql-db2-program "docker")
 (setq sql-db2-options '("exec" "-ti" "db2-server" "bash" "-c" "su - db2inst1 -c 'db2 -t'"))
 #+end_src
 
-DB2は改行でSQLを実行します。その場合複数行にまたがるSQLは改行を削除して実行する必要があります。
-=-t= を指定すると改行ではなくセミコロン(;)でSQLを実行するようになります。
+Db2は改行でSQLを実行する。その場合複数行にまたがるSQLは改行を削除して実行する必要がある。 =-t= を指定すると改行ではなくセミコロン(;)でSQLを実行するようになる。
 
-接続する前には必ずDB2サーバコンテナを起動しておく必要があります。
-起動するためのスクリプトはwhalebrewディレクトリにあります。
+接続する前には必ずDB2サーバコンテナを起動しておく必要がある。起動するためのスクリプトはwhalebrewディレクトリにある。
+
 [[https://github.com/TakesxiSximada/emacs.d/blob/main/whalebrew/db2-server]]
 
 ** Microsonft SQL Server
 
-MSSQL Serverについてはsql-modeでの扱いが難しいです。
+MSSQL Serverについてはsql-modeでの扱いが難しい。
+
 [[https://www.emacswiki.org/emacs/SqlMode#h5o-8]]
 
-そこでDocker経由で接続するためのコマンドを別途用意します。
+そこでDocker経由で接続するためのコマンドを別途用意する。
 
 #+begin_src emacs-lisp
 (defun sql-docker-ms ()
