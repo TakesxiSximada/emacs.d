@@ -114,7 +114,7 @@ package-selected-packagesで管理されているパッケージを全てイン�
 (el-get-bundle gist:6961ff8bfb228a7601ed470598fad513:django.el :type "git")
 (el-get-bundle gist:beb8e1944af406c3fb4f74b6e0e3b5fe:require-to-install-executable :type "git")
 (el-get-bundle gist:d451221dc2a280b7e35d:kpt.el :type "git")
-(el-get-bundle gist:e8a10244aac6308de1323d1f6685658b:change-case :type "git")
+(el-get-bundle change-case :url "git@github.com:TakesxiSximada/change-case.el.git" :type "git")
 (el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
 #+end_src
 
