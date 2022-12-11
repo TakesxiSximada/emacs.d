@@ -931,9 +931,9 @@ org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先�
   )
 #+end_src
 
-* org-babel
+* Org Babel
 
-org-babelはorg-modeのコードブロックを実行するためのライブラリです。
+Org Babelはorg-modeのコードブロックを実行する。ドキュメント内のコードを実行し、その出力をドキュメントに反映することができる。いわゆる文芸的プログラミングのようなことができる。
 
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
@@ -949,6 +949,21 @@ org-babelはorg-modeのコードブロックを実行するためのライブラ
    (sql . t)))
 #+end_src
 
+Org Babelのコア部分はob-core.elに実装されている。例えばOrg-modeファイルのコードブロック内で =C-c C-c= を実行すると =org-babel-execute-src-block= 関数が呼び出される。この時に用いるOrg Babel用拡張がサードパーティによって実装された別のパッケージである場合、その拡張がまだ読み込まれていないことがある。その場合、Org Babelは処理の実行に失敗する。必要なパッケージをrequireで読み込み、再度  =org-babel-execute-src-block= 関数を実行すればよいのだが、その都度Lispを記述しevalするのは面倒だ。そこでorg-core.elが読み込まれたら、ここで使用可能な拡張もrequireすることにした。
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'ob-core
+  (require 'ob-async)
+  (require 'ob-ditaa)
+  (require 'ob-emacs-lisp)
+  (require 'ob-http)
+  (require 'ob-python)
+  (require 'ob-restclient)
+  (require 'ob-restclient)
+  (require 'ob-scheme)
+  (require 'ob-shell)
+  (require 'ob-sql))
+#+end_src
 
 * Databases
 
