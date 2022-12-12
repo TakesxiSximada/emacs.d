@@ -32,24 +32,56 @@
 
 (defcustom aws-cli-command "aws" "")
 
+(defcustom aws-cli-current-profile nil "")
+
+;;;###autoload
+(defun aws-cli-switch-profile (profile-name)
+  (interactive "s:AWS_PROFILE: ")
+  (setq aws-cli-current-profile profile-name)
+  (message (format "Change aws profile configuration: %s"
+		   aws-cli-current-profile)))
+
+;;;###autoload
+(defun aws-cli-switch-cli (command)
+  (interactive "s:AWS CLI COMMAND: ")
+  (setq aws-cli-command command)
+  (message (format "Change aws cli base command: %s"
+		   aws-cli-command)))
+
+;;;###autoload
+(defun aws-cli-apply-profile-to-global ()
+  (interactive)
+  (when aws-cli-current-profile
+    (setenv "AWS_PROFILE" aws-cli-current-profile)
+    (message (format "Change `AWS_PROFILE` environment variable: %s"
+		     aws-cli-current-profile))))
+
+(defun aws-cli--process-environment ()
+  (if aws-cli-current-profile
+      (append `(,(format "AWS_PROFILE=%s" aws-cli-current-profile)) process-environment)
+    process-environment))
+
 ;;;###autoload
 (defun aws-cli-help (subcmd)
   (interactive "s[aws] ")
-  (async-shell-command (format "%s %s help" aws-cli-command subcmd)))
+  (let ((process-environment (aws-cli--process-environment)))
+    (async-shell-command (format "%s %s help" aws-cli-command subcmd))))
 
 ;;;###autoload
 (defun aws-cli-print-skeleton (subcmd)
   (interactive "s[aws] ")
-  (async-shell-command (format "%s %s --generate-cli-skeleton" aws-cli-command subcmd)))
+  (let ((process-environment (aws-cli--process-environment)))
+    (async-shell-command (format "%s %s --generate-cli-skeleton" aws-cli-command subcmd))))
 
 ;;;###autoload
 (defun aws-cli-execute-skelton (subcmd)
   (interactive "s[aws] ")
-  (async-shell-command
-   (format "%s %s --cli-input-json file://%s"
-	   aws-cli-command
-	   subcmd
-	   buffer-file-name)))
-	  
+  (let ((process-environment (aws-cli--process-environment)))
+    (async-shell-command
+     (format "%s %s --cli-input-json file://%s"
+	     aws-cli-command
+	     subcmd
+	     buffer-file-name))))
+
 (provide 'aws-cli)
 ;;; aws-cli.el ends here
