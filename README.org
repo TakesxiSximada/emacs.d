@@ -846,11 +846,24 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 め親のタスクのタイトルも表示します。 =%-10.20b= などの表示を入れること
 で親タスクも表示できます。
 
+各TODOに担当者を設定できるようにする。担当者は =org-property= を利用し =ASSIGNEE= 属性に担当者名を記述するようにする。
+次の関数で現在位置のTODOの担当者を取得する。この関数はアジェンダビューで担当者を表示するために用いる。
+タスクの管理手法は人によってかなり異なるが、チーム主体で考えると担当者が設定されていないTODOには担当者を割り振るほうがよく、個人主体で考えるのであれば担当者が設定されていないTODOは自分用のTODOという扱いにしたほうが、管理がしやすくなる。
+ライブラリとして切り出すのであれば、このあたりを両方対応できるように、設計したほうがよい。
+現状は特に何も考えず、担当者が設定されていないものはnullを返し、表示もnullとなる。
+
+#+begin_src emacs-lisp
+(defun org-assign-assignee-value-custom ()
+  "現在位置の担当者を取得する"
+  (interactive)
+  (cdr (assoc "ASSIGNEE" (org-entry-properties))))
+#+end_src
+
 ここまで用事した機能を用いてアジェンダビューの表示を変更します。
 
 #+begin_src emacs-lisp
 (setq org-agenda-prefix-format
-      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %t %.8s %-6.6c %-25.50b ")
+      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %6(org-assign-assignee-value) %t %.8s %-6.6c %-25.50b ")
         (todo . " %i %-12:c %-6e")
         (tags . " %i %-12:c")
         (search . " %i %-12:c")))
