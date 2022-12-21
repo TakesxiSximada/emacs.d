@@ -84,7 +84,6 @@ npm install -g prettier
 (use-package el-get :ensure t :defer t
   :init
   (setq el-get-dir (expand-file-name "/opt/ng")))
-
 #+end_src
 
 package-selected-packagesで管理されているパッケージを全てインストールする。
@@ -853,17 +852,21 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
 現状は特に何も考えず、担当者が設定されていないものはnullを返し、表示もnullとなる。
 
 #+begin_src emacs-lisp
+(setq org-assign-assignee-default-assignee nil)
+
 (defun org-assign-assignee-value-custom ()
   "現在位置の担当者を取得する"
   (interactive)
-  (cdr (assoc "ASSIGNEE" (org-entry-properties))))
+  (or
+    (cdr (assoc "ASSIGNEE" (org-entry-properties))))
+    org-assign-assignee-default-assignee)
 #+end_src
 
 ここまで用事した機能を用いてアジェンダビューの表示を変更します。
 
 #+begin_src emacs-lisp
 (setq org-agenda-prefix-format
-      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %6(org-assign-assignee-value) %t %.8s %-6.6c %-25.50b ")
+      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %6(org-assign-assignee-value-custom) %t %.4s %-6.6c %-25.50b ")
         (todo . " %i %-12:c %-6e")
         (tags . " %i %-12:c")
         (search . " %i %-12:c")))
