@@ -858,8 +858,8 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
   "現在位置の担当者を取得する"
   (interactive)
   (or
-    (cdr (assoc "ASSIGNEE" (org-entry-properties))))
-    org-assign-assignee-default-assignee)
+    (cdr (assoc "ASSIGNEE" (org-entry-properties)))
+    org-assign-assignee-default-assignee))
 #+end_src
 
 ここまで用事した機能を用いてアジェンダビューの表示を変更します。
