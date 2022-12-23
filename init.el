@@ -90,3 +90,29 @@
   (setenv "AWSL_ORIGIN" origin)
   (message (format "Change `AWSL_ORIGIN` environment variable: %s"
 		   origin)))
+
+;; For python configuration
+(add-hook 'python-mode-hook 'eglot-ensure)
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(setq interpreter-mode-alist (cons '("python" . python-mode)
+                                   interpreter-mode-alist))
+
+(require 'eglot)
+(add-hook 'python-mode-hook
+          #'(lambda ()
+              (add-hook 'before-save-hook
+                        'eglot-format-buffer nil t)))
+
+(require 'flymake)
+(require 'flymake-diagnostic-at-point)
+
+(define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+(define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
+
+
+(add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)
+(set-face-attribute 'flymake-error nil :foreground "black" :background "red2" :box '(color "black"))
+(set-face-attribute 'flymake-warning nil :foreground "black" :background "yellow" :box '(color "black"))
+(set-face-attribute 'flymake-note nil :foreground "black" :background "DeepSkyBlue" :box '(color "black"))
+
+
