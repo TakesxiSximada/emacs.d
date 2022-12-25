@@ -993,7 +993,7 @@ Org Babelのコア部分はob-core.elに実装されている。例えばOrg-mod
 
 #+begin_src emacs-lisp
 (setq sql-mysql-program "docker")
-(setq sql-mysql-options '("exec" "-ti" "mysqld" "mysql" "mysql"))
+(setq sql-mysql-options '("exec" "-ti" "mysqld" "mysql" "mysql" "--local-infile=1"))
 (setq sql-mysql-login-params nil)
 #+end_src
 
