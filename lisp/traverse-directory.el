@@ -46,6 +46,6 @@
 (defun traverse-directory-super-root-p (cwd)
   (string-equal "/" cwd ))
 
-(require 'traverse-directory)
+(provide 'traverse-directory)
 ;;; traverse-directory.el ends here
 
