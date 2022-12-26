@@ -92,27 +92,30 @@
 		   origin)))
 
 ;; For python configuration
+(require 'eglot)
+(require 'flymake)
+(require 'flymake-collection)
+(require 'flymake-diagnostic-at-point)
+
 (add-hook 'python-mode-hook 'eglot-ensure)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
                                    interpreter-mode-alist))
 
-(require 'eglot)
-(add-hook 'python-mode-hook
-          #'(lambda ()
-              (add-hook 'before-save-hook
-                        'eglot-format-buffer nil t)))
+(add-to-list 'flymake-collection-mypy-args "--no-incremental")
 
-(require 'flymake)
-(require 'flymake-diagnostic-at-point)
+(defun python-mode-setup-flymake ()
+  (add-hook 'flymake-diagnostic-functions 'flymake-collection-mypy nil t)
+  (add-hook 'flymake-diagnostic-functions 'flymake-collection-flake8 nil t)
+  )
+
+(add-hook 'python-mode-hook #'python-mode-setup-flymake)
+(add-hook 'python-mode-hook #'flymake-mode)
 
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
-
 
 (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)
 (set-face-attribute 'flymake-error nil :foreground "black" :background "red2" :box '(color "black"))
 (set-face-attribute 'flymake-warning nil :foreground "black" :background "yellow" :box '(color "black"))
 (set-face-attribute 'flymake-note nil :foreground "black" :background "DeepSkyBlue" :box '(color "black"))
-
-
