@@ -10,6 +10,7 @@ README.el
 abbrev_defs
 auto-save-list/
 bookmarks
+ddskk/
 dump.rdb
 el-get
 elpa
@@ -17,7 +18,6 @@ emojis/
 eshell/
 eww-bookmarks
 games/
-ddskk/
 ido*.last
 ido.last
 image-dired/
@@ -25,6 +25,7 @@ init.el~
 lib/our-circleci.el
 network-security.data
 org-capture-templates/
+org-persist/
 projectile-bookmarks.eld
 projects
 quelpa
