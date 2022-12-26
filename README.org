@@ -939,6 +939,9 @@ org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先�
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "M-p") 'org-priority-up)
   (define-key org-mode-map (kbd "M-n") 'org-todo)
+
+  (add-hook 'org-mode-hook #'visual-fill-column-mode)
+  (add-hook 'org-mode-hook #'toggle-truncate-lines)
   )
 
 (with-eval-after-load 'org-agenda
