@@ -108,6 +108,7 @@
 
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
+(define-key python-mode-map (kbd "M-<return>") 'run-python)
 
 
 (defcustom python-autoflake-executable "autoflake"
