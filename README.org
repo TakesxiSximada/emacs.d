@@ -541,9 +541,9 @@ macOSのアプリケーションをEmacsから起動する。
 
 * essay.el
 
-#+begin_src emacs-lisp
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/essay"))
+ドキュメントを記述するためのコマンドとドキュメント用の骨組を提供します。
 
+#+begin_src emacs-lisp
 (require 'essay)
 #+end_src
 
