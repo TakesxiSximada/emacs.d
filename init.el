@@ -104,6 +104,7 @@
 (require 'eglot)
 (require 'flymake-collection)
 (require 'traverse-directory)
+(require 'change-case)
 
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
@@ -117,6 +118,9 @@
   (call-process "autoflake" nil nil nil "-i" "--remove-all-unused-imports" buffer-file-name)
   (revert-buffer t t t))
 
+
+(defcustom django-run-test-dotenv nil
+  "Dot env file path for django")
 
 (defun django-run-test ()
   (interactive)
@@ -145,9 +149,14 @@
 		  (if (string-prefix-p "test" (car (last parsed-dir-name-list)))
 		      parsed-dir-name-list
 		    (butlast parsed-dir-name-list))))))
-	(make-process :name "*DJANGO*"
-		      :buffer test-buffer
-		      :command `("python" "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name)))))
+	(let ((process-environment (if (not django-run-test-dotenv)
+				       process-environment
+				     (with-current-buffer (find-file-noselect django-run-test-dotenv)
+				       (string-split (buffer-substring-no-properties (point-min) (point-max))
+						     "\n" t "#.*$")))))
+	  (make-process :name "*DJANGO*"
+			:buffer test-buffer
+			:command `("python" "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name))))))
 
 
 (defun flymake-python-setup ()
