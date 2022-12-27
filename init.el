@@ -106,10 +106,6 @@
 (require 'traverse-directory)
 (require 'change-case)
 
-(define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
-(define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
-(define-key python-mode-map (kbd "M-<return>") 'run-python)
-
 
 (defcustom python-autoflake-executable "autoflake"
   "Autoflake command")
@@ -207,3 +203,7 @@
 
 (setq python-mode-hook nil)
 (add-hook 'python-mode-hook #'flymake-python-setup)
+
+(define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+(define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
+(define-key python-mode-map (kbd "M-<return>") 'django-run-shell)
