@@ -132,12 +132,21 @@
   (if-let ((default-directory (traverse-directory-to-up
 			       (file-name-directory buffer-file-name)
     			       '(traverse-directory-django-manage-py-p))))
-      (let ((process-environment (if (not django-run-test-dotenv)
-				     process-environment
-				   (with-current-buffer (find-file-noselect django-run-test-dotenv)
-				     (string-split (buffer-substring-no-properties (point-min) (point-max))
-						   "\n" t "#.*$")))))
-	(run-python (format "%s manage.py shell" django-run-test-python-executable)))))
+      (progn
+	(let ((process-environment (if (not django-run-test-dotenv)
+				       process-environment
+				     (with-current-buffer (find-file-noselect django-run-test-dotenv)
+				       (string-split (buffer-substring-no-properties (point-min) (point-max))
+						     "\n" t "#.*$")))))
+	  (run-python (format "%s manage.py shell" django-run-test-python-executable)))
+
+	(if-let ((current-dotted-name (change-case-dotted-case-render
+				       (change-case-path-case-parse
+					(string-remove-suffix
+					 ".py"
+					 (string-replace default-directory
+							 "" buffer-file-name))))))
+	    (comint-send-string (get-buffer "*Python*") (format "from %s import *\n" current-dotted-name))))))
 
 
 (defun django-run-test ()
