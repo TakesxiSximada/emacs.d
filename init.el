@@ -103,6 +103,7 @@
 ;; For python configuration
 (require 'eglot)
 (require 'flymake-collection)
+(require 'traverse-directory)
 
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
@@ -113,14 +114,9 @@
 
   (let ((before-save-hook nil))
     (save-buffer))
-  (let ((proc (make-process :name "*AUTOFLAKE*"
-                            :buffer (get-buffer-create "*AUTOFLAKE*")
-                            :command `("autoflake" "-i" "--remove-all-unused-imports" ,buffer-file-name)
-                            :sentinel (lambda (process _)
-                                         (when (eq 'exit (process-status process))
-                                               (revert-buffer t t t))))))
-     (sleep-for 2)  ;; とりあえず2秒程度待ってみる
-     ))
+  (call-process "autoflake" nil nil nil "-i" "--remove-all-unused-imports" buffer-file-name)
+  (revert-buffer t t t))
+
 
 
 (defun flymake-python-setup ()
