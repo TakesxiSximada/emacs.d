@@ -166,6 +166,10 @@
 			:command `(,django-run-test-python-executable "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name))))))
 
 
+(require 'flymake-collection-define)
+(require 'flymake-collection-mypy)
+(require 'flymake-mypy-custom)
+
 (defun flymake-python-setup ()
   (flycheck-mode 0)
   ;; タグジャンプはeglotを使用した方が楽
@@ -181,7 +185,7 @@
   ;; 直接起動したほうが柔軟な対応が可能。
   (setq-local flymake-diagnostic-functions nil)
   (add-hook 'flymake-diagnostic-functions 'flymake-collection-flake8 nil t)
-  (add-hook 'flymake-diagnostic-functions 'flymake-collection-mypy nil t)
+  (add-hook 'flymake-diagnostic-functions 'flymake-mypy-custom nil t)
 
   (flymake-mode-on)
   )
