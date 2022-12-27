@@ -91,31 +91,57 @@
   (message (format "Change `AWSL_ORIGIN` environment variable: %s"
 		   origin)))
 
-;; For python configuration
-(require 'eglot)
+;; flymake
 (require 'flymake)
-(require 'flymake-collection)
 (require 'flymake-diagnostic-at-point)
-
-(add-hook 'python-mode-hook 'eglot-ensure)
-(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-(setq interpreter-mode-alist (cons '("python" . python-mode)
-                                   interpreter-mode-alist))
-
-(add-to-list 'flymake-collection-mypy-args "--no-incremental")
-
-(defun python-mode-setup-flymake ()
-  (add-hook 'flymake-diagnostic-functions 'flymake-collection-mypy nil t)
-  (add-hook 'flymake-diagnostic-functions 'flymake-collection-flake8 nil t)
-  )
-
-(add-hook 'python-mode-hook #'python-mode-setup-flymake)
-(add-hook 'python-mode-hook #'flymake-mode)
-
-(define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
-(define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
 
 (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode)
 (set-face-attribute 'flymake-error nil :foreground "black" :background "red2" :box '(color "black"))
 (set-face-attribute 'flymake-warning nil :foreground "black" :background "yellow" :box '(color "black"))
 (set-face-attribute 'flymake-note nil :foreground "black" :background "DeepSkyBlue" :box '(color "black"))
+
+;; For python configuration
+(require 'eglot)
+(require 'flymake-collection)
+
+(define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
+(define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
+
+
+(defun python-autoflake-reformat ()
+  (interactive)
+
+  (let ((before-save-hook nil))
+    (save-buffer))
+  (let ((proc (make-process :name "*AUTOFLAKE*"
+                            :buffer (get-buffer-create "*AUTOFLAKE*")
+                            :command `("autoflake" "-i" "--remove-all-unused-imports" ,buffer-file-name)
+                            :sentinel (lambda (process _)
+                                         (print "Ok")
+                                         (when (eq 'exit (process-status process))
+                                               (revert-buffer t t t))))))
+     (sleep-for 2)  ;; とりあえず2秒程度待ってみる
+     ))
+
+
+(defun flymake-python-setup ()
+  (flycheck-mode 0)
+  ;; タグジャンプはeglotを使用した方が楽
+  (eglot-ensure)
+
+  ;; バッファ保存時にフォーマットする
+  (add-hook 'before-save-hook 'python-isort-buffer nil t)
+  (add-hook 'before-save-hook 'python-autoflake-reformat nil t)
+  (add-hook 'before-save-hook 'blacken-buffer nil t)
+
+  ;; flymake関連はeglotが邪魔をするため、除去する。
+  ;; 直接起動したほうが柔軟な対応が可能。
+  (setq-local flymake-diagnostic-functions nil)
+  (add-hook 'flymake-diagnostic-functions 'flymake-collection-flake8 nil t)
+  (add-hook 'flymake-diagnostic-functions 'flymake-collection-mypy nil t)
+
+  (flymake-mode-on)
+  )
+
+(setq python-mode-hook nil)
+(add-hook 'python-mode-hook #'flymake-python-setup)
