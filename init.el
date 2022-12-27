@@ -124,6 +124,13 @@
 (defcustom django-run-test-python-executable "python"
   "Python command")
 
+(defcustom django-run-shell-default-code-list
+  '("from django.contrib.auth import get_user_model"
+    "UserModel = get_user_model()"
+    "from django.http.request import HttpRequest"
+    "from rest_framework.request import Request")
+  "")
+
 (defun django-run-shell ()
   (interactive)
   (if-let ((default-directory (traverse-directory-to-up
@@ -143,12 +150,11 @@
 					 ".py"
 					 (string-replace default-directory
 							 "" buffer-file-name))))))
-	    (progn
-	      (comint-send-string (get-buffer "*Python*") (format "from %s import *\n" current-dotted-name))
-	      (comint-send-string (get-buffer "*Python*") "from django.contrib.auth import get_user_model\n")
-	      (comint-send-string (get-buffer "*Python*") "UserModel = get_user_model()\n")
-	      (comint-send-string (get-buffer "*Python*") "from django.http.request import HttpRequest\n")
-	      (comint-send-string (get-buffer "*Python*") "from rest_framework.request import Request\n"))))))
+	    (mapcan (lambda (code)
+		      (comint-send-string (get-buffer "*Python*")
+					  (concat code "\n")))
+		    (append django-run-shell-default-code-list
+			    `(,(format "from %s import *" current-dotted-name))))))))
 
 (defun django-run-test ()
   (interactive)
