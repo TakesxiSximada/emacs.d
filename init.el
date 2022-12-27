@@ -110,17 +110,24 @@
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
 
 
+(defcustom python-autoflake-executable "autoflake"
+  "Autoflake command")
+
 (defun python-autoflake-reformat ()
   (interactive)
 
   (let ((before-save-hook nil))
     (save-buffer))
-  (call-process "autoflake" nil nil nil "-i" "--remove-all-unused-imports" buffer-file-name)
+  (call-process python-autoflake-executable nil nil nil "-i" "--remove-all-unused-imports" buffer-file-name)
   (revert-buffer t t t))
 
 
 (defcustom django-run-test-dotenv nil
   "Dot env file path for django")
+
+
+(defcustom django-run-test-python-executable "python"
+  "Python command")
 
 (defun django-run-test ()
   (interactive)
@@ -156,7 +163,7 @@
 						     "\n" t "#.*$")))))
 	  (make-process :name "*DJANGO*"
 			:buffer test-buffer
-			:command `("python" "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name))))))
+			:command `(,django-run-test-python-executable "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name))))))
 
 
 (defun flymake-python-setup ()
