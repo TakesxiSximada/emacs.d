@@ -1,4 +1,3 @@
-;;
 ;; - [ ] mypy
 ;; - [ ] black
 ;; - [ ] isort
@@ -28,7 +27,8 @@
                                          (print "Ok")
                                          (when (eq 'exit (process-status process))
                                                (revert-buffer t t t))))))
-     (sleep-for 2)))
+     (sleep-for 2)  ;; とりあえず2秒程度待ってみる
+     ))
 ;; (sleep-for 
 ;; (reformatter-define python-autoflake4
 ;;   :program "autoflake"
