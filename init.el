@@ -118,6 +118,37 @@
   (revert-buffer t t t))
 
 
+(defun django-run-test ()
+  (interactive)
+  (let ((before-save-hook nil))
+    (save-buffer))
+
+  (let ((test-buffer (get-buffer-create "*DJANGO*")))
+    (if-let ((old-process (get-buffer-process test-buffer)))
+	(signal-process old-process 1))
+
+    (with-current-buffer test-buffer
+      (erase-buffer))
+
+    (display-buffer test-buffer)
+
+    (if-let* ((default-directory (traverse-directory-to-up (file-name-directory buffer-file-name)
+							   '(traverse-directory-django-manage-py-p)))
+	      (test-dotted-name
+	       (change-case-dotted-case-render
+		(let ((parsed-dir-name-list
+		       (change-case-path-case-parse
+			(string-remove-suffix
+			 ".py"
+			 (string-replace default-directory
+                           		 "" buffer-file-name)))))
+		  (if (string-prefix-p "test" (car (last parsed-dir-name-list)))
+		      parsed-dir-name-list
+		    (butlast parsed-dir-name-list))))))
+	(make-process :name "*DJANGO*"
+		      :buffer test-buffer
+		      :command `("python" "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name)))))
+
 
 (defun flymake-python-setup ()
   (flycheck-mode 0)
@@ -128,6 +159,7 @@
   (add-hook 'before-save-hook 'python-isort-buffer nil t)
   (add-hook 'before-save-hook 'python-autoflake-reformat nil t)
   (add-hook 'before-save-hook 'blacken-buffer nil t)
+  (add-hook 'after-save-hook 'django-run-test nil t)
 
   ;; flymake関連はeglotが邪魔をするため、除去する。
   ;; 直接起動したほうが柔軟な対応が可能。
