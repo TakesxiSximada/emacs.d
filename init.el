@@ -130,6 +130,20 @@
 (defcustom django-run-test-python-executable "python"
   "Python command")
 
+
+(defun django-run-shell ()
+  (interactive)
+  (if-let ((default-directory (traverse-directory-to-up
+			       (file-name-directory buffer-file-name)
+    			       '(traverse-directory-django-manage-py-p))))
+      (let ((process-environment (if (not django-run-test-dotenv)
+				     process-environment
+				   (with-current-buffer (find-file-noselect django-run-test-dotenv)
+				     (string-split (buffer-substring-no-properties (point-min) (point-max))
+						   "\n" t "#.*$")))))
+	(run-python (format "%s manage.py shell" django-run-test-python-executable)))))
+
+
 (defun django-run-test ()
   (interactive)
   (let ((before-save-hook nil))
