@@ -117,7 +117,6 @@
                             :buffer (get-buffer-create "*AUTOFLAKE*")
                             :command `("autoflake" "-i" "--remove-all-unused-imports" ,buffer-file-name)
                             :sentinel (lambda (process _)
-                                         (print "Ok")
                                          (when (eq 'exit (process-status process))
                                                (revert-buffer t t t))))))
      (sleep-for 2)  ;; とりあえず2秒程度待ってみる
