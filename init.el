@@ -118,14 +118,11 @@
   (call-process python-autoflake-executable nil nil nil "-i" "--remove-all-unused-imports" buffer-file-name)
   (revert-buffer t t t))
 
-
 (defcustom django-run-test-dotenv nil
   "Dot env file path for django")
 
-
 (defcustom django-run-test-python-executable "python"
   "Python command")
-
 
 (defun django-run-shell ()
   (interactive)
@@ -146,8 +143,12 @@
 					 ".py"
 					 (string-replace default-directory
 							 "" buffer-file-name))))))
-	    (comint-send-string (get-buffer "*Python*") (format "from %s import *\n" current-dotted-name))))))
-
+	    (progn
+	      (comint-send-string (get-buffer "*Python*") (format "from %s import *\n" current-dotted-name))
+	      (comint-send-string (get-buffer "*Python*") "from django.contrib.auth import get_user_model\n")
+	      (comint-send-string (get-buffer "*Python*") "UserModel = get_user_model()\n")
+	      (comint-send-string (get-buffer "*Python*") "from django.http.request import HttpRequest\n")
+	      (comint-send-string (get-buffer "*Python*") "from rest_framework.request import Request\n"))))))
 
 (defun django-run-test ()
   (interactive)
