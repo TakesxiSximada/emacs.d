@@ -63,6 +63,16 @@
 ;; -----------------------------
 (load-theme 'symdon-kids t)
 
+
+;; -----------------------------
+;; Django configuration
+;; -----------------------------
+(defcustom django-run-shell-default-code-list
+  '("from django.contrib.auth import get_user_model"
+    "UserModel = get_user_model()"
+    "from django.http.request import HttpRequest"
+    "from rest_framework.request import Request")
+  "")
 ;; -------------------------
 ;; Load README configuration
 ;; -------------------------
@@ -124,12 +134,6 @@
 (defcustom django-run-test-python-executable "python"
   "Python command")
 
-(defcustom django-run-shell-default-code-list
-  '("from django.contrib.auth import get_user_model"
-    "UserModel = get_user_model()"
-    "from django.http.request import HttpRequest"
-    "from rest_framework.request import Request")
-  "")
 
 (defun django-run-shell ()
   (interactive)
