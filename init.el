@@ -200,6 +200,7 @@
 (defun flymake-python-setup ()
   (flycheck-mode 0)
   ;; タグジャンプはeglotを使用した方が楽
+  (setq eglot-server-programs (append `((python-mode . (,python-lsp-server-executable))) eglot-server-programs))
   (eglot-ensure)
 
   ;; バッファ保存時にフォーマットする
