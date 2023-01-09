@@ -1984,6 +1984,37 @@ textlintを用いた文章校正用のflycheckのチェッカーを定義する�
   :modes (text-mode markdown-mode gfm-mode org-mode))
 #+end_src
 
+* PDF
+
+EmacsはデフォルトでもPDFの表示が可能だが、表示が若干ぼやけたり、注釈の操作ができない等の問題がある。pdf-toolsを使用することで、それらの操作性の問題を解消できるが、注釈の扱いが完全ではなく、注釈に対する返信注釈を挿入できない。これは、pdf-toolsがPDFの操作の為に使用しているライブラリPopplerに起因する問題で、Poppler自体が返信注釈を完全に考慮できていなめ、それに依存するpdf-toolsも返信注釈に対応できていない。そこで返信注釈に対応するために、Popplerを拡張し、拡張したPopplerを使用しpdf-toolsを拡張した[fn:symdon-blog-poppler][fn:symdon-blog-pdf][fn:poppler-symdon-custom][fn:poppler-symdon-custom-homebrew][fn:pdf-tools-symdon-custom]。
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path (expand-file-name "/opt/ng/pdf-tools/lisp"))
+
+(require 'pdf-tools-autoloads)
+
+(with-eval-after-load 'pdf-tools
+  (require 'pdf-view-popup)
+  (require 'pdf-annot)
+  (define-key pdf-view-mode-map (kbd "t") 'pdf-view-popup-text)
+  (define-key pdf-view-mode-map (kbd "a l") 'pdf-annot-list-annotations)
+  (define-key pdf-view-mode-map (kbd "a t") 'pdf-annot-add-text-annotation))
+
+(autoload 'pdf-view-mode "pdf-tools")
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+#+end_src
+
+毎回実施する必要はないが、関数を変更したりした場合にはautoloads.elを更新する。
+
+#+begin_src emacs-lisp
+;; (package-generate-autoloads "pdf-tools" "/opt/ng/pdf-tools/lisp")
+#+end_src
+
+[fn:symdon-blog-poppler] https://blog.symdon.info/posts/1672718254/
+[fn:symdon-blog-pdf] https://blog.symdon.info/posts/1672220542/
+[fn:poppler-symdon-custom] https://github.com/TakesxiSximada/poppler-symdom-custom
+[fn:poppler-symdon-custom-homebrew] https://github.com/TakesxiSximada/homebrew-tap
+[fn:pdf-tools-symdon-custom] https://github.com/TakesxiSximada/pdf-tools
 
 * 脚注
 

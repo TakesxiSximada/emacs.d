@@ -228,11 +228,3 @@
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
 (define-key python-mode-map (kbd "M-<return>") 'django-run-shell)
-
-;;; PDF View
-(require 'pdf-view-popup)
-
-(define-key pdf-view-mode-map (kbd "t") 'pdf-view-popup-text)
-(define-key pdf-view-mode-map (kbd "a l") 'pdf-annot-list-annotations)
-(define-key pdf-view-mode-map (kbd "a t") 'pdf-annot-add-text-annotation)
-
