@@ -18,7 +18,8 @@
   (when (= 0 (buffer-size))
     (save-excursion
       (goto-char 0)
-      (insert (format "#+DATE: %s\n#+TAGS[]: comment\n\n"
+      (insert (format "#+TITLE: \n#+SUMMARY: \n#+TLDR: false\n#+DRAFT: true\n#+WIP: true\n#+DATE: %s\n#+LASTMOD: %s\n#+TAGS[]: comment\n\n"
+		      (format-time-string "%+FT%T%z")
 		      (format-time-string "%+FT%T%z")))))
   (kill-all-local-variables)
   (use-local-map essay-mode-map)
