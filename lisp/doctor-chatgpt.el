@@ -2,7 +2,6 @@
 
 ;; Copyright (C) 2023 TakesxiSximada
 
-
 ;; Author: TakesxiSximada <sximada@gmail.com>
 ;; Maintainer: TakesxiSximada <sximada@gmail.com>
 ;; Repository:
@@ -31,6 +30,10 @@
 
 (require 'plz)
 (require 'json)
+(require 'doctor)
+
+(defvar doctor-chatgpt-buffer-name "*doctor*"
+  "name of doctor buffer")
 
 (defcustom doctor-chatgpt-api-origin "https://api.openai.com"
   "API Origin of OpenAI ChatGPT")
@@ -41,12 +44,15 @@
 (defun doctor-chatgpt-api-get-url (path)
   (concat doctor-chatgpt-api-origin path))
 
-(defun doctor-read-print ()
+(defun doctor-chatgpt-activate ()
+  (interactive)
+  (fset 'doctor-read-print 'doctor-chatgpt-read-print))
+
+(defun doctor-chatgpt-read-print ()
   "Top level loop."
   (interactive nil doctor-mode)
   (backward-sentence 1)
-  (let* ((doctor-buf (current-buffer))
-         (sentence (buffer-substring-no-properties (point) (point-max)))
+  (let* ((sentence (buffer-substring-no-properties (point) (point-max)))
          (endpoint (doctor-chatgpt-api-get-url "/v1/completions"))
          (headers `(("Content-Type" . "application/json")
                     ("Authorization" . ,(format "Bearer %s" doctor-chatgpt-access-token))))
@@ -58,18 +64,18 @@
                               ("frequency_penalty" . 0.0)
                               ("presence_penalty" . 0.6)
                               ("stop" . (" Human:" " AI:"))))))
-    (goto-char (point-max))
-
     (plz 'post endpoint :headers headers :body body
       :as #'json-read
       :then (lambda (d)
-              (with-current-buffer doctor-buf
+              (with-current-buffer (get-buffer doctor-chatgpt-buffer-name)
+		(goto-char (point-max))
                 (insert
-                 (format "\nDoctor: %s\n\n"
+		 (format "\nDoctor: %s\n----------------------------------------\n\n"
                          (cdr (assoc 'text (elt (cdr (assoc 'choices
                                                             d
                                                             ))
-                                                0))))))))))
+						0)))))
+		(goto-char (point-max)))))))
 
 
 (provide 'doctor-chatgpt)
