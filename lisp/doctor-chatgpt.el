@@ -46,30 +46,31 @@
   (interactive nil doctor-mode)
   (backward-sentence 1)
   (let* ((doctor-buf (current-buffer))
-	 (sentence (buffer-substring-no-properties (point) (point-max)))
-	 (endpoint (doctor-chatgpt-api-get-url "/v1/completions"))
-	 (headers `(("Content-Type" . "application/json")
-		    ("Authorization" . ,(format "Bearer %s" doctor-chatgpt-access-token))))
-	 (body (json-encode `(("model" . "text-davinci-003")
-			      ("prompt" . ,sentence)
-			      ("temperature" . 0.9)
-			      ("max_tokens" . 150)
-			      ("top_p" . 1)
-			      ("frequency_penalty" . 0.0)
-			      ("presence_penalty" . 0.6)
-			      ("stop" . (" Human:" " AI:"))))))
+         (sentence (buffer-substring-no-properties (point) (point-max)))
+         (endpoint (doctor-chatgpt-api-get-url "/v1/completions"))
+         (headers `(("Content-Type" . "application/json")
+                    ("Authorization" . ,(format "Bearer %s" doctor-chatgpt-access-token))))
+         (body (json-encode `(("model" . "text-davinci-003")
+                              ("prompt" . ,sentence)
+                              ("temperature" . 0.9)
+                              ("max_tokens" . 150)
+                              ("top_p" . 1)
+                              ("frequency_penalty" . 0.0)
+                              ("presence_penalty" . 0.6)
+                              ("stop" . (" Human:" " AI:"))))))
     (goto-char (point-max))
 
     (plz 'post endpoint :headers headers :body body
       :as #'json-read
       :then (lambda (d)
-	      (with-current-buffer doctor-buf
-		(insert
-		 (format "\nDoctor: %s\n\n"
-			 (cdr (assoc 'text (elt (cdr (assoc 'choices
-							    d
-							    )) 0)))
-			 )))))))
+              (with-current-buffer doctor-buf
+                (insert
+                 (format "\nDoctor: %s\n\n"
+                         (cdr (assoc 'text (elt (cdr (assoc 'choices
+                                                            d
+                                                            ))
+                                                0))))))))))
+
 
 (provide 'doctor-chatgpt)
 ;;; doctor-chatgpt ends here
