@@ -7,7 +7,7 @@
 ;; Repository:
 ;; Version: 1
 ;; Package-Version: 20230115.0000
-;; Package-Requires: ((emacs "28.1") (plz "0.3") (plz "0.3") (json "1.5"))
+;; Package-Requires: ((emacs "28.0") (plz "0.3") (plz "0.3") (json "1.5"))
 ;; Date: 2023-01-15
 
 ;; This file is part of doctor-chatgpt.
@@ -59,7 +59,7 @@
          (body (json-encode `(("model" . "text-davinci-003")
                               ("prompt" . ,sentence)
                               ("temperature" . 0.9)
-                              ("max_tokens" . 150)
+                              ("max_tokens" . 300)
                               ("top_p" . 1)
                               ("frequency_penalty" . 0.0)
                               ("presence_penalty" . 0.6)
