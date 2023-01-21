@@ -26,6 +26,8 @@
 ;; <https://www.gnu.org/licenses/>.
 
 ;;; Code:
+(require 'vterm)
+
 (defcustom django-migration-squash-python-command "python" "")
 (defcustom django-migration-module-directory "." "")
 (defcustom django-migration-squash-database-name "testing" "")
