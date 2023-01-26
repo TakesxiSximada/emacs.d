@@ -1,0 +1,55 @@
+#+TITLE: trans.el - Translation utility.
+#+CATEGORY: trans.el
+
+trans.el is translation utility using by [[https://github.com/soimort/translate-shell][translation-shell]].
+[[https://github.com/soimort/translate-shell/blob/develop/google-translate-mode.el][translate-shell has emacs extention]].  But this package do not use
+google-translate-mode.el. Becouse it is created as a emacs lisp
+plactice.
+
+* How to use.
+
+** Start process
+
+=M-x trans-start RET=
+
+** Translate
+
+1. Mark region
+2. =M-x trans-region RET=
+
+If the translation is successful, the text will be displayed in
+=*Trans*= buffer.
+
+
+** Stop process
+
+=M-x trans-stop RET=
+
+* Install
+
+1. Download trans.el
+2. M-x package-install-file RET /PATH/TO/DOWNLOADED/trans.el RET
+
+This package is not yet melpa packaging.
+
+* Testing
+
+This package has no test yet.
+
+* Bug report and Contributing
+
+We haven't prepared those flows yet. For the time being, please write
+the steps to reproduce the bug in this gist comment, or attach the
+patch file in diff format.  Welcome them.
+
+* License
+
+GPL v3
+
+* Releases
+
+** Version 1 (2021-04-03)
+
+- First implements.
+- Supported translation.
+  - en to ja
