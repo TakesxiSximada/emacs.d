@@ -2015,6 +2015,14 @@ EmacsはデフォルトでもPDFの表示が可能だが、表示が若干ぼや
 [fn:poppler-symdon-custom-homebrew] https://github.com/TakesxiSximada/homebrew-tap
 [fn:pdf-tools-symdon-custom] https://github.com/TakesxiSximada/pdf-tools
 
+* 翻訳
+
+翻訳作業を行うため、翻訳用のユーティリティを自前で実装している。
+
+#+begin_src emacs-lisp
+(require 'trans)
+#+end_src
+
 * 脚注
 
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
