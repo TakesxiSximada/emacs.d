@@ -91,7 +91,7 @@
 			:command trans-process-command
 			:filter 'trans-output
 			))
-    (set-process-filter-multibyte trans-process t)))
+    (set-process-filter trans-process t)))
 
 ;;;###autoload
 (defun trans-restart ()
