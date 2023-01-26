@@ -1,14 +1,14 @@
 ;;; trans.el --- Translation functions -*- lexical-binding: t; -*-
 
 ;; Carstens outline-mode for keeping track of everything.
-;; Copyright (C) 2021 symdon
+;; Copyright (C) 2023 TakesxiSximada
 ;;
-;; Author: TakesxiSximada <8707279+TakesxiSximada@users.noreply.github.com>
-;; Maintainer: TakesxiSximada <8707279+TakesxiSximada@users.noreply.github.com>
+;; Author: TakesxiSximada <sximada@gmail.com>
+;; Maintainer: TakesxiSximada <sximada@gmail.com>
 ;; Keywords: Translation
-;; Homepage: https://www.symdon.info/
+;; Homepage: https://github.com/TakesxiSximada/emacs.d/tree/main/lisp/trans
 
-;; Version: 1
+;; Version: 2
 
 ;; trans.el is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

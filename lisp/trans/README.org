@@ -48,6 +48,10 @@ GPL v3
 
 * Releases
 
+** Version 2 (2023-01-26)
+
+- Support Emacs 29.1
+
 ** Version 1 (2021-04-03)
 
 - First implements.
