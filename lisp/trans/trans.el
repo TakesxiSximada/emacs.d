@@ -90,8 +90,8 @@
 			:buffer (get-buffer-create trans-process-buffer-name)
 			:command trans-process-command
 			:filter 'trans-output
-			))
-    (set-process-filter trans-process t)))
+			))))
+
 
 ;;;###autoload
 (defun trans-restart ()
