@@ -1,7 +1,9 @@
 *.log
 *~
+.DS_Store
 .README.el
 .cache/
+.cask/
 .env
 .lsp-session-v1
 .org-id-locations
@@ -17,6 +19,7 @@ elpa
 emojis/
 eshell/
 eww-bookmarks
+fly
 games/
 ido*.last
 ido.last
