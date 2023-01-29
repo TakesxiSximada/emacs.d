@@ -373,12 +373,12 @@ Returns symbol of major-mode.
 #+begin_src  emacs-lisp
 (use-package docker :ensure t :defer t)
 (use-package docker-compose-mode :ensure t :defer t)
-(use-package docker-tramp :ensure t :defer t)
 ;; (use-package dockerfile-mode :ensure t :defer t)
 #+end_src
 
 #+begin_src emacs-lisp
-(el-get-bundle dockerfile-mode :url "git@github.com:TakesxiSximada/dockerfile-mode.git" :type "git")
+
+;; (el-get-bundle dockerfile-mode :url "git@github.com:TakesxiSximada/dockerfile-mode.git" :type "git")
 (el-get-bundle gist:73383aaf81656737fa533dd39dcb27a8:docker-compose-up-services :type "git")
 #+end_src
 
