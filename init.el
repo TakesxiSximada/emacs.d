@@ -195,7 +195,7 @@
 						     "\n" t "#.*$")))))
 	  (make-process :name "*DJANGO*"
 			:buffer test-buffer
-			:command `(,django-run-test-python-executable "-m" "coverage" "run" "--rcfile" "../pyproject.toml" "manage.py" "test" "--no-input" "--keepdb" ,test-dotted-name))))))
+			:command `(,django-run-test-python-executable ,@django-test-command ,test-dotted-name))))))
 
 
 (require 'flymake-collection-define)
