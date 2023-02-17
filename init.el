@@ -236,3 +236,12 @@
 		(completing-read "URL: " nil nil nil
 				 (format "file://%s" buffer-file-name))))
   (xwidget-webkit-browse-url url t))
+
+;; customize thunderbird
+(defvar thunderbird-current-profile-name)
+(defvar thunderbird-current-profile-database)
+
+(defun sql-sqlite-thunderbird ()
+  (interactive)
+  (let ((sql-database thunderbird-current-profile-database))
+    (sql-sqlite)))
