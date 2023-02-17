@@ -229,3 +229,10 @@
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
 (define-key python-mode-map (kbd "M-<return>") 'django-run-shell)
+
+;; customize browse-url.el
+(defun browse-url-xwidget-webkit-open (url &optional _ignored)
+  (interactive (list
+		(completing-read "URL: " nil nil nil
+				 (format "file://%s" buffer-file-name))))
+  (xwidget-webkit-browse-url url t))
