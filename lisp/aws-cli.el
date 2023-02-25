@@ -33,6 +33,7 @@
 (defcustom aws-cli-command "aws" "")
 
 (defcustom aws-cli-current-profile nil "")
+(defcustom aws-cli-current-region nil "")
 
 ;;;###autoload
 (defun aws-cli-switch-profile (profile-name)
@@ -40,6 +41,13 @@
   (setq aws-cli-current-profile profile-name)
   (message (format "Change aws profile configuration: %s"
 		   aws-cli-current-profile)))
+
+;;;###autoload
+(defun aws-cli-switch-region (region-name)
+  (interactive "s:AWS_REGION: ")
+  (setq aws-cli-current-region region-name)
+  (message (format "Change aws region configuration: %s"
+		   aws-cli-current-region)))
 
 ;;;###autoload
 (defun aws-cli-switch-cli (command)
@@ -58,7 +66,10 @@
 
 (defun aws-cli--process-environment ()
   (if aws-cli-current-profile
-      (append `(,(format "AWS_PROFILE=%s" aws-cli-current-profile)) process-environment)
+      (append `(
+		,(format "AWS_PROFILE=%s" aws-cli-current-profile)
+		,(format "AWS_REGION=%s" aws-cli-current-region)
+		) process-environment)
     process-environment))
 
 ;;;###autoload
@@ -82,6 +93,13 @@
 	     aws-cli-command
 	     subcmd
 	     buffer-file-name))))
+
+;;;###autoload
+(defun aws-cli-shell ()
+  (interactive)
+  (let ((process-environment (aws-cli--process-environment)))
+    (vterm)))
+
 
 (provide 'aws-cli)
 ;;; aws-cli.el ends here
