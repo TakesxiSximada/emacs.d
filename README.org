@@ -918,7 +918,7 @@ org-todoにはTODOとDONEのステータスがデフォルトで用意されて�
 
 #+begin_src emacs-lisp
 (setq org-todo-keywords
-  '((sequence "TODO" "EPIC" "|" "DONE" "CANCEL")))
+  '((sequence "TODO" "EPIC" "WAIT" "|" "DONE" "CANCEL")))
 #+end_src
 
 * org-priority
