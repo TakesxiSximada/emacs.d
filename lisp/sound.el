@@ -4,6 +4,11 @@
   (interactive (list
 		(read-file-name  "Audio file: ")
 		(yes-or-no-p "Repeat?: ")))
-  (start-process "*SOUND PLAY*" nil sound-play-macos-afplay-executable file))
+  (if repeat
+      (async-shell-command
+       (format "while true; do %s %s; sleep 1; done"
+	       sound-play-macos-afplay-executable file))
+    (start-process
+     "*SOUND PLAY*" nil sound-play-macos-afplay-executable file)))
 
 (provide 'sound)
