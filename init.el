@@ -245,3 +245,7 @@
   (interactive)
   (let ((sql-database thunderbird-current-profile-database))
     (sql-sqlite)))
+
+;; for markdown-mode
+(with-eval-after-load 'markdown-mode
+  (add-hook 'markdown-mode-hook #'visual-fill-column-mode))
