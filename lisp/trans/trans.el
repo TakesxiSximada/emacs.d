@@ -1,6 +1,5 @@
 ;;; trans.el --- Translation functions -*- lexical-binding: t; -*-
 
-;; Carstens outline-mode for keeping track of everything.
 ;; Copyright (C) 2023 TakesxiSximada
 ;;
 ;; Author: TakesxiSximada <sximada@gmail.com>
@@ -47,19 +46,12 @@
 
 ;;; Code:
 
-(setq trans-output-buffer-name "*Trans*")
-(setq trans-process-name "*Trans Process")
-(setq trans-process-buffer-name " *Transprocess*")
-(setq trans-process-command '("trans"
-			      "en:ja"
-			      "-show-original" "n"
-			      "-show-prompt-message" "n"
-			      "-brief"
-			      "-no-pager"
-			      "-no-ansi"
-			      ))
-
+(defvar trans-output-buffer-name "*Trans*")
+(defvar trans-process-name "*Trans Process")
+(defvar trans-process-buffer-name " *Transprocess*")
 (defvar trans-process nil)
+
+(defcustom trans-current-lang-mode "ja:en" "")
 
 (defun trans-output (process output)
   (with-output-to-temp-buffer trans-output-buffer-name
@@ -74,7 +66,6 @@
       (point-min)
       (point-max))))
 
-
 (defun trans-cleanup-sentence (sentence)
   (with-temp-buffer
     (insert sentence)
@@ -88,10 +79,21 @@
     (setq trans-process
 	  (make-process :name trans-process-name
 			:buffer (get-buffer-create trans-process-buffer-name)
-			:command trans-process-command
+			:command `("trans"
+				   ,trans-current-lang-mode
+				   "-show-original" "n"
+				   "-show-prompt-message" "n"
+				   "-brief"
+				   "-no-pager"
+				   "-no-ansi"
+				   )
 			:filter 'trans-output
 			))))
 
+;;;###autoload
+(defun trans-switch-lang (lang-mode)
+  (interactive (list (completing-read "sLang mode(BASE:TRNAS): " '("ja:en" "en:ja"))))
+  (setq trans-current-lang-mode lang-mode))
 
 ;;;###autoload
 (defun trans-restart ()
