@@ -249,3 +249,10 @@
 ;; for markdown-mode
 (with-eval-after-load 'markdown-mode
   (add-hook 'markdown-mode-hook #'visual-fill-column-mode))
+
+;; Need say command
+(defun say-on-region ()
+  (interactive)
+  (let ((proc (start-process "*SAY*" "*SAY*" "say" "--rate" "500")))
+    (process-send-region proc (region-beginning) (region-end))
+    (process-send-string proc "\n")))
