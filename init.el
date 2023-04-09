@@ -264,3 +264,15 @@
   (setq org-agenda-files
 	(append (cdr org-agenda-files)
 		(list (car org-agenda-files)))))
+
+(defun org-agenda-my-next-task ()
+  "look only what to do next"
+  (interactive)
+  (unless org-agenda-buffer
+    (org-agenda-list))
+
+  (with-current-buffer org-agenda-buffer
+    (save-excursion
+      (goto-char (point-min))
+      (next-line 3)
+      (narrow-to-region (point-min) (point)))))
