@@ -256,3 +256,11 @@
   (let ((proc (start-process "*SAY*" "*SAY*" "say" "--rate" "500")))
     (process-send-region proc (region-beginning) (region-end))
     (process-send-string proc "\n")))
+
+;; org-mode
+(defun org-agenda-spin-project ()
+  "Rearrange the order of the agenda file to keep the project running evenly"
+  (interactive)
+  (setq org-agenda-files
+	(append (cdr org-agenda-files)
+		(list (car org-agenda-files)))))
