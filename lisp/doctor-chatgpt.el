@@ -5,10 +5,10 @@
 ;; Author: TakesxiSximada <sximada@gmail.com>
 ;; Maintainer: TakesxiSximada <sximada@gmail.com>
 ;; Repository:
-;; Version: 1
-;; Package-Version: 20230115.0000
+;; Version: 2
+;; Package-Version: 20230409.0000
 ;; Package-Requires: ((emacs "28.0") (plz "0.3") (plz "0.3") (json "1.5"))
-;; Date: 2023-01-15
+;; Date: 2023-04-09
 
 ;; This file is part of doctor-chatgpt.
 
