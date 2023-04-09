@@ -32,6 +32,9 @@
 (require 'json)
 (require 'doctor)
 
+(defvar doctor-current-answer-marker (make-marker))
+(defvar doctor-current-talk-end-marker (make-marker))
+
 (defvar doctor-chatgpt-buffer-name "*doctor*"
   "name of doctor buffer")
 
@@ -46,13 +49,47 @@
 
 (defun doctor-chatgpt-activate ()
   (interactive)
-  (fset 'doctor-read-print 'doctor-chatgpt-read-print))
+  (define-key doctor-mode-map (kbd "C-j") nil)
+  (define-key doctor-mode-map (kbd "RET") nil)
+  (define-key doctor-mode-map (kbd "C-c C-c") #'doctor-read-print))
 
-(defun doctor-chatgpt-read-print ()
+(defun doctor-chatgpt-parse-response-get-text (data)
+  "ChatGPT Response parser"
+  (cdr (assoc 'text (elt (cdr (assoc 'choices data)) 0))))
+
+;; backup original function
+(unless (symbol-function 'doctor-read-print-original)
+  (defalias 'doctor-read-print-original (symbol-function #'doctor-read-print)))
+
+(unless (symbol-function 'doctor-readin-original)
+  (defalias 'doctor-readin-original (symbol-function #'doctor-readin)))
+
+(unless (symbol-function 'doctor-doc-original)
+  (defalias 'doctor-doc-original (symbol-function #'doctor-doc)))
+
+;; extend doctor functions
+(defun doctor-readin-all-sentences ()
+  (interactive)
+  (list
+   (buffer-substring-no-properties
+    (marker-position doctor-current-talk-end-marker)
+    (point-max))))
+
+(defun doctor-read-print-extra ()
   "Top level loop."
   (interactive nil doctor-mode)
-  (backward-sentence 1)
-  (let* ((sentence (buffer-substring-no-properties (point) (point-max)))
+  (setq doctor-sent (doctor-readin))
+  (insert (if (equal (line-beginning-position) (point))
+    "\n" "\n\n"))
+  (insert "#+begin_example\n")
+  (set-marker doctor-current-answer-marker (point))
+  (goto-char (+ (point) 1))
+  (insert "#+end_example\n\n")
+  (set-marker doctor-current-talk-end-marker (point))
+  (doctor-doc))
+
+(defun doctor-doc-chatgpt ()
+  (let* ((sentence (car doctor-sent))
          (endpoint (doctor-chatgpt-api-get-url "/v1/completions"))
          (headers `(("Content-Type" . "application/json")
                     ("Authorization" . ,(format "Bearer %s" doctor-chatgpt-access-token))))
@@ -67,16 +104,23 @@
     (plz 'post endpoint :headers headers :body body
       :as #'json-read
       :then (lambda (d)
-              (with-current-buffer (get-buffer doctor-chatgpt-buffer-name)
-		(goto-char (point-max))
-                (insert
-		 (format "\nDoctor: %s\n----------------------------------------\n\n"
-                         (cdr (assoc 'text (elt (cdr (assoc 'choices
-                                                            d
-                                                            ))
-						0)))))
-		(goto-char (point-max)))))))
+              (let ((answer (doctor-chatgpt-parse-response-get-text d)))
+                (with-current-buffer (marker-buffer doctor-current-answer-marker)
+                  (save-excursion
+                    (goto-char (marker-position doctor-current-talk-end-marker))
+                    (insert answer)))))
+      :else (lambda (d)
+        (princ d)))))
 
+(defalias 'doctor-readin (symbol-function #'doctor-readin-all-sentences))
+(defalias 'doctor-read-print (symbol-function #'doctor-read-print-extra))
+(defalias 'doctor-doc (symbol-function #'doctor-doc-chatgpt))
+
+(defun doctor-chatgpt-recovery ()
+  (interactive)
+  (defalias 'doctor-read-print (symbol-function #'doctor-read-print-original))
+  (defalias 'doctor-readin (symbol-function #'doctor-readin-original))
+  (defalias 'doctor-doc (symbol-function #'doctor-doc-original)))
 
 (provide 'doctor-chatgpt)
 ;;; doctor-chatgpt ends here
