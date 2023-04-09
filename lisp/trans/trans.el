@@ -7,7 +7,7 @@
 ;; Keywords: Translation
 ;; Homepage: https://github.com/TakesxiSximada/emacs.d/tree/main/lisp/trans
 
-;; Version: 2
+;; Version: 3
 
 ;; trans.el is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

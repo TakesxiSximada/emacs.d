@@ -48,6 +48,10 @@ GPL v3
 
 * Releases
 
+** Version 3 (2023-04-09)
+
+- support to change lang-mode function
+
 ** Version 2 (2023-01-26)
 
 - Support Emacs 29.1
