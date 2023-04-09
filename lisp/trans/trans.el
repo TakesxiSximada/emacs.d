@@ -52,6 +52,7 @@
 (defvar trans-process nil)
 
 (defcustom trans-current-lang-mode "ja:en" "")
+(defcustom trans-started-lang-mode "" "")
 
 (defun trans-output (process output)
   (with-output-to-temp-buffer trans-output-buffer-name
@@ -88,7 +89,8 @@
 				   "-no-ansi"
 				   )
 			:filter 'trans-output
-			))))
+			)
+	  trans-started-lang-mode trans-current-lang-mode)))
 
 ;;;###autoload
 (defun trans-switch-lang (lang-mode)
@@ -106,11 +108,15 @@
   (interactive)
   (when trans-process
     (signal-process (get-process trans-process) 15)
-    (setq trans-process nil)))
+    (setq trans-process nil
+	  trans-started-lang-mode ""
+	  )))
 
 ;;;###autoload
 (defun trans-region ()
   (interactive)
+  (unless (string-equal trans-current-lang-mode trans-started-lang-mode)
+    (trans-stop))
   (trans-start)
   (if trans-process
       (process-send-string trans-process
