@@ -253,7 +253,12 @@
 ;; Need say command
 (defun say-on-region ()
   (interactive)
-  (let ((proc (start-process "*SAY*" "*SAY*" "say" "--rate" "500")))
+  (let ((proc (or (if-let* ((buf (get-buffer "*SAY*")))
+		      (if-let* ((current-proc (get-buffer-process buf)))
+			  (when (eq 'run (process-status current-proc))
+			    current-proc)))
+		  (start-process "*SAY*" (get-buffer-create "*SAY*")
+				 "say" "--rate" "500"))))
     (process-send-region proc (region-beginning) (region-end))
     (process-send-string proc "\n")))
 
