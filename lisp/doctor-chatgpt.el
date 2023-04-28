@@ -50,8 +50,8 @@
 (defun doctor-chatgpt-activate ()
   (interactive)
   (define-key doctor-mode-map (kbd "C-j") nil)
-  (define-key doctor-mode-map (kbd "RET") nil)
   (define-key doctor-mode-map (kbd "C-c C-c") #'doctor-read-print))
+  (define-key doctor-mode-map (kbd "RET") nil)
 
 (defun doctor-chatgpt-parse-response-get-text (data)
   "ChatGPT Response parser"
@@ -72,7 +72,7 @@
   (interactive)
   (list
    (buffer-substring-no-properties
-    (marker-position doctor-current-talk-end-marker)
+    (or (marker-position doctor-current-talk-end-marker) 120)
     (point-max))))
 
 (defun doctor-read-print-extra ()
