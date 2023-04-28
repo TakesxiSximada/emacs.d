@@ -96,7 +96,7 @@
          (body (json-encode `(("model" . "text-davinci-003")
                               ("prompt" . ,sentence)
                               ("temperature" . 0.9)
-                              ("max_tokens" . 300)
+                              ("max_tokens" . 1000)
                               ("top_p" . 1)
                               ("frequency_penalty" . 0.0)
                               ("presence_penalty" . 0.6)
