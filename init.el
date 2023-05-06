@@ -62,8 +62,7 @@
 ;; -----------------------------
 ;; Color Theme
 ;; -----------------------------
-(load-theme 'symdon-kids t)
-
+(load-theme 'symdon-light t)
 
 ;; -----------------------------
 ;; Django configuration
