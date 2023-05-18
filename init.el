@@ -280,3 +280,7 @@
       (goto-char (point-min))
       (next-line 3)
       (narrow-to-region (point-min) (point)))))
+
+(require 'ansi-color)
+
+(add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
