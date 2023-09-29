@@ -103,7 +103,6 @@ package-selected-packagesで管理されているパッケージを全てイン�
 ** 個人用パッケージ
 
 #+begin_src emacs-lisp
-(el-get-bundle dotenv-mode :url "git@github.com:collective-el/emacs-dotenv-mode.git" :type "git")
 (el-get-bundle eglot :type "git" :url "git@github.com:joaotavora/eglot.git")
 (el-get-bundle elnode :type "git" :url "git@github.com:collective-el/elnode.git")
 (el-get-bundle foreman-mode :url "git@github.com:collective-el/foreman-mode.git" :type "git")
