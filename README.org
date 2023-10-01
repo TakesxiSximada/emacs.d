@@ -1138,28 +1138,28 @@ ewwを用いてAsciiDocを表示する。
 フォントを調節して文字幅が合うようにする。
 
 #+begin_src emacs-lisp
-(progn
-  (set-face-attribute 'default nil :family "源ノ等幅" :height 120)
-  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "源ノ等幅" :size 16))
-  (set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "源ノ等幅" :size 16))
-  (set-fontset-font nil 'japanese-jisx0212 (font-spec :family "源ノ等幅" :size 16))
-  (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "源ノ等幅" :size 16))
-  (set-fontset-font nil 'jisx0201 (font-spec :family "源ノ等幅" :size 12))
-  (set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 12))
-  (set-fontset-font nil '(?☺ . ?☺) (font-spec :family "Apple Color Emoji" :size 6))
-  (set-fontset-font nil '(?🀄 . ?🀈) (font-spec :family "Apple Color Emoji" :size 9))
-  (set-fontset-font nil '(?一 . ?一) (font-spec :family "源ノ等幅" :size 12))
-  )
+;; (progn
+;;   (set-face-attribute 'default nil :family "源ノ等幅" :height 120)
+;;   (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "源ノ等幅" :size 16))
+;;   (set-fontset-font nil 'japanese-jisx0208-1978 (font-spec :family "源ノ等幅" :size 16))
+;;   (set-fontset-font nil 'japanese-jisx0212 (font-spec :family "源ノ等幅" :size 16))
+;;   (set-fontset-font nil 'japanese-jisx0213.2004-1 (font-spec :family "源ノ等幅" :size 16))
+;;   (set-fontset-font nil 'jisx0201 (font-spec :family "源ノ等幅" :size 12))
+;;   (set-fontset-font nil 'symbol (font-spec :family "Apple Color Emoji" :size 12))
+;;   (set-fontset-font nil '(?☺ . ?☺) (font-spec :family "Apple Color Emoji" :size 6))
+;;   (set-fontset-font nil '(?🀄 . ?🀈) (font-spec :family "Apple Color Emoji" :size 9))
+;;   (set-fontset-font nil '(?一 . ?一) (font-spec :family "源ノ等幅" :size 12))
+;;   )
 #+end_src
 
 | 類似文字 |
-|----------|
-| l I 1    |
-| o O 0    |
-| q 9      |
-| s S 5    |
-| x X      |
-| z Z 2    |
+|---------|
+| l I 1   |
+| o O 0   |
+| q 9     |
+| s S 5   |
+| x X     |
+| z Z 2   |
 | 一 ―     |
 
 
@@ -1174,9 +1174,30 @@ ewwを用いてAsciiDocを表示する。
 | 亜唖娃阿哀亜唖娃阿哀亜唖娃阿哀亜唖娃阿哀 | 同漢字             |
 | 𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽𠀋𡈽𡌛𡑮𡢽 | JIS X 0213漢字     |
 | 😃😇😍😜😸🙈🐺🐰👽🐉💰🏡🎅🍪🍕🚀🚻💩📷📦 | 絵文字             |
-| ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺                       | 絵文字             |
-| 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈                 | 絵文字             |
+| ☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺☺     | 絵文字             |
+| 🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈🀄🀅🀆🀇🀈           | 絵文字             |
 
+
+
+|------------+--------------------|
+| AIUEOaiueo | ASCII英字          |
+| 1234567890 | ASCII英字          |
+| ｱｲｳｴｵｱｲｳｴｵ | JIS X 0201ｶﾅ       |
+| あいうえお | JIS X 0208ひらがな |
+| アイウエオ | 同カタカナ         |
+| 𠀋𡈽𡌛𡑮𡢽 | JIS X 0213漢字     |
+| 😃😇😍😜😸 | 絵文字             |
+| 🙈🐺🐰👽🐉 |                    |
+| 💰🏡🎅🍪🍕 |                    |
+| 🚀🚻💩📷📦 |                    |
+| ☺☺☺☺☺ | 絵文字             |
+| 🀄🀄🀄🀄🀄 |                    |
+| ＡＡＡＡＡ |                    |
+| 亜亜亜亜亜 |                    |
+| ＡＢＣＤＥ | 同英字             |
+| 亜唖娃阿哀 | 同漢字             |
+| 🀅🀅🀅🀅🀅🀅  |                    |
+| 🀅🀆🀇🀈🀅
 
 (この文字列は https://qiita.com/query1000/items/4b0b8db872adc1a5e2e9V から抜粋)
 
