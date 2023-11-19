@@ -986,28 +986,6 @@ Org Babelのコア部分はob-core.elに実装されている。例えばOrg-mod
 
 各種データベースへの接続情報を設定する。
 
-** MySQL
-
-(setq sql-mysql-program "docker")
-(setq sql-mysql-options '("exec" "-ti" "mysqld" "mysql" "mysql"))
-
-
-#+begin_src emacs-lisp
-(setq sql-mysql-program "docker")
-(setq sql-mysql-options '("exec" "-ti" "mysqld" "mysql" "mysql" "--local-infile=1"))
-(setq sql-mysql-login-params nil)
-#+end_src
-
-MySQLのコンテナはSIGINTを送信(C-c C-c)したときに停止しないケースがある。そのため停止用にDockerで動作させているmysqldに対してSIGTERMを送信するためのコマンドを定義した。
-
-#+begin_src emacs-lisp
-(defun sql-mysqld-stop ()
-  (interactive)
-  (let ((vterm-shell "docker kill -s TERM mysqld")
-	(vterm-buffer-name "SQL: MySQL: Stop"))
-    (vterm)))
-#+end_src
-
 ** PostgreSQL
 
 #+begin_src emacs-lisp
