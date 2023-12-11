@@ -201,29 +201,29 @@
 (require 'flymake-collection-mypy)
 (require 'flymake-mypy-custom)
 
-(defun flymake-python-setup ()
-  (flycheck-mode 0)
-  ;; タグジャンプはeglotを使用した方が楽
-  (setq eglot-server-programs (append `((python-mode . (,python-lsp-server-executable))) eglot-server-programs))
-  (eglot-ensure)
+;; (defun flymake-python-setup ()
+;;   (flycheck-mode 0)
+;;   ;; タグジャンプはeglotを使用した方が楽
+;;   (setq eglot-server-programs (append `((python-mode . (,python-lsp-server-executable))) eglot-server-programs))
+;;   (eglot-ensure)
 
-  ;; バッファ保存時にフォーマットする
-  (add-hook 'before-save-hook 'python-isort-buffer nil t)
-  (add-hook 'before-save-hook 'python-autoflake-reformat nil t)
-  (add-hook 'before-save-hook 'blacken-buffer nil t)
-  (add-hook 'after-save-hook 'django-run-test nil t)
+;;   ;; バッファ保存時にフォーマットする
+;;   (add-hook 'before-save-hook 'python-isort-buffer nil t)
+;;   (add-hook 'before-save-hook 'python-autoflake-reformat nil t)
+;;   (add-hook 'before-save-hook 'blacken-buffer nil t)
+;;   (add-hook 'after-save-hook 'django-run-test nil t)
 
-  ;; flymake関連はeglotが邪魔をするため、除去する。
-  ;; 直接起動したほうが柔軟な対応が可能。
-  (setq-local flymake-diagnostic-functions nil)
-  (add-hook 'flymake-diagnostic-functions 'flymake-collection-flake8 nil t)
-  (add-hook 'flymake-diagnostic-functions 'flymake-mypy-custom nil t)
+;;   ;; flymake関連はeglotが邪魔をするため、除去する。
+;;   ;; 直接起動したほうが柔軟な対応が可能。
+;;   (setq-local flymake-diagnostic-functions nil)
+;;   (add-hook 'flymake-diagnostic-functions 'flymake-collection-flake8 nil t)
+;;   (add-hook 'flymake-diagnostic-functions 'flymake-mypy-custom nil t)
 
-  (flymake-mode-on)
-  )
+;;   (flymake-mode-on)
+;;   )
 
 (setq python-mode-hook nil)
-(add-hook 'python-mode-hook #'flymake-python-setup)
+;; (add-hook 'python-mode-hook #'flymake-python-setup)
 
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
@@ -250,17 +250,6 @@
   (add-hook 'markdown-mode-hook #'visual-fill-column-mode))
 
 ;; Need say command
-(defun say-on-region ()
-  (interactive)
-  (let ((proc (or (if-let* ((buf (get-buffer "*SAY*")))
-		      (if-let* ((current-proc (get-buffer-process buf)))
-			  (when (eq 'run (process-status current-proc))
-			    current-proc)))
-		  (start-process "*SAY*" (get-buffer-create "*SAY*")
-				 "say" "--rate" "500"))))
-    (process-send-region proc (region-beginning) (region-end))
-    (process-send-string proc "\n")))
-
 ;; org-mode
 (defun org-agenda-spin-project ()
   "Rearrange the order of the agenda file to keep the project running evenly"

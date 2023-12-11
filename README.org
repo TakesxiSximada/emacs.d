@@ -431,6 +431,7 @@ The build string will be of the format:
 
 #+begin_src emacs-lisp
 (setenv "WORKON_HOME" (expand-file-name "~/.venv"))
+(setenv "WORKON_HOME" (expand-file-name "/usr/local/Caskroom/miniconda/base/envs"))
 
 (use-package python :ensure t :defer t
   :requires (eglot)
@@ -438,9 +439,7 @@ The build string will be of the format:
   (add-hook 'python-mode-hook 'eglot-ensure)
   )
 (use-package blacken :ensure t :defer t)
-(use-package pyvenv :ensure t :defer t
-  :config
-  (setenv "WORKON_HOME" (expand-file-name "~/.venv")))
+(use-package pyvenv :ensure t :defer t)
 #+end_src
 
 *** py-isort
