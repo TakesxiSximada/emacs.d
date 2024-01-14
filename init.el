@@ -6,7 +6,9 @@
 	      eval-expression-debug-on-error nil
 	      make-backup-files nil
 	      auto-save-default nil
-	      custom-file (locate-user-emacs-file "custom.el")
+	      custom-file (if (file-exists-p "/opt/ng/symdon")
+			      "/opt/ng/symdon/custom.el"
+			    (locate-user-emacs-file "custom.el"))
 	      custom-theme-directory (expand-file-name "~/.emacs.d/themes")
 	      custom-readme-file (expand-file-name "README.org" user-emacs-directory)
 	      custom-env-file (expand-file-name ".env" user-emacs-directory)
