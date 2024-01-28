@@ -44,7 +44,6 @@
 ;; Load emacs customize file
 ;; ----------------------------
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/trans"))
 (load-file custom-file)
 
 ;; -----------------------------
