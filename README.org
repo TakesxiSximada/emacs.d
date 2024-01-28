@@ -154,7 +154,6 @@ Magitは自分のリポジトリに固有の修正が入っている。
 (use-package request :ensure t :defer t)
 (use-package restclient :ensure t :defer t)
 (use-package s :ensure t :defer t)
-(use-package slime :ensure t :defer t)
 (use-package smex :ensure t :defer t)
 (use-package terraform-mode :ensure t :defer t)
 (use-package transient :ensure t)
