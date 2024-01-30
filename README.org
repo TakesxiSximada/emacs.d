@@ -466,6 +466,7 @@ macOSのアプリケーションをEmacsから起動する。
   			 '("/Applications"
   			   "/Applications/Utilities"
   			   "/System/Applications"
+                         "/Applications/DaVinci Resolve"
   			   "/System/Applications/Utilities"))))
   	 (get-buffer-create "*Application*")))
   (make-process :name "*App*"
@@ -798,14 +799,14 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
     org-assign-assignee-default-assignee))
 #+end_src
 
-ここまで用事した機能を用いてアジェンダビューの表示を変更します。
+
 
 #+begin_src emacs-lisp
-(setq org-agenda-prefix-format
-      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %6(org-assign-assignee-value-custom) %t %.4s %-6.6c %-25.50b ")
-        (todo . " %i %-12:c %-6e")
-        (tags . " %i %-12:c")
-        (search . " %i %-12:c")))
+;(setq org-agenda-prefix-format
+;      '((agenda . "%4(org-clock-sum-current-item-custom) %4e %6(org-assign-assignee-value-custom) %t %.4s %-6.6c %-25.50b ")
+;        (todo . " %i %-12:c %-6e")
+;        (tags . " %i %-12:c")
+;        (search . " %i %-12:c")))
 #+end_src
 
 アジェンダビューでプロジェクト毎にタスクが固まるようにソート戦略を設定します。
@@ -832,7 +833,7 @@ org-todoの論理構造を強制します。
 依存しているタスクが存在する場合、それらを完了していないと次のタスクに進めません。
 
 #+begin_src emacs-lisp
-(setq org-enforce-todo-dependencies nil)
+(setq org-enforce-todo-dependencies t)
 #+end_src
 
 ただしチェックボックスは現在進行中のタスクを阻害してしまうので無効にします。
