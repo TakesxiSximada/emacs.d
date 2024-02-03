@@ -1672,17 +1672,6 @@ Emacs上からマシンをスリープするコマンドを実装する。
     (error "Failed to sleep machine: Not support sysmte type")))
 #+end_src
 
-* which-command.el
-
-which-command.elはwhichコマンドのためのユーティリティ関数を実装している。
-例えば =M-x which-command RET ls RET= するとlsコマンドへのパスが、クリップボードにコピーされる。
-
-#+begin_src emacs-lisp
-(autoload 'which-command "which-command" :interactive t)
-#+end_src
-
-[[https://blog.symdon.info/posts/1671331641]]
-
 * safe-local-variable-valuesをcustom-fileに保存しないために
 
 safe-local-variable-valuesを保存してしまうと、custom-fileファイルをGit
