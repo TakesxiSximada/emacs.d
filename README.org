@@ -1650,9 +1650,7 @@ https://github.com/skk-dev/ddskk
 
 * safe-local-variable-valuesをcustom-fileに保存しないために
 
-safe-local-variable-valuesを保存してしまうと、custom-fileファイルをGit
-に登録できなくなってしまうため、safe-local-variable-valuesは
-custom-fileに反映しないように設定する。
+safe-local-variable-valuesを保存してしまうと、custom-fileファイルをGitに登録できなくなってしまうため、safe-local-variable-valuesはcustom-fileに反映しないように設定する。
 
 #+begin_src emacs-lisp
 (setq-default enable-local-variables :all)
