@@ -1169,13 +1169,6 @@ Returns symbol of major-mode.
   (widen))
 #+end_src
 
-* N
-
-#+begin_src emacs-lisp
-(setenv "N_PREFIX" (expand-file-name "~/.local"))
-(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
-#+end_src
-
 * grip-mode
 
 Org-modeやMarkdownの編集時にはリアルタイムプレビューがあると非常に捗る。
