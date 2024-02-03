@@ -1655,23 +1655,6 @@ https://github.com/skk-dev/ddskk
   (require 'skk-study)
 #+end_src
 
-* Sleep
-
-Emacs上からマシンをスリープするコマンドを実装する。
-
-#+begin_src emacs-lisp
-(defun sleep-machine-system-command ()
-  (pcase system-type
-    ('darwin '("pmset" "sleepnow"))
-    (t nil)))
-
-(defun sleep-machine ()
-  (interactive)
-  (if-let ((cmds (sleep-machine-system-command)))
-      (apply #'call-process (car cmds) nil nil nil (cdr cmds))
-    (error "Failed to sleep machine: Not support sysmte type")))
-#+end_src
-
 * safe-local-variable-valuesをcustom-fileに保存しないために
 
 safe-local-variable-valuesを保存してしまうと、custom-fileファイルをGit
