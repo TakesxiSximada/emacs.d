@@ -669,62 +669,6 @@ CSS編集のためのタブ幅などを設定します。
 
 実行は =M-x prettier-buffer= で実行できます。
 
-* wakatime
-
-作業時間計測のためのサービス[[https://wakatime.com/dashboard][wakatime]]を利用しています。wakatimeには公式のEmacs拡張があります。
-
-- [[https://wakatime.com/emacs]]
-- [[https://melpa.org/#/getting-started]]
-- [[https://github.com/wakatime/wakatime-mode]]
-
-公式のEmacs拡張はPython製のwakatimeコマンドを用いてデータを送信する実装となっていました。
-
-プロジェクトやカテゴリーの値は、org-clock-inしているorg-todoの属性から取得し設定したい。Python製のwakatimeコマンドと公式wakatime-modeを使ってコマンドを調整しそれらを実現するよりもEmacsから制御したほうが、見通しがよくなると考え自前で実装することにしました。
-
-パッケージとして独立させるほどでもなかったため、このリポジトリの =wakatime= ディレクトリにファイルを配置しました。そのためload-pathを追加する必要があります。
-
-#+begin_src emacs-lisp
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/wakatime"))
-#+end_src
-
-** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/wakatime-record.el][wakatime-record.el]]
-
-wakatime-record.elは計測した結果をローカルのファイルにキャッシュします。
-wakatimeへのデータの送信は行わない。 =(wakatime-record-tunrn-on)= する
-ことで有効になります。
-
-#+begin_src emacs-lisp
-(require 'wakatime-record)
-
-(wakatime-record-tunrn-on)
-#+end_src
-
-** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/wakatime-transport.el][wakatime-transport.el]]
-
-wakatime-transport.elはwakatime-record.elがキャッシュしたデータをwakatimeへ送信します。
-=(wakatime-transport-turn-on))= することで有効になります。
-
-#+begin_src emacs-lisp
-(require 'wakatime-transport)
-
-(wakatime-transport-turn-on)
-#+end_src
-
-** [[https://github.com/TakesxiSximada/emacs.d/blob/main/wakatime/org-wakatime.el][org-wakatime.el]]
-
-org-modeのプロパティにwakatimeのカテゴリーを登録するための関数を提供しています。
-=wakatime-record-get-category= 関数を上書きすることでorg-modeのプロパティからカテゴリーの取得を試みます。
-設定されていなければ、メジャーモードからカテゴリーを推測します。
-
-#+begin_src emacs-lisp
-(require 'org-wakatime)
-
-(defun wakatime-record-get-category ()
-  (interactive)
-  (or (org-wakatime-get-category)
-      (wakatime-record-get-category-by-major-mode)))
-#+end_src
-
 * org-src
 
 コードブロックのインデントや見栄えをカスタマイズします。
