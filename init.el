@@ -61,11 +61,6 @@
 (package-initialize)
 
 ;; -----------------------------
-;; Color Theme
-;; -----------------------------
-(load-theme 'symdon-light t)
-
-;; -----------------------------
 ;; Django configuration
 ;; -----------------------------
 (defcustom django-run-shell-default-code-list
