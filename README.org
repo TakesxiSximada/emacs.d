@@ -1531,8 +1531,7 @@ Display current buffer name if not clock in now."
 
 * DDSKK
 
-Input MethodにはDaredevil SKKを使用している。
-辞書は =~/.emacs.d/dictionary/skk= 配下に配置している。
+インプットメソッドにはDaredevil SKKを使用している。
 
 https://github.com/skk-dev/ddskk
 
