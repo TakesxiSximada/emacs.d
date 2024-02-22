@@ -60,15 +60,6 @@
   			 ))
 (package-initialize)
 
-;; -----------------------------
-;; Django configuration
-;; -----------------------------
-(defcustom django-run-shell-default-code-list
-  '("from django.contrib.auth import get_user_model"
-    "UserModel = get_user_model()"
-    "from django.http.request import HttpRequest"
-    "from rest_framework.request import Request")
-  "")
 ;; -------------------------
 ;; Load README configuration
 ;; -------------------------
@@ -124,74 +115,6 @@
   (call-process python-autoflake-executable nil nil nil "-i" "--remove-all-unused-imports" buffer-file-name)
   (revert-buffer t t t))
 
-(defcustom django-run-test-dotenv nil
-  "Dot env file path for django")
-
-(defcustom django-run-test-python-executable "python"
-  "Python command")
-
-
-(defun django-run-shell ()
-  (interactive)
-  (if-let ((default-directory (traverse-directory-to-up
-			       (file-name-directory buffer-file-name)
-    			       '(traverse-directory-django-manage-py-p))))
-      (progn
-	(let ((process-environment (if (not django-run-test-dotenv)
-				       process-environment
-				     (with-current-buffer (find-file-noselect django-run-test-dotenv)
-				       (string-split (buffer-substring-no-properties (point-min) (point-max))
-						     "\n" t "#.*$")))))
-	  (run-python (format "%s manage.py shell" django-run-test-python-executable)))
-
-	(if-let ((current-dotted-name (change-case-dotted-case-render
-				       (change-case-path-case-parse
-					(string-remove-suffix
-					 ".py"
-					 (string-replace default-directory
-							 "" buffer-file-name))))))
-	    (mapcan (lambda (code)
-		      (comint-send-string (get-buffer "*Python*")
-					  (concat code "\n")))
-		    (append django-run-shell-default-code-list
-			    `(,(format "from %s import *" current-dotted-name))))))))
-
-(defun django-run-test ()
-  (interactive)
-  (let ((before-save-hook nil))
-    (save-buffer))
-
-  (let ((test-buffer (get-buffer-create "*DJANGO*")))
-    (if-let ((old-process (get-buffer-process test-buffer)))
-	(signal-process old-process 1))
-
-    (with-current-buffer test-buffer
-      (erase-buffer))
-
-    (display-buffer test-buffer)
-
-    (if-let* ((default-directory (traverse-directory-to-up (file-name-directory buffer-file-name)
-							   '(traverse-directory-django-manage-py-p)))
-	      (test-dotted-name
-	       (change-case-dotted-case-render
-		(let ((parsed-dir-name-list
-		       (change-case-path-case-parse
-			(string-remove-suffix
-			 ".py"
-			 (string-replace default-directory
-                           		 "" buffer-file-name)))))
-		  (if (string-prefix-p "test" (car (last parsed-dir-name-list)))
-		      parsed-dir-name-list
-		    (butlast parsed-dir-name-list))))))
-	(let ((process-environment (if (not django-run-test-dotenv)
-				       process-environment
-				     (with-current-buffer (find-file-noselect django-run-test-dotenv)
-				       (string-split (buffer-substring-no-properties (point-min) (point-max))
-						     "\n" t "#.*$")))))
-	  (make-process :name "*DJANGO*"
-			:buffer test-buffer
-			:command `(,django-run-test-python-executable ,@django-test-command ,test-dotted-name))))))
-
 
 (require 'flymake-collection-define)
 (require 'flymake-collection-mypy)
@@ -206,7 +129,6 @@
 ;;   (add-hook 'before-save-hook 'python-isort-buffer nil t)
 ;;   (add-hook 'before-save-hook 'python-autoflake-reformat nil t)
 ;;   (add-hook 'before-save-hook 'blacken-buffer nil t)
-;;   (add-hook 'after-save-hook 'django-run-test nil t)
 
 ;;   ;; flymake関連はeglotが邪魔をするため、除去する。
 ;;   ;; 直接起動したほうが柔軟な対応が可能。
@@ -222,7 +144,6 @@
 
 (define-key python-mode-map (kbd "M-p") 'flymake-goto-prev-error)
 (define-key python-mode-map (kbd "M-n") 'flymake-goto-next-error)
-(define-key python-mode-map (kbd "M-<return>") 'django-run-shell)
 
 ;; customize browse-url.el
 (defun browse-url-xwidget-webkit-open (url &optional _ignored)
@@ -268,3 +189,5 @@
 (require 'ansi-color)
 
 (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+(put 'erase-buffer 'disabled nil)
+(put 'list-timers 'disabled nil)
