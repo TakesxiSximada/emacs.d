@@ -195,7 +195,6 @@
 
 (require 'flymake-collection-define)
 (require 'flymake-collection-mypy)
-(require 'flymake-mypy-custom)
 
 ;; (defun flymake-python-setup ()
 ;;   (flycheck-mode 0)
