@@ -32,4 +32,4 @@
    (equal nil (traverse-directory-exist-readme-md-p "/a"))))
 
 (provide 'traverse-directory-test)
-;;; osx-keychain.el ends here
+;;; traverse-directory-test.el ends here
