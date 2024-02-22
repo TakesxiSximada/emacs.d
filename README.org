@@ -1382,46 +1382,6 @@ The given CMD string will be appended."
     (format "awsl%s s3 %s" profile-arg cmd)))
 #+end_src
 
-* [[https://github.com/TakesxiSximada/emacs.d/blob/main/lisp/make-possess-preset.el][make-possess-preset]]
-
-Emacsには良く設定された設定群に固有の名前を付けて配布するということがある。通常それらはディストリビューションやスターターキットと呼ばれるらしい。ここではそれらをプリセットと呼ぶことにする。
-
-例えばSpacemacsやDoom Emacsが該当する。他にも実はいくつかある。他にどのようなものがあるかについては[[https://github.com/emacs-tw/awesome-emacs#starter-kit][awesome-emacsのStarter Kitの項目]]を参照すると、いろいろと紹介されている。もちろん紹介されていないものも世の中にはいっぱいあるだろう。私自身はそれらをあまり使用しないが、設定の方法などを確認するためにしばしば使いたくなる。
-
-それらプリセットはEmacsの初期化時に設定が読み込まれる。しかし常にそれらを使用しない場合、任意のタイミングで環境を切り替えたい。そのためEmacsが完全に起動した後で、任意のタイミングでに切り替えられるようにした。
-
-切り替えを実行するとパッケージ関連のパスを書き換え、bootstrap用のファイルをロードする。
-
-Emacsがプリセットを読み込んだ後に元の環境に戻すためにはEmacsを再起動するしかない。プリセットの読み込み処理によって、更新された変数や関数などの情報をそれ以前の状態に戻すのが困難だからだ。過ぎ去った時間を取り戻すことはできない。
-
-** Spacemacs
-
-#+begin_src emacs-lisp
-(autoload 'make-possess-preset-of-spacemacs "make-possess-preset" :interactive t)
-#+end_src
-
-以下のコマンドを実行するとEmacsはSpacemacs化する。
-
-#+begin_example
-M-x make-possess-preset-of-spacemacs RET
-#+end_example
-
-[[https://res.cloudinary.com/symdon/image/upload/v1645310753/blog.symdon.info/1645313344/spacemacs.gif]]
-
-** Doom Emacs
-
-#+begin_src emacs-lisp
-(autoload 'make-possess-preset-of-doom-emacs "make-possess-preset" :interactive t)
-#+end_src
-
-以下のコマンドを実行するとEmacsはDoom Emacs化する。
-
-#+begin_example
-M-x make-possess-preset-of-doom-emacs RET
-#+end_example
-
-[[https://res.cloudinary.com/symdon/image/upload/v1645341352/blog.symdon.info/1645313344/doom-emacs.gif]]
-
 * Magit
 
 MagitはEmacs用のGitユーティリティで、Gitコマンドのラッパーとして
