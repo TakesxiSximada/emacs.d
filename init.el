@@ -63,8 +63,6 @@
 ;; -------------------------
 ;; Load README configuration
 ;; -------------------------
-(add-to-list 'exec-path "/usr/local/bin")
-(setenv "PATH" (string-join exec-path ":"))
 (when (package-installed-p 'org)
   (require 'org)
   (save-window-excursion
