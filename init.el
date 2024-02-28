@@ -189,3 +189,5 @@
 (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 (put 'erase-buffer 'disabled nil)
 (put 'list-timers 'disabled nil)
+
+(load-theme 'symdon-dark)
