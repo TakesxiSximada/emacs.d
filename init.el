@@ -98,7 +98,6 @@
 ;; For python configuration
 (require 'eglot)
 (require 'flymake-collection)
-(require 'traverse-directory)
 (require 'change-case)
 
 
