@@ -684,70 +684,6 @@ Org Babelのコア部分はob-core.elに実装されている。例えばOrg-mod
   (require 'ob-sql))
 #+end_src
 
-* Databases
-
-各種データベースへの接続情報を設定する。
-
-** PostgreSQL
-
-#+begin_src emacs-lisp
-(setq sql-postgres-program "docker")
-(setq sql-postgres-options '("exec" "-ti" "postgres" "psql" "-U" "postgres"))
-(setq sql-postgres-login-params nil)
-#+end_src
-
-** IBM Db2
-
-localで使うDb2の環境をDockerを用いて構築している。そのためDb2サーバへの接続はコンテナに直接入る方法を用いることにした。sql-db2-programとsql-db2-optionsを設定する。
-
-#+begin_src emacs-lisp
-(setq sql-db2-program "docker")
-(setq sql-db2-options '("exec" "-ti" "db2-server" "bash" "-c" "su - db2inst1 -c 'db2 -t'"))
-#+end_src
-
-Db2は改行でSQLを実行する。その場合複数行にまたがるSQLは改行を削除して実行する必要がある。 =-t= を指定すると改行ではなくセミコロン(;)でSQLを実行するようになる。
-
-接続する前には必ずDB2サーバコンテナを起動しておく必要がある。起動するためのスクリプトはwhalebrewディレクトリにある。
-
-[[https://github.com/TakesxiSximada/emacs.d/blob/main/whalebrew/db2-server]]
-
-** Microsonft SQL Server
-
-MSSQL Serverについてはsql-modeでの扱いが難しい。
-
-[[https://www.emacswiki.org/emacs/SqlMode#h5o-8]]
-
-そこでDocker経由で接続するためのコマンドを別途用意する。
-
-#+begin_src emacs-lisp
-(defun sql-docker-ms ()
-  (interactive)
-  (let ((vterm-shell "docker exec -ti mssql bash -c '/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P ${SA_PASSWORD}'")
-	(vterm-buffer-name "SQL: Docker: Microsoft MSSQL Server")
-	(vterm-kill-buffer-on-exit nil))
-  (vterm)))
-#+end_src
-
-** Microsoft SQL Server
-
-#+begin_src emacs-lisp
-(setq sql-ms-program "docker")
-(setq sql-ms-options '("exec" "-ti" "mssql" "/opt/mssql-tools/bin/sqlcmd"))
-(setq sql-ms-login-params '(user server))
-#+end_src
-" "-S" "localhost" "-U" "SA" "-P" "Testing1234!
-(setq sql-server "localhost")
-(setq sql-user "SA")
-(setq sql-password "Testing1234!")
-
-
-** Oracle
-
-#+begin_src emacs-lisp
-(setq sql-oracle-program "docker")
-(setq sql-oracle-options '("exec" "-ti" "oracle" "bash" "-c" "sqlplus sys/testing1234@localhost:1521/ORCLCDB as sysdba"))
-(setq sql-oracle-login-params nil)
-#+end_src
 
 * ユーティリティ
 
@@ -1124,29 +1060,6 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
    (url-hexify-string
     (buffer-substring-no-properties
      (region-beginning) (region-end)))))
-#+end_src
-
-* SQLフォーマッターの設定
-
-以下を参考にした。
-
-- https://github.com/maxcountryman/forma
-- https://www.emacswiki.org/emacs/SqlBeautify
-
-#+begin_src emacs-lisp
-
-(defvar sql-fmt-command "sqlfluff fix --dialect mysql --config ~/.emacs.d/.sqlfluff -")
-
-(defun sql-fmt-region (beg end)
-  (interactive "r")
-  (save-restriction
-    (shell-command-on-region beg end
-			     sql-fmt-command
-			     nil t)))
-
-(defun sql-fmt-buffer ()
-  (interactive)
-  (sql-fmt-region (point-min) (point-max)))
 #+end_src
 
 * その他
