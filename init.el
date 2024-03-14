@@ -2,8 +2,6 @@
 ;; Basic Behavior
 ;; ----------------------------
 (setq-default find-function-C-source-directory "/opt/ng/emacs/src"
-	      debug-on-error nil
-	      eval-expression-debug-on-error nil
 	      make-backup-files nil
 	      auto-save-default nil
 	      custom-file (if (file-exists-p "/opt/ng/symdon")
@@ -190,3 +188,6 @@
 (put 'list-timers 'disabled nil)
 
 (load-theme 'symdon-dark)
+
+(setq-default debug-on-error nil
+	      eval-expression-debug-on-error nil)
