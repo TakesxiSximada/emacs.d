@@ -448,25 +448,12 @@ macOSのアプリケーションをEmacsから起動する。
 (bind-key* "s-<left>" (lambda () (interactive) (window-resize nil -1 t)))
 #+end_src
 
-* Emacsの設定ファイルを素早く開く
-
-Emacsの設定ファイルは開く回数が多いため、素早く開けるように独自の関数を定義してキーを割り当てます。
-
-#+begin_src emacs-lisp
-(defun open-emacs-init-file ()
-  (interactive)
-  (expand-file-name "~/.emacs.d/README.org"))
-
-(bind-key* "s-2" #'open-emacs-init-file)
-#+end_src
-
 * 追加のキーバインドの設定
 
 #+begin_src emacs-lisp
 (bind-key* "C-M-i" #'company-complete)
 ;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
 (bind-key* "C-t C-c" #'vterm-command)
-(bind-key* "C-t C-o" #'macos-app)
 (bind-key* "C-t C-t" #'other-frame)
 (bind-key* "C-t C-w" #'essay)
 (bind-key* "C-x C-v" #'magit-status)
