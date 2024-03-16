@@ -188,6 +188,3 @@
 (put 'list-timers 'disabled nil)
 
 (load-theme 'symdon-dark)
-
-(setq-default debug-on-error nil
-	      eval-expression-debug-on-error nil)
