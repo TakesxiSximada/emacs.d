@@ -406,33 +406,6 @@ Emacsでは、通常のOSなどでウィンドウと呼ばれている領域は�
 (setq-default mode-line-format nil)
 #+end_src
 
-* macOS
-
-macOSのアプリケーションをEmacsから起動する。
-
-#+begin_src emacs-lisp
-(defun macos-app (&optional app buf)
-  "Start macOS application from Emacs"
-  (interactive
-   (list (completing-read
-	  "Application: "
-  	  (apply #'append
-  		 (mapcar (lambda (application-path)
-  			   (mapcar (lambda (name) (concat (directory-file-name application-path) "/" name))
-  				   (directory-files application-path nil ".app")))
-  			 '("/Applications"
-  			   "/Applications/Utilities"
-  			   "/System/Applications"
-                         "/Applications/DaVinci Resolve"
-  			   "/System/Applications/Utilities"))))
-  	 (get-buffer-create "*Application*")))
-  (make-process :name "*App*"
-  		:buffer (get-buffer-create "*App*")
-  		:command `("open" "-g" ,app)
-  		))
-
-#+end_src
-
 * ウィンドウサイズの変更
 
 #+begin_src emacs-lisp
@@ -453,13 +426,11 @@ macOSのアプリケーションをEmacsから起動する。
 (bind-key* "C-x C-v" #'magit-status)
 (bind-key* "M-X" #'smex-major-mode-commands)
 (bind-key* "M-x" #'smex)
-(bind-key* "s-1" #'org-agenda-list)
 (bind-key* "s-t" #'make-frame)
 
 #+end_src
 
 #+begin_src emacs-lisp
-(define-key override-global-map (kbd "s-1") #'org-agenda-list)
 (define-key override-global-map (kbd "C-t C-i") #'org-clock-goto)
 #+end_src
 
@@ -574,7 +545,6 @@ agendaファイルを追加するには =org-agenda-files= にファイルパス
     (cdr (assoc "ASSIGNEE" (org-entry-properties)))
     org-assign-assignee-default-assignee))
 #+end_src
-
 
 
 #+begin_src emacs-lisp
