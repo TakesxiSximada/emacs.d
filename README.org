@@ -325,19 +325,6 @@ Returns symbol of major-mode.
 
 ** Python
 
-#+begin_src emacs-lisp
-(setenv "WORKON_HOME" (expand-file-name "~/.venv"))
-(setenv "WORKON_HOME" (expand-file-name "/usr/local/Caskroom/miniconda/base/envs"))
-
-(use-package python :ensure t :defer t
-  :requires (eglot)
-  :config
-  (add-hook 'python-mode-hook 'eglot-ensure)
-  )
-(use-package blacken :ensure t :defer t)
-(use-package pyvenv :ensure t :defer t)
-#+end_src
-
 *** py-isort
 
 isortはPythonのimport順序を整列する。
@@ -422,7 +409,6 @@ Emacsでは、通常のOSなどでウィンドウと呼ばれている領域は�
 ;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
 (bind-key* "C-t C-c" #'vterm-command)
 (bind-key* "C-t C-t" #'other-frame)
-(bind-key* "C-t C-w" #'essay)
 (bind-key* "C-x C-v" #'magit-status)
 (bind-key* "M-X" #'smex-major-mode-commands)
 (bind-key* "M-x" #'smex)
