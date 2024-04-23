@@ -1,17 +1,18 @@
 ;; -----------------------------
 ;; Basic Behavior
 ;; ----------------------------
-(setq-default find-function-C-source-directory "/opt/ng/emacs/src"
-	      make-backup-files nil
-	      auto-save-default nil
-	      custom-file (if (file-exists-p "/opt/ng/symdon")
-			      "/opt/ng/symdon/custom.el"
-			    (locate-user-emacs-file "custom.el"))
-	      custom-theme-directory (expand-file-name "~/.emacs.d/themes")
-	      custom-readme-file (expand-file-name "README.org" user-emacs-directory)
-	      custom-env-file (expand-file-name ".env" user-emacs-directory)
-	      custom-additional-load-file-list nil
-	      )
+(setq-default
+ ;; find-function-C-source-directory "/opt/ng/emacs/src"
+ ;; make-backup-files nil
+ ;; auto-save-default nil
+ custom-file (if (file-exists-p "/opt/ng/symdon")
+		 "/opt/ng/symdon/custom.el"
+	       (locate-user-emacs-file "custom.el"))
+ custom-theme-directory (expand-file-name "~/.emacs.d/themes")
+ custom-readme-file (expand-file-name "README.org" user-emacs-directory)
+ custom-env-file (expand-file-name ".env" user-emacs-directory)
+ custom-additional-load-file-list nil
+ )
 
 ;; -----------------------------
 ;; Basic Key bindings
