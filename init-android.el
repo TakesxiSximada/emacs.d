@@ -12,7 +12,7 @@
  debug-on-error nil
  ng-path (if (file-directory-p "/opt/ng") "/opt/ng" "~/ng")
  ng-cache-dir (if (file-directory-p "/var/ng") "/var/ng" "~/cache/ng")
- custom-file (expand-file-name "~/.emacs.d/custom.el"))
+ custom-file (expand-file-name "~/.emacs.d/custom-android.el"))
 
 (setq  ;; Base
  ;; packageを保持するディレクトリを指定する
