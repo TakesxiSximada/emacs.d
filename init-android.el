@@ -163,37 +163,7 @@
 (load-file custom-file)  ;; customファイルを読み込む
 (global-visual-line-mode 1)
 
-;; org-mode
-(defun our-org-todo (&optional todo)
-  (interactive
-   (list (completing-read "Status: " (cdr (car org-todo-keywords)))))
-  (org-todo todo))
-
-(with-eval-after-load 'org
-  (define-key org-mode-map (kbd "M-n") #'our-org-todo)
-  (define-key org-mode-map (kbd "C-c C-,") #'org-insert-structure-template)
-  (define-key org-mode-map (kbd "C-c ,") #'org-insert-structure-template)
-
-  ;; org-clock
-  (define-key org-mode-map (kbd "M-i") #'org-clock-in)
-  (define-key org-mode-map (kbd "M-o") #'org-clock-out)
-  )
-
-
-
-
-;; org-agenda
-(defun our-org-agenda-todo (&optional todo)
-  (interactive
-   (list (completing-read "Status: " (cdr (car org-todo-keywords)))))
-  (org-agenda-todo todo))
-
-(with-eval-after-load 'org-agenda
-  (define-key org-agenda-mode-map (kbd "M-p") #'org-agenda-priority-up)
-  (define-key org-agenda-mode-map (kbd "M-n") #'our-org-agenda-todo)
-
-  (define-key org-agenda-mode-map (kbd "M-i") #'org-agenda-clock-in)
-  (define-key org-agenda-mode-map (kbd "M-o") #'org-agenda-clock-out))
+(load-file (expand-file-name "~/.emacs.d/custom/org.el")) 
 
 ;; dired
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
