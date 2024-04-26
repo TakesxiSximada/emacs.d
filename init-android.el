@@ -163,8 +163,6 @@
 (load-file custom-file)  ;; customファイルを読み込む
 (global-visual-line-mode 1)
 
-(load-file (expand-file-name "~/.emacs.d/custom/org.el")) 
-
 ;; dired
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
@@ -184,3 +182,6 @@
 	     remote-port
 	     ssh-command
 	     ))))
+
+(load-file (expand-file-name "~/.emacs.d/custom/org.el"))
+(load-file (expand-file-name "~/.emacs.d/custom/deepl.el"))

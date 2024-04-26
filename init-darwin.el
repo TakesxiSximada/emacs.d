@@ -190,6 +190,6 @@
 
 (load-theme 'symdon-dark)
 
-
 ;; custom
 (load-file (expand-file-name "~/.emacs.d/custom/org.el"))
+(load-file (expand-file-name "~/.emacs.d/custom/deepl.el"))
