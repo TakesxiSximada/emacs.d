@@ -39,5 +39,6 @@
   (define-key org-agenda-mode-map (kbd "M-i") #'org-agenda-clock-in)
   (define-key org-agenda-mode-map (kbd "M-o") #'org-agenda-clock-out))
 
+(global-set-key (kbd "C-t C-q") #'org-agenda-list)
 ;; deepl
 (global-set-key (kbd "C-t C-r") #'deepl)
