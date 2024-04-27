@@ -41,3 +41,4 @@
 
 ;; deepl
 (global-set-key (kbd "C-t C-r") #'deepl)
+(global-set-key (kbd "C-t C-e") #'openai-chat-question)
