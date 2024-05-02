@@ -184,6 +184,8 @@
 	     ))))
 
 ;; XperiaではなぜかC-SPCを入力したと判定されるまでに時間がかかるようだっ
-;; た。さらにC-SPCではなくC-@とし扱われていた。しかたがないのでM-SPCに
-;; #'set-mark-commandを割り当てる事にした。いつか直したい。
+;; た。さらにC-SPCではなくC-@とし扱われていた。しかたがないのでM-SPCと
+;; C-t C-pに#'set-mark-commandを割り当てる事にした。
+;; いつか直したい。
 (global-set-key (kbd "M-SPC")  #'set-mark-command)
+(global-set-key (kbd "C-t C-p") #'set-mark-command)
