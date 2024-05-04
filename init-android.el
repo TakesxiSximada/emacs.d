@@ -189,3 +189,17 @@
 ;; いつか直したい。
 (global-set-key (kbd "M-SPC")  #'set-mark-command)
 (global-set-key (kbd "C-t C-p") #'set-mark-command)
+
+;; org-agenda custom
+(defcustom org-agenda-default-directory-on-agenda-view
+  nil
+  "Specify default directory in org-agenda agenda view.
+
+MOTIVATION: When in the agenda view of org-agenda, I want to execute magit-status and immediately perform Git operations. For this to work, the default directory when in the agenda view needs to be the directory where the Git repository I intend to operate on is located.
+")
+
+(defun org-agenda-move-to-custom-default-directory ()
+  (when org-agenda-default-directory-on-agenda-view
+    (setq default-directory (expand-file-name org-agenda-default-directory-on-agenda-view))))
+
+(add-hook 'org-agenda-mode-hook #'org-agenda-move-to-custom-default-directory)
