@@ -105,15 +105,6 @@
 (add-to-list 'load-path (expand-file-name "symdon/pages/emacs/1602410851" ng-path))
 (condition-case err (require 'essay-autoloads) (error err))
 (global-set-key (kbd "C-t C-w") #'essay)
-(with-eval-after-load 'essay
-  (add-hook 'essay-after-save-hook #'essay-git-commit)
-  ;; 本来的にはdefcustomで定義してcustomizeで設定するべき。
-  (setq essay-project-alist
-	`(
-	  ("blog" . ,(expand-file-name "symdon/pages/posts" ng-path))
-	  ("emacs" . ,(expand-file-name "symdon/pages/emacs" ng-path))
-	  ("HKN" . ,(expand-file-name "symdon/confidential/HKN" ng-path))
-	  )))
 
 ;; misc
 (global-set-key (kbd "C-t C-c") #'async-shell-command)
