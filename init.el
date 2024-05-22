@@ -1,12 +1,23 @@
-(setq platform-configuration-file
-      (expand-file-name
-       (format "~/.emacs.d/platform/%s.el" system-configuration)))
+(setq ng-path (if (file-directory-p "/opt/ng") "/opt/ng" "~/ng")
+      ng-cache-dir (if (file-directory-p "/var/ng") "/var/ng" "~/cache/ng")
+      ng-custom-file (file-name-concat ng-path "symdon/custom.el"))
 
-(if (file-exists-p platform-configuration-file)
-    (progn
-      (message "Platform configuration file exists: %s" platform-configuration-file)
-      (condition-case err (load-file platform-configuration-file) (error err)))
-  (warn "No platform configuration file: %s" platform-configuration-file))
+;; customize platform
+(progn
+  (setq platform-configuration-file
+	(expand-file-name
+	 (format "~/.emacs.d/platform/%s.el" system-configuration)))
+  (if (file-exists-p platform-configuration-file)
+      (progn
+	(message "Platform configuration file exists: %s" platform-configuration-file)
+	(condition-case err (load-file platform-configuration-file) (error err)))
+    (warn "No platform configuration file: %s" platform-configuration-file)))
+
+;; load custom file
+(when (file-exists-p ng-custom-file)
+  (setq custom-file ng-custom-file)
+  (message "cusotm file exists: %s" custom-file)
+  (condition-case err (load-file custom-file) (error err)))
 
 ;; org-mode
 (defun our-org-todo (&optional todo)
