@@ -5,7 +5,7 @@
 (if (file-exists-p platform-configuration-file)
     (progn
       (message "Platform configuration file exists: %s" platform-configuration-file)
-      (load-file platform-configuration-file))
+      (condition-case err (load-file platform-configuration-file) (error err)))
   (warn "No platform configuration file: %s" platform-configuration-file))
 
 ;; org-mode
