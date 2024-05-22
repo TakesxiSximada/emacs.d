@@ -1,13 +1,3 @@
-(pcase system-configuration
-  ("aarch64-unknown-linux-android" ;; android
-   (message "Emacs on Android"))
-  ("darwin" ;; macOS
-   (message "Emacs on macOS"))
-  (t
-   (warn "Unknown system")
-   nil))
-
-
 (setq ;; Env
  debug-on-error nil
  ng-path (if (file-directory-p "/opt/ng") "/opt/ng" "~/ng")
