@@ -1,14 +1,12 @@
-(pcase system-configuration
-  ("x86_64-apple-darwin22.6.0"
-   (message "GNU Emacs on macOS")
-   (load-file (expand-file-name "~/.emacs.d/init-darwin.el")))
+(setq platform-configuration-file
+      (expand-file-name
+       (format "~/.emacs.d/platform/%s.el" system-configuration)))
 
-  ("aarch64-unknown-linux-android"
-   (message "GNU Emacs on Android")
-   (load-file (expand-file-name "~/.emacs.d/init-android.el")))
-
-  (t
-   (warn "Unkown system")))
+(if (file-exists-p platform-configuration-file)
+    (progn
+      (message "Platform configuration file exists: %s" platform-configuration-file)
+      (load-file platform-configuration-file))
+  (warn "No platform configuration file: %s" platform-configuration-file))
 
 ;; org-mode
 (defun our-org-todo (&optional todo)
