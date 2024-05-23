@@ -44,7 +44,9 @@
 							 "emacs-custom"
 							 (format "%s.el" system-configuration)))
       custom-file (if (file-exists-p ng-custom-file) ng-custom-file
-		    (progn (warn "No ng custom file: %s" ng-custom-file) nil)))
+		    (progn (warn "No ng custom file: %s" ng-custom-file)
+			   (locate-user-emacs-file "custom.el")))
+      custom-theme-directory (expand-file-name "~/.emacs.d/themes"))
 
 ;; package
 (setq package-user-dir (expand-file-name (format "%s/elpa.%d" ng-cache-dir emacs-major-version))
