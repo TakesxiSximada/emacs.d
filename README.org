@@ -73,15 +73,6 @@ package-selected-packagesで管理されているパッケージを全てイン�
 (el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
 #+end_src
 
-Magitは自分のリポジトリに固有の修正が入っている。
-暫く操作して問題がなければ本家にPRを作成する。
-
-#+begin_src emacs-lisp
-(add-to-list 'load-path (expand-file-name "/opt/ng/magit/lisp"))
-(use-package compat :ensure t :defer t)
-(el-get-bundle magit :type "git" :url "git@github.com:TakesxiSximada/magit.git")
-#+end_src
-
 #+begin_src
 (el-get-bundle swift-mode :type "git" :url "git@github.com:swift-emacs/swift-mode.git")
 #+end_src
