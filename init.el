@@ -134,9 +134,6 @@
 (global-set-key (kbd "C-t C-r") #'deepl)
 (global-set-key (kbd "C-t C-e") #'openai-chat-question)
 
-
-(setenv "PAGER" "cat")
-
 ;; IDO
 (require 'ido)
 
@@ -264,3 +261,8 @@ MOTIVATION: When in the agenda view of org-agenda, I want to execute magit-statu
     (setq default-directory (expand-file-name org-agenda-default-directory-on-agenda-view))))
 
 (add-hook 'org-agenda-mode-hook #'org-agenda-move-to-custom-default-directory)
+
+;; Environment variables configuration
+(setenv "PAGER" "cat")
+(setenv "PATH" (string-join exec-path ":"))
+(setenv "WORKON_HOME" (file-name-concat ng-cache-dir "python-venv"))
