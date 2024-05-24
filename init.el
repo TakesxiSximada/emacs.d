@@ -64,6 +64,12 @@
 			 ))
 (package-initialize)
 
+;; theme
+(load-theme 'symdon-light t)
+
+;; DDSKKの定設
+(require 'ddskk-autoloads)
+
 ;; 基本的なパスは使えないと不便なので、あらかじめ設定しておく
 (add-to-list 'exec-path "/usr/local/bin")
 (setenv "PATH" (string-join exec-path ":"))
@@ -72,8 +78,6 @@
 (when custom-file
   (condition-case err (load-file custom-file) (error err)))
 
-;; DDSKKの定設
-(require 'ddskk-autoloads)
 ;; vterm
 (with-eval-after-load 'vterm
   ;; (setq vterm-environment '("LANG=ja_JP.UTF-8"))
