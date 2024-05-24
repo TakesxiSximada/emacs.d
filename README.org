@@ -175,29 +175,6 @@ org-scheduleで挿入される曜日を英語表記にする。
 (setq system-time-locale "C")
 #+end_src
 
-** VTerm
-
-#+begin_src emacs-lisp
-(with-eval-after-load 'vterm
-  (setq vterm-environment '("LANG=ja_JP.UTF-8"))
-
-  (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode)
-  (define-key vterm-mode-map (kbd "C-t") nil)
-
-  (defun vterm-command (line &optional cwd)
-    (interactive (list
-		  (read-string "Command: " "" nil "")
-		  (read-directory-name "Directory: " default-directory nil default-directory)))
-    (let ((default-directory cwd)
-	  (vterm-shell line)
-	  (vterm-buffer-name (format "%s %s: In %s"
-				     (car (split-string line))
-				     (or (car (cdr (split-string line))) "")
-				     (expand-file-name cwd)))
-	  (vterm-kill-buffer-on-exit nil))
-      (vterm))))
-#+end_src
-
 ** company
 
 #+begin_src emacs-lisp
