@@ -55,7 +55,13 @@
 			 ("org" .
 			  "https://orgmode.org/elpa/")
 			 ("melpa" .
-			  "https://melpa.org/packages/")))
+			  "https://melpa.org/packages/")
+  			 ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+			 ;; 個人用リポジトリ
+			 ;; ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/")
+  			 ;; marmaladeは保守されなくなった
+  			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ))
 (package-initialize)
 
 ;; 基本的なパスは使えないと不便なので、あらかじめ設定しておく
