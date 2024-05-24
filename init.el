@@ -210,10 +210,6 @@
          (message (format "Copied: %s" path)))
       (message (format "Cannot copied")))))
 
-;; ssh-agent
-(add-to-list 'load-path (expand-file-name "symdon/pages/emacs/1713099096" ng-path))
-(condition-case err (require 'ssh-autoloads) (error err))
-
 ;; macos.el
 (add-to-list 'load-path (expand-file-name "symdon/pages/emacs/1710409633" ng-path))
 (condition-case err (require 'macos-autoloads) (error err))
