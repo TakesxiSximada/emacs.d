@@ -58,12 +58,36 @@
 			  "https://melpa.org/packages/")))
 (package-initialize)
 
+;; 基本的なパスは使えないと不便なので、あらかじめ設定しておく
+(add-to-list 'exec-path "/usr/local/bin")
+(setenv "PATH" (string-join exec-path ":"))
+
 ;; カスタムファイルのロード
 (when custom-file
   (condition-case err (load-file custom-file) (error err)))
 
 ;; DDSKKの定設
 (require 'ddskk-autoloads)
+;; vterm
+(with-eval-after-load 'vterm
+  ;; (setq vterm-environment '("LANG=ja_JP.UTF-8"))
+  (global-set-key (kbd "C-t C-c") #'vterm-command)
+  (define-key vterm-mode-map (kbd "C-t") nil)
+  (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode)
+  ;; (bind-key* "C-t C-c" #'vterm-command)
+
+  (defun vterm-command (line &optional cwd)
+    (interactive (list
+		  (read-string "Command: " "" nil "")
+		  (read-directory-name "Directory: " default-directory nil default-directory)))
+    (let ((default-directory cwd)
+	  (vterm-shell line)
+	  (vterm-buffer-name (format "%s %s: In %s"
+				     (car (split-string line))
+				     (or (car (cdr (split-string line))) "")
+				     (expand-file-name cwd)))
+	  (vterm-kill-buffer-on-exit nil))
+      (vterm))))
 
 ;; org-mode
 (defun our-org-todo (&optional todo)
