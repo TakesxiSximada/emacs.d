@@ -64,9 +64,6 @@
 			 ))
 (package-initialize)
 
-;; theme
-(load-theme 'symdon-light t)
-
 ;; DDSKKの定設
 (require 'ddskk-autoloads)
 
