@@ -23,6 +23,12 @@
 (global-set-key (kbd "C-t l") #'windmove-right)
 (global-set-key (kbd "C-t l") #'windmove-right)
 
+;; キーボードマクロ
+(global-set-key (kbd "<f1>") #'start-kbd-macro)
+(global-set-key (kbd "<f2>") #'end-kbd-macro)
+(global-set-key (kbd "<f3>") #'call-last-kbd-macro)
+(global-set-key (kbd "<f4>") #'insert-kbd-macro)
+
 ;; コメントアウト
 (global-set-key (kbd "C-c C-w") #'comment-or-uncomment-region)
 
