@@ -265,3 +265,5 @@ MOTIVATION: When in the agenda view of org-agenda, I want to execute magit-statu
 (setenv "PAGER" "cat")
 (setenv "PATH" (string-join exec-path ":"))
 (setenv "WORKON_HOME" (file-name-concat ng-cache-dir "python-venv"))
+(put 'erase-buffer 'disabled nil)
+(global-visual-line-mode 0)
