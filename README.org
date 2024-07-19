@@ -658,12 +658,6 @@ adoc-modeはEmacs上でAsciiDoc形式のファイルを扱うためのメジャ�
 
 ewwを用いてAsciiDocを表示する。
 
-#+begin_src emacs-lisp
-(defun asciidoc-view ()
-  (interactive)
-  (shell-command (format "asciidoc -o /tmp/foo.html %s" (buffer-file-name)))
-  (eww-open-file "/tmp/foo.html"))
-#+end_src
 
 * Font
 
