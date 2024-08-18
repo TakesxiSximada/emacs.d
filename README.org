@@ -13,6 +13,10 @@ This repository is settings for my Emacs.
 | ./spacemacs/                      | Settings for spacemacs.                       |
 |-----------------------------------+-----------------------------------------------|
 
+#+begin_src emacs-lisp
+(message "Loading ~/.emacs.d/README.org")
+#+end_src
+
 * Setup
 
 #+begin_example
@@ -1395,3 +1399,9 @@ package-install RET visual-fill-column RET
 [fn:source-han-mono-repo] https://github.com/adobe-fonts/source-han-mono
 [fn:mmm-mode-issue-112] [[https://github.com/purcell/mmm-mode/issues/112]]
 [fn:mmm-mode-issue-112-wa] [[https://github.com/purcell/mmm-mode/issues/112#issuecomment-751926650]]
+
+* 末尾
+
+#+begin_src emacs-lisp
+(message "Loaded ~/.emacs.d/README.org")
+#+end_src

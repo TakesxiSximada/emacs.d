@@ -1,3 +1,4 @@
+(message "Loading ~/.emacs.d/init.el")
 ;; C-tをプレフィックスキーとして使うために潰しておく
 (global-set-key (kbd "C-t") nil)
 
@@ -267,3 +268,4 @@ MOTIVATION: When in the agenda view of org-agenda, I want to execute magit-statu
 (setenv "WORKON_HOME" (file-name-concat ng-cache-dir "python-venv"))
 (put 'erase-buffer 'disabled nil)
 (global-visual-line-mode 0)
+(message "Loaded ~/.emacs.d/init.el")
