@@ -72,6 +72,9 @@
 (package-initialize)
 
 ;; DDSKKの定設
+(unless (package-installed-p 'ddskk)
+  (package-install 'ddskk))
+
 (require 'ddskk-autoloads)
 
 ;; 基本的なパスは使えないと不便なので、あらかじめ設定しておく
