@@ -45,7 +45,7 @@
 ;; ればそれを使用し、存在しなければ使用しせず、それでもなんとか使える
 ;; 程度に設定され起動する事が望ましい。
 (setq ng-path (expand-file-name (if (file-directory-p "/opt/ng") "/opt/ng" "~/ng"))
-      ng-cache-dir (expand-file-name (if (file-directory-p "/var/ng") "/var/ng" "~/cache/ng"))
+      ng-cache-dir (expand-file-name (if (file-directory-p "/var/ng") "/var/ng" "~/.cache/ng"))
       ng-custom-file (expand-file-name (file-name-concat ng-path
 							 "symdon"
 							 "emacs-custom"
