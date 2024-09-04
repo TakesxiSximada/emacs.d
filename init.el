@@ -65,6 +65,8 @@
 	))
 (package-initialize) ; パッケージ情報を初期化する
 
+(condition-case err (load-theme 'symdon-dark t t) (error err))) ; テーマの設定
+
 ;; どうしても必ず入れておきたいパッケージ
 (progn ; SKK
   (unless (package-installed-p 'ddskk)
@@ -139,10 +141,13 @@
 (global-set-key (kbd "M-X") #'smex-major-mode-commands) ; M-x補助
 (global-set-key (kbd "C-x C-j") #'skk-mode)             ; SKK切替
 (global-set-key (kbd "C-x C-v") #'magit-status)         ; Git状態表示
-(when (package-installed-p 'vterm)
-  (global-set-key (kbd "C-t C-c") #'vterm-command)
-  (define-key vterm-mode-map (kbd "C-t") nil)
-  (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode))
+(global-set-key (kbd "C-t C-c") #'vterm-command)
+
+(condition-case err
+    (progn
+      (require 'vterm)
+      (define-key vterm-mode-map (kbd "C-t") nil)
+      (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode)))
 
 ;; カスタムファイルのロード
 (when custom-file (condition-case err (load-file custom-file) (error err)))
