@@ -26,10 +26,11 @@
 
 ;; その他の基本的な設定
 (defalias 'yes-or-no-p 'y-or-n-p) ; Yes/Noの省略入力
-(global-visual-line-mode 1)
+(global-visual-line-mode 0)
 (put 'erase-buffer 'disabled nil)
 (setenv "PAGER" "cat")            ; pagerでlessが使われないようにcatを指定しておく
 (add-hook 'dired-mode-hook 'dired-hide-details-mode) ; diredの省略表示
+(global-hl-line-mode t) ; 可視性の向上のためカーソル位置の行にアンダーラインを表示する
 
 ;; 個人用の基本的な環境用の変数設定
 ;; これらのディレクトリは、環境によって有ったり無かったりする。存在す
@@ -65,7 +66,7 @@
 	))
 (package-initialize) ; パッケージ情報を初期化する
 
-(condition-case err (load-theme 'symdon-dark t t) (error err))) ; テーマの設定
+(condition-case err (load-theme 'symdon-dark t t) (error err)) ; テーマの設定
 
 ;; どうしても必ず入れておきたいパッケージ
 (progn ; SKK
@@ -144,10 +145,11 @@
 (global-set-key (kbd "C-t C-c") #'vterm-command)
 
 (condition-case err
-    (progn
-      (require 'vterm)
-      (define-key vterm-mode-map (kbd "C-t") nil)
-      (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode)))
+    (progn (require 'vterm)
+	   (define-key vterm-mode-map (kbd "C-t") nil)
+	   (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode))
+  (error err))
 
 ;; カスタムファイルのロード
 (when custom-file (condition-case err (load-file custom-file) (error err)))
+(put 'narrow-to-region 'disabled nil)
