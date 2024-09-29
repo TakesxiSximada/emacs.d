@@ -597,22 +597,6 @@ Org Babelのコア部分はob-core.elに実装されている。例えばOrg-mod
 
 ここでは必要に応じて定義した様々な目的の関数を記述します。
 
-** バッファのファイルパスをクリップボードにコピーする
-
-カレントバッファのファイルパスをクリップボードのコピーするコマンドを追加しています。
-
-#+begin_src emacs-lisp
-(defun our-buffer-copy-current-file-path ()
-  "バッファのファイルパスをクリップボードにコピーする"
-  (interactive)
-  (let ((path (buffer-file-name)))
-    (if path
-  	(progn
-         (kill-new path)
-         (message (format "Copied: %s" path)))
-      (message (format "Cannot copied")))))
-#+end_src
-
 ** face
 
 現在のカーソル位置のface名を表示します。
