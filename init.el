@@ -116,6 +116,10 @@
 	     (add-hook 'ido-setup-hook #'configure-ido-keymap))
     (error err)))
 
+(progn ; org
+  (condition-case err (require 'org) (error err))
+  (condition-case err (require 'org-habit) (error err)))
+
 (progn ; VTerm
   (unless (package-installed-p 'vterm)
     (condition-case err (package-install 'vterm) (error err)))
