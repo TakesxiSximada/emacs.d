@@ -155,6 +155,9 @@
 	   (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode))
   (error err))
 
+;; その他の設定
+(custom-set-default 'system-time-locale "C") ; org-scheduleで挿入される曜日を英語表記にする。 参考 :: https://qiita.com/tnoda_/items/9fefa1575f3bd5273b64
+
 ;; カスタムファイルのロード
 (when custom-file (condition-case err (load-file custom-file) (error err)))
 (put 'narrow-to-region 'disabled nil)

@@ -157,13 +157,6 @@ package-selected-packagesで管理されているパッケージを全てイン�
 			   t 'org-clock-out))
 #+end_src
 
-org-scheduleで挿入される曜日を英語表記にする。
-参考 :: https://qiita.com/tnoda_/items/9fefa1575f3bd5273b64
-
-#+begin_src emacs-lisp
-(setq system-time-locale "C")
-#+end_src
-
 ** company
 
 #+begin_src emacs-lisp
