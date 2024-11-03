@@ -928,19 +928,6 @@ EditorConfigはプロジェクト毎のエディタの設定を統一する。
       (set-foreground-color color-fg)))
 #+end_src
 
-* URL関連
-
-#+begin_src emacs-lisp
-(require 'url-util)
-
-(defun our-url-encode ()
-  (interactive)
-  (kill-new
-   (url-hexify-string
-    (buffer-substring-no-properties
-     (region-beginning) (region-end)))))
-#+end_src
-
 * その他
 
 #+begin_src emacs-lisp
