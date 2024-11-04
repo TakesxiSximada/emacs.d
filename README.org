@@ -20,14 +20,6 @@ This repository is settings for my Emacs.
 git clone git@github.com:TakesxiSximada/emacs.d.git ~/.emacs.d
 #+end_example
 
-#+BEGIN_EXAMPLE
-pip3 install -U --user -r python-mode-requirements.txt
-#+END_EXAMPLE
-
-#+BEGIN_EXAMPLE
-npm install -g prettier
-#+END_EXAMPLE
-
 * 環境変数関連ユーティリティ
 
 #+begin_src emacs-lisp
