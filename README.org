@@ -20,16 +20,6 @@ This repository is settings for my Emacs.
 git clone git@github.com:TakesxiSximada/emacs.d.git ~/.emacs.d
 #+end_example
 
-* 環境変数関連ユーティリティ
-
-#+begin_src emacs-lisp
-(defun getenv+ (name)
-  "環境変数から値を取得し、さもなければシンボルから値を取得する"
-  (or (getenv name)
-      (symbol-value (intern-soft name))))
-
-#+end_src
-
 * パッケージング関連パッケージ
 
 #+begin_src emacs-lisp
