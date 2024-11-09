@@ -314,15 +314,6 @@ Emacsでは、通常のOSなどでウィンドウと呼ばれている領域は�
 (fringe-mode 0)
 #+end_src
 
-* ウィンドウサイズの変更
-
-#+begin_src emacs-lisp
-(bind-key* "s-<up>" (lambda () (interactive) (window-resize nil -1)))
-(bind-key* "s-<down>" (lambda () (interactive) (window-resize nil 1)))
-(bind-key* "s-<right>" (lambda () (interactive) (window-resize nil 1 t)))
-(bind-key* "s-<left>" (lambda () (interactive) (window-resize nil -1 t)))
-#+end_src
-
 * 追加のキーバインドの設定
 
 #+begin_src emacs-lisp

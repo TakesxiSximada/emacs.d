@@ -19,6 +19,12 @@
 (global-set-key (kbd "C-t C-c") #'async-shell-command)         ; コマンド実行
 (global-set-key (kbd "M-SPC")  #'set-mark-command)             ; リージョン選択開始
 (global-set-key (kbd "s-t") #'make-frame-on-current-monitor)   ; ウィンドウ追加
+
+(global-set-key (kbd "s-<up>")    (lambda () (interactive) (window-resize nil -1)))   ; ウィンドウサイズの変更
+(global-set-key (kbd "s-<down>")  (lambda () (interactive) (window-resize nil 1)))    ; ウィンドウサイズの変更
+(global-set-key (kbd "s-<right>") (lambda () (interactive) (window-resize nil 1 t)))  ; ウィンドウサイズの変更
+(global-set-key (kbd "s-<left>")  (lambda () (interactive) (window-resize nil -1 t))) ; ウィンドウサイズの変更
+
 ;; XperiaではなぜかC-SPCを入力したと判定されるまでに時間がかかるようだっ
 ;; た。さらにC-SPCではなくC-@とし扱われていた。しかたがないのでM-SPCと
 ;; C-t C-pに#'set-mark-commandを割り当てる事にした。
