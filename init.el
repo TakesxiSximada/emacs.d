@@ -1,25 +1,24 @@
 ;; 標準のコマンドのキー割当変更。ここには基本的なキー割当の設定をする
 (global-set-key (kbd "C-t") nil)      ; C-tをプレフィックスキーとして使うために潰す
-(global-set-key (kbd "C-h") #'backward-delete-char-untabify)   ; バックスペース
-(global-set-key (kbd "C-x C-w") #'kill-buffer)                 ; バッファ削除
-(global-set-key (kbd "C-t C-h") #'windmove-left)               ; ウィンドウ切替
-(global-set-key (kbd "C-t C-j") #'windmove-down)               ; ウィンドウ切替
-(global-set-key (kbd "C-t C-k") #'windmove-up)	               ; ウィンドウ切替
-(global-set-key (kbd "C-t C-l") #'windmove-right)              ; ウィンドウ切替
-(global-set-key (kbd "C-t h") #'windmove-left)	               ; ウィンドウ切替
-(global-set-key (kbd "C-t j") #'windmove-down)	               ; ウィンドウ切替
-(global-set-key (kbd "C-t k") #'windmove-up)	               ; ウィンドウ切替
-(global-set-key (kbd "C-t l") #'windmove-right)	               ; ウィンドウ切替
-(global-set-key (kbd "C-t l") #'windmove-right)	               ; ウィンドウ切替
-(global-set-key (kbd "<f1>") #'start-kbd-macro)                ; キーボードマクロ開始
-(global-set-key (kbd "<f2>") #'end-kbd-macro)   	       ; キーボードマクロ終了
-(global-set-key (kbd "<f3>") #'call-last-kbd-macro)	       ; キーボードマクロ実行
-(global-set-key (kbd "<f4>") #'insert-kbd-macro)	       ; キーボードマクロ書出
-(global-set-key (kbd "C-c C-w") #'comment-or-uncomment-region) ; コメントアウト
-(global-set-key (kbd "C-t C-c") #'async-shell-command)         ; コマンド実行
-(global-set-key (kbd "M-SPC")  #'set-mark-command)             ; リージョン選択開始
-(global-set-key (kbd "s-t") #'make-frame-on-current-monitor)   ; ウィンドウ追加
-
+(global-set-key (kbd "C-h") #'backward-delete-char-untabify)                          ; バックスペース
+(global-set-key (kbd "C-x C-w") #'kill-buffer)                                        ; バッファ削除
+(global-set-key (kbd "C-t C-h") #'windmove-left)                                      ; ウィンドウ切替
+(global-set-key (kbd "C-t C-j") #'windmove-down)                                      ; ウィンドウ切替
+(global-set-key (kbd "C-t C-k") #'windmove-up)                                        ; ウィンドウ切替
+(global-set-key (kbd "C-t C-l") #'windmove-right)                                     ; ウィンドウ切替
+(global-set-key (kbd "C-t h") #'windmove-left)                                        ; ウィンドウ切替
+(global-set-key (kbd "C-t j") #'windmove-down)                                        ; ウィンドウ切替
+(global-set-key (kbd "C-t k") #'windmove-up)                                          ; ウィンドウ切替
+(global-set-key (kbd "C-t l") #'windmove-right)                                       ; ウィンドウ切替
+(global-set-key (kbd "C-t l") #'windmove-right)                                       ; ウィンドウ切替
+(global-set-key (kbd "<f1>") #'start-kbd-macro)                                       ; キーボードマクロ開始
+(global-set-key (kbd "<f2>") #'end-kbd-macro)                                         ; キーボードマクロ終了
+(global-set-key (kbd "<f3>") #'call-last-kbd-macro)                                   ; キーボードマクロ実行
+(global-set-key (kbd "<f4>") #'insert-kbd-macro)                                      ; キーボードマクロ書出
+(global-set-key (kbd "C-c C-w") #'comment-or-uncomment-region)                        ; コメントアウト
+(global-set-key (kbd "C-t C-c") #'async-shell-command)                                ; コマンド実行
+(global-set-key (kbd "M-SPC")  #'set-mark-command)                                    ; リージョン選択開始
+(global-set-key (kbd "s-t") #'make-frame-on-current-monitor)                          ; ウィンドウ追加
 (global-set-key (kbd "s-<up>")    (lambda () (interactive) (window-resize nil -1)))   ; ウィンドウサイズの変更
 (global-set-key (kbd "s-<down>")  (lambda () (interactive) (window-resize nil 1)))    ; ウィンドウサイズの変更
 (global-set-key (kbd "s-<right>") (lambda () (interactive) (window-resize nil 1 t)))  ; ウィンドウサイズの変更
@@ -49,14 +48,14 @@
       (expand-file-name (if (file-directory-p "/var/ng") "/var/ng" "~/.cache/ng"))
       ng-custom-file ; 追加の設定置き場
       (expand-file-name (file-name-concat
-			 ng-path "symdon" "emacs-custom"
-			 (format "%s.el" system-configuration))))
+                         ng-path "symdon" "emacs-custom"
+                         (format "%s.el" system-configuration))))
 
 ;; Emacsの基本的な環境用の変数設定
 (setq custom-file ; customizeの設定はここに保存される
       (if (file-exists-p ng-custom-file) ng-custom-file
-	(progn (warn "No ng custom file: %s" ng-custom-file)
-	       (locate-user-emacs-file "custom.el")))
+        (progn (warn "No ng custom file: %s" ng-custom-file)
+               (locate-user-emacs-file "custom.el")))
       custom-theme-directory ; テーマファイル置き場
       (expand-file-name "~/.emacs.d/themes"))
 
@@ -65,12 +64,12 @@
       (expand-file-name (format "%s/elpa.%d" ng-cache-dir emacs-major-version))
       package-archives ; このリポジトリからパッケージを取得する
       '(("gnu" . "https://elpa.gnu.org/packages/")
-	("org" . "https://orgmode.org/elpa/")
-	("melpa" . "https://melpa.org/packages/")
-  	; ("melpa-stable" . "http://stable.melpa.org/packages/") ; stable
-	; ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/") ; 個人用
-  	; ("marmalade" . "http://marmalade-repo.org/packages/") ; marmaladeは保守されなくなった
-	))
+        ("org" . "https://orgmode.org/elpa/")
+        ("melpa" . "https://melpa.org/packages/")
+        ; ("melpa-stable" . "http://stable.melpa.org/packages/") ; stable
+        ; ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/") ; 個人用
+        ; ("marmalade" . "http://marmalade-repo.org/packages/") ; marmaladeは保守されなくなった
+        ))
 (package-initialize) ; パッケージ情報を初期化する
 
 (condition-case err (load-theme 'symdon-dark t t) (error err)) ; テーマの設定
@@ -113,13 +112,13 @@
 
   (condition-case err
       (progn (setq ido-enable-flex-matching t
-		   ido-default-file-method 'selected-window
-		   ido-default-buffer-method 'selected-window)
-	     (ido-mode 1)
-	     (ido-everywhere 1)
-	     (ido-vertical-mode)
-	     (ido-ubiquitous-mode 1)
-	     (add-hook 'ido-setup-hook #'configure-ido-keymap))
+                   ido-default-file-method 'selected-window
+                   ido-default-buffer-method 'selected-window)
+             (ido-mode 1)
+             (ido-everywhere 1)
+             (ido-vertical-mode)
+             (ido-ubiquitous-mode 1)
+             (add-hook 'ido-setup-hook #'configure-ido-keymap))
     (error err)))
 
 (progn ; org
@@ -134,16 +133,16 @@
 
   (defun vterm-command (line &optional cwd)
     (interactive (list (read-string "Command: " "" nil "")
-		       (read-directory-name "Directory: "
-					    default-directory nil
-					    default-directory)))
+                       (read-directory-name "Directory: "
+                                            default-directory nil
+                                            default-directory)))
     (let ((default-directory cwd)
-	  (vterm-shell line)
-	  (vterm-buffer-name (format "%s %s: In %s"
-				     (car (split-string line))
-				     (or (car (cdr (split-string line))) "")
-				     (expand-file-name cwd)))
-	  (vterm-kill-buffer-on-exit nil))
+          (vterm-shell line)
+          (vterm-buffer-name (format "%s %s: In %s"
+                                     (car (split-string line))
+                                     (or (car (cdr (split-string line))) "")
+                                     (expand-file-name cwd)))
+          (vterm-kill-buffer-on-exit nil))
       (vterm)))
 
   (setq vterm-environment '("LANG=ja_JP.UTF-8")))
@@ -157,8 +156,8 @@
 
 (condition-case err
     (progn (require 'vterm)
-	   (define-key vterm-mode-map (kbd "C-t") nil)
-	   (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode))
+           (define-key vterm-mode-map (kbd "C-t") nil)
+           (define-key vterm-mode-map (kbd "C-c C-v") 'vterm-copy-mode))
   (error err))
 
 ;; その他の設定
