@@ -314,24 +314,6 @@ Emacsでは、通常のOSなどでウィンドウと呼ばれている領域は�
 (fringe-mode 0)
 #+end_src
 
-* 追加のキーバインドの設定
-
-#+begin_src emacs-lisp
-(bind-key* "C-M-i" #'company-complete)
-;; (bind-key* "C-c C-c M-x" #'execute-extended-command)
-(bind-key* "C-t C-c" #'vterm-command)
-(bind-key* "C-t C-t" #'other-frame)
-(bind-key* "C-x C-v" #'magit-status)
-(bind-key* "M-X" #'smex-major-mode-commands)
-(bind-key* "M-x" #'smex)
-(bind-key* "s-t" #'make-frame)
-
-#+end_src
-
-#+begin_src emacs-lisp
-(define-key override-global-map (kbd "C-t C-i") #'org-clock-goto)
-#+end_src
-
 * デバッガーの起動コマンドへのエイリアス
 
 Emacsには標準でいくつかのデバッガーが付属していますが、それぞれのツールの名前がそのまま付いています。 =M-x debug-on-XXXX= で全てのデバッガーを起動できるようにエイリアスを設定しています。
