@@ -59,39 +59,6 @@ package-selected-packagesで管理されているパッケージを全てイン�
 
 * 各種パッケージ
 
-#+begin_src emacs-lisp
-(use-package sgml-mode :ensure t :defer t
-  :config
-  (setq sgml-quick-keys 'close))
-(use-package add-node-modules-path :ensure t :defer t)
-(use-package ag :ensure t :defer t :no-require t)
-(use-package avy-menu :ensure t :defer t)
-(use-package csv-mode :ensure t :defer t)
-(use-package db :ensure t :defer t)
-(use-package dired-filter :ensure t :defer t)
-(use-package fakir :ensure t :defer t)
-(use-package flycheck :ensure t :defer t)
-(use-package github-review  :ensure t :defer t)
-(use-package google-translate :ensure t :defer t)
-(use-package mew :ensure t :defer t)
-(use-package monky :ensure t :defer t)
-(use-package nginx-mode :ensure t :defer t)
-(use-package ob-async :ensure t)
-(use-package ob-restclient :ensure t :defer t)
-(use-package pcre2el :ensure t :defer t)
-(use-package request :ensure t :defer t)
-(use-package restclient :ensure t :defer t)
-(use-package s :ensure t :defer t)
-(use-package smex :ensure t :defer t)
-(use-package terraform-mode :ensure t :defer t)
-(use-package transient :ensure t)
-;; (use-package unicode-escape :ensure t :defer t)
-(use-package vagrant-tramp :ensure t :defer t)
-(use-package web :ensure t :defer t)
-(use-package wgrep :ensure t :defer t)
-(use-package wgrep-ag :ensure t :defer t)
-#+end_src
-
 ** IDO
 
 #+begin_src emacs-lisp
