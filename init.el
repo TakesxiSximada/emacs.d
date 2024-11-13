@@ -169,3 +169,8 @@
 (when custom-file (condition-case err (load-file custom-file) (error err)))
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
+
+;; safe-local-variable-valuesを保存してしまうと、custom-fileファイルを
+;; Gitに登録できなくなってしまうため、safe-local-variable-valuesは
+;; custom-fileに反映しないように設定する。
+(setq-default enable-local-variables :all)
