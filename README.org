@@ -1072,18 +1072,6 @@ https://github.com/skk-dev/ddskk
 
 Org Modeは巨大なドキュメントシステムであり、プロジェクト管理や表計算など様々な機能を提供している。
 
-** org-clock
-
-org-clockはタスク(org-todo)の作業時間の計測を行う。作業時間の計測を簡
-略化するためにキーバインドを変更する。
-
-#+begin_src emacs-lisp
-(with-eval-after-load 'org-clock
-  (define-key org-mode-map (kbd "M-i") #'org-clock-in)
-  (define-key org-mode-map (kbd "M-o") #'org-clock-out)
-  )
-#+end_src
-
 ** org-agenda
 
 org-agendaはタスクの状況を一覧で表示する。org-agendaの一覧表示からでも
