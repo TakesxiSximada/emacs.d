@@ -319,18 +319,6 @@ CSS編集のためのタブ幅などを設定します。
 
 実行は =M-x prettier-buffer= で実行できます。
 
-* org-src
-
-コードブロックのインデントや見栄えをカスタマイズします。
-
-#+begin_src emacs-lisp
-(setq org-src-fontify-natively t
-    org-src-window-setup 'current-window
-    org-src-strip-leading-and-trailing-blank-lines t
-    org-src-preserve-indentation t
-    org-src-tab-acts-natively nil)
-#+end_src
-
 * org-agenda
 
 タスクの管理に =org-agenda= を使用しています。
