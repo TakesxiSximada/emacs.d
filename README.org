@@ -281,20 +281,6 @@ Emacsでは、通常のOSなどでウィンドウと呼ばれている領域は�
 (fringe-mode 0)
 #+end_src
 
-* デバッガーの起動コマンドへのエイリアス
-
-Emacsには標準でいくつかのデバッガーが付属していますが、それぞれのツールの名前がそのまま付いています。 =M-x debug-on-XXXX= で全てのデバッガーを起動できるようにエイリアスを設定しています。
-
-#+begin_src emacs-lisp
-(defalias 'debug-on-c 'gdb)
-(defalias 'debug-on-java 'jdb)
-(defalias 'debug-on-perl 'perldb)
-(defalias 'debug-on-python 'pdb)
-;; dbx
-;; sdb
-#+end_src
-
-
 * CSS
 
 CSS編集のためのタブ幅などを設定します。
