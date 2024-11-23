@@ -256,16 +256,6 @@ isortコマンドを外部から指定できるようにモンキーパッチを
                             py-isort-options))))))
 #+end_src
 
-* CSS
-
-CSS編集のためのタブ幅などを設定します。
-
-#+begin_src emacs-lisp
-(require 'css-mode)
-
-(setq css-indent-offset 2)
-#+end_src
-
 * [[https://github.com/TakesxiSximada/emacs.d/blob/main/prettier/prettier-buffer.el][prettier-buffer.el]]
 
 フロントエンドのコードフォーマッターとして[[https://github.com/prettier/prettier][prettier]]を用いています。公式の拡張である[[https://github.com/prettier/prettier-emacs][Prettier-js for Emacs]]もありますが、使用感が合わなかったので必要な機能だけを実装しました。
