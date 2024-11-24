@@ -705,17 +705,6 @@ calls each respective submode's `syntax-propertize-function'."
 		 (string-to-number float-style-string)))))
 #+end_src
 
-* EditorConfig
-
-EditorConfigはプロジェクト毎のエディタの設定を統一する。
-
-#+begin_src emacs-lisp
-(use-package editorconfig
-  :ensure t
-  :config
-  (editorconfig-mode 1))
-#+end_src
-
 * Frame毎に色調を切り替える
 
 #+begin_src emacs-lisp
