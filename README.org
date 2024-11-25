@@ -231,31 +231,6 @@ Returns symbol of major-mode.
   )
 #+end_src
 
-** Python
-
-*** py-isort
-
-isortはPythonのimport順序を整列する。
-isortコマンドを外部から指定できるようにモンキーパッチを当てる。
-
-#+begin_src emacs-lisp
-(autoload 'py-isort-buffer "py-isort")
-(autoload 'py-isort-region "py-isort")
-(autoload 'py-isort-before-save "py-isort")
-
-(with-eval-after-load 'py-isort
-  (defcustom py-isort-executable "isort"
-    "Name of the executable to run."
-    :type 'string)
-
-  (defun py-isort--call-executable (errbuf file)
-    (let ((default-directory (py-isort--find-settings-path)))
-      (zerop (apply 'call-process py-isort-executable nil errbuf nil
-                    (append `(" " , file, " ",
-                              (concat "--settings-path=" default-directory))
-                            py-isort-options))))))
-#+end_src
-
 * [[https://github.com/TakesxiSximada/emacs.d/blob/main/prettier/prettier-buffer.el][prettier-buffer.el]]
 
 フロントエンドのコードフォーマッターとして[[https://github.com/prettier/prettier][prettier]]を用いています。公式の拡張である[[https://github.com/prettier/prettier-emacs][Prettier-js for Emacs]]もありますが、使用感が合わなかったので必要な機能だけを実装しました。
