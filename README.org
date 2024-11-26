@@ -361,22 +361,6 @@ org-mode及びorg-agenda-modeではそれぞれ =M-n= =M-p= を用いて優先�
   )
 #+end_src
 
-* ユーティリティ
-
-ここでは必要に応じて定義した様々な目的の関数を記述します。
-
-** face
-
-現在のカーソル位置のface名を表示します。
-
-#+begin_src emacs-lisp
-(defun what-face (pos)
-  "Display current position face name."
-  (interactive "d")
-  (if-let ((face-name (get-text-property pos 'face)))
-      (message "Face: %s" face-name)))
-#+end_src
-
 * AsciiDoc
 
 AsciiDocはマークアップのため記法(Nortation)の1つです。
