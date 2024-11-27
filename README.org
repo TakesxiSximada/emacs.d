@@ -231,20 +231,6 @@ Returns symbol of major-mode.
   )
 #+end_src
 
-* [[https://github.com/TakesxiSximada/emacs.d/blob/main/prettier/prettier-buffer.el][prettier-buffer.el]]
-
-フロントエンドのコードフォーマッターとして[[https://github.com/prettier/prettier][prettier]]を用いています。公式の拡張である[[https://github.com/prettier/prettier-emacs][Prettier-js for Emacs]]もありますが、使用感が合わなかったので必要な機能だけを実装しました。
-
-パッケージとして独立させるほどでもなかったため、このリポジトリの =prettier= ディレクトリにファイルを配置しました。そのためload-pathを追加し、 =prettier-buffer= をrequireします。
-
-#+begin_src emacs-lisp
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/prettier"))
-
-(require 'prettier-buffer)
-#+end_src
-
-実行は =M-x prettier-buffer= で実行できます。
-
 * org-agenda
 
 タスクの管理に =org-agenda= を使用しています。
