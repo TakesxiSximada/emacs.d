@@ -844,22 +844,6 @@ https://github.com/skk-dev/ddskk
   (require 'skk-study)
 #+end_src
 
-* Org Mode
-
-Org Modeは巨大なドキュメントシステムであり、プロジェクト管理や表計算など様々な機能を提供している。
-
-** org-agenda
-
-org-agendaはタスクの状況を一覧で表示する。org-agendaの一覧表示からでも
-作業を開始できるようにキーバインドを変更する。
-
-#+begin_src emacs-lisp
-(with-eval-after-load 'org-agenda
-  (define-key org-agenda-mode-map (kbd "M-i") #'org-agenda-clock-in)
-  (define-key org-agenda-mode-map (kbd "M-o") #'org-agenda-clock-out)
-  )
-#+end_src
-
 * org-super-agenda
 
 org-agendaのレポート機能を強化したライブラリとして =org-super-agenda=
