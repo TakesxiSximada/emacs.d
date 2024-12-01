@@ -704,26 +704,6 @@ calls each respective submode's `syntax-propertize-function'."
    ))
 #+end_example
 
-* S3
-
-S3へのアクセスにはs3edを使用する。
-
-#+begin_src emacs-lisp
-(use-package s3ed :ensure t)
-#+end_src
-
-基本的にローカルでのみダミーサーバーに対して使用する。
-その為に使用するコマンドをawslコマンドとして定義しているが、
-それを利用できるようにaws cliのコマンドを返す関数を上書きする。
-
-#+begin_src emacs-lisp
-(defun s3ed-aws-cli (cmd)
-  "Run the aws cli (s3) command with the configured arguments.
-The given CMD string will be appended."
-  (let* ((profile-arg (if s3ed-profile-name (format " --profile %s" s3ed-profile-name) "")))
-    (format "awsl%s s3 %s" profile-arg cmd)))
-#+end_src
-
 * Magit
 
 MagitはEmacs用のGitユーティリティで、Gitコマンドのラッパーとして
