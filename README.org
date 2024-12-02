@@ -687,23 +687,6 @@ calls each respective submode's `syntax-propertize-function'."
       custom-additional-load-file-list)
 #+end_src
 
-* Color Themeのカスタマイズ
-
-#+begin_example emacs-lisp
-(solarized-create-theme-file-with-palette 'dark 'simple-darkness
- '("#000000"  ;; darkest-base
-   "#ffffff"  ;; brightest-base
-   "#dbb32d"  ;; yellow
-   "#e67f43"  ;; orange
-   "#ed4a46"  ;; red
-   "#eb6eb7"  ;; magenta
-   "#a580e2"  ;; violet
-   "#368aeb"  ;; blue
-   "#3fc5b7"  ;; cyan
-   "#70b433"  ;; green
-   ))
-#+end_example
-
 * Magit
 
 MagitはEmacs用のGitユーティリティで、Gitコマンドのラッパーとして
