@@ -165,9 +165,6 @@
 ;; その他の設定
 (custom-set-default 'system-time-locale "C") ; org-scheduleで挿入される曜日を英語表記にする。 参考 :: https://qiita.com/tnoda_/items/9fefa1575f3bd5273b64
 
-;; カスタムファイルのロード
-(when custom-file (condition-case err (load-file custom-file) (error err)))
-
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 
@@ -175,3 +172,7 @@
 ;; Gitに登録できなくなってしまうため、safe-local-variable-valuesは
 ;; custom-fileに反映しないように設定する。
 (setq-default enable-local-variables :all)
+
+;; カスタムファイルのロード
+(when custom-file (condition-case err (load-file custom-file) (error err)))
+(print "Okay")
