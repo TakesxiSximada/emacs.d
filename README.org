@@ -662,13 +662,6 @@ calls each respective submode's `syntax-propertize-function'."
       (set-foreground-color color-fg)))
 #+end_src
 
-* その他
-
-#+begin_src emacs-lisp
-(put 'narrow-to-region 'disabled nil)
-(put 'dired-find-alternate-file 'disabled nil)
-#+end_src
-
 * 追加の設定の読み込み
 
 各環境毎に読み込みするかどうかを切り替えたい設定もある。

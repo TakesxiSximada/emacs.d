@@ -167,6 +167,7 @@
 
 ;; カスタムファイルのロード
 (when custom-file (condition-case err (load-file custom-file) (error err)))
+
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 
