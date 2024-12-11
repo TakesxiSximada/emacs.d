@@ -45,18 +45,6 @@ package-selected-packagesで管理されているパッケージを全てイン�
 	  package-selected-packages))
 #+end_src
 
-** 個人用パッケージ
-
-#+begin_src emacs-lisp
-(el-get-bundle eglot :type "git" :url "git@github.com:joaotavora/eglot.git")
-(el-get-bundle change-case :url "git@github.com:TakesxiSximada/change-case.el.git" :type "git")
-(el-get-bundle sudden-death :url "git@github.com:TakesxiSximada/sudden-death.el.git" :type "git")
-#+end_src
-
-#+begin_src
-(el-get-bundle swift-mode :type "git" :url "git@github.com:swift-emacs/swift-mode.git")
-#+end_src
-
 * 各種パッケージ
 
 ** IDO

@@ -1,6 +1,6 @@
 (setq-default byte-compile-warnings nil
-	      debug-on-error nil
-	      eval-expression-debug-on-error nil)
+	      debug-on-error t
+	      eval-expression-debug-on-error t)
 (push '(fullscreen . fullboth) default-frame-alist)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
