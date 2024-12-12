@@ -47,34 +47,6 @@ package-selected-packagesで管理されているパッケージを全てイン�
 
 * 各種パッケージ
 
-** IDO
-
-#+begin_src emacs-lisp
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-enable-flex-matching t)
-(use-package ido-vertical-mode :ensure t :defer
-  :init
-  (ido-vertical-mode)
-  (add-hook 'ido-setup-hook #'ido-vertical-define-keys-custom)
-  :custom
-  (ido-default-file-method 'selected-window)
-  (ido-default-buffer-method 'selected-window))
-
-(defun ido-vertical-define-keys-custom ()
-  (define-key ido-completion-map (kbd "M-n") 'ido-next-match)
-  (define-key ido-completion-map (kbd "M-p") 'ido-prev-match)
-  )
-
-;; WHY DID I USE ido-completing-read+ PACKAGE?:
-;;   I changed value t to ido-everywhere, but ido-vertical-mode did
-;;   not work. Should be enabled ido-ubiquitous-mode to work it.
-
-(use-package ido-completing-read+ :ensure t :defer t
-  :init
-  (ido-ubiquitous-mode 1))
-#+end_src
-
 ** OrgMode
 
 #+begin_src emacs-lisp
