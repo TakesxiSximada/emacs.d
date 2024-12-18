@@ -1,5 +1,0 @@
-#!/usr/bin/env whalebrew
-image: mongo:4.1
-entrypoint:
-  - "mongo"
-  - "mongodb://host.docker.internal:27017"
