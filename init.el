@@ -33,7 +33,7 @@
 
 ;; その他の基本的な設定
 (defalias 'yes-or-no-p 'y-or-n-p) ; Yes/Noの省略入力
-(global-visual-line-mode 0)
+(global-visual-line-mode 0)  ; 行の表示を行わない
 (put 'erase-buffer 'disabled nil)
 (setenv "PAGER" "cat")            ; pagerでlessが使われないようにcatを指定しておく
 (add-hook 'dired-mode-hook 'dired-hide-details-mode) ; diredの省略表示
