@@ -173,6 +173,15 @@
 ;; custom-fileに反映しないように設定する。
 (setq-default enable-local-variables :all)
 
+(condition-case err
+    (progn (add-to-list 'load-path (expand-file-name "~/ng/symdon/articles/posts/1741919353"))
+	   (require 'doctor-quack)
+	   (with-eval-after-load 'doctor-quack
+	     (define-key doctor-mode-map (kbd "C-j") #'electric-newline-and-maybe-indent)
+	     (define-key doctor-mode-map (kbd "RET") #'newline)
+	     (define-key doctor-mode-map (kbd "M-RET") #'doctor-quack-read-print)))
+  (error err))
+
 ;; カスタムファイルのロード
 (when custom-file (condition-case err (load-file custom-file) (error err)))
 (print "Okay")
