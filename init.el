@@ -19,7 +19,7 @@
 (global-set-key (kbd "C-t C-c") #'async-shell-command)                                ; コマンド実行
 (global-set-key (kbd "M-SPC")  #'set-mark-command)                                    ; リージョン選択開始
 (global-set-key (kbd "s-t") #'make-frame-on-current-monitor)                          ; ウィンドウ追加
-(global-set-key (kbd "C-t C-t") #'other-frame)
+(global-set-key (kbd "C-t C-t") #'other-frame)                                        ; フレームの移動
 (global-set-key (kbd "s-<up>")    (lambda () (interactive) (window-resize nil -1)))   ; ウィンドウサイズの変更
 (global-set-key (kbd "s-<down>")  (lambda () (interactive) (window-resize nil 1)))    ; ウィンドウサイズの変更
 (global-set-key (kbd "s-<right>") (lambda () (interactive) (window-resize nil 1 t)))  ; ウィンドウサイズの変更
@@ -149,11 +149,10 @@
   (setq vterm-environment '("LANG=ja_JP.UTF-8")))
 
 ;; 追加パッケージに関するキー割当
-(global-set-key (kbd "M-x") #'smex)                     ; M-x補助
-(global-set-key (kbd "M-X") #'smex-major-mode-commands) ; M-x補助
-(global-set-key (kbd "C-x C-j") #'skk-mode)             ; SKK切替
-(global-set-key (kbd "C-x C-v") #'magit-status)         ; Git状態表示
-(global-set-key (kbd "C-t C-c") #'vterm-command)
+(global-set-key (kbd "M-x") #'smex)                        ; M-x補助
+(global-set-key (kbd "M-X") #'smex-major-mode-commands)    ; M-x補助
+(global-set-key (kbd "C-x C-j") #'skk-mode)                ; SKK切替
+(global-set-key (kbd "C-x C-v") #'magit-status)            ; Git状態表示
 (global-set-key (kbd "C-t C-c") #'our-async-shell-command)
 (global-set-key (kbd "C-M-i") #'company-complete)
 
