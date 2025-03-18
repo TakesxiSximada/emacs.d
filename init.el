@@ -133,10 +133,10 @@
   (require 'vterm-autoloads)
 
   (defun our-async-shell-command (line &optional cwd)
-    (interactive (list (read-string "Command: " "" nil "")
-                       (read-directory-name "Directory: "
-                                            default-directory nil
-                                            default-directory)))
+    (interactive (list (read-shell-command "SHELL$ ")
+                       (read-directory-name "DIRECTORY: "
+					    default-directory nil
+					    default-directory)))
     (let ((default-directory cwd)
           (vterm-shell line)
           (vterm-buffer-name (format "%s %s: In %s"
