@@ -132,7 +132,7 @@
 
   (require 'vterm-autoloads)
 
-  (defun vterm-command (line &optional cwd)
+  (defun our-async-shell-command (line &optional cwd)
     (interactive (list (read-string "Command: " "" nil "")
                        (read-directory-name "Directory: "
                                             default-directory nil
@@ -154,6 +154,7 @@
 (global-set-key (kbd "C-x C-j") #'skk-mode)             ; SKK切替
 (global-set-key (kbd "C-x C-v") #'magit-status)         ; Git状態表示
 (global-set-key (kbd "C-t C-c") #'vterm-command)
+(global-set-key (kbd "C-t C-c") #'our-async-shell-command)
 (global-set-key (kbd "C-M-i") #'company-complete)
 
 (condition-case err
