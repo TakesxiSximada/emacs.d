@@ -133,7 +133,9 @@
   (require 'vterm-autoloads)
 
   (defun our-async-shell-command (line &optional cwd)
-    (interactive (list (read-shell-command "SHELL$ ")
+    (interactive (list (progn
+			 (when (use-region-p) (clipboard-kill-ring-save (region-beginning) (region-end)))
+			 (read-shell-command "SHELL$ "))
                        (read-directory-name "DIRECTORY: "
 					    default-directory nil
 					    default-directory)))
