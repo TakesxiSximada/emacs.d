@@ -1,3 +1,88 @@
-#+TITLE: My GNU Emacs Configuration
+#+TITLE: My GNU Emacs
 
 [[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
+
+This is my GNU Emacs.
+
+* Setup
+
+1. Install GNU Emacs.
+
+   See the official installation document at https://www.gnu.org/software/emacs/download.html, or you can [[Self build]].
+
+2. Download a configuration files.
+
+   #+begin_src
+   git clone https://github.com/TakesxiSximada/.emacs.d.git ~/.emacs.d
+   #+end_src
+
+3. Start GNU Emacs.
+
+   Start GNU Emacs Application(=emacs -nw= , =open Emacs.app= etc).
+
+* Self build
+
+The official GNU Emacs distribution has several features disabled. To enable them, you need to build the application yourself. Here are the steps to do that, with the environment being targeted for macOS.
+
+1. Install dependencies.
+
+   #+caption: Install dependencies via Homebrew
+   #+begin_src bash
+   brew install \
+        autoconf \
+        texinfo \
+        imagemagick \
+        gnutls
+   #+end_src
+
+2. Download GNU Emacs source code.
+
+   #+caption: Download GNU Emacs source code via Savannah.
+   #+begin_src bash
+   git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git
+   #+end_src
+
+3. Move the working directory to the root directory of the source code.
+
+   #+begin_src bash
+   cd emacs
+   #+end_src
+
+4. Run the autogen script to generate the configure script.
+
+   #+begin_src bash
+   ./autogen.sh
+   #+end_src
+
+5. Execute the configure script to generate files needed for the build, such as the Makefile, specifying the features to enable as options.
+
+   #+begin_src bash
+   ./configure \
+      --with-imagemagick \
+      --with-mailutils \
+      --with-modules \
+      --with-ns \
+      --with-pop \
+      --with-xwidgets \
+      --x-includes=/opt/X11/include \
+      --x-libraries=/opt/X11/lib \
+      --with-x
+   #+end_src
+
+4. Build the source code implemented in C.
+
+   #+begin_src
+   make
+   #+end_src
+
+5. Create an application bundle to be treated as an application on macOS, including the code implemented in Emacs Lisp.
+
+   #+begin_src
+   make install
+   #+end_src
+
+6. Move the application to the specified location under /Applications.
+
+   #+begin_src
+   sudo mv nextstep/Emacs.app /Applications
+   #+end_src
