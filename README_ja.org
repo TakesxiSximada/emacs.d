@@ -1,0 +1,116 @@
+#+TITLE: Emacsの設定
+
+[[README.org][en]] | [[README_ja.org][ja]]
+
+[[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
+
+これは私のGNU Emacsです。ここでは私とEmacsとの関わりについて書きます。
+
+* なぜ私はEmacsを使うのか
+
+Emacsは高い拡張性を持つテキストエディタです。Emacs Lispという言語によって、ほとんどの機能に手を加える事ができます。この挙動により、既存のコードへの修正や、修正を即時反映できます。またEmacs Lispの特性もあいまって、Emacs Lispで全てを実装するのではなく、外部プロセスを利用したり、協調する事で機能を実現する事を良しと考える人もいます。そのような方法ではEmacs以外の知識を利用する事になり、その知識の深さの分だけできる事が増えます。自分ができない事はEmacsを使ってもできません。つまり自分自身の成長に歩幅を合わせてEmacsも成長していきます。自分と共に成長してくれる相棒、それがEmacsであり、それこそ僕がEmacsを使う理由です。
+
+* セットアップ
+
+1. GNU Emacsをインストールします。
+
+   公式のインストール方法は https://www.gnu.org/software/emacs/download.html を参照してください。または自分でビルドする事もできます。自分でビルドする場合は「セルフビルド」の節を参照してください。
+
+2. 設定ファイルをダウンロードします。
+
+   #+begin_src
+   git clone https://github.com/TakesxiSximada/.emacs.d.git ~/.emacs.d
+   #+end_src
+
+3. GNU Emacsを起動します。
+
+   GNU Emacsのアプリケーションを起動します。環境によって起動方法は異なりますが =emacs= や =emacs -nw= 、macOSであれば =open /Applications/Emacs.app= などで起動できるでしょう。もちろん、Emacsのアプリケーションのアイコンをダブルクリックでも起動するでしょう。
+
+* セルフビルド
+
+公式のGNU Emacsディストリビューションには、いくつかの機能が無効になっています。これらの機能を有効にするには、自分でアプリケーションをビルドする必要があります。以下は、macOS向けにビルドするための手順です。
+
+1. 依存するツールをインストールする。
+
+   #+caption: Homebrewを使って依存するツールをインストールする。
+   #+begin_src bash
+   brew install \
+        autoconf \
+        texinfo \
+        imagemagick \
+        gnutls
+   #+end_src
+
+2. GNU Emacsのソースコードをダウンロードする。
+
+   #+caption: SavannahからGNU Emacsのソースコードをダウンロードする。
+   #+begin_src bash
+   git clone --depth 1 https://git.savannah.gnu.org/git/emacs.git
+   #+end_src
+
+3. ソースツリーのルートディレクトリに作業ディレクトリを移動する。
+
+   #+begin_src bash
+   cd emacs
+   #+end_src
+
+4. autogenスクリプトを実行しconfigureスクリプトを生成する。
+
+   #+begin_src bash
+   ./autogen.sh
+   #+end_src
+
+5. configureスクリプトを実行しビルドに必要なMakefileなどの各種ファイルを生成する。この時、有効にする機能をオプションとして指定する。
+
+   #+begin_src bash
+   ./configure \
+      --with-imagemagick \
+      --with-mailutils \
+      --with-modules \
+      --with-ns \
+      --with-pop \
+      --with-xwidgets \
+      --x-includes=/opt/X11/include \
+      --x-libraries=/opt/X11/lib \
+      --with-x
+   #+end_src
+
+4. Cで実装されたコードをビルドする。
+
+   #+begin_src
+   make
+   #+end_src
+
+5. macOS用のアプリケーションバンドルを生成する。これによりEmacs Lispで実装されたコードも同梱される。
+
+   #+begin_src
+   make install
+   #+end_src
+
+6. アプリケーションを/Applications配下のディレクトリに移動する。
+
+   #+begin_src
+   sudo mv nextstep/Emacs.app /Applications
+   #+end_src
+
+* Emacs文学
+
+Emacsには根強いファンがいます。そのファンの中には自らのEmacsへの想いをテクニカルエッセイといったような形式で文章にしている人達がいます。その内容は様々であり、主観的であったり、個人的な事柄を含む事もあります。それはその人達が何かしらの仕事に取り組んだ足跡であり、それぞれの考え方を伝えようとしています。
+
+私はそのような文章の事をEmacs文学と呼んでおり、読むのが好きです。それは著者達の人間味を感じる事ができるからです。ここではそのようなEmacs文学の名著達を紹介します。これはフィクションである事もありますが、そんな事はどうでもいい事です。どの作品であれ、そこにはEmacsに対する愛が溢れています。
+
+- https://qiita.com/sylx/items/46bc993471cd71980aa5
+- https://www.itmedia.co.jp/enterprise/articles/0706/26/news003_2.html
+- https://gntm-mdk.hatenadiary.com/entry/2016/10/28/073351
+- http://kymst.net/index.php?plugin=attach&refer=diary&openfile=diaryFrN57to.pdf
+- https://www.hum.grad.fukuoka-u.ac.jp/news/1396/
+- https://tomoya.hatenadiary.org/entry/20120327/1332792017
+- https://anond.hatelabo.jp/20250203103447
+
+* Emacsは死んだ
+
+「Emacsは死んだ」とは、私が考えるEmacs文学の中でも特別な意味を持つジャンルの1つです。Emacs自体は長い歴史を持っているため、その時代に合わせて変化してきました。その中では他の競合が登場したり、開発が停滞したり、さまざまな理由によってEmacsが時代遅れとなった、オワコンになった、使われなくなったといった意味合いでこの言葉が使われてきました。それが「Emacsは死んだ」というジャンルです。
+
+本当にEmacsがそうなったのかは関係ありません。ただ時代の流れや変化を楽しむ事が目的なのです。僕自身は新しいEmacsの死が、このジャンルの歴史として永遠に積み重なっていく事を願っています。Emacsに栄光あれ。
+
+- https://qiita.com/akmiyoshi/items/1c19d1484049683b4cec

@@ -1,12 +1,14 @@
 #+TITLE: My GNU Emacs
 
+[[README.org][en]] | [[README_ja.org][ja]]
+
 [[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
 
 This is my GNU Emacs.
 
 * Why I use Emacs
 
-Emacs is a highly extensible text editor. Through the use of Emacs Lisp, you can modify nearly all of its functionalities. This capability allows you to make changes to existing code and see them reflected immediately. Additionally, thanks to the nature of Emacs Lisp, it's encouraged to not rely solely on it for implementation; instead, you can utilize external processes and collaborate with them to achieve functionality. This means that your knowledge beyond Emacs becomes valuable, and the deeper your understanding, the more you can accomplish. If there are things you cannot do, using Emacs won't help you do them. In other words, Emacs grows alongside your personal development. It serves as a companion that evolves with you, and that is why I choose to use Emacs.
+Emacs is a highly extensible text editor. With the Emacs Lisp language, you can modify almost all of its functionality. This capability allows you to change existing code and see those changes reflected immediately. Additionally, due to the nature of Emacs Lisp, it is common for some users to believe in achieving functionality by utilizing external processes or collaborating with other systems instead of implementing everything solely in Emacs Lisp. By doing so, you can draw upon knowledge beyond Emacs, enhancing the possibilities based on the depth of that knowledge. What you cannot do on your own, you cannot achieve even with Emacs. In other words, Emacs grows alongside your own development. It serves as a partner that evolves with you, and that's why I choose to use Emacs.
 
 * Setup
 
@@ -90,3 +92,22 @@ The official GNU Emacs distribution has several features disabled. To enable the
    #+begin_src
    sudo mv nextstep/Emacs.app /Applications
    #+end_src
+
+* Emacs Literature
+
+Emacs has dedicated fans who express their love for it through various forms, including technical essays. Within this community, there are individuals who have written about their experiences and feelings regarding Emacs, encompassing a wide range of perspectives that often include subjective and personal elements. These writings serve as a testament to their journeys in their work and aim to convey their unique thoughts. I refer to these pieces as Emacs Literature, and I enjoy reading them because they allow me to feel the humanity of the authors.
+
+Here, I would like to introduce some renowned works of Emacs Literature. While some of these may be fictional, such distinctions are ultimately inconsequential. What truly matters is that each work overflows with love for Emacs.
+
+- https://qiita.com/sylx/items/46bc993471cd71980aa5
+- https://www.itmedia.co.jp/enterprise/articles/0706/26/news003_2.html
+- https://gntm-mdk.hatenadiary.com/entry/2016/10/28/073351
+- http://kymst.net/index.php?plugin=attach&refer=diary&openfile=diaryFrN57to.pdf
+- https://www.hum.grad.fukuoka-u.ac.jp/news/1396/
+
+
+* Emacs is dead
+
+
+
+- https://qiita.com/akmiyoshi/items/1c19d1484049683b4cec
