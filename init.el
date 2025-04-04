@@ -155,8 +155,8 @@
 (global-set-key (kbd "M-X") #'smex-major-mode-commands)    ; M-x補助
 (global-set-key (kbd "C-x C-j") #'skk-mode)                ; SKK切替
 (global-set-key (kbd "C-x C-v") #'magit-status)            ; Git状態表示
-(global-set-key (kbd "C-t C-c") #'our-async-shell-command)
-(global-set-key (kbd "C-M-i") #'company-complete)
+(global-set-key (kbd "C-t C-c") #'our-async-shell-command) ; Shell実行
+(global-set-key (kbd "C-M-i") #'company-complete)          ; サジェスト
 
 (condition-case err
     (progn (require 'vterm)

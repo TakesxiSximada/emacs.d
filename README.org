@@ -4,6 +4,10 @@
 
 This is my GNU Emacs.
 
+* Why I use Emacs
+
+Emacs is a highly extensible text editor. Through the use of Emacs Lisp, you can modify nearly all of its functionalities. This capability allows you to make changes to existing code and see them reflected immediately. Additionally, thanks to the nature of Emacs Lisp, it's encouraged to not rely solely on it for implementation; instead, you can utilize external processes and collaborate with them to achieve functionality. This means that your knowledge beyond Emacs becomes valuable, and the deeper your understanding, the more you can accomplish. If there are things you cannot do, using Emacs won't help you do them. In other words, Emacs grows alongside your personal development. It serves as a companion that evolves with you, and that is why I choose to use Emacs.
+
 * Setup
 
 1. Install GNU Emacs.
