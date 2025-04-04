@@ -2,9 +2,9 @@
 
 [[README.org][en]] | [[README_ja.org][ja]]
 
-[[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
-
 これは私のGNU Emacsです。ここでは私とEmacsとの関わりについて書きます。
+
+[[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
 
 * なぜ私はEmacsを使うのか
 
