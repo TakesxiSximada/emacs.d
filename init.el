@@ -90,7 +90,10 @@
   (unless (package-installed-p 'company)
     (condition-case err (package-install 'company) (error err)))
   (require 'company-autoloads)
-  (global-company-mode))
+  (global-company-mode)
+  (setq company-idle-delay 1.0)
+  (setq company-minimum-prefix-length 1)
+  )
 
 (progn ; Magit
   (unless (package-installed-p 'magit)
