@@ -13,13 +13,15 @@ Emacs is a text editor, a software used for writing documents and code. It has a
 
 Emacs excels in customization, allowing users to shape it into a version that suits their preferences. Depending on what one wants to do and how they wish to do it, Emacs evolves, and this growth allows it to feel like an integral part of oneself.
 
-Emacs can be seen as a complete implementation of the programming language called Emacs Lisp. With Emacs Lisp, nearly all features of Emacs can be modified, and by evaluating new Emacs Lisp code on a running instance of Emacs, the behavior of existing code can be instantly altered.
+Emacs can be seen as a complete runtime system of the programming language called Emacs Lisp. With Emacs Lisp, nearly all features of Emacs can be modified, and by evaluating new Emacs Lisp code on a running instance of Emacs, the behavior of existing code can be instantly altered.
 
 Emacs Lisp is a dialect of the Lisp language. Lisp has various strengths that are not found in other languages, but discussing them in depth would be too extensive for this context. However, one of the strengths of Emacs Lisp is its flexibility.
 
 The way scoping is handled in Emacs Lisp, along with its (almost unrestricted) approach to namespaces, fits well with a style that allows one to easily write, evaluate, and modify Lisp code. While these characteristics can be disadvantages for creating robust, complete systems, they become advantageous for quickly writing tools tailored for personal use or instantaneously modifying specific behaviors to meet small, everyday needs.
 
-There is also a viewpoint that regards Emacs Lisp as a deficient programming language. Indeed, it may not be known for its speed, and various constraints, such as the existence of a Global Interpreter Lock (GIL) and blocking of the main thread by threads, persist. However, it is precisely because of such traits that one might prefer not to implement everything solely in Emacs Lisp. Instead, they might choose to employ external processes to realize functionalities in collaboration with the outside world. This approach encourages the utilization of knowledge beyond Emacs, thereby increasing capabilities in proportion to the depth of that knowledge. What one cannot do is also not achievable through Emacs. In other words, Emacs grows alongside one’s personal development. It is a companion that evolves with you, and that is the reason to use Emacs.
+There is also a viewpoint that regards Emacs Lisp as a deficient programming language. Indeed, it may not be known for its speed, and various constraints, such as the existence of a Global Interpreter Lock (GIL) and blocking of the main thread by threads, persist. However, it is precisely because of such traits that one might prefer not to implement everything solely in Emacs Lisp. Instead, they might choose to employ external processes to realize functionalities in collaboration with the outside world.This approach encourages the utilization of knowledge beyond Emacs, thereby increasing capabilities in proportion to the depth of that knowledge.
+
+What I can do can be further enhanced by Emacs' powerful editing capabilities and buffer management, while what I cannot do cannot be accomplished even with Emacs. In other words, Emacs grows alongside my own personal development. It is a companion that evolves with me, and that is the reason I use Emacs.
 
 * Setup
 
