@@ -118,9 +118,10 @@ Here, I would like to introduce some renowned works of Emacs Literature. While s
 - http://kymst.net/index.php?plugin=attach&refer=diary&openfile=diaryFrN57to.pdf
 - https://www.hum.grad.fukuoka-u.ac.jp/news/1396/
 
+One of the special genres within technical essays is the phrase "X is dead." This expression is used when a once-popular software becomes outdated, no longer used, or falls into obsolescence due to the emergence of competitors, stagnation in development, or various other reasons. This is referred to as the "X is dead" genre.
 
-* Emacs is dead
+If the subject is software you have a personal attachment to, it may evoke feelings of anger. However, take a moment to calm down. The fact that such articles are written is evidence that the software was remarkable and popular at one point. Whether or not that software is indeed "dead" is irrelevant. At the very least, you are still using it, right? These writings are simply meant to celebrate the flow of time and change.
 
-
+Emacs has its own wonderful pieces in this genre. Personally, I hope that the "death of new Emacs" will continue to accumulate as part of the history of this genre forever. Long live Emacs!
 
 - https://qiita.com/akmiyoshi/items/1c19d1484049683b4cec
