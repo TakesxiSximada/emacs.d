@@ -91,7 +91,7 @@
     (condition-case err (package-install 'company) (error err)))
   (require 'company-autoloads)
   (global-company-mode)
-  (setq company-idle-delay 1.0)
+  (setq company-idle-delay 0.4)
   (setq company-minimum-prefix-length 1)
   )
 
