@@ -1,11 +1,26 @@
-#+TITLE: My GNU Emacs
+#+TITLE: My GNU Emacs configuration
 
 [[README.org][en]] | [[README_ja.org][ja]]
 
-This is my GNU Emacs. I will write about my relationship with Emacs here.
+This repository is intended for managing my personal GNU Emacs configurations and customizations.
 
 [[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
 
+* Purpose
+
+This repository is developed and maintained with the following objectives:
+
+- Providing a flexible environment that adapts to personal growth
+
+  The aim is to gradually improve the configuration to match my increasing skills and to create an environment that can flexibly accommodate my evolving needs. I incorporate what I learn into the setup and make necessary adjustments. I also focus on ensuring that even without prior knowledge of how everything works internally, the system remains understandable. Additionally, by preserving the revision history, I can track my long-term growth over time.
+
+- Ensuring consistent usability across multiple environments
+
+  The goal is to create a system where, as long as there is internet access, I can reproduce the same comfortable environment anytime and continue to be productive. Even if everything is lost, rebuilding the environment is made easy. The setup is designed to work seamlessly across various locations and devices.
+
+- Sharing information with other Emacs users
+
+  Customizing Emacs is a gradual, long-term process that can take many years to reach satisfaction. Each user has different needs, and because of this, there are no fixed procedures or step-by-step tutorials. However, having reference code or configurations can help others who wish to customize their Emacs environments in a similar way. The purpose is to serve as a helpful resource for those who are working on their own setups.
 
 * Why I use Emacs
 
