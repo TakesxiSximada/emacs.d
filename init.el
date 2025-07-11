@@ -1,3 +1,31 @@
+;;; init.el --- Emacs configuration.  -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2016 - 2025 TakesxiSximada
+
+;; Author: TakesxiSximada
+;; URL: https://github.com/TakesxiSximada/emacs.d
+
+;; This file is not part of GNU Emacs.
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; Enjoy Emacs!!
+
+;;; Code:
+
 ;; 標準のコマンドのキー割当変更。ここには基本的なキー割当の設定をする
 (global-set-key (kbd "C-t") nil)      ; C-tをプレフィックスキーとして使うために潰す
 (global-set-key (kbd "C-h") #'backward-delete-char-untabify)                          ; バックスペース
@@ -190,3 +218,7 @@
 ;; カスタムファイルのロード
 (when custom-file (condition-case err (load-file custom-file) (error err)))
 (print "Okay")
+(put 'list-timers 'disabled nil)
+
+(provide 'init)
+;;; init.el ends here
