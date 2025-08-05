@@ -114,6 +114,8 @@
     (condition-case err (package-install 'smex) (error err)))
   (require 'smex-autoloads))
 
+;; company
+(add-to-list 'load-path (expand-file-name "company-mode" ng-path))
 (progn ; company
   (unless (package-installed-p 'company)
     (condition-case err (package-install 'company) (error err)))
