@@ -121,8 +121,10 @@
     (condition-case err (package-install 'company) (error err)))
   (require 'company-autoloads)
   (global-company-mode)
-  (setq company-idle-delay 0.4)
+  (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 1)
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  (define-key company-active-map (kbd "RET") 'company-complete-selection)
   )
 
 (progn ; Magit
