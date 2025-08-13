@@ -16,3 +16,5 @@
    ((null? val) 'null)
    ((procedure? val) 'procedure)
    (else 'unknown)))
+
+(load-extension "libprocess")

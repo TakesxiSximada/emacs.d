@@ -224,5 +224,11 @@
 (print "Okay")
 (put 'list-timers 'disabled nil)
 
+;; tinyscheme用の動的ライブラリ探索
+(add-to-list 'process-environment
+	     (format "DYLD_LIBRARY_PATH=%s"
+		     (string-join `(,(expand-file-name "~/ng/tinyscheme")
+				    ,(expand-file-name "~/.emacs.d/tinyscheme_clib"))
+				  ":")))
 (provide 'init)
 ;;; init.el ends here
