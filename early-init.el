@@ -1,4 +1,4 @@
-;;; early-init.el --- Early initialization. -*- lexical-binding: t -*-
+;; -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 - 2025 TakesxiSximada
 
@@ -31,9 +31,9 @@
 	      debug-on-error t
 	      eval-expression-debug-on-error t)
 ;; (push '(fullscreen . fullboth) default-frame-alist)
+
+;; Disable GUI Menu
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
-
-(provide 'early-init)
 ;;; early-init.el ends here
