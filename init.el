@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 ;;
-;; Enjoy Emacs!!
+;; My Emacs configuration
 
 ;;; Code:
 
@@ -81,25 +81,47 @@
                          (format "%s.el" system-configuration))))
 
 ;; Emacsの基本的な環境用の変数設定
-(setq custom-file ; customizeの設定はここに保存される
-      (if (file-exists-p ng-custom-file) ng-custom-file
-        (progn (warn "No ng custom file: %s" ng-custom-file)
-               (locate-user-emacs-file "custom.el")))
-      custom-theme-directory ; テーマファイル置き場
-      (expand-file-name "~/.emacs.d/themes"))
+(customize-set-variable 'custom-file
+			(if (file-exists-p ng-custom-file) ng-custom-file
+			  (progn (warn "No ng custom file: %s" ng-custom-file)
+				 (locate-user-emacs-file "custom.el")))
+			"customizeの設定はここに保存される")
+
+(customize-set-variable 'custom-theme-directory
+			(expand-file-name "~/.emacs.d/themes")
+			"テーマファイル置き場")
 
 ;; パッケージの設定
-(setq package-user-dir ; インストールしたパッケージはここに保存される
-      (expand-file-name (format "%s/elpa.%d" ng-cache-dir emacs-major-version))
-      package-archives ; このリポジトリからパッケージを取得する
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("org" . "https://orgmode.org/elpa/")
-        ("melpa" . "https://melpa.org/packages/")
-        ; ("melpa-stable" . "http://stable.melpa.org/packages/") ; stable
-        ; ("cubelpa" . "https://sximada.github.io/cubelpa-repo/packages/") ; 個人用
-        ; ("marmalade" . "http://marmalade-repo.org/packages/") ; marmaladeは保守されなくなった
-        ))
-(package-initialize) ; パッケージ情報を初期化する
+(customize-set-variable 'package-user-dir
+			(expand-file-name
+			 (format "%s/elpa.%d"
+				 ng-cache-dir
+				 emacs-major-version))
+			"パッケージのインストール先ディレクトリ
+
+異なるバージョンのEmacsを使用できるよう、パッケージのインストール先は
+Emacsのバージョン毎に分かれるようにする。
+")
+
+(customize-set-variable 'package-archives
+			'(("gnu" . "https://elpa.gnu.org/packages/")
+			  ("org" . "https://orgmode.org/elpa/")
+			  ("melpa" . "https://melpa.org/packages/"))
+			"パッケージを取得するリポジトリ
+
+過去に使用していたリポジトリ
+
+- melpa-stable :: MELPAの安定版
+  http://stable.melpa.org/packages/
+
+- cubelpa :: 個人用
+  https://sximada.github.io/cubelpa-repo/packages/
+
+- marmalade :: marmaladeは保守されなくなった
+  http://marmalade-repo.org/packages/
+")
+
+(package-initialize)
 
 (condition-case err (load-theme 'symdon-dark t t) (error err)) ; テーマの設定
 
@@ -230,5 +252,4 @@
 		     (string-join `(,(expand-file-name "~/ng/tinyscheme")
 				    ,(expand-file-name "~/.emacs.d/tinyscheme_clib"))
 				  ":")))
-(provide 'init)
 ;;; init.el ends here
