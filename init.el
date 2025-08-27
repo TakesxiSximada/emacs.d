@@ -38,7 +38,6 @@
 (global-set-key (kbd "C-t j") #'windmove-down)                                        ; ウィンドウ切替
 (global-set-key (kbd "C-t k") #'windmove-up)                                          ; ウィンドウ切替
 (global-set-key (kbd "C-t l") #'windmove-right)                                       ; ウィンドウ切替
-(global-set-key (kbd "C-t l") #'windmove-right)                                       ; ウィンドウ切替
 (global-set-key (kbd "<f1>") #'start-kbd-macro)                                       ; キーボードマクロ開始
 (global-set-key (kbd "<f2>") #'end-kbd-macro)                                         ; キーボードマクロ終了
 (global-set-key (kbd "<f3>") #'call-last-kbd-macro)                                   ; キーボードマクロ実行
@@ -252,4 +251,35 @@ Emacsのバージョン毎に分かれるようにする。
 		     (string-join `(,(expand-file-name "~/ng/tinyscheme")
 				    ,(expand-file-name "~/.emacs.d/tinyscheme_clib"))
 				  ":")))
+
+(defun my/vterm-copy-mode-open-python-traceback-from-line ()
+  "In vterm copy-mode, obtain the current line content and jump to the corresponding line in a Python file."
+  (interactive)
+  (let* ((line-str  ;; get line string
+          (string-replace
+           "\n" ""
+           (buffer-substring-no-properties
+            (vterm--get-beginning-of-line)
+            (vterm--get-end-of-line))))
+
+         ;; Extract filename and line number by regexp
+         (match-data (string-match "File \"\\([^\"]+\\)\"[, ]* line \\([0-9]+\\)" line-str)))
+
+    (if match-data
+        (let* ((file-path (match-string 1 line-str))
+               (line-num (string-to-number (match-string 2 line-str)))
+               (full-path file-path))
+
+          ;; Convert absolute path
+          (unless (file-name-absolute-p full-path)
+            (setq full-path (expand-file-name full-path)))
+
+          ;; Open file and goto line
+          (if (file-exists-p full-path)
+              (progn
+                (find-file-other-window full-path)
+                (goto-line line-num))
+            (message "File not found: %s" full-path)))
+
+      (message "Unmatch line string: %s" line-str))))
 ;;; init.el ends here
