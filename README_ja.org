@@ -57,7 +57,7 @@ Emacsをインストールし、この設定を使う方法について説明し
 2. 設定ファイルをダウンロードします。
 
    #+begin_src
-   git clone https://github.com/TakesxiSximada/.emacs.d.git ~/.emacs.d
+   git clone https://github.com/TakesxiSximada/emacs.d.git ~/.emacs.d
    #+end_src
 
 3. GNU Emacsを起動します。

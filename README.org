@@ -47,7 +47,7 @@ What I can do can be further enhanced by Emacs' powerful editing capabilities an
 2. Download a configuration files.
 
    #+begin_src
-   git clone https://github.com/TakesxiSximada/.emacs.d.git ~/.emacs.d
+   git clone https://github.com/TakesxiSximada/emacs.d.git ~/.emacs.d
    #+end_src
 
 3. Start GNU Emacs.
