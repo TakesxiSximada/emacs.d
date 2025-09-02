@@ -307,4 +307,24 @@ Emacsのバージョン毎に分かれるようにする。
       )
   (error "faild to support macos started applications"))
 
+(condition-case err
+    (progn
+      (defvar my/colab--osascript-executable (executable-find "osascript"))
+      (defcustom my/colab--browser-application "Safari" "Browser application name")
+
+      (defun my/colab ()
+	(interactive)
+	(clipboard-kill-ring-save (region-beginning) (region-end))
+	(call-process my/colab--osascript-executable nil nil nil "-e"
+		      (format "tell application \"%s\" to activate"
+			      my/colab--browser-application))
+	(sleep-for 0.5)
+	(call-process my/colab--osascript-executable nil nil nil "-e"
+		      "tell application \"System Events\" to keystroke \"v\" using {command down}")
+	(call-process my/colab--osascript-executable nil nil nil "-e"
+		      "
+tell application \"System Events\" to keystroke \"v\" using {command down}
+tell application \"System Events\" to keystroke return using {option down}
+tell application \"Emacs\" to activate")))
+  (error "Failed to support google colab extention"))
 ;;; init.el ends here
