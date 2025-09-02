@@ -282,4 +282,29 @@ Emacsのバージョン毎に分かれるようにする。
             (message "File not found: %s" full-path)))
 
       (message "Unmatch line string: %s" line-str))))
+
+(condition-case err
+    (progn
+      (defvar my/macos-started-applications nil "")
+
+      (defun my/macos-refresh-started-applications ()
+	(interactive)
+	(with-current-buffer "*macOS Started Applications*"
+	  (erase-buffer))
+
+	(call-process "osascript" nil "*macOS Started Applications*" t "-e"
+		      "tell application \"System Events\" to get name of every application process")
+
+	(with-current-buffer "*macOS Started Applications*" ;; cleanup buffer
+	  (replace-string "," "\n" nil (point-min) (point-max))
+	  (indent-region (point-min) (point-max))
+	  (delete-trailing-whitespace))
+
+	(setq my/macos-started-applications
+	      (with-current-buffer "*macOS Started Applications*"
+		(split-string (buffer-substring (point-min) (point-max)) "\n"))))
+
+      )
+  (error "faild to support macos started applications"))
+
 ;;; init.el ends here
