@@ -3,10 +3,8 @@
 
 (custom-theme-set-faces
  'symdon-surface
+ '(cursor ((t (:foreground "black" :background "red"))))
  '(default ((t (:background "#000000" :foreground "#ffffff")))))
-
-(set-face-attribute 'default nil :height 200)
-(set-frame-parameter nil 'alpha '(40 . 40))
 
 (provide 'symdon-surface)
 ;;; symdon-surface-theme.el ends here

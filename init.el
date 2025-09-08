@@ -25,6 +25,14 @@
 ;; My Emacs configuration
 
 ;;; Code:
+(customize-set-variable 'custom-theme-directory
+			(expand-file-name "~/.emacs.d/themes")
+			"My theme files")
+(load-theme 'symdon-surface t)
+
+(set-face-attribute 'default nil :height 150)
+(set-frame-parameter nil 'alpha '(70 . 70))
+(set-cursor-color "red")
 
 ;; 標準のコマンドのキー割当変更。ここには基本的なキー割当の設定をする
 (global-set-key (kbd "C-t") nil)      ; C-tをプレフィックスキーとして使うために潰す
