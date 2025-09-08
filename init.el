@@ -327,4 +327,5 @@ tell application \"System Events\" to keystroke \"v\" using {command down}
 tell application \"System Events\" to keystroke return using {option down}
 tell application \"Emacs\" to activate")))
   (error "Failed to support google colab extention"))
+(set-frame-parameter nil 'alpha 60)  ;; 透明度
 ;;; init.el ends here
