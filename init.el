@@ -328,4 +328,11 @@ tell application \"System Events\" to keystroke return using {option down}
 tell application \"Emacs\" to activate")))
   (error "Failed to support google colab extention"))
 (set-frame-parameter nil 'alpha 60)  ;; 透明度
+(condition-case err
+    (progn
+      (unless (package-installed-p 'gcmh)
+	(package-install 'gcmh))
+      (require 'gcmh)
+      (gcmh-mode 1))
+  (warn "Failed to configuration: gcmh: It might be better to lower the GC threshold.: %s" err))
 ;;; init.el ends here

@@ -27,10 +27,13 @@
 ;;
 
 ;;; Code:
-(setq-default byte-compile-warnings nil
-	      debug-on-error t
-	      eval-expression-debug-on-error t)
-;; (push '(fullscreen . fullboth) default-frame-alist)
+(setq debug-on-error t)
+
+;; To make it less likely for Stop The World events caused by GC to
+;; occur during runtime, the gcmh package manages GC after
+;; startup. During initialization, it allocates a large amount of
+;; memory.
+(setq gc-cons-threshold 1073741824)
 
 ;; Disable GUI Menu
 (push '(menu-bar-lines . 0) default-frame-alist)
