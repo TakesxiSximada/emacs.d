@@ -347,6 +347,11 @@ tell application \"Emacs\" to activate")))
 (defun disable-mode-line ()
   (setq-local mode-line-format nil))
 
+;; 辞書の設定
+;; (setq skk-user-directory "~/.cache/skk")
+;; (setq skk-extra-jisyo-file-list
+;;       '("Library/Application Support/AquaSKK/SKK-JISYO.L"))
+
 (with-eval-after-load 'skk
   ;; モードラインを表示しない
   (add-hook 'skk-mode-hook 'disable-mode-line)
