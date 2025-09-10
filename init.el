@@ -343,4 +343,53 @@ tell application \"Emacs\" to activate")))
       (require 'gcmh)
       (gcmh-mode 1))
   (warn "Failed to configuration: gcmh: It might be better to lower the GC threshold.: %s" err))
+;; SKK
+(defun disable-mode-line ()
+  (setq-local mode-line-format nil))
+
+(with-eval-after-load 'skk
+  ;; モードラインを表示しない
+  (add-hook 'skk-mode-hook 'disable-mode-line)
+  (setq mode-line-format nil)
+  (setq skk-modeline-input-mode nil)
+
+  ;; 絶対にモードラインを表示させたくないため
+  ;; モードラインの設定関数を上書きする。
+  (defun skk-setup-modeline () nil)
+
+  ;; SKKの候補の表示方法
+  (setq skk-show-tooltip nil)
+  (setq skk-show-inline 'vertical)
+  (setq skk-egg-like-newline nil)
+  (setq skk-dcomp-activate t)
+  (setq skk-dcomp-multiple-activate t)
+  (setq skk-henkan-strict-okuri-precedence t)
+
+  ;; カーソルの色を変更する
+  (setq skk-cursor-latin-color "turquoise")
+  (setq skk-cursor-hiragana-color "orange")
+  (setq skk-cursor-katakana-color "systemGreenColor")
+
+  (setq skk-show-mode-show t)
+  (setq skk-show-mode-style "tooltip")
+
+  (defun skk-isearch-setup-maybe ()
+    (require 'skk-vars)
+    (when (or (eq skk-isearch-mode-enable 'always)
+  	      (and (boundp 'skk-mode)
+  		   skk-mode
+  		   skk-isearch-mode-enable))
+      (skk-isearch-mode-setup)))
+
+  (defun skk-isearch-cleanup-maybe ()
+    (require 'skk-vars)
+    (when (and (featurep 'skk-isearch)
+  	       skk-isearch-mode-enable)
+      (skk-isearch-mode-cleanup)))
+
+  (add-hook 'isearch-mode-hook #'skk-isearch-setup-maybe)
+  (add-hook 'isearch-mode-end-hook #'skk-isearch-cleanup-maybe)
+
+  (require 'skk-study)  ;; 辞書の学習
+  )
 ;;; init.el ends here
