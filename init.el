@@ -397,4 +397,14 @@ tell application \"Emacs\" to activate")))
 
   (require 'skk-study)  ;; 辞書の学習
   )
+
+(defun my/set-alpha (alpha)
+  (interactive
+   (list
+    (string-to-number
+     (completing-read
+      "Alpha: "
+      '("10" "20" "30" "40" "50" "60" "70" "80" "90" "100")))))
+  (set-frame-parameter nil 'alpha
+		       (cons alpha alpha)))
 ;;; init.el ends here
