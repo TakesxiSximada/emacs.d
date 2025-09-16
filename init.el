@@ -407,4 +407,8 @@ tell application \"Emacs\" to activate")))
       '("10" "20" "30" "40" "50" "60" "70" "80" "90" "100")))))
   (set-frame-parameter nil 'alpha
 		       (cons alpha alpha)))
+;; EWW
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "b") #'eww-back-url))
+
 ;;; init.el ends here
