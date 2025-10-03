@@ -24,6 +24,14 @@
 ;;
 ;; My Emacs configuration
 
+;;; Splash buffer
+(defvar fancy-startup-tail-original nil
+  "起動画面の描画関数を上書きするために、オリジナルの定義を退避しておく")
+
+(setf (symbol-function 'fancy-startup-tail-original) (symbol-function 'fancy-startup-tail))
+
+(defun fancy-startup-tail (&optional concise) nil)
+
 ;;; Code:
 (customize-set-variable 'custom-theme-directory
 			(expand-file-name "~/.emacs.d/themes")
