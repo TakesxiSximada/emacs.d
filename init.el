@@ -24,13 +24,18 @@
 ;;
 ;; My Emacs configuration
 
-;;; Splash buffer
-(defvar fancy-startup-tail-original nil
-  "起動画面の描画関数を上書きするために、オリジナルの定義を退避しておく")
+;;; 起動画面
+(defvar fancy-startup-tail-original (symbol-function 'fancy-startup-tail)
+  "起動画面のオリジナルの処理を変数セルに退避")
+(defvar fancy-startup-text-original fancy-startup-text
+  "起動画面のオリジナルの処理を変数セルに退避")
 
-(setf (symbol-function 'fancy-startup-tail-original) (symbol-function 'fancy-startup-tail))
+;; 起動画面をカスタマイズ
+(setf (symbol-function 'fancy-startup-tail) (lambda (&optional concise) nil))
+(setq fancy-startup-text nil)
 
-(defun fancy-startup-tail (&optional concise) nil)
+;; 起動画面のオリジナルの処理を呼び出せるように関数セルに入れておく
+(setf (symbol-function 'fancy-startup-tail-original) fancy-startup-tail-original)
 
 ;;; Code:
 (customize-set-variable 'custom-theme-directory
