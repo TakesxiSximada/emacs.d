@@ -24,7 +24,7 @@
 ;;
 ;; My Emacs configuration
 
-;;; 起動画面
+;;; Start up view
 (defvar fancy-startup-tail-original (symbol-function 'fancy-startup-tail)
   "起動画面のオリジナルの処理を変数セルに退避")
 (defvar fancy-startup-text-original fancy-startup-text
@@ -48,7 +48,7 @@
 (load-theme 'symdon-surface t)
 
 (set-face-attribute 'default nil :height 150)
-(set-frame-parameter nil 'alpha '(70 . 70))
+(set-frame-parameter nil 'alpha '(100 . 100))
 (set-cursor-color "red")
 
 ;; 標準のコマンドのキー割当変更。ここには基本的なキー割当の設定をする
@@ -89,7 +89,7 @@
 (put 'erase-buffer 'disabled nil)
 (setenv "PAGER" "cat")            ; pagerでlessが使われないようにcatを指定しておく
 (add-hook 'dired-mode-hook 'dired-hide-details-mode) ; diredの省略表示
-(global-hl-line-mode t) ; 可視性の向上のためカーソル位置の行にアンダーラインを表示する
+;; (global-hl-line-mode t)  ; 可視性の向上のためカーソル位置の行にアンダーラインを表示する
 
 ;; 個人用の基本的な環境用の変数設定
 ;; これらのディレクトリは、環境によって有ったり無かったりする。存在す
@@ -110,10 +110,6 @@
 			  (progn (warn "No ng custom file: %s" ng-custom-file)
 				 (locate-user-emacs-file "custom.el")))
 			"customizeの設定はここに保存される")
-
-(customize-set-variable 'custom-theme-directory
-			(expand-file-name "~/.emacs.d/themes")
-			"テーマファイル置き場")
 
 ;; パッケージの設定
 (customize-set-variable 'package-user-dir
@@ -147,7 +143,7 @@ Emacsのバージョン毎に分かれるようにする。
 
 (package-initialize)
 
-(condition-case err (load-theme 'symdon-dark t t) (error err)) ; テーマの設定
+(condition-case err (load-theme 'symdon-surface t t) (error err)) ; テーマの設定
 
 ;; どうしても必ず入れておきたいパッケージ
 (progn ; SKK
@@ -155,7 +151,7 @@ Emacsのバージョン毎に分かれるようにする。
     (condition-case err (package-install 'ddskk) (error err)))
   (require 'ddskk-autoloads))
 
-(progn ; smex
+(progn ; smex (disabled: migrated to Vertico/Consult)
   (unless (package-installed-p 'smex)
     (condition-case err (package-install 'smex) (error err)))
   (require 'smex-autoloads))
@@ -178,7 +174,7 @@ Emacsのバージョン毎に分かれるようにする。
     (condition-case err (package-install 'magit) (error err)))
   (require 'magit-autoloads))
 
-(progn ; IDO関連
+(progn ; IDO関連 (disabled: migrated to Vertico)
   (require 'ido)
   (unless (package-installed-p 'ido-vertical-mode)
     (condition-case err (package-install 'ido-vertical-mode) (error err)))
@@ -207,6 +203,26 @@ Emacsのバージョン毎に分かれるようにする。
   (condition-case err (require 'org) (error err))
   (condition-case err (require 'org-habit) (error err)))
 
+;; ;; Vertico + Orderless + Marginalia + Consult
+;; (progn
+;;   (dolist (pkg '(vertico orderless marginalia consult))
+;;     (unless (package-installed-p pkg)
+;;       (condition-case err (package-install pkg) (error err))))
+
+;;   (condition-case err
+;;       (progn
+;;         ;; Completion behavior
+;;         (setq completion-styles '(orderless basic)
+;;               completion-category-defaults nil
+;;               completion-category-overrides '((file (styles . (partial-completion)))))
+;;         ;; Enable UIs
+;;         (require 'vertico)
+;;         (vertico-mode 1)
+;;         (require 'marginalia)
+;;         (marginalia-mode 1)
+;;         (require 'consult))
+;;     (error (message "Failed to setup Vertico stack: %s" err))))
+
 (progn ; VTerm
   (unless (package-installed-p 'vterm)
     (condition-case err (package-install 'vterm) (error err)))
@@ -234,9 +250,31 @@ Emacsのバージョン毎に分かれるようにする。
 ;; 追加パッケージに関するキー割当
 (global-set-key (kbd "M-x") #'smex)                        ; M-x補助
 (global-set-key (kbd "M-X") #'smex-major-mode-commands)    ; M-x補助
+;; 追加パッケージに関するキー割当（安全なフォールバック付き）
+;; M-x: smex が利用可能なら使用し、なければ標準コマンドにフォールバック
+;; (global-set-key
+;;  (kbd "M-x")
+;;  (cond
+;;   ((fboundp 'smex) #'smex)
+;;   (t #'execute-extended-command)))
+
+;; M-X: メジャーモード限定コマンド。smex があれば smex を、なければ Emacs 28+ の
+;; execute-extended-command-for-buffer があればそれを、最後の手段として通常の M-x
+;; (global-set-key
+;;  (kbd "M-X")
+;;  (cond
+;;   ((fboundp 'smex-major-mode-commands) #'smex-major-mode-commands)
+;;   ((fboundp 'execute-extended-command-for-buffer) #'execute-extended-command-for-buffer)
+;;   (t #'execute-extended-command)))
+
+;; 追加パッケージに関するキー割当（Vertico/Consult）
+;; (global-set-key (kbd "M-x") #'consult-M-x)                 ; M-x補助
+;; (global-set-key (kbd "M-X") #'consult-mode-command)        ; メジャーモードコマンド
 (global-set-key (kbd "C-x C-j") #'skk-mode)                ; SKK切替
 (global-set-key (kbd "C-x C-v") #'magit-status)            ; Git状態表示
 (global-set-key (kbd "C-t C-c") #'our-async-shell-command) ; Shell実行
+;; 検索系: consult-line があれば利用、無ければ isearch-forward
+;; (global-set-key (kbd "C-s") (if (fboundp 'consult-line) #'consult-line #'isearch-forward))
 (global-set-key (kbd "C-M-i") #'company-complete)          ; サジェスト
 
 (condition-case err
@@ -257,12 +295,12 @@ Emacsのバージョン毎に分かれるようにする。
 (setq-default enable-local-variables :all)
 
 (condition-case err
-    (progn (add-to-list 'load-path (expand-file-name "~/ng/symdon/articles/posts/1741919353"))
-	   (require 'doctor-quack)
-	   (with-eval-after-load 'doctor-quack
-	     (define-key doctor-mode-map (kbd "C-j") #'electric-newline-and-maybe-indent)
-	     (define-key doctor-mode-map (kbd "RET") #'newline)
-	     (define-key doctor-mode-map (kbd "M-RET") #'doctor-quack-read-print)))
+    (progn
+      (require 'doctor-quack)
+      (with-eval-after-load 'doctor-quack
+	(define-key doctor-mode-map (kbd "C-j") #'electric-newline-and-maybe-indent)
+	(define-key doctor-mode-map (kbd "RET") #'newline)
+	(define-key doctor-mode-map (kbd "M-RET") #'doctor-quack-read-print)))
   (error err))
 
 ;; カスタムファイルのロード
@@ -332,6 +370,19 @@ Emacsのバージョン毎に分かれるようにする。
       )
   (error "faild to support macos started applications"))
 
+;; (defvar my/copy-and-paste-other-application--application-history nil)
+;; (defun my/copy-and-paste-region-to-other-application (application)
+;;   (interactive
+;;    (list (completing-read "Application: "
+;; 			  my/macos-started-applications
+;; 			  (lambda (str) (not (string-blank-p str)))
+;; 			  t
+;; 			  (or (car my/copy-and-paste-other-application--application-history) "")
+;; 			  'my/copy-and-paste-other-application--application-history
+;; 			  (car my/copy-and-paste-other-application--application-history))))
+;; (customize-set-value 'my/colab--browser-application "Brave Browser")
+;; copy-and-paste-to-other-application
+
 (condition-case err
     (progn
       (defvar my/colab--osascript-executable (executable-find "osascript"))
@@ -352,7 +403,14 @@ tell application \"System Events\" to keystroke \"v\" using {command down}
 tell application \"System Events\" to keystroke return using {option down}
 tell application \"Emacs\" to activate")))
   (error "Failed to support google colab extention"))
-(set-frame-parameter nil 'alpha 60)  ;; 透明度
+
+(defun my/apply-shell-command(cmd)
+  (interactive (list (read-shell-command "Shell Command: ")))
+  (when (y-or-n-p (format "Execute and apply[$ %s] ?" cmd))
+    (shell-command-on-region (point-min) (point-max) cmd nil t)))
+
+
+;;  (t "No terminal")))
 (condition-case err
     (progn
       (unless (package-installed-p 'gcmh)
@@ -360,6 +418,7 @@ tell application \"Emacs\" to activate")))
       (require 'gcmh)
       (gcmh-mode 1))
   (warn "Failed to configuration: gcmh: It might be better to lower the GC threshold.: %s" err))
+
 ;; SKK
 (defun disable-mode-line ()
   (setq-local mode-line-format nil))
@@ -424,8 +483,24 @@ tell application \"Emacs\" to activate")))
       '("10" "20" "30" "40" "50" "60" "70" "80" "90" "100")))))
   (set-frame-parameter nil 'alpha
 		       (cons alpha alpha)))
+
+(defun my/super-laser-beam-focus ()
+  (interactive)
+  (make-frame)
+  (doctor)
+  (insert "次やる事を指示して")
+  (doctor-quack-read-print))
+
 ;; EWW
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "b") #'eww-back-url))
+
+;; Agentic
+(add-to-list 'load-path (expand-file-name "~/ng/symdon/agentic"))
+
+;; key customize
+(with-eval-after-load 'doc-view
+  (define-key doc-view-mode-map (kbd "C-t") nil))
+
 
 ;;; init.el ends here
