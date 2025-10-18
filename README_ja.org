@@ -2,7 +2,7 @@
 
 [[README.org][en]] | [[README_ja.org][ja]]
 
-このリポジトリでは、Emacsの個人的な設定とカスタマイズを管理している。
+このリポジトリは、Emacsの個人的な設定とカスタマイズを管理している。
 
 [[https://res.cloudinary.com/symdon/image/upload/v1645157040/demo_spyojf.gif]]
 
