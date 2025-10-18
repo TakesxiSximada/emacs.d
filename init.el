@@ -37,6 +37,10 @@
 ;; 起動画面のオリジナルの処理を呼び出せるように関数セルに入れておく
 (setf (symbol-function 'fancy-startup-tail-original) fancy-startup-tail-original)
 
+;; Library Path
+(add-to-list 'load-path (expand-file-name "~/ng/symdon/my"))
+(add-to-list 'load-path (expand-file-name "~/ng/symdon/elisp"))
+
 ;;; Code:
 (customize-set-variable 'custom-theme-directory
 			(expand-file-name "~/.emacs.d/themes")
