@@ -502,5 +502,7 @@ tell application \"Emacs\" to activate")))
 (with-eval-after-load 'doc-view
   (define-key doc-view-mode-map (kbd "C-t") nil))
 
+;; Using bash
+(setq shell-file-name (or (executable-find "bash") shell-file-name))
 
 ;;; init.el ends here
