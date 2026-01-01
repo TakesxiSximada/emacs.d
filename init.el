@@ -1,6 +1,6 @@
 ;;; init.el --- Emacs configuration.  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2016 - 2025 TakesxiSximada
+;; Copyright (C) 2016 - 2026 TakesxiSximada
 
 ;; Author: TakesxiSximada
 ;; URL: https://github.com/TakesxiSximada/emacs.d
@@ -45,7 +45,7 @@
 (customize-set-variable 'custom-theme-directory
 			(expand-file-name "~/.emacs.d/themes")
 			"My theme files")
-(load-theme 'symdon-surface t)
+;; (load-theme 'symdon-surface t)
 
 (set-face-attribute 'default nil :height 150)
 (set-frame-parameter nil 'alpha '(100 . 100))

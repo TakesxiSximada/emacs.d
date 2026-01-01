@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t -*-
 
-;; Copyright (C) 2016 - 2025 TakesxiSximada
+;; Copyright (C) 2016 - 2026 TakesxiSximada
 
 ;; Author: TakesxiSximada
 ;; URL: https://github.com/TakesxiSximada/emacs.d
