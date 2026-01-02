@@ -1,0 +1,16 @@
+.org-id-locations
+bookmarks.eld
+el-get/
+elpa/
+eshell/
+ido.last
+image-dired/
+multisession/
+projects.eld
+recentf.eld
+semanticdb/
+smex-items
+tramp
+transient/
+tutorial/
+url/
