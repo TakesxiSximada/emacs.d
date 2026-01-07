@@ -53,6 +53,7 @@
 
 ;; 標準のコマンドのキー割当変更。ここには基本的なキー割当の設定をする
 (global-set-key (kbd "C-t") nil)      ; C-tをプレフィックスキーとして使うために潰す
+(global-set-key (kbd "C-x C-t") nil)  ; 行の入れ替えコマンドも使わないので潰す
 (global-set-key (kbd "C-h") #'backward-delete-char-untabify)                          ; バックスペース
 (global-set-key (kbd "C-x C-w") #'kill-buffer)                                        ; バッファ削除
 (global-set-key (kbd "C-t C-h") #'windmove-left)                                      ; ウィンドウ切替
