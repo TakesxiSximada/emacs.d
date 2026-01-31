@@ -39,7 +39,10 @@
 
 ;; Library Path
 (add-to-list 'load-path (expand-file-name "~/ng/symdon/my"))
+(require 'my-autoloads)
+
 (add-to-list 'load-path (expand-file-name "~/ng/symdon/elisp"))
+
 
 ;;; Code:
 (customize-set-variable 'custom-theme-directory
@@ -498,6 +501,7 @@ tell application \"Emacs\" to activate")))
 
 ;; Agentic
 (add-to-list 'load-path (expand-file-name "~/ng/symdon/agentic"))
+(require 'agentic-autoloads)
 
 ;; key customize
 (with-eval-after-load 'doc-view
