@@ -41,9 +41,6 @@
 (add-to-list 'load-path (expand-file-name "~/ng/symdon/my"))
 (require 'my-autoloads)
 
-(add-to-list 'load-path (expand-file-name "~/ng/symdon/elisp"))
-
-
 ;;; Code:
 (customize-set-variable 'custom-theme-directory
 			(expand-file-name "~/.emacs.d/themes")
