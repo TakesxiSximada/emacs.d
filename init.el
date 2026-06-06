@@ -509,4 +509,7 @@ tell application \"Emacs\" to activate")))
 ;; Using bash
 (setq shell-file-name (or (executable-find "bash") shell-file-name))
 
+;; Minibuffer height bug. See https://www.symdon.info/ja/posts/1778664750/
+(setq minibuffer-follows-selected-frame nil)
+
 ;;; init.el ends here
