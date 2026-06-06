@@ -190,14 +190,16 @@ Emacsのバージョン毎に分かれるようにする。
     (define-key ido-completion-map (kbd "M-p") #'ido-prev-match))
 
   (condition-case err
-      (progn (setq ido-enable-flex-matching t
-                   ido-default-file-method 'selected-window
-                   ido-default-buffer-method 'selected-window)
-             (ido-mode 1)
-             (ido-everywhere 1)
-             (ido-vertical-mode)
-             (ido-ubiquitous-mode 1)
-             (add-hook 'ido-setup-hook #'configure-ido-keymap))
+      (progn
+	(setq ido-enable-flex-matching t
+              ido-default-file-method 'selected-window
+              ido-default-buffer-method 'selected-window
+	      ido-vertical-define-keys nil)
+        (ido-mode 1)
+        (ido-everywhere 1)
+        (ido-vertical-mode)
+        (ido-ubiquitous-mode 1)
+        (add-hook 'ido-setup-hook #'configure-ido-keymap))
     (error err)))
 
 (progn ; org
