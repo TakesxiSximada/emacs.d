@@ -89,7 +89,13 @@
 (global-visual-line-mode 0)  ; 行の表示を行わない
 (put 'erase-buffer 'disabled nil)
 (setenv "PAGER" "cat")            ; pagerでlessが使われないようにcatを指定しておく
-(add-hook 'dired-mode-hook 'dired-hide-details-mode) ; diredの省略表示
+
+(with-eval-after-load 'dired
+  (require 'dired-x)
+  (setq dired-omit-files ".*~$")
+  (add-hook 'dired-mode-hook #'dired-omit-mode)
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode) ; diredの省略表示
+  )
 ;; (global-hl-line-mode t)  ; 可視性の向上のためカーソル位置の行にアンダーラインを表示する
 
 ;; 個人用の基本的な環境用の変数設定
