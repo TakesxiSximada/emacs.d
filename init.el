@@ -39,6 +39,8 @@
 
 ;; Library Path
 (add-to-list 'load-path (expand-file-name "~/ng/symdon/my"))
+(add-to-list 'load-path (expand-file-name "~/ng/restclient"))
+(add-to-list 'load-path (expand-file-name "~/ng/ob-restclient.el/"))
 (require 'my-autoloads)
 
 ;;; Code:
