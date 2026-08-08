@@ -79,6 +79,13 @@
 (global-set-key (kbd "s-<down>")  (lambda () (interactive) (window-resize nil 1)))    ; ウィンドウサイズの変更
 (global-set-key (kbd "s-<right>") (lambda () (interactive) (window-resize nil 1 t)))  ; ウィンドウサイズの変更
 (global-set-key (kbd "s-<left>")  (lambda () (interactive) (window-resize nil -1 t))) ; ウィンドウサイズの変更
+;;; パスの設定
+(pcase system-type
+  (darwin
+   (progn
+     (add-to-list 'exec-path "/Applications/Docker.app/Contents/Resources/bin")
+     (setenv "PATH" (string-join exec-path ":"))))
+  (_ (warn (format "unknown system type: %s" system-type))))
 
 ;; XperiaではなぜかC-SPCを入力したと判定されるまでに時間がかかるようだっ
 ;; た。さらにC-SPCではなくC-@とし扱われていた。しかたがないのでM-SPCと
