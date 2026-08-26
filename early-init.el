@@ -35,6 +35,9 @@
 ;; memory.
 (setq gc-cons-threshold 1073741824)
 
+;; Warnings popup configuration
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+
 ;; Disable GUI Menu
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
